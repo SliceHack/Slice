@@ -10,5 +10,5 @@ import slice.event.Event;
 public class EventUpdate extends Event {
     private double x, y, z;
     private float yaw, pitch;
-    private boolean onGround;
+    private boolean onGround, pre;
 }
