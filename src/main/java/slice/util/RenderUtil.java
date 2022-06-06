@@ -16,7 +16,7 @@ public class RenderUtil {
         drawRoundedRect(x, y, x + width, y + width, 10, color);
     }
 
-    /* Did not write this method (to much math) */
+    /* Did not write this method (too much math) */
     public static void drawRoundedRect(double left, double top, double right, double bottom, double radius, int color) {
         GL11.glScaled(0.5D, 0.5D, 0.5D);
         left *= 2.0D;
