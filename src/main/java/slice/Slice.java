@@ -4,6 +4,11 @@ import lombok.Getter;
 import slice.event.Event;
 import slice.manager.ModuleManager;
 
+/**
+* Main Class for the Client
+*
+* @author Nick
+*/
 @Getter
 public enum Slice {
     INSTANCE;
