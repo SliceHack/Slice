@@ -567,6 +567,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         GlStateManager.viewport(0, 0, this.displayWidth, this.displayHeight);
         this.effectRenderer = new EffectRenderer(this.theWorld, this.renderEngine);
         this.checkGLError("Post startup");
+        Slice instance = Slice.INSTANCE;
         this.ingameGUI = new GuiIngame(this);
 
         if (this.serverName != null)
