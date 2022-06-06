@@ -4,7 +4,7 @@ import lombok.experimental.UtilityClass;
 import net.minecraft.client.Minecraft;
 
 /**
- * Easier rotation methods without doing alot of math
+ * Easier rotation methods without doing a lot of math
  *
  * @author Nick
  * */
