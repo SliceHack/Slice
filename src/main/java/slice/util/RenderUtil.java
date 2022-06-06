@@ -27,6 +27,8 @@ public class RenderUtil {
         GlStateManager.enableBlend();
         glColor(color);
         GL11.glBegin(9);
+
+        // math to round the rectangle
         int i;
         for (i = 0; i <= 90; i++)
             GL11.glVertex2d(left + radius + Math.sin(i * Math.PI / 180.0D) * radius * -1.0D, top + radius + Math.cos(i * Math.PI / 180.0D) * radius * -1.0D);
@@ -36,6 +38,7 @@ public class RenderUtil {
             GL11.glVertex2d(right - radius + Math.sin(i * Math.PI / 180.0D) * radius, bottom - radius + Math.cos(i * Math.PI / 180.0D) * radius);
         for (i = 90; i <= 180; i++)
             GL11.glVertex2d(right - radius + Math.sin(i * Math.PI / 180.0D) * radius, top + radius + Math.cos(i * Math.PI / 180.0D) * radius);
+
         GL11.glEnd();
         GL11.glEnable(3553);
         GL11.glScaled(2.0D, 2.0D, 2.0D);
