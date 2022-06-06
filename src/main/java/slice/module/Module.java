@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
 import slice.event.Event;
+import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
 
 /**
@@ -21,8 +22,8 @@ public abstract class Module {
     private ModuleInfo info = getClass().getAnnotation(ModuleInfo.class);
 
     /* Module Data */
-    private String name;
-    private String description;
+    private String name, description;
+    private Category category;
     private int key;
 
     private boolean enabled;
@@ -32,6 +33,7 @@ public abstract class Module {
             throw new IllegalStateException("ModuleInfo is not present on module " + getClass().getName());
         }
         this.name = info.name();
+        this.category = info.category();
         this.description = info.description();
         this.key = info.key();
     }

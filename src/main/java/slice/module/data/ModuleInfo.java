@@ -7,5 +7,6 @@ import java.lang.annotation.RetentionPolicy;
 public @interface ModuleInfo {
     String name();
     String description() default "No description provided.";
+    Category category();
     int key() default 0;
 }

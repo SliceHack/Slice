@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum Category {
     COMBAT("Combat"), MOVEMENT("Movement"),
     PLAYER("Player"), WORLD("World"),
-    RENDER("Other");
+    RENDER("Other"), MISC("Misc");
 
     Category(String name) {
         this.name = name;
