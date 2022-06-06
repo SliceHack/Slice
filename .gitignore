@@ -1,4 +1,9 @@
 out/
 logs/
+<<<<<<< HEAD
 .idea/
 Slice.iml
+=======
+Slice.iml
+.idea
+>>>>>>> a6ff830a1569e859d246de6666c8b4a92bc546e3
