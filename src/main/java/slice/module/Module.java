@@ -2,6 +2,7 @@ package slice.module;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.client.Minecraft;
 import slice.event.Event;
 import slice.module.data.ModuleInfo;
 
@@ -12,6 +13,9 @@ import slice.module.data.ModuleInfo;
  */
 @Getter @Setter
 public abstract class Module {
+
+    /* Module fields */
+    protected Minecraft mc = Minecraft.getMinecraft();
 
     /* info */
     private ModuleInfo info = getClass().getAnnotation(ModuleInfo.class);
