@@ -185,6 +185,7 @@ import org.lwjgl.opengl.OpenGLException;
 import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
 import slice.Slice;
+import slice.event.events.EventKey;
 
 public class Minecraft implements IThreadListener, IPlayerUsage
 {
@@ -1945,6 +1946,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                     }
                     else
                     {
+                        EventKey key = new EventKey(k);
+                        key.call();
                         if (k == 1)
                         {
                             this.displayInGameMenu();
