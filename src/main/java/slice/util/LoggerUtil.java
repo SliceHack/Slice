@@ -3,6 +3,7 @@ package slice.util;
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
+import java.util.logging.Logger;
 
 
 /**
@@ -30,7 +31,7 @@ public class LoggerUtil {
      * @param message The message to log.
      */
     public static void addTerminalMessage(String message) {
-        System.out.println("Slice » " + message.replace("&", ""));
+        Logger.getLogger("Slice").info(message);
     }
 
 }
