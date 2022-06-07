@@ -31,6 +31,9 @@ public class MainMenu extends GuiScreen {
         this.buttonList.forEach(button -> button.drawButton(Minecraft.getMinecraft(), mouseX, mouseY));
     }
 
+    /**
+     * Button pressed events
+     * */
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
         this.buttonList.forEach(button -> {
             if(button instanceof MainButton) {
