@@ -185,6 +185,7 @@ import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
 import slice.Slice;
 import slice.event.events.EventKey;
+import slice.font.TTFFontRenderer;
 import slice.gui.main.MainMenu;
 
 @SuppressWarnings("all")

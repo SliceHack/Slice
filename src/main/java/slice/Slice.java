@@ -1,6 +1,9 @@
 package slice;
 
 import lombok.Getter;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
 import slice.event.Event;
 import slice.event.events.EventKey;
 import slice.font.FontManager;
@@ -37,4 +40,6 @@ public enum Slice {
         }
         moduleManager.getModules().stream().filter(Module::isEnabled).forEach(module -> module.onEvent(event)); // Module events
     }
+
+
 }
