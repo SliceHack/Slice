@@ -19,10 +19,8 @@ import java.util.List;
 public class HUD {
 
     public static void draw() {
-        GlStateManager.pushMatrix();
-        GlStateManager.enableBlend();
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-        TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Medium", 60);
+        TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Thin", 60);
         TTFFontRenderer font2 = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 25);
         TTFFontRenderer font3 = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 15);
 
@@ -48,8 +46,5 @@ public class HUD {
         }
 
         font3.drawString("BPS: " + MoveUtil.getBPS(), 0, sr.getScaledHeight() - font3.getHeight("BPS: " + MoveUtil.getBPS()), -1);
-
-        GlStateManager.popMatrix();
-
     }
 }
