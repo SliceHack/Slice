@@ -1,6 +1,9 @@
 package slice.util;
 
 import lombok.experimental.UtilityClass;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.opengl.GL11;
 
@@ -11,6 +14,14 @@ import org.lwjgl.opengl.GL11;
  * */
 @UtilityClass
 public class RenderUtil {
+
+    /**
+     * Render's an Image
+     * */
+    public static void drawImage(String location, int x, int y, int width, int height) {
+        Minecraft.getMinecraft().getTextureManager().bindTexture(ResourceUtil.getResource(location));
+        Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, width, height, width, height);
+    }
 
     /**
      * @see #drawRoundedRect(double, double, double, double, double, int)
