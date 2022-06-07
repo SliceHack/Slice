@@ -186,7 +186,9 @@ import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
 import slice.Slice;
 import slice.event.events.EventKey;
+import slice.util.KeyUtil;
 
+@SuppressWarnings("all")
 public class Minecraft implements IThreadListener, IPlayerUsage
 {
     private static final Logger logger = LogManager.getLogger();
@@ -475,6 +477,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     private void startGame() throws LWJGLException, IOException
     {
         this.gameSettings = new GameSettings(this, this.mcDataDir);
+        new KeyUtil();
         this.defaultResourcePacks.add(this.mcDefaultResourcePack);
         this.startTimerHackThread();
 

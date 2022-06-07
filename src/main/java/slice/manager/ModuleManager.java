@@ -3,6 +3,7 @@ package slice.manager;
 import lombok.Getter;
 import lombok.Setter;
 import slice.module.Module;
+import slice.module.modules.movement.Fly;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ public class ModuleManager {
     private List<Module> modules = new ArrayList<>();
 
     public ModuleManager() {
+        register(new Fly());
     }
 
     public void register(Module module) {

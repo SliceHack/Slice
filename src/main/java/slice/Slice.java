@@ -5,6 +5,7 @@ import slice.event.Event;
 import slice.event.events.EventKey;
 import slice.manager.ModuleManager;
 import slice.module.Module;
+import slice.util.LoggerUtil;
 
 /**
 * Main Class for the Client
@@ -27,7 +28,7 @@ public enum Slice {
     public void onEvent(Event event) {
         if(event instanceof EventKey) {
             EventKey e = (EventKey) event;
-            moduleManager.getModules().stream().filter(module -> module.getKey() == e.getKey()).forEach(module -> module.onEvent(event)); // key event
+            moduleManager.getModules().stream().filter(module -> module.getKey() == e.getKey()).forEach(Module::toggle); // key event
         }
         moduleManager.getModules().stream().filter(Module::isEnabled).forEach(module -> module.onEvent(event)); // Module events
     }
