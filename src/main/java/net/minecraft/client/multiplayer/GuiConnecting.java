@@ -1,10 +1,12 @@
 package net.minecraft.client.multiplayer;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.concurrent.atomic.AtomicInteger;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiDisconnected;
 import net.minecraft.client.gui.GuiScreen;
@@ -158,6 +160,7 @@ public class GuiConnecting extends GuiScreen
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
+        Gui.drawRect(0, 0, this.width, this.height, new Color(1, 0, 0).getRGB());
         this.drawDefaultBackground();
 
         if (this.networkManager == null)
