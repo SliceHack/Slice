@@ -52,7 +52,6 @@ public class MainButton extends GuiButton {
 
         if(timeSpan < 80  && !hovered) {
             timeSpan = 80;
-            System.out.println("timeSpan: " + timeSpan);
         }
 
         if(hovered)

@@ -284,10 +284,12 @@ public class RegionFile
      */
     private void write(int sectorNumber, byte[] data, int length) throws IOException
     {
-        this.dataFile.seek((long)(sectorNumber * 4096));
-        this.dataFile.writeInt(length + 1);
-        this.dataFile.writeByte(2);
-        this.dataFile.write(data, 0, length);
+        try {
+            this.dataFile.seek((long) (sectorNumber * 4096));
+            this.dataFile.writeInt(length + 1);
+            this.dataFile.writeByte(2);
+            this.dataFile.write(data, 0, length);
+        } catch (Exception ignored){}
     }
 
     /**

@@ -17,9 +17,9 @@ public class Fly extends Module {
     public void onEvent(Event event) {
         if(event instanceof EventUpdate) {
             if(mc.gameSettings.keyBindSneak.isKeyDown()) {
-                mc.thePlayer.motionY = 0.5;
+                mc.thePlayer.motionY = speed.getValue().doubleValue();
             } else if(mc.gameSettings.keyBindSprint.isKeyDown()) {
-                mc.thePlayer.motionY = -0.5;
+                mc.thePlayer.motionY = -speed.getValue().doubleValue();
             } else {
                 mc.thePlayer.motionY = 0;
             }
