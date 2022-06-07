@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import slice.Slice;
 import slice.font.TTFFontRenderer;
 import slice.module.Module;
+import slice.util.LoggerUtil;
 import slice.util.MoveUtil;
 
 import java.util.ArrayList;
@@ -20,7 +21,8 @@ public class HUD {
 
     public static void draw() {
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-        TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Thin", 60);
+        int fontHeight = sr.getScaledHeight() / 6;
+        TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Thin", fontHeight);
         TTFFontRenderer font2 = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 25);
         TTFFontRenderer font3 = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 15);
 
