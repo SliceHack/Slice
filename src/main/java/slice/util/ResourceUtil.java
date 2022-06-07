@@ -11,6 +11,9 @@ import net.minecraft.util.ResourceLocation;
 @UtilityClass
 public class ResourceUtil {
 
+    /**
+     * Gets a Resource Location from a String.
+     * */
     public static ResourceLocation getResource(String resource) {
         return new ResourceLocation("slice/" + resource);
     }
