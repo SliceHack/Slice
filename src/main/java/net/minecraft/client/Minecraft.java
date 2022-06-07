@@ -46,6 +46,7 @@ import net.minecraft.client.gui.GuiControls;
 import net.minecraft.client.gui.GuiGameOver;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.GuiIngameMenu;
+import slice.gui.main.MainMenu;
 import net.minecraft.client.gui.GuiMemoryErrorScreen;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiSleepMP;
@@ -185,13 +186,11 @@ import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
 import slice.Slice;
 import slice.event.events.EventKey;
-import slice.font.TTFFontRenderer;
-import slice.gui.main.MainMenu;
 
 @SuppressWarnings("all")
 public class Minecraft implements IThreadListener, IPlayerUsage
 {
-    public static final Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
     private static final ResourceLocation locationMojangPng = new ResourceLocation("textures/gui/title/mojang.png");
     public static final boolean isRunningOnMac = Util.getOSType() == Util.EnumOS.OSX;
 
@@ -570,7 +569,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         GlStateManager.viewport(0, 0, this.displayWidth, this.displayHeight);
         this.effectRenderer = new EffectRenderer(this.theWorld, this.renderEngine);
         this.checkGLError("Post startup");
-        Slice instance = Slice.INSTANCE;
         this.ingameGUI = new GuiIngame(this);
 
         if (this.serverName != null)
@@ -952,7 +950,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
     /**
      * Draw with the WorldRenderer
-     *  
+     *
      * @param posX X position for the render
      * @param posY Y position for the render
      * @param texU X position for the texture
@@ -2643,7 +2641,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
     /**
      * Return an ItemStack with the NBTTag of the TileEntity ("Owner" if the block is a skull)
-     *  
+     *
      * @param itemIn The item from the block picked
      * @param meta Metadata of the item
      * @param tileEntityIn TileEntity of the block picked
@@ -3320,7 +3318,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
     /**
      * Set if the player is connected to a realms server
-     *  
+     *
      * @param isConnected The value that set if the player is connected to a realms server or not
      */
     public void setConnectedToRealms(boolean isConnected)

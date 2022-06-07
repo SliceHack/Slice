@@ -48,6 +48,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
+import slice.event.events.EventPacket;
 
 public class NetworkManager extends SimpleChannelInboundHandler<Packet>
 {
@@ -148,6 +149,11 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
 
     protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, Packet p_channelRead0_2_) throws Exception
     {
+        EventPacket eventPacket = new EventPacket(p_channelRead0_2_, false);
+
+        if(eventPacket.isCancelled())
+            return;
+
         if (this.channel.isOpen())
         {
             try
@@ -174,6 +180,11 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
 
     public void sendPacket(Packet packetIn)
     {
+        EventPacket eventPacket = new EventPacket(packetIn, true);
+
+        if(eventPacket.isCancelled())
+            return;
+
         if (this.isChannelOpen())
         {
             this.flushOutboundQueue();

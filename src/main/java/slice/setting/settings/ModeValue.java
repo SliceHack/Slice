@@ -12,9 +12,9 @@ public class ModeValue extends Setting {
 
     private int index;
 
-    public ModeValue(String name, String... values) {
+    public ModeValue(String name, String value, String... values) {
         super(name);
-        this.value = values[0];
+        this.value = value;
         this.values = values;
     }
 

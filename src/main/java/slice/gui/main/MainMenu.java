@@ -12,6 +12,9 @@ import java.io.IOException;
 public class MainMenu extends GuiScreen {
 
     public void initGui() {
+        if(mc.currentScreen != this)
+            return;
+
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
 
         int x = 240;
@@ -22,9 +25,13 @@ public class MainMenu extends GuiScreen {
     }
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        if(mc.currentScreen != this)
+            return;
+
+        drawBackground();
+
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
         int fontHeight = sr.getScaledHeight() / 3;
-        this.drawBackground();
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Thin", fontHeight);
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
@@ -38,6 +45,9 @@ public class MainMenu extends GuiScreen {
      * Button pressed events
      * */
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+        if(mc.currentScreen != this)
+            return;
+
         this.buttonList.forEach(button -> {
             if(button instanceof MainButton) {
                 MainButton b = (MainButton) button;
