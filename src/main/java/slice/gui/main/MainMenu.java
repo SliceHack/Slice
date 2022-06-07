@@ -1,26 +1,39 @@
 package slice.gui.main;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
 import slice.Slice;
 import slice.font.TTFFontRenderer;
 
+import java.awt.*;
+
 public class MainMenu extends GuiScreen {
+
+    int fontHeight = 70;
 
     public void initGui() {
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-        this.buttonList.add(new GuiButton(0, 0, 20, 150, 50,"Singleplayer"));
+        this.buttonList.add(new MainButton(0, 0, 0, "Test"));
+        super.initGui();
     }
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-
-        this.drawDefaultBackground();
-
+        this.drawBackground();
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-        int fontHeight = 70;
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Thin", fontHeight);
-        font.drawStringWithShadow("Slice", sr.getScaledWidth() / 2f - (fontHeight - 30), 30, -1);
+
+        GlStateManager.pushMatrix();
+        GlStateManager.enableBlend();
+        font.drawCenteredString("Slice", (sr.getScaledWidth() / 2f)-2, 25, -1);
+        GlStateManager.popMatrix();
+
+        this.buttonList.forEach(button -> button.drawButton(Minecraft.getMinecraft(), mouseX, mouseY));
+    }
+
+    private void drawBackground() {
+        Gui.drawRect(0, 0, this.width, this.height, new Color(1, 0, 0).getRGB());
     }
 }
