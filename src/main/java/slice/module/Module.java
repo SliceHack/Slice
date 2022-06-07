@@ -6,6 +6,10 @@ import net.minecraft.client.Minecraft;
 import slice.event.Event;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
+import slice.setting.Setting;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class of the base of every module
@@ -27,6 +31,8 @@ public abstract class Module {
     private int key;
 
     private boolean enabled;
+
+    private List<Setting> settings = new ArrayList<>();
 
     public Module() {
         if(info == null) {
