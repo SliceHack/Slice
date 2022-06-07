@@ -21,15 +21,15 @@ public class HUD {
     public static void draw() {
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
-        GlStateManager.enableAlpha();
-        GlStateManager.enableDepth();
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Medium", 60);
         TTFFontRenderer font2 = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 25);
         TTFFontRenderer font3 = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 15);
 
-        if(Minecraft.getMinecraft().gameSettings.showDebugProfilerChart)
+        if(Minecraft.getMinecraft().gameSettings.showDebugProfilerChart) {
+            GlStateManager.pushMatrix();
             return;
+        }
 
         // title
         font.drawStringWithShadow("Slice", 10, 10, -1);
