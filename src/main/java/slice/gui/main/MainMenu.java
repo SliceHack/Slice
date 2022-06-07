@@ -36,6 +36,7 @@ public class MainMenu extends GuiScreen {
             if(button instanceof MainButton) {
                 MainButton b = (MainButton) button;
                 if(b.x <= mouseX && b.x + b.width >= mouseX && b.getY() <= mouseY && b.y + b.height >= mouseY) {
+                    b.playPressSound(Minecraft.getMinecraft().getSoundHandler());
                     b.click();
                 }
             }
