@@ -29,12 +29,13 @@ public class MainButton extends GuiButton {
     }
 
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
-        //draw clean button
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
         this.width = sr.getScaledWidth() / 2;
         this.height = sr.getScaledHeight() / 12;
         float fontHeight = sr.getScaledHeight() / 10.5f;
         float radius = (sr.getScaledHeight() + sr.getScaledWidth()) / 50f;
+
+        this.hovered = mouseX >= this.x && mouseX <= this.x + this.width && mouseY >= this.y && mouseY <= this.y + this.height;
 
         if (this.xPosition == 0) {
             this.xPosition = 1;

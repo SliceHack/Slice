@@ -13,8 +13,10 @@ public class MainMenu extends GuiScreen {
 
     public void initGui() {
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-        this.buttonList.add(new MainButton(0, 450, 400, "Singleplayer", () -> mc.displayGuiScreen(new GuiSelectWorld(this))));
-        this.buttonList.add(new MainButton(1, 450, 100, "Multiplayer", () -> mc.displayGuiScreen(new GuiMultiplayer(this))));
+
+        int x = 240;
+        this.buttonList.add(new MainButton(0, x, 200, "Singleplayer", () -> mc.displayGuiScreen(new GuiSelectWorld(this))));
+        this.buttonList.add(new MainButton(1, x, 260, "Multiplayer", () -> mc.displayGuiScreen(new GuiMultiplayer(this))));
         super.initGui();
     }
 
@@ -25,7 +27,7 @@ public class MainMenu extends GuiScreen {
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Thin", fontHeight);
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
-        font.drawCenteredString("Slice", (sr.getScaledWidth() / 2f)-2, 25, -1);
+        font.drawCenteredString("Slice", (sr.getScaledWidth() / 2f)+3, 25, -1);
         GlStateManager.popMatrix();
 
         this.buttonList.forEach(button -> button.drawButton(Minecraft.getMinecraft(), mouseX, mouseY));
