@@ -20,8 +20,8 @@ public class NumberValue extends Setting {
     public void setValue(Number value) {
         this.value = value;
 
-        if(value.doubleValue() < min.doubleValue()) value = min;
-        if(value.doubleValue() > max.doubleValue()) value = max;
+        if(value.doubleValue() > max.doubleValue()) this.value = max;
+        else if(value.doubleValue() < min.doubleValue()) this.value = min;
     }
 
     public enum Type {
