@@ -34,6 +34,15 @@ public class MoveUtil {
     }
 
     /**
+     * @see #strafe(double)
+     */
+    public void strafe() {
+        if(Minecraft.getMinecraft().thePlayer.hurtResistantTime > 5)
+            return;
+        strafe(getSpeed());
+    }
+
+    /**
      * Gets how fast a player is moving
      * */
     public double getSpeed() {
