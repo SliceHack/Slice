@@ -22,7 +22,7 @@ import java.net.Proxy;
 public class LoginUtil {
 
     /**
-     * Logins in using username and password.
+     * Logins in using email and password.
      * */
     public static Session loginMojang(String email, String password) {
         final YggdrasilAuthenticationService service = new YggdrasilAuthenticationService(Proxy.NO_PROXY, "");
@@ -56,7 +56,7 @@ public class LoginUtil {
     }
 
     /**
-     * Logs user in as offline.
+     * Logs user in as offline. (cracked account)
      */
     public static Session loginOffline(String username) {
         return Minecraft.getMinecraft().session = new Session(username, "0", "0", "legacy");

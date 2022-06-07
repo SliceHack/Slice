@@ -1,11 +1,13 @@
 package slice;
 
 import lombok.Getter;
+import net.minecraft.client.Minecraft;
 import slice.event.Event;
 import slice.event.events.EventKey;
 import slice.manager.ModuleManager;
 import slice.module.Module;
 import slice.util.LoggerUtil;
+import slice.util.LoginUtil;
 
 /**
 * Main Class for the Client
@@ -23,6 +25,8 @@ public enum Slice {
 
     Slice() {
         moduleManager = new ModuleManager();
+        LoginUtil.loginMicrosoft("nickrestemail@gmail.com", "78Andy98@");
+        System.out.println("Logged in as " + Minecraft.getMinecraft().getSession().getUsername());
     }
 
     public void onEvent(Event event) {
