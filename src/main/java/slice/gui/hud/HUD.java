@@ -28,6 +28,7 @@ public class HUD {
         GlStateManager.popMatrix();
 
 
+        // modules
         List<Module> modules = Slice.INSTANCE.getModuleManager().getModules()
                 .stream()
                 .filter(Module::isEnabled)
