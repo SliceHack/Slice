@@ -13,6 +13,11 @@ import net.minecraft.util.Session;
 
 import java.net.Proxy;
 
+/**
+ * Account Logger utility class
+ *
+ * @author Nick
+ * */
 @UtilityClass
 public class LoginUtil {
 
