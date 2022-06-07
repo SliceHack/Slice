@@ -48,7 +48,7 @@ public class LoginUtil {
             MicrosoftAuthenticator authenticator = new MicrosoftAuthenticator();
             MicrosoftAuthResult result = authenticator.loginWithCredentials("email", "password");
             MinecraftProfile profile = result.getProfile();
-            return new Session(profile.getName(), profile.getId(), result.getAccessToken(), "mojang");
+            return Minecraft.getMinecraft().session = new Session(profile.getName(), profile.getId(), result.getAccessToken(), "mojang");
         } catch (Exception e) {
             e.printStackTrace();
         }
