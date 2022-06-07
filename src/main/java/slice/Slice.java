@@ -1,15 +1,10 @@
 package slice;
 
 import lombok.Getter;
-import net.minecraft.client.Minecraft;
 import slice.event.Event;
 import slice.event.events.EventKey;
 import slice.manager.ModuleManager;
 import slice.module.Module;
-import slice.util.LoggerUtil;
-import slice.util.LoginUtil;
-
-import java.util.Objects;
 
 /**
 * Main Class for the Client

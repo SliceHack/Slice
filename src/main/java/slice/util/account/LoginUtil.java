@@ -1,4 +1,4 @@
-package slice.util;
+package slice.util.account;
 
 import com.mojang.authlib.Agent;
 import com.mojang.authlib.GameProfile;
@@ -10,6 +10,7 @@ import fr.litarvan.openauth.microsoft.model.response.MinecraftProfile;
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Session;
+import slice.util.account.microsoft.MicrosoftAccount;
 
 import java.net.Proxy;
 
@@ -43,12 +44,15 @@ public class LoginUtil {
     /**
      * Logins user in using Microsoft Authenticator.
      */
-    public static Session loginMicrosoft(String email, String password) {
+    public static MicrosoftAccount loginMicrosoft(String email, String password) {
         try {
             MicrosoftAuthenticator authenticator = new MicrosoftAuthenticator();
             MicrosoftAuthResult result = authenticator.loginWithCredentials(email, password);
             MinecraftProfile profile = result.getProfile();
-            return Minecraft.getMinecraft().session = new Session(profile.getName(), profile.getId(), result.getAccessToken(), "mojang");
+
+            Session session = new Session(profile.getName(), profile.getId(), result.getAccessToken(), "mojang");
+            Minecraft.getMinecraft().session = session;
+            return new MicrosoftAccount(profile, session, result.getRefreshToken());
         } catch (Exception e) {
             e.printStackTrace();
         }
