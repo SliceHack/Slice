@@ -36,6 +36,8 @@ import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
+import the_fireplace.ias.gui.GuiAccountSelector;
+import the_fireplace.ias.gui.GuiButtonWithImage;
 
 public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
 {
