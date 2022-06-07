@@ -2,9 +2,11 @@ package slice.gui.hud;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
 import slice.Slice;
 import slice.font.TTFFontRenderer;
 import slice.module.Module;
+import slice.util.RenderUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +20,29 @@ public class HUD {
 
     public static void draw() {
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-        int fontHeight = sr.getScaledHeight() / 6;
 
+        /* f3 */
+        if(Minecraft.getMinecraft().gameSettings.showDebugProfilerChart)
+            return;
+
+        int widthHeight = 90;
+
+        RenderUtil.drawRoundedRect(5, 5, 10 + (widthHeight + 5), 10 + (widthHeight + 5), 10, Integer.MIN_VALUE);
+
+        GlStateManager.pushMatrix();
+        GlStateManager.enableTexture2D();
+        GlStateManager.enableBlend();
+        GlStateManager.enableAlpha();
+        RenderUtil.drawImage("icons/Slice.png", 10, 10, widthHeight, widthHeight);
+        GlStateManager.popMatrix();
+
+        TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 25);
+        List<Module> modules = getEnabledModules(font);
+        int i = 2;
+        for(Module module : modules) {
+            font.drawStringWithShadow(module.getName(), sr.getScaledWidth() - font.getWidth(module.getName()) - 12, 10 + i, -1);
+            i += font.getHeight(module.getName()) + 5;
+        }
     }
 
     public static List<Module> getEnabledModules(TTFFontRenderer font) {
