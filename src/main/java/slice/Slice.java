@@ -22,11 +22,6 @@ public enum Slice {
     private final ModuleManager moduleManager;
     private final FontManager fontManager;
 
-    /**
-     * TODO:
-         * - Fix Button Scaling in MainMenu
-         *
-     * */
     Slice() {
         moduleManager = new ModuleManager();
         fontManager = new FontManager();
