@@ -10,6 +10,7 @@ import slice.font.FontManager;
 import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
 import slice.module.Module;
+import slice.util.ResourceUtil;
 import slice.util.account.LoginUtil;
 
 /**

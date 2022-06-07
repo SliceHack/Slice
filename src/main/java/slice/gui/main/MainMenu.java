@@ -5,6 +5,7 @@ import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.GlStateManager;
 import slice.Slice;
 import slice.font.TTFFontRenderer;
+import slice.util.ResourceUtil;
 
 import java.awt.*;
 import java.io.IOException;

@@ -1,5 +1,6 @@
 package net.minecraft.client.gui;
 
+import java.awt.*;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -297,7 +298,7 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
 
         protected void drawBackground()
         {
-            GuiSelectWorld.this.drawDefaultBackground();
+            Gui.drawRect(0, 0, this.width, this.height, new Color(1, 0, 0).getRGB());
         }
 
         protected void drawSlot(int entryID, int p_180791_2_, int p_180791_3_, int p_180791_4_, int mouseXIn, int mouseYIn)
