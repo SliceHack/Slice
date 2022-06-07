@@ -3,6 +3,8 @@ package slice.util;
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
+
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 
