@@ -2,7 +2,12 @@ package slice.util;
 
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * Player movement utility class
@@ -31,6 +36,22 @@ public class MoveUtil {
         final double yaw = RotationUtil.getDirection();
         Minecraft.getMinecraft().thePlayer.motionX = -MathHelper.sin((float) yaw) * speed;
         Minecraft.getMinecraft().thePlayer.motionZ = MathHelper.cos((float) yaw) * speed;
+    }
+
+    /**
+     * Get's the player's bps
+     * */
+    public double getBPS() {
+        EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+        return MathUtil.round(((Math.hypot(player.posX - player.prevPosX, player.posZ - player.prevPosZ) * Minecraft.getMinecraft().timer.timerSpeed) * 20), 2);
+    }
+
+    /**
+     * Jumps the player
+     * without Minecaft accelerating to high
+     */
+    public void jump() {
+        Minecraft.getMinecraft().thePlayer.motionY = 0.42F;
     }
 
     /**

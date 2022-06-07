@@ -223,7 +223,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
     /** True if the player is connected to a realms server */
     private boolean connectedToRealms = false;
-    private Timer timer = new Timer(20.0F);
+    public Timer timer = new Timer(20.0F);
 
     /** Instance of PlayerUsageSnooper. */
     private PlayerUsageSnooper usageSnooper = new PlayerUsageSnooper("client", this, MinecraftServer.getCurrentTimeMillis());

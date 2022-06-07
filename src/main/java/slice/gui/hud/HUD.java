@@ -6,40 +6,50 @@ import net.minecraft.client.renderer.GlStateManager;
 import slice.Slice;
 import slice.font.TTFFontRenderer;
 import slice.module.Module;
+import slice.util.MoveUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Renders the client's heads-up-display.
+ *
+ * @author Nick
+ * */
 public class HUD {
 
     public static void draw() {
+        GlStateManager.pushMatrix();
+        GlStateManager.enableBlend();
+        GlStateManager.enableAlpha();
+        GlStateManager.enableDepth();
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-        TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Thin", 60);
-        TTFFontRenderer font2 = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 20);
+        TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Medium", 60);
+        TTFFontRenderer font2 = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 25);
+        TTFFontRenderer font3 = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 15);
 
         if(Minecraft.getMinecraft().gameSettings.showDebugProfilerChart)
             return;
 
         // title
-        GlStateManager.pushMatrix();
-        GlStateManager.enableBlend();
-        GlStateManager.enableAlpha();
         font.drawStringWithShadow("Slice", 10, 10, -1);
-        GlStateManager.popMatrix();
-
 
         // modules
         List<Module> modules = Slice.INSTANCE.getModuleManager().getModules()
                 .stream()
                 .filter(Module::isEnabled)
-                .sorted((m1, m2) -> (int) (font2.getWidth(m1.getName()) - font2.getWidth(m2.getName())))
+                .sorted((m1, m2) -> (int) (font2.getWidth(m2.getName()) - font2.getWidth(m1.getName())))
                 .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
 
         int y = 5;
         for(Module module : modules) {
             font2.drawStringWithShadow(module.getName(), (sr.getScaledWidth() - font2.getWidth(module.getName()))-5, y, -1);
-            y += font2.getHeight(module.getName()) + 5;
+            y += font2.getHeight(module.getName()) + 2;
         }
+
+        font3.drawString("BPS: " + MoveUtil.getSpeed(), 0, sr.getScaledHeight() - font3.getHeight("BPS: " + MoveUtil.getSpeed()), -1);
+
+        GlStateManager.popMatrix();
 
     }
 }
