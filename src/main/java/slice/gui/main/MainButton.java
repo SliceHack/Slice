@@ -7,7 +7,6 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.ScaledResolution;
 import slice.Slice;
 import slice.font.TTFFontRenderer;
-import slice.util.LoggerUtil;
 import slice.util.RenderUtil;
 
 import java.awt.*;
@@ -22,11 +21,6 @@ public class MainButton extends GuiButton {
 
     public MainButton(int buttonId, int x, int y, String buttonText, Runnable action) {
         super(buttonId, x, y, buttonText);
-        this.action = action;
-    }
-
-    public MainButton(int buttonId, int x, int y, int width, int height, String buttonText, Runnable action) {
-        super(buttonId, x, y, width, height, buttonText);
         this.action = action;
     }
 

@@ -17,7 +17,7 @@ import slice.util.MoveUtil;
 @ModuleInfo(name = "Fly", key = Keyboard.KEY_G, description = "Allows you to fly like a bird", category = Category.MOVEMENT)
 public class Fly extends Module {
 
-    ModeValue mode = new ModeValue("Mode", "UwUGuard", "Vanilla");
+    ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla");
     NumberValue speed = new NumberValue("Speed", 3.0D, 0.1D, 6.0D, NumberValue.Type.DOUBLE);
 
     public void onEvent(Event event) {

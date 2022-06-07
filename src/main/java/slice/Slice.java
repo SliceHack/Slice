@@ -4,12 +4,14 @@ import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
+import org.lwjgl.input.Keyboard;
 import slice.event.Event;
 import slice.event.events.EventKey;
 import slice.font.FontManager;
 import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
 import slice.module.Module;
+import slice.util.LoggerUtil;
 import slice.util.ResourceUtil;
 import slice.util.account.LoginUtil;
 
