@@ -1,5 +1,6 @@
 package slice.module.modules.movement;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
@@ -10,6 +11,7 @@ import slice.event.events.EventUpdate;
 import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
+import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
 import slice.util.MoveUtil;
@@ -18,10 +20,20 @@ import slice.util.MoveUtil;
 public class Fly extends Module {
 
     ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla");
+    BooleanValue bobbing = new BooleanValue("Bobbing", true);
     NumberValue speed = new NumberValue("Speed", 3.0D, 0.1D, 6.0D, NumberValue.Type.DOUBLE);
+
+    boolean up = false;
 
     public void onEvent(Event event) {
         if(event instanceof EventUpdate) {
+
+            // boobing
+            if(bobbing.getValue() && MoveUtil.isMoving()) {
+                mc.thePlayer.cameraPitch = 0.1F;
+                mc.thePlayer.cameraYaw = 0.1F;
+            }
+
             switch (mode.getValue()) {
                 case "Vanilla":
                     if(mc.gameSettings.keyBindSneak.isKeyDown()) {
@@ -29,7 +41,8 @@ public class Fly extends Module {
                     } else if(mc.gameSettings.keyBindSprint.isKeyDown()) {
                         mc.thePlayer.motionY = -speed.getValue().doubleValue();
                     } else {
-                        mc.thePlayer.motionY = 0;
+                        mc.thePlayer.motionY = up ? 0 : 0.001;
+                        up = !up;
                     }
                     MoveUtil.strafe(speed.getValue().doubleValue());
                     break;

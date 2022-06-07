@@ -15,15 +15,17 @@ public class SettingsManager {
             Field[] fields = module.getClass().getDeclaredFields();
 
             for(Field field : fields) {
-                if(field.getType().getSuperclass().equals(Setting.class)) {
-                    try {
-                        field.setAccessible(true);
-                        Setting setting = (Setting) field.get(module);
-                        module.getSettings().add(setting);
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
+                try {
+                    if (field.getType().getSuperclass().equals(Setting.class)) {
+                        try {
+                            field.setAccessible(true);
+                            Setting setting = (Setting) field.get(module);
+                            module.getSettings().add(setting);
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
+                } catch (Exception ignored) {}
             }
         });
     }

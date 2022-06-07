@@ -7,6 +7,7 @@ import slice.event.Event;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
 import slice.setting.Setting;
+import slice.util.LoggerUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,8 +49,10 @@ public abstract class Module {
         enabled = !enabled;
         if(enabled) {
             onEnable();
+            LoggerUtil.addMessage("Enabled &a" + this.name);
         } else {
             onDisable();
+            LoggerUtil.addMessage("Disabled &c" + this.name);
         }
     }
 

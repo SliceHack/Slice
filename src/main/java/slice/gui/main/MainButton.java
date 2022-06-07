@@ -11,6 +11,9 @@ import slice.util.RenderUtil;
 
 import java.awt.*;
 
+/**
+ * @author Dylan
+ */
 @Getter @Setter
 public class MainButton extends GuiButton {
 
