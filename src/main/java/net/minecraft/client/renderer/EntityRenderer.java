@@ -96,6 +96,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
+import slice.gui.main.MainMenu;
 
 public class EntityRenderer implements IResourceManagerReloadListener
 {
@@ -2700,7 +2701,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
         if (this.mc.currentScreen instanceof GuiMainMenu)
         {
-            this.updateMainMenu((GuiMainMenu)this.mc.currentScreen);
+            this.updateMainMenu((GuiMainMenu) this.mc.currentScreen);
         }
 
         if (this.updatedWorld != world)
