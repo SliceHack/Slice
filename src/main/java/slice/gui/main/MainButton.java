@@ -18,6 +18,8 @@ public class MainButton extends GuiButton {
     public int x, y;
     private Runnable action;
 
+    private int timeSpan;
+
     public MainButton(int buttonId, int x, int y, String buttonText, Runnable action) {
         super(buttonId, x, y, buttonText);
         this.action = action;
@@ -48,8 +50,22 @@ public class MainButton extends GuiButton {
         int yPosition = (sr.getScaledHeight() / 5) * this.yPosition / 100;
         int xPosition = (sr.getScaledWidth() / 9) * this.xPosition / 100;
 
+        if(timeSpan < 80  && !hovered) {
+            timeSpan = 80;
+            System.out.println("timeSpan: " + timeSpan);
+        }
+
+        if(hovered)
+            timeSpan += 5;
+        else
+            timeSpan = 80;
+
+        if(timeSpan >= 200) {
+            timeSpan = 200;
+        }
+
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", (int)fontHeight);
-        RenderUtil.drawRoundedRect(xPosition, yPosition, xPosition + this.width, yPosition + this.height, radius, -1);
+        RenderUtil.drawRoundedRect(xPosition, yPosition, xPosition + this.width, yPosition + this.height, radius, !hovered ? -1 : new Color(255, 80, 0).getRGB());
         font.drawCenteredString(this.displayString, xPosition + (this.width / 2f),yPosition + (this.height / 2f) - (fontHeight / 2) + 6, new Color(60, 60, 60).getRGB());
         x = xPosition;
         y = yPosition;
