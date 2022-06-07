@@ -47,7 +47,7 @@ public class HUD {
             y += font2.getHeight(module.getName()) + 2;
         }
 
-        font3.drawString("BPS: " + MoveUtil.getSpeed(), 0, sr.getScaledHeight() - font3.getHeight("BPS: " + MoveUtil.getSpeed()), -1);
+        font3.drawString("BPS: " + MoveUtil.getBPS(), 0, sr.getScaledHeight() - font3.getHeight("BPS: " + MoveUtil.getBPS()), -1);
 
         GlStateManager.popMatrix();
 
