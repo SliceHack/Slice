@@ -2,12 +2,9 @@ package slice.gui.hud;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.GlStateManager;
 import slice.Slice;
 import slice.font.TTFFontRenderer;
 import slice.module.Module;
-import slice.util.LoggerUtil;
-import slice.util.MoveUtil;
 
 import java.util.ArrayList;
 import java.util.List;
