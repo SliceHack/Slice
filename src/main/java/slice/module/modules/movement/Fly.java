@@ -6,10 +6,13 @@ import slice.event.events.EventUpdate;
 import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
+import slice.setting.settings.NumberValue;
 import slice.util.MoveUtil;
 
 @ModuleInfo(name = "Fly", key = Keyboard.KEY_G, description = "Allows you to fly like a bird", category = Category.MOVEMENT)
 public class Fly extends Module {
+
+    NumberValue speed = new NumberValue("Speed", 3.0D, 0.1D, 6.0D, NumberValue.Type.DOUBLE);
 
     public void onEvent(Event event) {
         if(event instanceof EventUpdate) {
@@ -20,7 +23,7 @@ public class Fly extends Module {
             } else {
                 mc.thePlayer.motionY = 0;
             }
-            MoveUtil.strafe(0.5);
+            MoveUtil.strafe(speed.getValue().doubleValue());
         }
     }
 }
