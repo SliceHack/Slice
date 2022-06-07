@@ -41,7 +41,7 @@ public class HUD {
         int i = 2;
         for(Module module : modules) {
             font.drawStringWithShadow(module.getName(), sr.getScaledWidth() - font.getWidth(module.getName()) - 12, 10 + i, -1);
-            i += font.getHeight(module.getName()) + 5;
+            i += font.getHeight(module.getName()) + 2;
         }
     }
 
