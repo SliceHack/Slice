@@ -1,21 +1,20 @@
 package slice.gui.main;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.GlStateManager;
 import slice.Slice;
 import slice.font.TTFFontRenderer;
 
 import java.awt.*;
+import java.io.IOException;
 
 public class MainMenu extends GuiScreen {
 
     public void initGui() {
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-        this.buttonList.add(new MainButton(0, 450, 400, "Singleplayer"));
-        this.buttonList.add(new MainButton(1, 450, 100, "Multiplayer"));
+        this.buttonList.add(new MainButton(0, 450, 400, "Singleplayer", () -> mc.displayGuiScreen(new GuiSelectWorld(this))));
+        this.buttonList.add(new MainButton(1, 450, 100, "Multiplayer", () -> mc.displayGuiScreen(new GuiMultiplayer(this))));
         super.initGui();
     }
 
@@ -30,6 +29,17 @@ public class MainMenu extends GuiScreen {
         GlStateManager.popMatrix();
 
         this.buttonList.forEach(button -> button.drawButton(Minecraft.getMinecraft(), mouseX, mouseY));
+    }
+
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+        this.buttonList.forEach(button -> {
+            if(button instanceof MainButton) {
+                MainButton b = (MainButton) button;
+                if(b.x <= mouseX && b.x + b.width >= mouseX && b.getY() <= mouseY && b.y + b.height >= mouseY) {
+                    b.click();
+                }
+            }
+        });
     }
 
     private void drawBackground() {

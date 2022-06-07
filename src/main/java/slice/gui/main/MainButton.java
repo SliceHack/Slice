@@ -1,5 +1,7 @@
 package slice.gui.main;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.ScaledResolution;
@@ -10,14 +12,20 @@ import slice.util.RenderUtil;
 
 import java.awt.*;
 
+@Getter @Setter
 public class MainButton extends GuiButton {
 
-    public MainButton(int buttonId, int x, int y, String buttonText) {
+    public int x, y;
+    private Runnable action;
+
+    public MainButton(int buttonId, int x, int y, String buttonText, Runnable action) {
         super(buttonId, x, y, buttonText);
+        this.action = action;
     }
 
-    public MainButton(int buttonId, int x, int y, int width, int height, String buttonText) {
+    public MainButton(int buttonId, int x, int y, int width, int height, String buttonText, Runnable action) {
         super(buttonId, x, y, width, height, buttonText);
+        this.action = action;
     }
 
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
@@ -42,6 +50,11 @@ public class MainButton extends GuiButton {
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", (int)fontHeight);
         RenderUtil.drawRoundedRect(xPosition, yPosition, xPosition + this.width, yPosition + this.height, radius, -1);
         font.drawCenteredString(this.displayString, xPosition + (this.width / 2f),yPosition + (this.height / 2f) - (fontHeight / 2) + 6, new Color(60, 60, 60).getRGB());
+        x = xPosition;
+        y = yPosition;
+    }
 
+    public void click() {
+        action.run();
     }
 }
