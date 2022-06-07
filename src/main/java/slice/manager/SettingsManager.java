@@ -13,6 +13,7 @@ public class SettingsManager {
     public SettingsManager(ModuleManager moduleManager) {
         moduleManager.getModules().forEach((module) -> {
             Field[] fields = module.getClass().getDeclaredFields();
+
             for(Field field : fields) {
                 if(field.getType().getSuperclass().equals(Setting.class)) {
                     try {
