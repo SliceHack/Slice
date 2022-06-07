@@ -1,7 +1,6 @@
 package slice.util.account;
 
 import com.mojang.authlib.Agent;
-import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthResult;
