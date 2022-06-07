@@ -24,10 +24,8 @@ public class HUD {
         TTFFontRenderer font2 = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 25);
         TTFFontRenderer font3 = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 15);
 
-        if(Minecraft.getMinecraft().gameSettings.showDebugProfilerChart) {
-            GlStateManager.pushMatrix();
+        if(Minecraft.getMinecraft().gameSettings.showDebugProfilerChart)
             return;
-        }
 
         // title
         font.drawStringWithShadow("Slice", 10, 10, -1);
