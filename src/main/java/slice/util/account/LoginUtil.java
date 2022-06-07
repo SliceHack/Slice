@@ -14,7 +14,7 @@ import slice.util.account.microsoft.MicrosoftAccount;
 import java.net.Proxy;
 
 /**
- * Account Logger utility class
+ * Utility class to log in to accounts
  *
  * @author Nick
  * */
