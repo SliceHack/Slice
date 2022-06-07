@@ -3,6 +3,7 @@ package slice;
 import lombok.Getter;
 import slice.event.Event;
 import slice.event.events.EventKey;
+import slice.font.FontManager;
 import slice.manager.ModuleManager;
 import slice.module.Module;
 
@@ -19,9 +20,11 @@ public enum Slice {
 
     /* managers */
     private final ModuleManager moduleManager;
+    private final FontManager fontManager;
 
     Slice() {
         moduleManager = new ModuleManager();
+        fontManager = new FontManager();
     }
 
     public void onEvent(Event event) {
