@@ -12,19 +12,18 @@ import java.awt.*;
 
 public class MainMenu extends GuiScreen {
 
-    int fontHeight = 70;
-
     public void initGui() {
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-        this.buttonList.add(new MainButton(0, 0, 0, "Test"));
+        this.buttonList.add(new MainButton(0, 450, 400, "Singleplayer"));
+        this.buttonList.add(new MainButton(1, 450, 100, "Multiplayer"));
         super.initGui();
     }
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        this.drawBackground();
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
+        int fontHeight = sr.getScaledHeight() / 3;
+        this.drawBackground();
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Thin", fontHeight);
-
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
         font.drawCenteredString("Slice", (sr.getScaledWidth() / 2f)-2, 25, -1);

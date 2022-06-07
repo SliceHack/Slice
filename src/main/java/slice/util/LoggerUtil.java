@@ -3,6 +3,8 @@ package slice.util;
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
+import org.apache.logging.log4j.LogManager;
+
 import java.util.logging.Logger;
 
 
@@ -31,7 +33,7 @@ public class LoggerUtil {
      * @param message The message to log.
      */
     public static void addTerminalMessage(String message) {
-        Logger.getLogger("Slice").info(message);
+        LogManager.getLogger("Slice").info(message);
     }
 
 }
