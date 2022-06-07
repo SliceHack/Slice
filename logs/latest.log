@@ -1,1064 +1,164 @@
-[18:27:09] [Client thread/INFO]: Setting user: SliceAccount421
-[18:27:09] [Client thread/INFO]: (Session ID is token:0:SliceAccount421)
-[18:27:10] [Client thread/INFO]: [OptiFine] *** Reflector Forge ***
-[18:27:10] [Client thread/INFO]: [OptiFine] *** Reflector Vanilla ***
-[18:27:10] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.common.eventhandler.Event$Result
-[18:27:10] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraft.launchwrapper.Launch
-[18:27:10] [Client thread/INFO]: LWJGL Version: 2.9.4
-[18:27:10] [Client thread/INFO]: [OptiFine] 
-[18:27:10] [Client thread/INFO]: [OptiFine] OptiFine_1.8.9_HD_U_M5
-[18:27:10] [Client thread/INFO]: [OptiFine] Build: null
-[18:27:10] [Client thread/INFO]: [OptiFine] OS: Windows 10 (amd64) version 10.0
-[18:27:10] [Client thread/INFO]: [OptiFine] Java: 1.8.0_332, Azul Systems, Inc.
-[18:27:10] [Client thread/INFO]: [OptiFine] VM: OpenJDK 64-Bit Server VM (mixed mode), Azul Systems, Inc.
-[18:27:10] [Client thread/INFO]: [OptiFine] LWJGL: 2.9.4
-[18:27:10] [Client thread/INFO]: [OptiFine] OpenGL: NVIDIA GeForce RTX 3050/PCIe/SSE2, version 4.6.0 NVIDIA 512.59, NVIDIA Corporation
-[18:27:10] [Client thread/INFO]: [OptiFine] OpenGL Version: 4.6.0
-[18:27:10] [Client thread/INFO]: [OptiFine] Maximum texture size: 32768x32768
-[18:27:10] [VersionCheck/INFO]: [OptiFine] Checking for new version
-[18:27:10] [Client thread/INFO]: [Shaders] OpenGL Version: 4.6.0 NVIDIA 512.59
-[18:27:10] [Client thread/INFO]: [Shaders] Vendor:  NVIDIA Corporation
-[18:27:10] [Client thread/INFO]: [Shaders] Renderer: NVIDIA GeForce RTX 3050/PCIe/SSE2
-[18:27:10] [Client thread/INFO]: [Shaders] Capabilities:  2.0  2.1  3.0  3.2  4.0 
-[18:27:10] [Client thread/INFO]: [Shaders] GL_MAX_DRAW_BUFFERS: 8
-[18:27:10] [Client thread/INFO]: [Shaders] GL_MAX_COLOR_ATTACHMENTS_EXT: 8
-[18:27:10] [Client thread/INFO]: [Shaders] GL_MAX_TEXTURE_IMAGE_UNITS: 32
-[18:27:10] [Client thread/INFO]: [Shaders] Load shaders configuration.
-[18:27:10] [Client thread/INFO]: [Shaders] Save shaders configuration.
-[18:27:10] [Client thread/INFO]: [Shaders] No shaderpack loaded.
-[18:27:10] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.common.Loader
-[18:27:10] [VersionCheck/INFO]: [OptiFine] Version found: M5
-[18:27:11] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.client.SplashProgress
-[18:27:11] [Client thread/INFO]: Reloading ResourceManager: Default, butterfly_mixpack.zip
-[18:27:11] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: optifine.OptiFineClassTransformer
-[18:27:11] [Client thread/INFO]: [OptiFine] *** Reloading textures ***
-[18:27:11] [Client thread/INFO]: [OptiFine] Resource packs: butterfly_mixpack.zip
-[18:27:11] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.model.Attributes
-[18:27:11] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.client.renderer.vertex.VertexFormatElement$EnumUsage.preDraw
-[18:27:11] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.client.renderer.vertex.VertexFormatElement$EnumUsage.postDraw
-[18:27:11] [Sound Library Loader/INFO]: Starting up SoundSystem...
-[18:27:11] [Thread-6/INFO]: Initializing LWJGL OpenAL
-[18:27:11] [Thread-6/INFO]: (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
-[18:27:11] [Thread-6/INFO]: OpenAL initialized.
-[18:27:11] [Sound Library Loader/INFO]: Sound engine started
-[18:27:12] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.ForgeHooksClient
-[18:27:12] [Client thread/INFO]: [OptiFine] Mipmap levels: 4
-[18:27:12] [Client thread/INFO]: [OptiFine] Multitexture: false
-[18:27:12] [Client thread/INFO]: [OptiFine] ConnectedTextures: mcpatcher/ctm/glass/glass.properties
-[18:27:13] [Client thread/INFO]: [OptiFine] Multipass connected textures: false
-[18:27:13] [Client thread/INFO]: [OptiFine] Multipass connected textures: false
-[18:27:13] [Client thread/INFO]: [OptiFine] BetterGrass: Parsing default configuration optifine/bettergrass.properties
-[18:27:13] [Client thread/INFO]: [OptiFine] Scaled non power of 2: minecraft:items/ender_pearl, 55 -> 64
-[18:27:13] [Client thread/INFO]: [OptiFine] Scaled too small texture: minecraft:blocks/slime, 8 -> 16
-[18:27:13] [Client thread/INFO]: Created: 1024x512 textures-atlas
-[18:27:13] [Client thread/INFO]: [OptiFine] Animated sprites: 18
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.model.ModelLoader
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.ItemModelMesherForge
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.client.registry.RenderingRegistry
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.ForgeModContainer
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: mods.betterfoliage.client.BetterFoliageClient
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.common.asm.transformers.BlamingTransformer
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.event.world.ChunkWatchEvent$UnWatch
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.relauncher.CoreModManager
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.DimensionManager
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.GuiScreenEvent$DrawScreenEvent$Pre
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.GuiScreenEvent$DrawScreenEvent$Post
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.EntityViewRenderEvent$CameraSetup
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.EntityViewRenderEvent$FogColors
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.common.eventhandler.Event
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.common.eventhandler.EventBus
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.property.ExtendedBlockState
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.client.FMLClientHandler
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.common.FMLCommonHandler
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.world.biome.BiomeGenBase.getWaterColorMultiplier
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.addDestroyEffects
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.addHitEffects
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.canCreatureSpawn
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.canRenderInLayer
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.doesSideBlockRendering
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.getBedDirection
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.getExtendedState
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.getLightOpacity
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.getLightValue
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.hasTileEntity
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.isAir
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.isBed
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.isBedFoot
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.isSideSolid
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.world.ChunkCache.isSideSolid
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.entity.Entity.canRiderInteract
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Field not present: net.minecraft.entity.Entity.captureDrops
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Field not present: net.minecraft.entity.Entity.capturedDrops
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.entity.Entity.shouldRenderInPass
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.entity.Entity.shouldRiderSit
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.event.ForgeEventFactory
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.ForgeHooks
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Field not present: net.minecraft.item.Item.delegate
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.item.Item.getDurabilityForDisplay
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.item.Item.getModel
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.item.Item.onEntitySwing
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.item.Item.shouldCauseReequipAnimation
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.item.Item.showDurabilityBar
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.potion.PotionEffect.isCurativeItem
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.tileentity.TileEntity.canRenderBreaking
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.tileentity.TileEntity.getRenderBoundingBox
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.tileentity.TileEntity.hasFastRenderer
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.tileentity.TileEntity.shouldRenderInPass
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.world.World.countEntities
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.world.World.getPerWorldStorage
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.world.WorldProvider.getCloudRenderer
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.world.WorldProvider.getSkyRenderer
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.world.WorldProvider.getWeatherRenderer
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.world.WorldProvider.getSaveFolder
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.client.GuiModList
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.model.IColoredBakedQuad
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.property.IExtendedBlockState
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.model.IModel
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.IRenderHandler
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.model.pipeline.LightUtil
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.MinecraftForge
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.MinecraftForgeClient
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.common.ModContainer
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.model.ModelLoader$VanillaLoader
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.RenderBlockOverlayEvent$OverlayType
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.RenderItemInFrameEvent
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.RenderLivingEvent$Pre
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.RenderLivingEvent$Post
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.RenderLivingEvent$Specials$Pre
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.RenderLivingEvent$Specials$Post
-[18:27:13] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.event.world.WorldEvent$Load
-[18:27:14] [Client thread/INFO]: [OptiFine] *** Reloading custom textures ***
-[18:27:14] [Client thread/INFO]: [OptiFine] CustomColors: Colormap mcpatcher/colormap/pine.png
-[18:27:14] [Client thread/INFO]: [OptiFine] CustomColors: Colormap mcpatcher/colormap/birch.png
-[18:27:14] [Client thread/INFO]: [OptiFine] CustomColors: Colormap mcpatcher/colormap/swampgrass.png
-[18:27:14] [Client thread/INFO]: [OptiFine] CustomColors: Colormap mcpatcher/colormap/swampfoliage.png
-[18:27:14] [Client thread/INFO]: [OptiFine] CustomColors: Colormap mcpatcher/colormap/sky0.png
-[18:27:14] [Client thread/INFO]: [OptiFine] CustomColors: Colormap mcpatcher/colormap/fog0.png
-[18:27:14] [Client thread/INFO]: [OptiFine] CustomColors: Colormap mcpatcher/colormap/underwater.png
-[18:27:14] [Client thread/INFO]: [OptiFine] CustomColors: Colormap mcpatcher/colormap/redstone.png
-[18:27:14] [Client thread/INFO]: [OptiFine] CustomColors: Non-standard palette size: 1x16, should be: 16x1, path: mcpatcher/colormap/redstone.png
-[18:27:14] [Client thread/INFO]: [OptiFine] CustomColors: Colormap mcpatcher/lightmap/world0.png
-[18:27:14] [Client thread/INFO]: [OptiFine] CustomColors: Loading mcpatcher/color.properties
-[18:27:14] [Client thread/INFO]: [OptiFine] CustomColors: lilypad = 6aef3f
-[18:27:14] [Client thread/INFO]: [OptiFine] CustomColors: sky.end = FFFFFF
-[18:27:14] [Client thread/INFO]: [OptiFine] CustomSky properties: mcpatcher/sky/world0/sky1.properties
-[18:27:14] [Client thread/INFO]: [OptiFine] CustomSky properties: mcpatcher/sky/world0/sky2.properties
-[18:27:14] [Client thread/INFO]: [OptiFine] CustomSky properties: mcpatcher/sky/world0/sky3.properties
-[18:27:14] [Client thread/INFO]: [OptiFine] CustomSky properties: mcpatcher/sky/world0/sky4.properties
-[18:27:15] [Client thread/INFO]: [OptiFine] CustomSky properties: mcpatcher/sky/world0/sky5.properties
-[18:27:15] [Client thread/INFO]: [OptiFine] CustomSky: Texture not found: minecraft:mcpatcher/sky/world0/starfield02.png
-[18:27:15] [Client thread/INFO]: [OptiFine] CustomSky properties: mcpatcher/sky/world0/sky6.properties
-[18:27:15] [Client thread/INFO]: [OptiFine] CustomSky properties: mcpatcher/sky/world0/sky7.properties
-[18:27:15] [Client thread/INFO]: [OptiFine] CustomSky properties: mcpatcher/sky/world0/sky8.properties
-[18:27:15] [Client thread/INFO]: [OptiFine] Enable face culling: acacia_leaves, birch_leaves, dark_oak_leaves, jungle_leaves, oak_leaves, spruce_leaves
-[18:27:45] [Client thread/INFO]: Connecting to _dc-srv.35583ea59f7e._minecraft._tcp.blocksmc.com., 25565
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:46] [Client thread/INFO]: [CHAT] 
-[18:27:47] [Client thread/INFO]: [CHAT] 
-[18:27:47] [Client thread/INFO]: [CHAT] 
-[18:27:47] [Client thread/INFO]: [CHAT] 
-[18:27:47] [Client thread/INFO]: [CHAT] 
-[18:27:47] [Client thread/INFO]: [CHAT] 
-[18:27:47] [Client thread/INFO]: [CHAT] 
-[18:27:47] [Client thread/INFO]: [CHAT] 
-[18:27:47] [Client thread/INFO]: [CHAT] 
-[18:27:47] [Client thread/INFO]: [CHAT] 
-[18:27:47] [Client thread/INFO]: [CHAT] 
-[18:27:47] [Client thread/INFO]: [CHAT] 
-[18:27:47] [Client thread/INFO]: [CHAT] 
-[18:27:47] [Client thread/INFO]: [CHAT] 
-[18:27:47] [Client thread/INFO]: [CHAT] 
-[18:27:47] [Client thread/INFO]: [CHAT] 
-[18:27:47] [Client thread/INFO]: [CHAT] /register <password> <password>
-[18:27:52] [Client thread/INFO]: [CHAT] Successful Register.
-[18:27:52] [Client thread/INFO]: [CHAT] ┃ BlocksMC ┃ If you have a premium minecraft account you may join through:
-[18:27:52] [Client thread/INFO]: [CHAT] ┃ BlocksMC ┃ PREMIUM.BLOCKSMC.COM
-[18:27:53] [Client thread/INFO]: [CHAT] 
-[18:27:53] [Client thread/INFO]: [CHAT] 
-[18:27:53] [Client thread/INFO]: [CHAT]                         Welcome to BlocksMC
-[18:27:53] [Client thread/INFO]: [CHAT]                We have 1156 players at our network
-[18:27:53] [Client thread/INFO]: [CHAT] 
-[18:27:53] [Client thread/INFO]: [CHAT]                          Check out these links:
-[18:27:53] [Client thread/INFO]: [CHAT]      Website - Rules - Store - Support - Discord
-[18:27:53] [Client thread/INFO]: [CHAT] 
-[18:27:53] [Client thread/INFO]: [CHAT]                                Have Fun ❤
-[18:27:53] [Client thread/INFO]: [CHAT] 
-[18:27:53] [Client thread/INFO]: [CHAT]                                      
-[18:27:55] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:27:55] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:27:56] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:27:58] [Chunk Batcher 8/WARN]: Needed to grow BufferBuilder buffer: Old size 524288 bytes, new size 2621440 bytes.
-[18:27:58] [Chunk Batcher 2/WARN]: Needed to grow BufferBuilder buffer: Old size 524288 bytes, new size 2621440 bytes.
-[18:27:59] [Chunk Batcher 5/WARN]: Needed to grow BufferBuilder buffer: Old size 524288 bytes, new size 2621440 bytes.
-[18:27:59] [Chunk Batcher 6/WARN]: Needed to grow BufferBuilder buffer: Old size 524288 bytes, new size 2621440 bytes.
-[18:27:59] [Chunk Batcher 3/WARN]: Needed to grow BufferBuilder buffer: Old size 524288 bytes, new size 2621440 bytes.
-[18:28:00] [Chunk Batcher 7/WARN]: Needed to grow BufferBuilder buffer: Old size 524288 bytes, new size 2621440 bytes.
-[18:28:00] [Client thread/INFO]: [CHAT] §cSlice §7» Enabled §aSpeed
-[18:28:00] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:01] [Client thread/INFO]: [CHAT] §8[§e✦§8] Visit our website at https://blocksmc.com
-[18:28:01] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:01] [Client thread/INFO]: [CHAT] §cSlice §7» Disabled §cSpeed
-[18:28:02] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:02] [Chunk Batcher 5/WARN]: Needed to grow BufferBuilder buffer: Old size 524288 bytes, new size 2621440 bytes.
-[18:28:02] [Chunk Batcher 0/WARN]: Needed to grow BufferBuilder buffer: Old size 524288 bytes, new size 2621440 bytes.
-[18:28:02] [Chunk Batcher 1/WARN]: Needed to grow BufferBuilder buffer: Old size 524288 bytes, new size 2621440 bytes.
-[18:28:02] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:03] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:04] [Client thread/INFO]: [CHAT] §cSlice §7» Enabled §aFly
-[18:28:04] [Client thread/INFO]: [CHAT] §cSlice §7» Disabled §cFly
-[18:28:04] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:05] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:05] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:06] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:06] [Chunk Batcher 9/WARN]: Needed to grow BufferBuilder buffer: Old size 524288 bytes, new size 2621440 bytes.
-[18:28:06] [Chunk Batcher 4/WARN]: Needed to grow BufferBuilder buffer: Old size 524288 bytes, new size 2621440 bytes.
-[18:28:07] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:07] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:07] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:07] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:08] [Chunk Batcher 2/WARN]: Needed to grow BufferBuilder buffer: Old size 524288 bytes, new size 2621440 bytes.
-[18:28:09] [Chunk Batcher 5/WARN]: Needed to grow BufferBuilder buffer: Old size 524288 bytes, new size 2621440 bytes.
-[18:28:10] [Chunk Batcher 7/WARN]: Needed to grow BufferBuilder buffer: Old size 524288 bytes, new size 2621440 bytes.
-[18:28:10] [Chunk Batcher 3/WARN]: Needed to grow BufferBuilder buffer: Old size 524288 bytes, new size 2621440 bytes.
-[18:28:13] [Chunk Batcher 5/WARN]: Needed to grow BufferBuilder buffer: Old size 524288 bytes, new size 2621440 bytes.
-[18:28:13] [Chunk Batcher 9/WARN]: Needed to grow BufferBuilder buffer: Old size 524288 bytes, new size 2621440 bytes.
-[18:28:16] [Chunk Batcher 5/WARN]: Needed to grow BufferBuilder buffer: Old size 524288 bytes, new size 2621440 bytes.
-[18:28:16] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:17] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:19] [Client thread/INFO]: [CHAT] 09 ▏ huansoos » xFahad_
-[18:28:27] [Chunk Batcher 8/WARN]: Needed to grow BufferBuilder buffer: Old size 524288 bytes, new size 2621440 bytes.
-[18:28:27] [Chunk Batcher 2/WARN]: Needed to grow BufferBuilder buffer: Old size 524288 bytes, new size 2621440 bytes.
-[18:28:27] [Chunk Batcher 3/WARN]: Needed to grow BufferBuilder buffer: Old size 524288 bytes, new size 2621440 bytes.
-[18:28:27] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:28] [Client thread/INFO]: [CHAT] BW ▏ mirou55 » ok
-[18:28:28] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:29] [Client thread/INFO]: [CHAT]                                      
-[18:28:30] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:30] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:32] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:32] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:36] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:36] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:38] [Client thread/INFO]: [CHAT] ┃ BlocksMC ┃ You don't have any party.
-[18:28:41] [Client thread/INFO]: [CHAT] Unknown command. Type "/help" for help.
-[18:28:43] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:43] [Client thread/INFO]: [CHAT] Unknown command. Type "/help" for help.
-[18:28:43] [Client thread/INFO]: [CHAT] BW ▏ lamis_bedwars » ok
-[18:28:44] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:46] [Client thread/INFO]: [CHAT] DU ▏ meissa » ree
-[18:28:47] [Client thread/INFO]: [CHAT] BW ▏ mirou55 » bye
-[18:28:48] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:51] [Client thread/INFO]: [CHAT] SliceAccount421 has joined the server.
-[18:28:52] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:28:52] [Client thread/INFO]: [CHAT] AWS__ has joined the server.
-[18:28:53] [Client thread/INFO]: [CHAT] §cSlice §7» Enabled §aFly
-[18:28:54] [Client thread/INFO]: [CHAT] §cSlice §7» Disabled §cFly
-[18:28:58] [Client thread/INFO]: [CHAT] §cSlice §7» Enabled §aFly
-[18:28:58] [Client thread/INFO]: [CHAT] §cSlice §7» Disabled §cFly
-[18:29:00] [Client thread/INFO]: [CHAT] §cSlice §7» Enabled §aSpeed
-[18:29:01] [Client thread/INFO]: [CHAT] §8[§e✦§8] Join our discord at https://blocksmc.com/discord
-[18:29:01] [Client thread/INFO]: [CHAT] §cSlice §7» Disabled §cSpeed
-[18:29:04] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:29:04] [Client thread/INFO]: [CHAT] ZeKlan has joined the server.
-[18:29:05] [Client thread/INFO]: [CHAT] ▏ BedWars Solo ▏ Timer has been shortened to 30 seconds.
-[18:29:05] [Client thread/INFO]: [CHAT] ▏ BedWars Solo ▏ Map: Playground
-[18:29:05] [Client thread/INFO]: [CHAT] ▏ BedWars Solo ▏ Time remaining: 30 seconds.
-[18:29:05] [Client thread/INFO]: [CHAT] ▏ BedWars Solo ▏ Players waiting: 4
-[18:29:06] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:29:06] [Client thread/INFO]: [CHAT] lamis_bedwars has joined the server.
-[18:29:07] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:29:07] [Client thread/INFO]: [CHAT] cpae has joined the server.
-[18:29:08] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:29:08] [Client thread/INFO]: [CHAT] EpicoGamer has joined the server.
-[18:29:09] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:29:09] [Client thread/INFO]: [CHAT] Abo_adnan has joined the server.
-[18:29:11] [Client thread/INFO]: [CHAT] §cSlice §7» Enabled §aSpeed
-[18:29:11] [Client thread/INFO]: [CHAT] §cSlice §7» Disabled §cSpeed
-[18:29:12] [Client thread/INFO]: [CHAT] §cSlice §7» Enabled §aSpeed
-[18:29:12] [Client thread/INFO]: [CHAT] §cSlice §7» Disabled §cSpeed
-[18:29:14] [Client thread/INFO]: [CHAT] §cSlice §7» Enabled §aSpeed
-[18:29:14] [Client thread/INFO]: [CHAT] §cSlice §7» Disabled §cSpeed
-[18:29:15] [Client thread/INFO]: [CHAT] ▏ BedWars Solo ▏ Warmup started. You will be teleported in the next 10 seconds.
-[18:29:15] [Client thread/INFO]: [CHAT] §cSlice §7» Enabled §aSpeed
-[18:29:20] [Client thread/INFO]: [CHAT] §cSlice §7» Disabled §cSpeed
-[18:29:20] [Client thread/INFO]: [CHAT] §cSlice §7» Enabled §aFly
-[18:29:21] [Client thread/INFO]: [CHAT] §cSlice §7» Disabled §cFly
-[18:29:21] [Client thread/INFO]: [CHAT] §cSlice §7» Enabled §aFly
-[18:29:22] [Client thread/INFO]: [CHAT] §cSlice §7» Disabled §cFly
-[18:29:24] [Client thread/INFO]: [CHAT] ▏ BedWars Solo ▏ You are now playing on the Cyan Team!
-[18:29:26] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:29:26] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:29:26] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:29:26] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:29:26] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:29:26] [Client thread/FATAL]: Error executing task
-java.util.concurrent.ExecutionException: java.lang.NullPointerException
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:20) [Slice/:?]
-	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1113) [Slice/:?]
-	at net.minecraft.client.Minecraft.run(Minecraft.java:429) [Slice/:?]
-	at net.minecraft.client.main.Main.main(Main.java:113) [Slice/:?]
-	at Start.main(Start.java:8) [Slice/:?]
-Caused by: java.lang.NullPointerException
-	at net.minecraft.client.network.NetHandlerPlayClient.handleSpawnPlayer(NetHandlerPlayClient.java:539) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:83) ~[Slice/:?]
-	at net.minecraft.network.play.server.S0CPacketSpawnPlayer.processPacket(S0CPacketSpawnPlayer.java:15) ~[Slice/:?]
-	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:22) ~[Slice/:?]
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_332]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[?:1.8.0_332]
-	at net.minecraft.util.Util.runTask(Util.java:19) ~[Slice/:?]
-	... 4 more
-[18:29:29] [Client thread/INFO]: [CHAT] §cSlice §7» Enabled §aFly
-[18:29:29] [Client thread/INFO]: [CHAT] §cSlice §7» Disabled §cFly
-[18:29:29] [Client thread/INFO]: [CHAT] §cSlice §7» Enabled §aFly
-[18:29:30] [Client thread/INFO]: [CHAT] lamis_bedwars » yp
-[18:29:36] [Client thread/INFO]: Connecting to _dc-srv.35583ea59f7e._minecraft._tcp.blocksmc.com., 25565
-[18:29:43] [Server thread/INFO]: Starting integrated minecraft server version 1.9
-[18:29:43] [Server thread/INFO]: Generating keypair
-[18:29:43] [Server thread/INFO]: Preparing start region for level 0
-[18:29:43] [Server thread/INFO]: Changing view distance to 8, from 10
-[18:29:43] [Server thread/INFO]: SliceAccount421[local:E:67038cc1] logged in with entity id 4084 at (-724.4819910372203, 79.0, -360.30000001192093)
-[18:29:43] [Server thread/INFO]: SliceAccount421 joined the game
-[18:29:44] [Client thread/INFO]: [CHAT] §cSlice §7» Disabled §cFly
-[18:29:48] [Client thread/INFO]: [CHAT] §cSlice §7» Enabled §aSpeed
-[18:30:13] [Client thread/INFO]: [CHAT] §cSlice §7» Disabled §cSpeed
-[18:30:13] [Client thread/INFO]: [CHAT] §cSlice §7» Enabled §aSpeed
-[18:30:14] [Client thread/INFO]: [CHAT] §cSlice §7» Enabled §aFly
-[18:30:14] [Client thread/INFO]: [CHAT] §cSlice §7» Disabled §cFly
-[18:30:16] [Client thread/INFO]: [CHAT] §cSlice §7» Disabled §cSpeed
-[18:31:56] [Server thread/INFO]: SliceAccount421 has just earned the achievement [Taking Inventory]
-[18:31:56] [Client thread/INFO]: [CHAT] SliceAccount421 has just earned the achievement [Taking Inventory]
-[18:35:14] [Client thread/INFO]: [CHAT] §cSlice §7» Enabled §aFly
-[18:35:14] [Client thread/INFO]: [CHAT] §cSlice §7» Disabled §cFly
-[18:35:15] [Client thread/INFO]: [CHAT] §cSlice §7» Enabled §aFly
-[18:35:16] [Client thread/INFO]: [CHAT] §cSlice §7» Disabled §cFly
-[18:35:18] [Client thread/INFO]: [CHAT] §cSlice §7» Enabled §aSpeed
-[18:37:08] [Client thread/INFO]: [CHAT] §cSlice §7» Enabled §aFly
-[18:37:09] [Client thread/INFO]: [CHAT] §cSlice §7» Disabled §cFly
-[18:37:13] [Client thread/INFO]: [CHAT] §cSlice §7» Disabled §cSpeed
-[18:37:14] [Client thread/INFO]: [CHAT] §cSlice §7» Enabled §aSpeed
-[18:37:17] [Server thread/INFO]: Saving and pausing game...
-[18:37:17] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
-[18:37:17] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
-[18:37:17] [Server thread/INFO]: Saving chunks for level 'New World'/The End
-[18:37:18] [Server thread/INFO]: Stopping server
-[18:37:18] [Server thread/INFO]: Saving players
-[18:37:18] [Server thread/INFO]: Saving worlds
-[18:37:18] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
-[18:37:18] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
-[18:37:18] [Server thread/INFO]: Saving chunks for level 'New World'/The End
+[18:58:15] [Client thread/INFO]: Setting user: SliceAccount218
+[18:58:15] [Client thread/INFO]: (Session ID is token:0:SliceAccount218)
+[18:58:16] [Client thread/INFO]: [OptiFine] *** Reflector Forge ***
+[18:58:16] [Client thread/INFO]: [OptiFine] *** Reflector Vanilla ***
+[18:58:16] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.common.eventhandler.Event$Result
+[18:58:16] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraft.launchwrapper.Launch
+[18:58:16] [Client thread/INFO]: LWJGL Version: 2.9.4
+[18:58:17] [Client thread/INFO]: [OptiFine] 
+[18:58:17] [Client thread/INFO]: [OptiFine] OptiFine_1.8.9_HD_U_M5
+[18:58:17] [Client thread/INFO]: [OptiFine] Build: null
+[18:58:17] [Client thread/INFO]: [OptiFine] OS: Windows 10 (amd64) version 10.0
+[18:58:17] [Client thread/INFO]: [OptiFine] Java: 1.8.0_332, Azul Systems, Inc.
+[18:58:17] [Client thread/INFO]: [OptiFine] VM: OpenJDK 64-Bit Server VM (mixed mode), Azul Systems, Inc.
+[18:58:17] [Client thread/INFO]: [OptiFine] LWJGL: 2.9.4
+[18:58:17] [Client thread/INFO]: [OptiFine] OpenGL: NVIDIA GeForce RTX 3050/PCIe/SSE2, version 4.6.0 NVIDIA 512.59, NVIDIA Corporation
+[18:58:17] [Client thread/INFO]: [OptiFine] OpenGL Version: 4.6.0
+[18:58:17] [Client thread/INFO]: [OptiFine] Maximum texture size: 32768x32768
+[18:58:17] [VersionCheck/INFO]: [OptiFine] Checking for new version
+[18:58:17] [Client thread/INFO]: [Shaders] OpenGL Version: 4.6.0 NVIDIA 512.59
+[18:58:17] [Client thread/INFO]: [Shaders] Vendor:  NVIDIA Corporation
+[18:58:17] [Client thread/INFO]: [Shaders] Renderer: NVIDIA GeForce RTX 3050/PCIe/SSE2
+[18:58:17] [Client thread/INFO]: [Shaders] Capabilities:  2.0  2.1  3.0  3.2  4.0 
+[18:58:17] [Client thread/INFO]: [Shaders] GL_MAX_DRAW_BUFFERS: 8
+[18:58:17] [Client thread/INFO]: [Shaders] GL_MAX_COLOR_ATTACHMENTS_EXT: 8
+[18:58:17] [Client thread/INFO]: [Shaders] GL_MAX_TEXTURE_IMAGE_UNITS: 32
+[18:58:17] [Client thread/INFO]: [Shaders] Load shaders configuration.
+[18:58:17] [Client thread/INFO]: [Shaders] Save shaders configuration.
+[18:58:17] [Client thread/INFO]: [Shaders] No shaderpack loaded.
+[18:58:17] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.common.Loader
+[18:58:17] [VersionCheck/INFO]: [OptiFine] Version found: M5
+[18:58:17] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.client.SplashProgress
+[18:58:17] [Client thread/INFO]: Reloading ResourceManager: Default, butterfly_mixpack.zip
+[18:58:17] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: optifine.OptiFineClassTransformer
+[18:58:17] [Client thread/INFO]: [OptiFine] *** Reloading textures ***
+[18:58:17] [Client thread/INFO]: [OptiFine] Resource packs: butterfly_mixpack.zip
+[18:58:17] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.model.Attributes
+[18:58:17] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.client.renderer.vertex.VertexFormatElement$EnumUsage.preDraw
+[18:58:17] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.client.renderer.vertex.VertexFormatElement$EnumUsage.postDraw
+[18:58:17] [Sound Library Loader/INFO]: Starting up SoundSystem...
+[18:58:17] [Thread-6/INFO]: Initializing LWJGL OpenAL
+[18:58:17] [Thread-6/INFO]: (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
+[18:58:17] [Thread-6/INFO]: OpenAL initialized.
+[18:58:18] [Sound Library Loader/INFO]: Sound engine started
+[18:58:18] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.ForgeHooksClient
+[18:58:18] [Client thread/INFO]: [OptiFine] Mipmap levels: 4
+[18:58:18] [Client thread/INFO]: [OptiFine] Multitexture: false
+[18:58:18] [Client thread/INFO]: [OptiFine] ConnectedTextures: mcpatcher/ctm/glass/glass.properties
+[18:58:18] [Client thread/INFO]: [OptiFine] Multipass connected textures: false
+[18:58:18] [Client thread/INFO]: [OptiFine] Multipass connected textures: false
+[18:58:18] [Client thread/INFO]: [OptiFine] BetterGrass: Parsing default configuration optifine/bettergrass.properties
+[18:58:19] [Client thread/INFO]: [OptiFine] Scaled non power of 2: minecraft:items/ender_pearl, 55 -> 64
+[18:58:19] [Client thread/INFO]: [OptiFine] Scaled too small texture: minecraft:blocks/slime, 8 -> 16
+[18:58:19] [Client thread/INFO]: Created: 1024x512 textures-atlas
+[18:58:19] [Client thread/INFO]: [OptiFine] Animated sprites: 18
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.model.ModelLoader
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.ItemModelMesherForge
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.client.registry.RenderingRegistry
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.ForgeModContainer
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: mods.betterfoliage.client.BetterFoliageClient
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.common.asm.transformers.BlamingTransformer
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.event.world.ChunkWatchEvent$UnWatch
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.relauncher.CoreModManager
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.DimensionManager
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.GuiScreenEvent$DrawScreenEvent$Pre
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.GuiScreenEvent$DrawScreenEvent$Post
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.EntityViewRenderEvent$CameraSetup
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.EntityViewRenderEvent$FogColors
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.common.eventhandler.Event
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.common.eventhandler.EventBus
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.property.ExtendedBlockState
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.client.FMLClientHandler
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.common.FMLCommonHandler
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.world.biome.BiomeGenBase.getWaterColorMultiplier
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.addDestroyEffects
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.addHitEffects
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.canCreatureSpawn
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.canRenderInLayer
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.doesSideBlockRendering
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.getBedDirection
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.getExtendedState
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.getLightOpacity
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.getLightValue
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.hasTileEntity
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.isAir
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.isBed
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.isBedFoot
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.block.Block.isSideSolid
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.world.ChunkCache.isSideSolid
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.entity.Entity.canRiderInteract
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Field not present: net.minecraft.entity.Entity.captureDrops
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Field not present: net.minecraft.entity.Entity.capturedDrops
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.entity.Entity.shouldRenderInPass
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.entity.Entity.shouldRiderSit
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.event.ForgeEventFactory
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.ForgeHooks
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Field not present: net.minecraft.item.Item.delegate
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.item.Item.getDurabilityForDisplay
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.item.Item.getModel
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.item.Item.onEntitySwing
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.item.Item.shouldCauseReequipAnimation
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.item.Item.showDurabilityBar
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.potion.PotionEffect.isCurativeItem
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.tileentity.TileEntity.canRenderBreaking
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.tileentity.TileEntity.getRenderBoundingBox
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.tileentity.TileEntity.hasFastRenderer
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.tileentity.TileEntity.shouldRenderInPass
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.world.World.countEntities
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.world.World.getPerWorldStorage
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.world.WorldProvider.getCloudRenderer
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.world.WorldProvider.getSkyRenderer
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.world.WorldProvider.getWeatherRenderer
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.world.WorldProvider.getSaveFolder
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.client.GuiModList
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.model.IColoredBakedQuad
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.property.IExtendedBlockState
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.model.IModel
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.IRenderHandler
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.model.pipeline.LightUtil
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.MinecraftForge
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.MinecraftForgeClient
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.common.ModContainer
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.model.ModelLoader$VanillaLoader
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.RenderBlockOverlayEvent$OverlayType
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.RenderItemInFrameEvent
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.RenderLivingEvent$Pre
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.RenderLivingEvent$Post
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.RenderLivingEvent$Specials$Pre
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.RenderLivingEvent$Specials$Post
+[18:58:19] [Client thread/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.event.world.WorldEvent$Load
+[18:58:19] [Client thread/INFO]: [OptiFine] *** Reloading custom textures ***
+[18:58:19] [Client thread/INFO]: [OptiFine] CustomColors: Colormap mcpatcher/colormap/pine.png
+[18:58:19] [Client thread/INFO]: [OptiFine] CustomColors: Colormap mcpatcher/colormap/birch.png
+[18:58:19] [Client thread/INFO]: [OptiFine] CustomColors: Colormap mcpatcher/colormap/swampgrass.png
+[18:58:19] [Client thread/INFO]: [OptiFine] CustomColors: Colormap mcpatcher/colormap/swampfoliage.png
+[18:58:19] [Client thread/INFO]: [OptiFine] CustomColors: Colormap mcpatcher/colormap/sky0.png
+[18:58:20] [Client thread/INFO]: [OptiFine] CustomColors: Colormap mcpatcher/colormap/fog0.png
+[18:58:20] [Client thread/INFO]: [OptiFine] CustomColors: Colormap mcpatcher/colormap/underwater.png
+[18:58:20] [Client thread/INFO]: [OptiFine] CustomColors: Colormap mcpatcher/colormap/redstone.png
+[18:58:20] [Client thread/INFO]: [OptiFine] CustomColors: Non-standard palette size: 1x16, should be: 16x1, path: mcpatcher/colormap/redstone.png
+[18:58:20] [Client thread/INFO]: [OptiFine] CustomColors: Colormap mcpatcher/lightmap/world0.png
+[18:58:20] [Client thread/INFO]: [OptiFine] CustomColors: Loading mcpatcher/color.properties
+[18:58:20] [Client thread/INFO]: [OptiFine] CustomColors: lilypad = 6aef3f
+[18:58:20] [Client thread/INFO]: [OptiFine] CustomColors: sky.end = FFFFFF
+[18:58:20] [Client thread/INFO]: [OptiFine] CustomSky properties: mcpatcher/sky/world0/sky1.properties
+[18:58:20] [Client thread/INFO]: [OptiFine] CustomSky properties: mcpatcher/sky/world0/sky2.properties
+[18:58:20] [Client thread/INFO]: [OptiFine] CustomSky properties: mcpatcher/sky/world0/sky3.properties
+[18:58:20] [Client thread/INFO]: [OptiFine] CustomSky properties: mcpatcher/sky/world0/sky4.properties
+[18:58:20] [Client thread/INFO]: [OptiFine] CustomSky properties: mcpatcher/sky/world0/sky5.properties
+[18:58:20] [Client thread/INFO]: [OptiFine] CustomSky: Texture not found: minecraft:mcpatcher/sky/world0/starfield02.png
+[18:58:20] [Client thread/INFO]: [OptiFine] CustomSky properties: mcpatcher/sky/world0/sky6.properties
+[18:58:20] [Client thread/INFO]: [OptiFine] CustomSky properties: mcpatcher/sky/world0/sky7.properties
+[18:58:21] [Client thread/INFO]: [OptiFine] CustomSky properties: mcpatcher/sky/world0/sky8.properties
+[18:58:21] [Client thread/INFO]: [OptiFine] Enable face culling: acacia_leaves, birch_leaves, dark_oak_leaves, jungle_leaves, oak_leaves, spruce_leaves
+[18:58:24] [Server thread/INFO]: Starting integrated minecraft server version 1.9
+[18:58:24] [Server thread/INFO]: Generating keypair
+[18:58:24] [Server thread/INFO]: Preparing start region for level 0
+[18:58:25] [Server thread/INFO]: Changing view distance to 8, from 10
+[18:58:26] [Server thread/INFO]: SliceAccount218[local:E:6a23ddb3] logged in with entity id 176 at (-660.4099919073982, 64.0, 122.08306545137958)
+[18:58:26] [Server thread/INFO]: SliceAccount218 joined the game
+[18:58:26] [Server thread/INFO]: Saving and pausing game...
+[18:58:26] [Server thread/INFO]: Saving chunks for level 'New World'/Overworld
+[18:58:26] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
+[18:58:26] [Server thread/INFO]: Saving chunks for level 'New World'/The End
+[18:58:30] [Client thread/INFO]: [CHAT] §cSlice §7» Enabled §aFly

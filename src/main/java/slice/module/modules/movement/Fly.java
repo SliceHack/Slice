@@ -1,5 +1,6 @@
 package slice.module.modules.movement;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
@@ -20,6 +21,8 @@ public class Fly extends Module {
     ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla");
     NumberValue speed = new NumberValue("Speed", 3.0D, 0.1D, 6.0D, NumberValue.Type.DOUBLE);
 
+    boolean up = false;
+
     public void onEvent(Event event) {
         if(event instanceof EventUpdate) {
             switch (mode.getValue()) {
@@ -29,7 +32,8 @@ public class Fly extends Module {
                     } else if(mc.gameSettings.keyBindSprint.isKeyDown()) {
                         mc.thePlayer.motionY = -speed.getValue().doubleValue();
                     } else {
-                        mc.thePlayer.motionY = 0;
+                        mc.thePlayer.motionY = up ? 0 : 0.00001;
+                        up = !up;
                     }
                     MoveUtil.strafe(speed.getValue().doubleValue());
                     break;
