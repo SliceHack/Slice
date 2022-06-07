@@ -3,15 +3,8 @@ package slice.util;
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
-<<<<<<< HEAD
 
-import java.util.logging.LogManager;
-=======
 import org.apache.logging.log4j.LogManager;
-
->>>>>>> 55b3d6068d3308ccfdf94e6566ddb094ec7300f7
-import java.util.logging.Logger;
-
 
 /**
  * Utility class for logging messages to the minecraft chat.
