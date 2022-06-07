@@ -11,6 +11,10 @@ import net.minecraft.client.Minecraft;
 @UtilityClass
 public class RotationUtil {
 
+
+    /**
+     * Gets the direction the player is facing
+     */
     public static double getDirection() {
         float rotationYaw = Minecraft.getMinecraft().thePlayer.rotationYaw;
         float moveForward = Minecraft.getMinecraft().thePlayer.moveForward;
