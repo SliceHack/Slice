@@ -34,6 +34,5 @@ public class AltLogin extends GuiMainMenu {
     }
 
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
-        username.mouseClicked(mouseX, mouseY, mouseButton);
     }
 }
