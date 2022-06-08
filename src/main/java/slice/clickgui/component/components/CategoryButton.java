@@ -64,7 +64,7 @@ public class CategoryButton extends Component {
 
             button.setHeight((int) (font.getHeight(button.getName()) + 5));
 
-            yAdd += /*font.getHeight(button.getName())*/ buttons.get(index).getHeight() + 20;
+            yAdd += buttons.get(index).getHeight() + 20;
             index++;
         }
     }
@@ -89,10 +89,6 @@ public class CategoryButton extends Component {
         if (isHovered(mouseX, mouseY)) {
             Slice.INSTANCE.getClickGui().setCategory(parent);
             Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
-        }
-
-        if(mouseButton == 1) {
-            updateButtons();
         }
 
         if(Slice.INSTANCE.getClickGui().getCategory().equals(parent)) {

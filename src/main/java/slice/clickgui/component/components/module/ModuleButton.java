@@ -62,8 +62,9 @@ public class ModuleButton extends Component {
 
             if(mouseButton == 1) {
                 open = !open;
-            }
 
+            }
+            Slice.INSTANCE.getClickGui().getCategoryButton(module.getCategory()).updateButtons();
         }
 
     }
