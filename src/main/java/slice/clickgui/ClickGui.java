@@ -87,8 +87,8 @@ public class ClickGui extends GuiScreen {
 
     /** Update components */
     public void updateComponents() {
+        int yAdd = 0;
         for(Component component : components) {
-            int yAdd = 0;
             if(component instanceof CategoryButton) {
                 TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 25);
 
