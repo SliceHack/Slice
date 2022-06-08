@@ -6,6 +6,7 @@ import slice.clickgui.component.Component;
 import slice.module.Module;
 import slice.util.RenderUtil;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,12 +33,13 @@ public class SettingPane {
     }
 
     public void drawComponent(int mouseX, int mouseY, float partialTicks) {
-        if(dragging) {
-            x = dragX - mouseX;
-            y = dragY - mouseY;
+        if (dragging) {
+            x = mouseX - dragX;
+            y = mouseY - dragY;
         }
 
-        RenderUtil.drawRoundedRect(x, y, width, height, 10, 0xFF000000);
+        RenderUtil.drawRoundedRect(x, y, x + width, y + height, 25, Color.GRAY.darker().getRGB());
+
         components.forEach(component -> component.drawComponent(mouseX, mouseY, partialTicks));
     }
 
@@ -46,7 +48,8 @@ public class SettingPane {
     }
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
-        if (isHovered(x, y, width, height, mouseX, mouseY)) {
+
+        if(mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height) {
             dragX = mouseX - x;
             dragY = mouseY - y;
             dragging = true;

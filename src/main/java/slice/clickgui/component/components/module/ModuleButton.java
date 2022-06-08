@@ -27,7 +27,6 @@ import java.util.ArrayList;
 public class ModuleButton extends Component {
 
     private Module module;
-    private boolean open;
 
     private final int defualtHeight;
     private int openHeight;
@@ -37,7 +36,7 @@ public class ModuleButton extends Component {
         super(module.getName(), x, y, width, height);
         this.module = module;
         this.defualtHeight = height;
-        settingPane = new SettingPane(this, 0, 0, width, 250);
+        this.settingPane = new SettingPane(this, 0, 0, width, 250);
     }
 
     public void drawComponent(int mouseX, int mouseY, float partialTicks) {
@@ -49,28 +48,24 @@ public class ModuleButton extends Component {
         GlStateManager.disableLighting();
         GlStateManager.color(255, 200, 0, 255);
 
-        setHeight(open ? openHeight + 20 : defualtHeight);
         int color = !module.isEnabled() ? -1: Color.ORANGE.darker().getRGB();
 
         font.drawString(getName(), getX() + 10, getY(), color);
 
         GlStateManager.popMatrix();
-        settingPane.drawComponent(mouseX, mouseY, partialTicks);
     }
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
-        settingPane.mouseClicked(mouseX, mouseY, mouseButton);
         if(mouseX >= getX() && mouseX <= getX() + getWidth() && mouseY >= getY() && mouseY <= getY() + defualtHeight) {
-
             if(mouseButton == 0) {
                 module.toggle();
             }
 
             if(mouseButton == 1) {
-                open = !open;
-
             }
+
             Slice.INSTANCE.getClickGui().getCategoryButton(module.getCategory()).updateButtons();
         }
+
     }
 }

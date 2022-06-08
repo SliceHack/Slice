@@ -41,6 +41,10 @@ public enum Slice {
     /* data */
     private final ClickGui clickGui;
 
+    /**
+     * TODO:
+        * - Fix ClickGui module opening
+     * */
     Slice() {
         moduleManager = new ModuleManager();
         settingsManager = new SettingsManager(moduleManager);

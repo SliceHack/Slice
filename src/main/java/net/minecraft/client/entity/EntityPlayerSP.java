@@ -51,6 +51,7 @@ import net.minecraft.util.MovementInput;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
+import slice.event.events.EventChat;
 import slice.event.events.EventUpdate;
 
 public class EntityPlayerSP extends AbstractClientPlayer
@@ -304,6 +305,11 @@ public class EntityPlayerSP extends AbstractClientPlayer
      */
     public void sendChatMessage(String message)
     {
+        EventChat e = new EventChat(message);
+        e.call();
+        if(e.isCancelled())
+            return;
+
         this.sendQueue.addToSendQueue(new C01PacketChatMessage(message));
     }
 

@@ -60,5 +60,14 @@ public abstract class Module {
     public void onDisable() {}
     public abstract void onEvent(Event event);
 
+    /**
+     * Gets a setting by name
+     * @param name the name of the setting
+     *             - if the setting is not found, null is returned
+     * */
+    public Setting getSetting(String name) {
+        return settings.stream().filter(setting -> setting.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+    }
+
 
 }
