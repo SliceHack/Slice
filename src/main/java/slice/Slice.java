@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.input.Keyboard;
+import slice.clickgui.ClickGui;
 import slice.event.Event;
 import slice.event.events.EventKey;
 import slice.font.FontManager;
@@ -31,10 +32,14 @@ public enum Slice {
     private final SettingsManager settingsManager;
     private final FontManager fontManager;
 
+    /* data */
+    private ClickGui clickGui;
+
     Slice() {
         moduleManager = new ModuleManager();
         settingsManager = new SettingsManager(moduleManager);
         fontManager = new FontManager();
+        clickGui = new ClickGui();
     }
 
     /**
@@ -45,6 +50,7 @@ public enum Slice {
     public void onEvent(Event event) {
         if(event instanceof EventKey) {
             EventKey e = (EventKey) event;
+            if(e.getKey() == Keyboard.KEY_RSHIFT) Minecraft.getMinecraft().displayGuiScreen(clickGui);
             moduleManager.getModules().stream().filter(module -> module.getKey() == e.getKey()).forEach(Module::toggle); // key event
         }
         moduleManager.getModules().stream().filter(Module::isEnabled).forEach(module -> module.onEvent(event)); // Module events
