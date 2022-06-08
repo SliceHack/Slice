@@ -30,6 +30,6 @@ public class CategoryButton extends Component {
     }
 
     public void mouseClicked(int mouseX, int mouseY) {
-        if(isHovered(mouseX, mouseY)) Slice.INSTANCE.getClickGui().setSelectedCategory(this);
+        if(isHovered(mouseX, mouseY)) Slice.INSTANCE.getClickGui().setCategory(parent);
     }
 }

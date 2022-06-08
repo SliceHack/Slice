@@ -5,6 +5,7 @@ import lombok.Setter;
 import net.minecraft.client.gui.GuiScreen;
 import slice.clickgui.component.Component;
 import slice.clickgui.component.components.CategoryButton;
+import slice.module.data.Category;
 import slice.util.RenderUtil;
 
 import java.awt.*;
@@ -31,10 +32,15 @@ public class ClickGui extends GuiScreen {
     private int x, y, width = 350, height = 350;
 
     /** data */
-    private CategoryButton selectedCategory;
+    private Category category;
+
+    public void onGuiClosed() {
+        components.clear();
+    }
 
     public void initGui() {
         dragging = false;
+
     }
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -71,5 +77,16 @@ public class ClickGui extends GuiScreen {
      * */
     public boolean doesGuiPauseGame() {
         return false;
+    }
+
+    /**
+     * Gets Category Button from the components
+     */
+    public CategoryButton getCategoryButton(Category category) {
+        return (CategoryButton) components
+                .stream()
+                .filter(component -> component instanceof CategoryButton)
+                .filter(component -> ((CategoryButton) component).getParent().equals(category))
+                .map(component -> (CategoryButton) component);
     }
 }
