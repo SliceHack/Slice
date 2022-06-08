@@ -7,6 +7,7 @@ import slice.Slice;
 import slice.font.TTFFontRenderer;
 import slice.module.Module;
 import slice.util.LoggerUtil;
+import slice.util.MoveUtil;
 import slice.util.RenderUtil;
 
 import java.util.ArrayList;
@@ -19,9 +20,7 @@ import java.util.List;
  * */
 public class HUD {
 
-    public static void onTick() {
-
-    }
+    public static void onTick() {}
 
     public static void draw() {
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
@@ -43,6 +42,7 @@ public class HUD {
         GlStateManager.disableBlend();
         GlStateManager.disableAlpha();
         int fontHeight2 = sr.getScaledHeight() / 18;
+
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", fontHeight2);
         List<Module> modules = getEnabledModules(font);
         int i = 2;
@@ -50,6 +50,9 @@ public class HUD {
             font.drawStringWithShadow(module.getName(), sr.getScaledWidth() - font.getWidth(module.getName()) - 12, 10 + i, -1);
             i += font.getHeight(module.getName()) + 2;
         }
+
+        TTFFontRenderer font2 = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 20);
+        font2.drawStringWithShadow("BPS: " + MoveUtil.getBPS(), 0, sr.getScaledHeight() - font2.getHeight("BPS: " + MoveUtil.getBPS()), -1);
     }
 
     /**

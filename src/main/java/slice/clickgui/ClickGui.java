@@ -58,6 +58,7 @@ public class ClickGui extends GuiScreen {
         if (dragging) {
             x = mouseX - dragX;
             y = mouseY - dragY;
+            components.forEach(component -> component.onClickGuiDrag(mouseX, mouseY));
             updateComponents();
         }
 
