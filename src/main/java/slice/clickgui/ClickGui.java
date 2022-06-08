@@ -18,8 +18,8 @@ public class ClickGui extends GuiScreen {
     /** For dragging the ClickGui */
     private int dragX, dragY;
 
-    /** the width and height of the ClickGui */
-    private int width, height;
+    /** the positions of the ClickGui */
+    private int x, y, width, height;
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         components.forEach(component -> component.drawComponent(mouseX, mouseY, partialTicks));
