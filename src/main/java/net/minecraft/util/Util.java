@@ -31,7 +31,6 @@ public class Util
         }
         catch (InterruptedException interruptedexception)
         {
-            logger.fatal((String)"Error executing task", (Throwable)interruptedexception);
         }
 
         return (V)((Object)null);

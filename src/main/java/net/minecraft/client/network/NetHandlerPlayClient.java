@@ -1947,54 +1947,46 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
      */
     public void handleTeams(S3EPacketTeams packetIn)
     {
-        PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, this.gameController);
-        Scoreboard scoreboard = this.clientWorldController.getScoreboard();
-        ScorePlayerTeam scoreplayerteam;
+        try {
+            PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, this.gameController);
+            Scoreboard scoreboard = this.clientWorldController.getScoreboard();
+            ScorePlayerTeam scoreplayerteam;
 
-        if (packetIn.getAction() == 0)
-        {
-            scoreplayerteam = scoreboard.createTeam(packetIn.getName());
-        }
-        else
-        {
-            scoreplayerteam = scoreboard.getTeam(packetIn.getName());
-        }
-
-        if (packetIn.getAction() == 0 || packetIn.getAction() == 2)
-        {
-            scoreplayerteam.setTeamName(packetIn.getDisplayName());
-            scoreplayerteam.setNamePrefix(packetIn.getPrefix());
-            scoreplayerteam.setNameSuffix(packetIn.getSuffix());
-            scoreplayerteam.setChatFormat(EnumChatFormatting.func_175744_a(packetIn.getColor()));
-            scoreplayerteam.func_98298_a(packetIn.getFriendlyFlags());
-            Team.EnumVisible team$enumvisible = Team.EnumVisible.func_178824_a(packetIn.getNameTagVisibility());
-
-            if (team$enumvisible != null)
-            {
-                scoreplayerteam.setNameTagVisibility(team$enumvisible);
+            if (packetIn.getAction() == 0) {
+                scoreplayerteam = scoreboard.createTeam(packetIn.getName());
+            } else {
+                scoreplayerteam = scoreboard.getTeam(packetIn.getName());
             }
-        }
 
-        if (packetIn.getAction() == 0 || packetIn.getAction() == 3)
-        {
-            for (String s : packetIn.getPlayers())
-            {
-                scoreboard.addPlayerToTeam(s, packetIn.getName());
+            if (packetIn.getAction() == 0 || packetIn.getAction() == 2) {
+                scoreplayerteam.setTeamName(packetIn.getDisplayName());
+                scoreplayerteam.setNamePrefix(packetIn.getPrefix());
+                scoreplayerteam.setNameSuffix(packetIn.getSuffix());
+                scoreplayerteam.setChatFormat(EnumChatFormatting.func_175744_a(packetIn.getColor()));
+                scoreplayerteam.func_98298_a(packetIn.getFriendlyFlags());
+                Team.EnumVisible team$enumvisible = Team.EnumVisible.func_178824_a(packetIn.getNameTagVisibility());
+
+                if (team$enumvisible != null) {
+                    scoreplayerteam.setNameTagVisibility(team$enumvisible);
+                }
             }
-        }
 
-        if (packetIn.getAction() == 4)
-        {
-            for (String s1 : packetIn.getPlayers())
-            {
-                scoreboard.removePlayerFromTeam(s1, scoreplayerteam);
+            if (packetIn.getAction() == 0 || packetIn.getAction() == 3) {
+                for (String s : packetIn.getPlayers()) {
+                    scoreboard.addPlayerToTeam(s, packetIn.getName());
+                }
             }
-        }
 
-        if (packetIn.getAction() == 1)
-        {
-            scoreboard.removeTeam(scoreplayerteam);
-        }
+            if (packetIn.getAction() == 4) {
+                for (String s1 : packetIn.getPlayers()) {
+                    scoreboard.removePlayerFromTeam(s1, scoreplayerteam);
+                }
+            }
+
+            if (packetIn.getAction() == 1) {
+                scoreboard.removeTeam(scoreplayerteam);
+            }
+        } catch (Exception ignored){}
     }
 
     /**

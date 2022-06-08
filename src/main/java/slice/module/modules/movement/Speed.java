@@ -14,10 +14,10 @@ public class Speed extends Module {
     public void onEvent(Event event) {
         if(event instanceof EventUpdate) {
             if(MoveUtil.isMoving()) {
-                if (mc.thePlayer.onGround) {
-                    MoveUtil.jump();
-                }
-                MoveUtil.strafe(0.5f);
+//                if (mc.thePlayer.onGround) {
+//                    MoveUtil.jump();
+//                }
+                MoveUtil.strafe(0.42f);
             }
         }
     }
