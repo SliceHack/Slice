@@ -30,7 +30,7 @@ public class MainButton extends GuiButton {
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
         this.width = sr.getScaledWidth() / 2;
-        this.height = sr.getScaledHeight() / 12;
+        this.height = sr.getScaledHeight() / 16;
         float fontHeight = sr.getScaledHeight() / 10.5f;
         float radius = (sr.getScaledHeight() + sr.getScaledWidth()) / 50f;
 
