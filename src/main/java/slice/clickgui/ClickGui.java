@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
+import org.lwjgl.input.Mouse;
 import slice.Slice;
 import slice.clickgui.component.Component;
 import slice.clickgui.component.components.CategoryButton;
@@ -67,6 +68,16 @@ public class ClickGui extends GuiScreen {
         RenderUtil.drawRoundedRect(x - 65, y, (x - 65) + 70, y + height, 15, new Color(105, 101, 101).darker().darker().getRGB());
 
         components.forEach(component -> component.drawComponent(mouseX, mouseY, partialTicks));
+    }
+
+    /**
+     * Handles scrolling
+     * */
+    public void handleMouseInput() throws IOException {
+        super.handleMouseInput();
+
+        int i = Mouse.getEventDWheel();
+        if(i != 0) components.forEach(component -> component.onScroll(Integer.compare(i, 0)));
     }
 
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {

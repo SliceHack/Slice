@@ -23,6 +23,7 @@ import java.awt.*;
 public class CategoryButton extends Component {
 
     private Category parent;
+    private int scrollHeight;
 
     public CategoryButton(Category category, int x, int y, int width, int height) {
         super(category.getName(), x, y, width, height);
@@ -37,6 +38,10 @@ public class CategoryButton extends Component {
         GlStateManager.enableAlpha();
         font.drawString(getName(), getX(), getY(), Slice.INSTANCE.getClickGui().getCategory().equals(parent) ? Color.ORANGE.getRGB() : -1);
         GlStateManager.popMatrix();
+    }
+
+    public void onScroll(int scrollDelta) {
+        scrollHeight += scrollDelta * 5f;
     }
 
     public void mouseClicked(int mouseX, int mouseY) {
