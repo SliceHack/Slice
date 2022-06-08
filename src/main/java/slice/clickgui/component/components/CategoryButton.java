@@ -61,8 +61,10 @@ public class CategoryButton extends Component {
             button.setY(Slice.INSTANCE.getClickGui().getY() + yAdd);
 
             button.setWidth((Slice.INSTANCE.getClickGui().getWidth())-10);
-            button.setHeight(buttons.get(index).isOpen() ? buttons.get(index).getHeight() + 5 : (int) (font.getHeight(button.getName()) + 5));
-            yAdd += font.getHeight(button.getName()) + 20;
+
+            button.setHeight((int) (font.getHeight(button.getName()) + 5));
+
+            yAdd += /*font.getHeight(button.getName())*/ buttons.get(index).getHeight() + 20;
             index++;
         }
     }
