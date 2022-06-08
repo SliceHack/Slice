@@ -94,8 +94,8 @@ public class ClickGui extends GuiScreen {
 
                 component.setX(x - 10);
                 component.setY(y + yAdd);
-                component.setWidth((int) (font.getWidth(category.getName()) + 5));
-                component.setHeight((int) (font.getHeight(category.getName()) + 2));
+                component.setWidth((int) (font.getWidth(component.getName()) + 5));
+                component.setHeight((int) (font.getHeight(component.getName()) + 2));
                 yAdd += 15;
             }
         }
