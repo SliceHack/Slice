@@ -3,14 +3,12 @@ package slice.clickgui;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.input.Mouse;
 import slice.Slice;
 import slice.clickgui.component.Component;
 import slice.clickgui.component.components.CategoryButton;
 import slice.font.TTFFontRenderer;
 import slice.module.data.Category;
-import slice.util.LoggerUtil;
 import slice.util.RenderUtil;
 
 import java.awt.*;
@@ -139,7 +137,7 @@ public class ClickGui extends GuiScreen {
     }
 
     /**
-     * Checks if you are inside of the drag component
+     * Checks if you are inside the drag component
      */
     public boolean isInsideOfDrag(int mouseX, int mouseY) {
         return mouseX >= x && mouseX <= x + (width+2) && mouseY >= y && mouseY <= y + 30;
