@@ -187,6 +187,7 @@ import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
 import slice.Slice;
 import slice.event.events.EventKey;
+import viamcp.ViaMCP;
 
 @SuppressWarnings("all")
 public class Minecraft implements IThreadListener, IPlayerUsage
@@ -570,6 +571,13 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         GlStateManager.viewport(0, 0, this.displayWidth, this.displayHeight);
         this.effectRenderer = new EffectRenderer(this.theWorld, this.renderEngine);
         this.checkGLError("Post startup");
+
+        try {
+            ViaMCP.getInstance().start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         this.ingameGUI = new GuiIngame(this);
 
         if (this.serverName != null)

@@ -7,6 +7,7 @@ import slice.Slice;
 import slice.font.TTFFontRenderer;
 import slice.util.RenderUtil;
 import slice.util.ResourceUtil;
+import viamcp.gui.GuiProtocolSelector;
 
 import java.awt.*;
 import java.io.IOException;
@@ -26,7 +27,7 @@ public class MainMenu extends GuiScreen {
         this.buttonList.add(new MainButton(0, x, y, "Singleplayer", () -> mc.displayGuiScreen(new GuiSelectWorld(this))));
         this.buttonList.add(new MainButton(1, x, y+60, "Multiplayer", () -> mc.displayGuiScreen(new GuiMultiplayer(this))));
         this.buttonList.add(new MainButton(2, x, y+120, "Alt Manager", () -> {}));
-        this.buttonList.add(new MainButton(3, x, y+180, "Version Switcher", () -> {}));
+        this.buttonList.add(new MainButton(3, x, y+180, "Version Switcher", () -> mc.displayGuiScreen(new GuiProtocolSelector(this))));
         super.initGui();
     }
 
