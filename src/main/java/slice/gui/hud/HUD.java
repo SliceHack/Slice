@@ -42,8 +42,8 @@ public class HUD {
         GlStateManager.popMatrix();
         GlStateManager.disableBlend();
         GlStateManager.disableAlpha();
-
-        TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 25);
+        int fontHeight2 = sr.getScaledHeight() / 18;
+        TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", fontHeight2);
         List<Module> modules = getEnabledModules(font);
         int i = 2;
         for(Module module : modules) {
