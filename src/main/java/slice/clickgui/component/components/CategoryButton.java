@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
@@ -28,13 +29,13 @@ import java.util.List;
 public class CategoryButton extends Component {
 
     private Category parent;
-    private int scrollHeight;
 
     private List<ModuleButton> buttons = new ArrayList<>();
 
     public CategoryButton(Category category, int x, int y, int width, int height) {
         super(category.getName(), x, y, width, height);
         this.parent = category;
+        addButtons();
     }
 
     public void drawComponent(int mouseX, int mouseY, float partialTicks) {
@@ -47,27 +48,27 @@ public class CategoryButton extends Component {
         GlStateManager.popMatrix();
 
 
-        GL11.glPushMatrix();
-        GL11.glEnable(GL11.GL_SCISSOR_TEST);
-        int yAdd = 0;
-        buttons.forEach(button -> button.drawComponent(mouseX, mouseY, partialTicks));
-        GL11.glPopMatrix();
+        if(Slice.INSTANCE.getClickGui().getCategory().equals(parent)) {
+            buttons.forEach(button -> button.drawComponent(mouseX, mouseY, partialTicks));
+        }
     }
 
     public void addButtons() {
-        for(Module module : )
-    }
-
-    public void onScroll(int scrollDelta) {
-        scrollHeight += scrollDelta * 5f;
-        if (scrollHeight < 0) scrollHeight = 0;
+        int yAdd = 0;
+        for(Module module : Slice.INSTANCE.getModuleManager().getModules(parent)) {
+            buttons.add(new ModuleButton(module, getX(), getY() + yAdd, getWidth(), 25));
+            yAdd += 25;
+            LoggerUtil.addMessage("Added button from module: " + module.getName());
+        }
     }
 
     public void mouseClicked(int mouseX, int mouseY) {
-        if(isHovered(mouseX, mouseY)) {
-            Slice.INSTANCE.getClickGui().setCategory(parent);
-            Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+        if(Slice.INSTANCE.getClickGui().getCategory().equals(parent)) {
+            if (isHovered(mouseX, mouseY)) {
+                Slice.INSTANCE.getClickGui().setCategory(parent);
+                Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+            }
+            buttons.forEach(button -> button.mouseClicked(mouseX, mouseY));
         }
-        buttons.forEach(button -> button.mouseClicked(mouseX, mouseY));
     }
 }

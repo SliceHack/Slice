@@ -28,6 +28,5 @@ public class ModuleButton extends Component {
     public void drawComponent(int mouseX, int mouseY, float partialTicks) {
         RenderUtil.drawRoundedRect(getX(), getY(), getWidth(), getHeight(), 0, new Color(134, 134, 134).getRGB());
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 25);
-        font.drawCenteredString(getName(), getX() + getWidth() / 2f, getY() + getHeight() / 2f, -1);
     }
 }
