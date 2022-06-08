@@ -46,8 +46,6 @@ public enum Slice {
         settingsManager = new SettingsManager(moduleManager);
         fontManager = new FontManager();
         clickGui = new ClickGui();
-
-        LoginUtil.loginMicrosoft("gballinger279@gmail.com", "78Andy98@");
     }
 
     /**
