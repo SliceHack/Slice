@@ -4,15 +4,15 @@ import net.minecraft.client.renderer.GlStateManager;
 import slice.Slice;
 import slice.clickgui.component.Component;
 import slice.font.TTFFontRenderer;
-import slice.setting.settings.ModeValue;
+import slice.setting.settings.BooleanValue;
 
-public class ModeSetting extends Component {
+public class BooleanSetting extends Component {
 
-    ModeValue mode;
+    BooleanValue value;
 
-    public ModeSetting(ModeValue mode, int x, int y, int width, int height) {
-        super(mode.getName(), x, y, width, height);
-        this.mode = mode;
+    public BooleanSetting(BooleanValue value, int x, int y, int width, int height) {
+        super(value.getName(), x, y, width, height);
+        this.value = value;
     }
 
     public void drawComponent(int mouseX, int mouseY, float partialTicks) {
@@ -20,13 +20,13 @@ public class ModeSetting extends Component {
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
         GlStateManager.enableAlpha();
-        font.drawString(mode.getName() + ": " + mode.getValue(), getX(), getY(), -1);
+        font.drawString(value.getName() + ": " + value.getValue(), getX(), getY(), -1);
         GlStateManager.popMatrix();
     }
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
         if(isHovered(mouseX, mouseY)) {
-            mode.cycle();
+            value.setValue(!value.getValue());
         }
     }
 }

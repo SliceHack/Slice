@@ -44,9 +44,9 @@ public class ModuleButton extends Component {
         int color = !module.isEnabled() ? -1: Color.ORANGE.darker().getRGB();
 
         boolean hovered = isHovered(mouseX, mouseY);
-        if(hovered) {
-            font.drawString(module.getDescription(), getWidth() - (font.getWidth(module.getDescription())) - 5, getY(), Color.GRAY.getRGB());
-        }
+//        if(hovered) {
+//            font.drawString(module.getDescription(), getWidth() - (font.getWidth(module.getDescription())) - 5, getY(), Color.GRAY.getRGB());
+//        }
 
         font.drawString(getName(), getX() + 10, getY(), color);
 
