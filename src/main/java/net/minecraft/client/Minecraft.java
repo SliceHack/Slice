@@ -46,6 +46,7 @@ import net.minecraft.client.gui.GuiControls;
 import net.minecraft.client.gui.GuiGameOver;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.GuiIngameMenu;
+import slice.gui.hud.HUD;
 import slice.gui.main.MainMenu;
 import net.minecraft.client.gui.GuiMemoryErrorScreen;
 import net.minecraft.client.gui.GuiScreen;
@@ -1743,6 +1744,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
      */
     public void runTick() throws IOException
     {
+        HUD.onTick();
         if (this.rightClickDelayTimer > 0)
         {
             --this.rightClickDelayTimer;

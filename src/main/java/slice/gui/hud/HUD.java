@@ -18,6 +18,10 @@ import java.util.List;
  * */
 public class HUD {
 
+    public static void onTick() {
+
+    }
+
     public static void draw() {
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
 
