@@ -35,6 +35,8 @@ public class HUD {
         GlStateManager.enableAlpha();
         RenderUtil.drawImage("icons/Slice.png", 10, 10, widthHeight, widthHeight);
         GlStateManager.popMatrix();
+        GlStateManager.disableBlend();
+        GlStateManager.disableAlpha();
 
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 25);
         List<Module> modules = getEnabledModules(font);
