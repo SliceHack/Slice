@@ -1,14 +1,5 @@
 package slice.module.modules.movement;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import net.minecraft.block.material.Material;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.client.C03PacketPlayer;
-import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
-import net.minecraft.network.play.server.S13PacketDestroyEntities;
-import net.minecraft.network.play.server.S32PacketConfirmTransaction;
-import net.minecraft.network.play.server.S3EPacketTeams;
-import net.minecraft.util.BlockPos;
 import org.lwjgl.input.Keyboard;
 import slice.event.Event;
 import slice.event.events.EventPacket;
@@ -19,7 +10,6 @@ import slice.module.data.ModuleInfo;
 import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
-import slice.util.LoggerUtil;
 import slice.util.MoveUtil;
 
 @ModuleInfo(name = "Fly", key = Keyboard.KEY_G, description = "Allows you to fly like a bird", category = Category.MOVEMENT)
