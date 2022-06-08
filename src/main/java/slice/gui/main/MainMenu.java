@@ -66,13 +66,14 @@ public class MainMenu extends GuiScreen {
     private void drawBackground() {
         Gui.drawRect(0, 0, this.width, this.height, new Color(1, 0, 0).getRGB());
 
-        RenderUtil.drawImage("main/background/frame_" + format3Places(index) + "_delay-0.03s" + ".png", 0, 0,0, 0);
+        RenderUtil.drawImage("main/background/frame_" + format3Places(index) + "_delay-0.03s" + ".png", 0, 0,this.width, this.height);
     }
 
     public String format3Places(int places) {
         if(places < 10) return "00" + places;
-        else if(places < 100 && places > 10) return "0" + places;
-        else return "" + places;
+        else if(places < 100) return "0" + places;
+        else if(places > 100) return "" + places;
+        else return "0" + places;
     }
 
     public void onTick() {
