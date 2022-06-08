@@ -572,9 +572,14 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         this.effectRenderer = new EffectRenderer(this.theWorld, this.renderEngine);
         this.checkGLError("Post startup");
 
-        try {
+        try
+        {
             ViaMCP.getInstance().start();
-        } catch (Exception e) {
+            ViaMCP.getInstance().initAsyncSlider();
+            ViaMCP.getInstance().initAsyncSlider(0, 0, 110, 20);
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
 
