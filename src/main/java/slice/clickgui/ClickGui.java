@@ -55,7 +55,7 @@ public class ClickGui extends GuiScreen {
 
         RenderUtil.drawRoundedRect(x, y, x + width, y + height, 10, new Color(105, 101, 101).darker().getRGB());
         RenderUtil.drawRoundedRect(x - 5, y, x + (width+2), y + 30, 15, new Color(105, 101, 101).darker().darker().getRGB());
-        RenderUtil.drawRoundedRect(x - 60, y, (x - 60) + 70, y + height, 15, new Color(105, 101, 101).darker().darker().getRGB());
+        RenderUtil.drawRoundedRect(x - 65, y, (x - 65) + 70, y + height, 15, new Color(105, 101, 101).darker().darker().getRGB());
         components.forEach(component -> component.drawComponent(mouseX, mouseY, partialTicks));
     }
 
@@ -80,27 +80,27 @@ public class ClickGui extends GuiScreen {
         if(components.size() > 0)
             return;
 
-        int yAdd = 0;
+        int yAdd = 45;
         for(Category category : Category.values()) {
             TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 25);
 
-            components.add(new CategoryButton(category, x - 10, y + yAdd, (int) (font.getWidth(category.getName()) + 5), (int) (font.getHeight(category.getName()) + 2)));
-            yAdd += 15;
+            components.add(new CategoryButton(category, x - (65), y + yAdd, (int) (font.getWidth(category.getName()) + 5), (int) (font.getHeight(category.getName()) + 2)));
+            yAdd += 35;
         }
     }
 
     /** Update components */
     public void updateComponents() {
-        int yAdd = 0;
+        int yAdd = 45;
         for(Component component : components) {
             if(component instanceof CategoryButton) {
                 TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 25);
 
-                component.setX(x - 10);
+                component.setX(x - (65));
                 component.setY(y + yAdd);
                 component.setWidth((int) (font.getWidth(component.getName()) + 5));
                 component.setHeight((int) (font.getHeight(component.getName()) + 2));
-                yAdd += 15;
+                yAdd += 35;
             }
         }
     }
@@ -113,7 +113,8 @@ public class ClickGui extends GuiScreen {
                 .stream()
                 .filter(component -> component instanceof CategoryButton)
                 .filter(component -> ((CategoryButton) component).getParent().equals(category))
-                .map(component -> (CategoryButton) component);
+                .findFirst()
+                .orElse(null);
     }
 
     /**

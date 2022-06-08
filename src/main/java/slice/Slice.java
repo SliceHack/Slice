@@ -33,7 +33,7 @@ public enum Slice {
     private final FontManager fontManager;
 
     /* data */
-    private ClickGui clickGui;
+    private final ClickGui clickGui;
 
     Slice() {
         moduleManager = new ModuleManager();
