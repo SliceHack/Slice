@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.gui.GuiScreen;
 import slice.clickgui.component.Component;
+import slice.clickgui.component.components.CategoryButton;
 import slice.util.RenderUtil;
 
 import java.awt.*;
@@ -28,6 +29,9 @@ public class ClickGui extends GuiScreen {
 
     /** the positions of the ClickGui */
     private int x, y, width = 350, height = 350;
+
+    /** data */
+    private CategoryButton selectedCategory;
 
     public void initGui() {
         dragging = false;

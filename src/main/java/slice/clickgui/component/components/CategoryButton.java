@@ -9,6 +9,11 @@ import slice.module.data.Category;
 
 import java.awt.*;
 
+/**
+ * Client CategoryButton
+ *
+ * @author Nick
+ * */
 @Getter @Setter
 public class CategoryButton extends Component {
 
@@ -24,4 +29,7 @@ public class CategoryButton extends Component {
         font.drawString(parent.getName(), getX(), getY(), isHovered(mouseX, mouseY) ? Color.ORANGE.darker().getRGB() : -1);
     }
 
+    public void mouseClicked(int mouseX, int mouseY) {
+        if(isHovered(mouseX, mouseY)) Slice.INSTANCE.getClickGui().setSelectedCategory(this);
+    }
 }
