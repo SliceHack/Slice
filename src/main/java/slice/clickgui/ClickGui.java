@@ -50,6 +50,7 @@ public class ClickGui extends GuiScreen {
         if (dragging) {
             x = mouseX - dragX;
             y = mouseY - dragY;
+            updateComponents();
         }
 
         RenderUtil.drawRoundedRect(x, y, x + width, y + height, 10, new Color(105, 101, 101).darker().getRGB());
@@ -81,6 +82,22 @@ public class ClickGui extends GuiScreen {
 
             components.add(new CategoryButton(category, x - 10, y + yAdd, (int) (font.getWidth(category.getName()) + 5), (int) (font.getHeight(category.getName()) + 2)));
             yAdd += 15;
+        }
+    }
+
+    /** Update components */
+    public void updateComponents() {
+        for(Component component : components) {
+            int yAdd = 0;
+            if(component instanceof CategoryButton) {
+                TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 25);
+
+                component.setX(x - 10);
+                component.setY(y + yAdd);
+                component.setWidth((int) (font.getWidth(category.getName()) + 5));
+                component.setHeight((int) (font.getHeight(category.getName()) + 2));
+                yAdd += 15;
+            }
         }
     }
 

@@ -26,7 +26,7 @@ public class CategoryButton extends Component {
     public void drawComponent(int mouseX, int mouseY, float partialTicks) {
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 25);
 
-        font.drawString(parent.getName(), getX(), getY(), isHovered(mouseX, mouseY) ? Color.ORANGE.darker().getRGB() : -1);
+        font.drawString(getName(), getX(), getY(), isHovered(mouseX, mouseY) ? Color.ORANGE.getRGB() : -1);
     }
 
     public void mouseClicked(int mouseX, int mouseY) {
