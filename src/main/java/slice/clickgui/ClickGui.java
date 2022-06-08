@@ -24,18 +24,42 @@ public class ClickGui extends GuiScreen {
 
     /** For dragging the ClickGui */
     private int dragX, dragY;
+    private boolean dragging;
 
     /** the positions of the ClickGui */
     private int x, y, width = 350, height = 350;
 
+    public void initGui() {
+        dragging = false;
+    }
+
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        RenderUtil.drawRoundedRect(x, y, x + width, y + height, 10, new Color(105, 101, 101).getRGB());
-        RenderUtil.drawRoundedRect(x - 5, y, x + (width+2), y + 30, 15, new Color(105, 101, 101).darker().getRGB());
+        if (dragging) {
+            x = mouseX - dragX;
+            y = mouseY - dragY;
+        }
+
+        RenderUtil.drawRoundedRect(x, y, x + width, y + height, 10, new Color(105, 101, 101).darker().getRGB());
+        RenderUtil.drawRoundedRect(x - 5, y, x + (width+2), y + 30, 15, new Color(105, 101, 101).darker().darker().getRGB());
         components.forEach(component -> component.drawComponent(mouseX, mouseY, partialTicks));
     }
 
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
         components.forEach(component -> component.mouseClicked(mouseX, mouseY));
+
+        if(isInsideOfDrag(mouseX, mouseY)) {
+            dragX = mouseX - x;
+            dragY = mouseY - y;
+            dragging = true;
+        }
+    }
+
+    protected void mouseReleased(int mouseX, int mouseY, int state) {
+        dragging = false;
+    }
+
+    public boolean isInsideOfDrag(int mouseX, int mouseY) {
+        return mouseX >= x && mouseX <= x + (width+2) && mouseY >= y && mouseY <= y + 30;
     }
 
     /**
