@@ -53,13 +53,17 @@ public class CategoryButton extends Component {
 
     public void updateButtons() {
         int yAdd = 45;
+        int index = 0;
         for(ModuleButton button : buttons) {
             TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 25);
+
             button.setX(Slice.INSTANCE.getClickGui().getX() + 8);
             button.setY(Slice.INSTANCE.getClickGui().getY() + yAdd);
+
             button.setWidth((Slice.INSTANCE.getClickGui().getWidth())-10);
-            button.setHeight((int) (font.getHeight(button.getName()) + 5));
+            button.setHeight(buttons.get(index).isOpen() ? buttons.get(index).getHeight() + 5 : (int) (font.getHeight(button.getName()) + 5));
             yAdd += font.getHeight(button.getName()) + 20;
+            index++;
         }
     }
 
@@ -79,14 +83,18 @@ public class CategoryButton extends Component {
         }
     }
 
-    public void mouseClicked(int mouseX, int mouseY) {
+    public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
         if (isHovered(mouseX, mouseY)) {
             Slice.INSTANCE.getClickGui().setCategory(parent);
             Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
         }
 
+        if(mouseButton == 1) {
+            updateButtons();
+        }
+
         if(Slice.INSTANCE.getClickGui().getCategory().equals(parent)) {
-            buttons.forEach(button -> button.mouseClicked(mouseX, mouseY));
+            buttons.forEach(button -> button.mouseClicked(mouseX, mouseY, mouseButton));
         }
     }
 }

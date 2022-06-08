@@ -79,7 +79,7 @@ public class ClickGui extends GuiScreen {
     }
 
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
-        components.forEach(component -> component.mouseClicked(mouseX, mouseY));
+        components.forEach(component -> component.mouseClicked(mouseX, mouseY, mouseButton));
 
         if(isInsideOfDrag(mouseX, mouseY)) {
             dragX = mouseX - x;

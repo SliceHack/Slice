@@ -17,7 +17,7 @@ public class Component {
     private int x, y, width, height;
 
     public void drawComponent(int mouseX, int mouseY, float partialTicks) {}
-    public void mouseClicked(int mouseX, int mouseY) {}
+    public void mouseClicked(int mouseX, int mouseY, int mouseButton) {}
     public void onClickGuiDrag(int mouseX, int mouseY) {}
     public void onScroll(int scrollDelta) {}
 
