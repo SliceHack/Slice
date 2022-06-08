@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import slice.Slice;
 import slice.font.TTFFontRenderer;
 import slice.module.Module;
+import slice.util.LoggerUtil;
 import slice.util.RenderUtil;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class HUD {
         if(Minecraft.getMinecraft().gameSettings.showDebugProfilerChart)
             return;
 
-        int widthHeight = 90;
+        int widthHeight = ((sr.getScaledHeight() + sr.getScaledWidth()) / 18);
 
         RenderUtil.drawRoundedRect(5, 5, 10 + (widthHeight + 5), 10 + (widthHeight + 5), 10, Integer.MIN_VALUE);
 
