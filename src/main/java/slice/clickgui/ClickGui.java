@@ -76,6 +76,9 @@ public class ClickGui extends GuiScreen {
      * Adds the componeents to the ClickGui
      * */
     public void addComponents() {
+        if(components.size() > 0)
+            return;
+
         int yAdd = 0;
         for(Category category : Category.values()) {
             TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 25);
