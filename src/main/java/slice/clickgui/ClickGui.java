@@ -8,6 +8,7 @@ import slice.clickgui.component.Component;
 import slice.clickgui.component.components.CategoryButton;
 import slice.font.TTFFontRenderer;
 import slice.module.data.Category;
+import slice.util.LoggerUtil;
 import slice.util.RenderUtil;
 
 import java.awt.*;
@@ -42,7 +43,7 @@ public class ClickGui extends GuiScreen {
 
     public void initGui() {
         dragging = false;
-
+        addComponents();
     }
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
