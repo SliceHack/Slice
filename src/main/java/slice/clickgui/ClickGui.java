@@ -3,8 +3,10 @@ package slice.clickgui;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.gui.GuiScreen;
+import slice.Slice;
 import slice.clickgui.component.Component;
 import slice.clickgui.component.components.CategoryButton;
+import slice.font.TTFFontRenderer;
 import slice.module.data.Category;
 import slice.util.RenderUtil;
 
@@ -68,15 +70,17 @@ public class ClickGui extends GuiScreen {
         dragging = false;
     }
 
-    public boolean isInsideOfDrag(int mouseX, int mouseY) {
-        return mouseX >= x && mouseX <= x + (width+2) && mouseY >= y && mouseY <= y + 30;
-    }
-
     /**
-     * So the gui does not pause the game when it is open
+     * Adds the componeents to the ClickGui
      * */
-    public boolean doesGuiPauseGame() {
-        return false;
+    public void addComponents() {
+        int yAdd = 0;
+        for(Category category : Category.values()) {
+            TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 25);
+
+            components.add(new CategoryButton(category, x - 10, y + yAdd, (int) (font.getWidth(category.getName()) + 5), (int) (font.getHeight(category.getName()) + 2)));
+            yAdd += 15;
+        }
     }
 
     /**
@@ -88,5 +92,19 @@ public class ClickGui extends GuiScreen {
                 .filter(component -> component instanceof CategoryButton)
                 .filter(component -> ((CategoryButton) component).getParent().equals(category))
                 .map(component -> (CategoryButton) component);
+    }
+
+    /**
+     * Checks if you are inside of the drag component
+     */
+    public boolean isInsideOfDrag(int mouseX, int mouseY) {
+        return mouseX >= x && mouseX <= x + (width+2) && mouseY >= y && mouseY <= y + 30;
+    }
+
+    /**
+     * So the gui does not pause the game when it is open
+     */
+    public boolean doesGuiPauseGame() {
+        return false;
     }
 }
