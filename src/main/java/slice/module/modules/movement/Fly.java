@@ -19,7 +19,7 @@ import slice.util.MoveUtil;
 @ModuleInfo(name = "Fly", key = Keyboard.KEY_G, description = "Allows you to fly like a bird", category = Category.MOVEMENT)
 public class Fly extends Module {
 
-    ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla");
+    ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla", "Astro");
     BooleanValue bobbing = new BooleanValue("Bobbing", true);
     NumberValue speed = new NumberValue("Speed", 3.0D, 0.1D, 6.0D, NumberValue.Type.DOUBLE);
 
@@ -46,12 +46,23 @@ public class Fly extends Module {
                     }
                     MoveUtil.strafe(speed.getValue().doubleValue());
                     break;
+                case "Astro":
+                    mc.thePlayer.motionY = 0;
+                    break;
 
             }
 
         }
         if(event instanceof EventPacket) {
             EventPacket e = (EventPacket) event;
+            if(mode.getValue().equalsIgnoreCase("Astro")) {
+                if(e.isIncomming())
+                    return;
+
+                if(mc.thePlayer.ticksExisted % 2 == 0) {
+                    e.setCancelled(true);
+                }
+            }
         }
     }
 }
