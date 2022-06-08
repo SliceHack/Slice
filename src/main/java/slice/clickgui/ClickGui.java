@@ -65,13 +65,7 @@ public class ClickGui extends GuiScreen {
         RenderUtil.drawRoundedRect(x - 5, y, x + (width+2), y + 30, 15, new Color(105, 101, 101).darker().darker().getRGB());
         RenderUtil.drawRoundedRect(x - 65, y, (x - 65) + 70, y + height, 15, new Color(105, 101, 101).darker().darker().getRGB());
 
-        GlStateManager.pushMatrix();
-        GlStateManager.enableBlend();
-        GlStateManager.enableAlpha();
         components.forEach(component -> component.drawComponent(mouseX, mouseY, partialTicks));
-        GlStateManager.popMatrix();
-        GlStateManager.disableBlend();
-        GlStateManager.disableAlpha();
     }
 
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
