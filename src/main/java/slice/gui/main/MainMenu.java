@@ -5,12 +5,15 @@ import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.GlStateManager;
 import slice.Slice;
 import slice.font.TTFFontRenderer;
+import slice.util.RenderUtil;
 import slice.util.ResourceUtil;
 
 import java.awt.*;
 import java.io.IOException;
 
 public class MainMenu extends GuiScreen {
+
+    private int index;
 
     public void initGui() {
         if(mc.currentScreen != this)
@@ -62,6 +65,19 @@ public class MainMenu extends GuiScreen {
 
     private void drawBackground() {
         Gui.drawRect(0, 0, this.width, this.height, new Color(1, 0, 0).getRGB());
+
+        RenderUtil.drawImage("main/background/frame_" + format3Places(index) + ".png", 0, 0,0, 0);
+    }
+
+    public String format3Places(int places) {
+        if(places < 10) return "00" + places;
+        else if(places < 100 && places > 10) return "0" + places;
+        else return "" + places;
+    }
+
+    public void onTick() {
+        if(index >= 215) index = 0;
+        else index++;
     }
 
 }

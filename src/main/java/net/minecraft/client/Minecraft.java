@@ -1744,6 +1744,10 @@ public class Minecraft implements IThreadListener, IPlayerUsage
      */
     public void runTick() throws IOException
     {
+        if(this.currentScreen instanceof MainMenu) {
+            MainMenu mainMenu = (MainMenu) this.currentScreen;
+            mainMenu.onTick();
+        }
         HUD.onTick();
         if (this.rightClickDelayTimer > 0)
         {
