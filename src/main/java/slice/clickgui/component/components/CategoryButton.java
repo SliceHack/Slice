@@ -1,20 +1,18 @@
 package slice.clickgui.component.components;
 
+import com.viaversion.viaversion.libs.javassist.compiler.ast.Variable;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
 import slice.Slice;
 import slice.clickgui.component.Component;
 import slice.clickgui.component.components.module.ModuleButton;
 import slice.font.TTFFontRenderer;
 import slice.module.Module;
 import slice.module.data.Category;
-import slice.util.LoggerUtil;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -40,7 +38,6 @@ public class CategoryButton extends Component {
 
     public void drawComponent(int mouseX, int mouseY, float partialTicks) {
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 25);
-
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
         GlStateManager.enableAlpha();
@@ -53,21 +50,41 @@ public class CategoryButton extends Component {
         }
     }
 
+    public void updateButtons() {
+        int yAdd = 45;
+        for(ModuleButton button : buttons) {
+            TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 25);
+            button.setX(Slice.INSTANCE.getClickGui().getX() + 8);
+            button.setY(Slice.INSTANCE.getClickGui().getY() + yAdd);
+            button.setWidth((Slice.INSTANCE.getClickGui().getWidth())-10);
+            button.setHeight((int) (font.getHeight(button.getName()) + 5));
+            yAdd += font.getHeight(button.getName()) + 20;
+        }
+    }
+
+    public void onClickGuiDrag(int mouseX, int mouseY) {
+        updateButtons();
+    }
+
+    /**
+     * Add all buttons to this category
+     * */
     public void addButtons() {
-        int yAdd = 0;
+        int yAdd = 45;
+        TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 25);
         for(Module module : Slice.INSTANCE.getModuleManager().getModules(parent)) {
-            buttons.add(new ModuleButton(module, getX(), getY() + yAdd, getWidth(), 25));
-            yAdd += 25;
-            LoggerUtil.addMessage("Added button from module: " + module.getName());
+            buttons.add(new ModuleButton(module, Slice.INSTANCE.getClickGui().getX() + 8, Slice.INSTANCE.getClickGui().getY() + yAdd, (Slice.INSTANCE.getClickGui().getWidth())-10, (int) (font.getHeight(module.getName()) + 5)));
+            yAdd += font.getHeight(module.getName()) + 20;
         }
     }
 
     public void mouseClicked(int mouseX, int mouseY) {
+        if (isHovered(mouseX, mouseY)) {
+            Slice.INSTANCE.getClickGui().setCategory(parent);
+            Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+        }
+
         if(Slice.INSTANCE.getClickGui().getCategory().equals(parent)) {
-            if (isHovered(mouseX, mouseY)) {
-                Slice.INSTANCE.getClickGui().setCategory(parent);
-                Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
-            }
             buttons.forEach(button -> button.mouseClicked(mouseX, mouseY));
         }
     }
