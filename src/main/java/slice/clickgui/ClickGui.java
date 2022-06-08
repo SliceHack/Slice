@@ -55,7 +55,7 @@ public class ClickGui extends GuiScreen {
 
         RenderUtil.drawRoundedRect(x, y, x + width, y + height, 10, new Color(105, 101, 101).darker().getRGB());
         RenderUtil.drawRoundedRect(x - 5, y, x + (width+2), y + 30, 15, new Color(105, 101, 101).darker().darker().getRGB());
-        RenderUtil.drawRoundedRect(x - 40, y, (x - 5) + 70, y + height, 15, new Color(105, 101, 101).darker().getRGB());
+        RenderUtil.drawRoundedRect(x - 60, y, (x - 60) + 70, y + height, 15, new Color(105, 101, 101).darker().darker().getRGB());
         components.forEach(component -> component.drawComponent(mouseX, mouseY, partialTicks));
     }
 

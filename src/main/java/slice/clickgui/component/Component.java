@@ -4,6 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Base of every component on the ClickGui
+ *
+ * @author Nick
+ * */
 @Getter @Setter
 @AllArgsConstructor
 public class Component {
