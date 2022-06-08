@@ -37,7 +37,7 @@ public class ModuleButton extends Component {
         super(module.getName(), x, y, width, height);
         this.module = module;
         this.defualtHeight = height;
-        settingPane = new SettingPane(this, 0, 0, width, 0);
+        settingPane = new SettingPane(this, 0, 0, width, 250);
     }
 
     public void drawComponent(int mouseX, int mouseY, float partialTicks) {
@@ -59,6 +59,7 @@ public class ModuleButton extends Component {
     }
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
+        settingPane.mouseClicked(mouseX, mouseY, mouseButton);
         if(mouseX >= getX() && mouseX <= getX() + getWidth() && mouseY >= getY() && mouseY <= getY() + defualtHeight) {
 
             if(mouseButton == 0) {
