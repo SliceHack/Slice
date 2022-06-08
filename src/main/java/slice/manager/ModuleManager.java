@@ -5,6 +5,7 @@ import lombok.Setter;
 import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.modules.movement.Fly;
+import slice.module.modules.movement.InvMove;
 import slice.module.modules.movement.Speed;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class ModuleManager {
     public ModuleManager() {
         register(new Fly());
         register(new Speed());
+        register(new InvMove());
     }
 
     /**
