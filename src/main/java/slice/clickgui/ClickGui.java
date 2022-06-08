@@ -3,6 +3,7 @@ package slice.clickgui;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.renderer.GlStateManager;
 import slice.Slice;
 import slice.clickgui.component.Component;
 import slice.clickgui.component.components.CategoryButton;
@@ -63,7 +64,14 @@ public class ClickGui extends GuiScreen {
         RenderUtil.drawRoundedRect(x, y, x + width, y + height, 10, new Color(105, 101, 101).darker().getRGB());
         RenderUtil.drawRoundedRect(x - 5, y, x + (width+2), y + 30, 15, new Color(105, 101, 101).darker().darker().getRGB());
         RenderUtil.drawRoundedRect(x - 65, y, (x - 65) + 70, y + height, 15, new Color(105, 101, 101).darker().darker().getRGB());
+
+        GlStateManager.pushMatrix();
+        GlStateManager.enableBlend();
+        GlStateManager.enableAlpha();
         components.forEach(component -> component.drawComponent(mouseX, mouseY, partialTicks));
+        GlStateManager.popMatrix();
+        GlStateManager.disableBlend();
+        GlStateManager.disableAlpha();
     }
 
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
@@ -119,7 +127,7 @@ public class ClickGui extends GuiScreen {
         return (CategoryButton) components
                 .stream()
                 .filter(component -> component instanceof CategoryButton)
-                .filter(component -> ((CategoryButton) component).getParent().equals(category))
+                .filter(component -> ((CategoryButton) component).getParent() == category)
                 .findFirst()
                 .orElse(null);
     }
