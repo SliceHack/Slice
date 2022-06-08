@@ -37,6 +37,11 @@ public enum Slice {
         fontManager = new FontManager();
     }
 
+    /**
+     * Where all events are handled
+     *
+     * @pamra event - the event to be handled
+     * */
     public void onEvent(Event event) {
         if(event instanceof EventKey) {
             EventKey e = (EventKey) event;
