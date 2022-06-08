@@ -45,6 +45,10 @@ public class HUD {
         }
     }
 
+    /**
+     * Gets the enabled modules.
+     * @param font - the font to sort the modules by
+     */
     public static List<Module> getEnabledModules(TTFFontRenderer font) {
         return Slice.INSTANCE.getModuleManager().getModules()
                 .stream()
