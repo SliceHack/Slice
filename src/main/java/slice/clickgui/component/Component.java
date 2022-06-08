@@ -14,4 +14,8 @@ public class Component {
     public void drawComponent(int mouseX, int mouseY, float partialTicks) {}
     public void mouseClicked(int mouseX, int mouseY) {}
 
+    public boolean isHovered(int mouseX, int mouseY) {
+        return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
+    }
+
 }
