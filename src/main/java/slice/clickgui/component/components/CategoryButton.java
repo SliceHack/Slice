@@ -1,6 +1,5 @@
 package slice.clickgui.component.components;
 
-import com.viaversion.viaversion.libs.javassist.compiler.ast.Variable;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
@@ -29,6 +28,8 @@ public class CategoryButton extends Component {
     private Category parent;
 
     private List<ModuleButton> buttons = new ArrayList<>();
+
+    private int scroll;
 
     public CategoryButton(Category category, int x, int y, int width, int height) {
         super(category.getName(), x, y, width, height);

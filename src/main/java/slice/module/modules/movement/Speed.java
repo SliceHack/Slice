@@ -29,7 +29,7 @@ public class Speed extends Module {
                         break;
                     case "Astro":
                         if (mc.thePlayer.onGround) {
-                            MoveUtil.jump();
+                            mc.thePlayer.jump();
                         }
 
                         if (mc.thePlayer.fallDistance < 0.1 && !mc.thePlayer.onGround) {
@@ -37,7 +37,9 @@ public class Speed extends Module {
                             return;
                         }
 
-                        mc.timer.timerSpeed = 0.1f;
+                        if(!mc.thePlayer.onGround)
+                            mc.timer.timerSpeed = 0.1f;
+
                         break;
                 }
         }
