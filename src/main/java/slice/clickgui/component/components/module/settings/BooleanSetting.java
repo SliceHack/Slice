@@ -3,16 +3,25 @@ package slice.clickgui.component.components.module.settings;
 import net.minecraft.client.renderer.GlStateManager;
 import slice.Slice;
 import slice.clickgui.component.Component;
+import slice.clickgui.component.components.module.ModuleButton;
+import slice.clickgui.component.components.module.SettingPane;
 import slice.font.TTFFontRenderer;
 import slice.setting.settings.BooleanValue;
 
+/**
+ * Boolean Setting for the ClickGui
+ *
+ * @author Nick
+ * */
 public class BooleanSetting extends Component {
 
+    SettingPane parent;
     BooleanValue value;
 
-    public BooleanSetting(BooleanValue value, int x, int y, int width, int height) {
+    public BooleanSetting(SettingPane parent, BooleanValue value, int x, int y, int width, int height) {
         super(value.getName(), x, y, width, height);
         this.value = value;
+        this.parent = parent;
     }
 
     public void drawComponent(int mouseX, int mouseY, float partialTicks) {

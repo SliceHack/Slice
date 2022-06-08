@@ -12,6 +12,7 @@ import slice.clickgui.component.components.module.ModuleButton;
 import slice.font.TTFFontRenderer;
 import slice.module.Module;
 import slice.module.data.Category;
+import slice.util.LoggerUtil;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -62,15 +63,20 @@ public class CategoryButton extends Component {
 
             button.setWidth((Slice.INSTANCE.getClickGui().getWidth())-10);
 
-            button.setHeight((int) (font.getHeight(button.getName()) + 5));
+            button.setHeight((int) (font.getHeight(button.getName()) + yAdd));
 
-            yAdd += buttons.get(index).getHeight() + 20;
+            try {
+                yAdd += buttons.get(index + 1).getHeight() + 20;
+            } catch (Exception ignored) {
+                yAdd += 20;
+            }
             index++;
         }
     }
 
     public void onClickGuiDrag(int mouseX, int mouseY) {
         updateButtons();
+        buttons.forEach(button -> button.onClickGuiDrag(mouseX, mouseY));
     }
 
     /**

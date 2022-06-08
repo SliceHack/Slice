@@ -19,8 +19,10 @@ public class ModeValue extends Setting {
     }
 
     public void cycle() {
-        if(index >= values.length) index = 0;
-        else index++;
+        if(values.length == 0)
+            return;
+
+        index = (index + 1) % values.length;
         value = values[index];
     }
 }
