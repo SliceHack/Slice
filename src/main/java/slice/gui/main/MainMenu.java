@@ -71,9 +71,9 @@ public class MainMenu extends GuiScreen {
 
     public String format3Places(int places) {
         if(places < 10) return "00" + places;
+        else if(places == 100) return "100";
         else if(places < 100) return "0" + places;
-        else if(places > 100) return "" + places;
-        else return "0" + places;
+        else return "" + places;
     }
 
     public void onTick() {
