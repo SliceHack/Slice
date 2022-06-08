@@ -15,6 +15,7 @@ import slice.event.Event;
 import slice.event.events.EventKey;
 import slice.event.events.EventPacket;
 import slice.font.FontManager;
+import slice.manager.CommandManager;
 import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
 import slice.module.Module;
@@ -35,6 +36,7 @@ public enum Slice {
 
     /* managers */
     private final ModuleManager moduleManager;
+    private final CommandManager commandManager;
     private final SettingsManager settingsManager;
     private final FontManager fontManager;
 
@@ -47,6 +49,7 @@ public enum Slice {
      * */
     Slice() {
         moduleManager = new ModuleManager();
+        commandManager = new CommandManager();
         settingsManager = new SettingsManager(moduleManager);
         fontManager = new FontManager();
         clickGui = new ClickGui();
