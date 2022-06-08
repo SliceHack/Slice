@@ -6,10 +6,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import slice.Slice;
 import slice.font.TTFFontRenderer;
 import slice.util.RenderUtil;
-import slice.util.ResourceUtil;
 import viamcp.gui.GuiProtocolSelector;
 
-import java.awt.*;
 import java.io.IOException;
 
 public class MainMenu extends GuiScreen {
