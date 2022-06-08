@@ -63,4 +63,5 @@ public class MainMenu extends GuiScreen {
     private void drawBackground() {
         Gui.drawRect(0, 0, this.width, this.height, new Color(1, 0, 0).getRGB());
     }
+
 }
