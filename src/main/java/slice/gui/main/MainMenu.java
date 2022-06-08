@@ -22,7 +22,7 @@ public class MainMenu extends GuiScreen {
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
 
         int x = 305;
-        int y = 160;
+        int y = 200;
         this.buttonList.add(new MainButton(0, x, y, "Singleplayer", () -> mc.displayGuiScreen(new GuiSelectWorld(this))));
         this.buttonList.add(new MainButton(1, x, y+60, "Multiplayer", () -> mc.displayGuiScreen(new GuiMultiplayer(this))));
         this.buttonList.add(new MainButton(2, x, y+120, "Alt Manager", () -> {}));
