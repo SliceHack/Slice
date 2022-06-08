@@ -25,7 +25,8 @@ public class MainMenu extends GuiScreen {
         int y = 160;
         this.buttonList.add(new MainButton(0, x, y, "Singleplayer", () -> mc.displayGuiScreen(new GuiSelectWorld(this))));
         this.buttonList.add(new MainButton(1, x, y+60, "Multiplayer", () -> mc.displayGuiScreen(new GuiMultiplayer(this))));
-        this.buttonList.add(new MainButton(1, x, y+120, "Alt Manager", () -> {}));
+        this.buttonList.add(new MainButton(2, x, y+120, "Alt Manager", () -> {}));
+        this.buttonList.add(new MainButton(3, x, y+180, "Version Switcher", () -> {}));
         super.initGui();
     }
 
