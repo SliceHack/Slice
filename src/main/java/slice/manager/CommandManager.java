@@ -12,8 +12,8 @@ public class CommandManager {
 
     public List<Command> commands = new ArrayList<>();
 
-    public CommandManager() {
-        register(new CommandSetting());
+    public CommandManager(ModuleManager moduleManager) {
+        register(new CommandSetting(moduleManager));
     }
 
     public void register(Command command) {

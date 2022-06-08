@@ -12,6 +12,7 @@ import net.minecraft.network.play.server.S32PacketConfirmTransaction;
 import org.lwjgl.input.Keyboard;
 import slice.clickgui.ClickGui;
 import slice.event.Event;
+import slice.event.events.EventChat;
 import slice.event.events.EventKey;
 import slice.event.events.EventPacket;
 import slice.font.FontManager;
@@ -49,7 +50,7 @@ public enum Slice {
      * */
     Slice() {
         moduleManager = new ModuleManager();
-        commandManager = new CommandManager();
+        commandManager = new CommandManager(moduleManager);
         settingsManager = new SettingsManager(moduleManager);
         fontManager = new FontManager();
         clickGui = new ClickGui();
@@ -61,6 +62,9 @@ public enum Slice {
      * @pamra event - the event to be handled
      * */
     public void onEvent(Event event) {
+        if(event instanceof EventChat) {
+            commandManager.handleChat((EventChat) event);
+        }
         if(event instanceof EventKey) {
             EventKey e = (EventKey) event;
             if(e.getKey() == Keyboard.KEY_RSHIFT) Minecraft.getMinecraft().displayGuiScreen(clickGui);

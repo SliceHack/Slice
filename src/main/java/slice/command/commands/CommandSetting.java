@@ -3,6 +3,7 @@ package slice.command.commands;
 import slice.Slice;
 import slice.command.Command;
 import slice.command.data.CommandInfo;
+import slice.manager.ModuleManager;
 import slice.module.Module;
 import slice.setting.Setting;
 import slice.setting.settings.BooleanValue;
@@ -12,8 +13,8 @@ import slice.setting.settings.NumberValue;
 @CommandInfo(name = "setting", description = "Change settings")
 public class CommandSetting extends Command {
 
-    public CommandSetting() {
-        Slice.INSTANCE.getModuleManager().getModules().forEach(module -> addAlias(module.getName()));
+    public CommandSetting(ModuleManager moduleManager) {
+        moduleManager.getModules().forEach(module -> addAlias(module.getName()));
     }
 
     @Override
