@@ -37,6 +37,13 @@ public class ClickGui extends GuiScreen {
     /** data */
     private Category category;
 
+    /**
+     * Ran when the client is launched
+     */
+    public ClickGui() {
+        this.category = Category.values()[0];
+    }
+
     public void onGuiClosed() {
         components.clear();
     }
