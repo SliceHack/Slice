@@ -61,8 +61,8 @@ public class MainButton extends GuiButton {
         }
 
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", (int)fontHeight);
-        RenderUtil.drawRoundedRect(xPosition, yPosition, xPosition + this.width, yPosition + this.height, radius, !hovered ? -1 : new Color(255, 80, 0).getRGB());
-        font.drawCenteredString(this.displayString, xPosition + (this.width / 2f),yPosition + (this.height / 2f) - (fontHeight / 2) + 6, new Color(60, 60, 60).getRGB());
+        RenderUtil.drawRoundedRect(xPosition, yPosition, xPosition + this.width, yPosition + this.height, radius, !hovered ? Integer.MIN_VALUE : Color.pink.getRGB());
+        font.drawCenteredString(this.displayString, xPosition + (this.width / 2f),yPosition + (this.height / 2f) - (fontHeight / 2) + 6, -1);
         x = xPosition;
         y = yPosition;
     }
