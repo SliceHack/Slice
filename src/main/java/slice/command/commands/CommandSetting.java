@@ -60,8 +60,16 @@ public class CommandSetting extends Command {
         if(setting instanceof NumberValue) {
             NumberValue numberValue = (NumberValue) setting;
             double value;
-            if(args[1] == null) value = numberValue.getValue().doubleValue();
-            else value = Double.parseDouble(args[1]);
+            if(args[1] == null) {
+                value = numberValue.getValue().doubleValue();
+            } else {
+                try {
+                    value = Double.parseDouble(args[1]);
+                } catch (NumberFormatException e) {
+                    addMessage("&cInvalid number");
+                    return false;
+                }
+            }
 
             numberValue.setValue(value);
             addMessage("&a" + args[0] + " set to " + value);
