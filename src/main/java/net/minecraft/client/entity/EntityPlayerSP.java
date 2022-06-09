@@ -52,6 +52,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
 import slice.event.events.EventChat;
+import slice.event.events.EventSlowDown;
 import slice.event.events.EventUpdate;
 
 public class EntityPlayerSP extends AbstractClientPlayer
@@ -800,12 +801,16 @@ public class EntityPlayerSP extends AbstractClientPlayer
         boolean flag2 = this.movementInput.moveForward >= f;
         this.movementInput.updatePlayerMoveState();
 
-        if (this.isUsingItem() && !this.isRiding())
+        EventSlowDown slowDown = new EventSlowDown();
+        slowDown.call();
+        if ((this.isUsingItem() && !this.isRiding()) && !slowDown.cancelled)
         {
             this.movementInput.moveStrafe *= 0.2F;
             this.movementInput.moveForward *= 0.2F;
             this.sprintToggleTimer = 0;
-        }
+        } else
+            this.movementInput.moveStrafe *= 0.8F;
+            this.movementInput.moveForward *= 0.8F;
 
         this.pushOutOfBlocks(this.posX - (double)this.width * 0.35D, this.getEntityBoundingBox().minY + 0.5D, this.posZ + (double)this.width * 0.35D);
         this.pushOutOfBlocks(this.posX - (double)this.width * 0.35D, this.getEntityBoundingBox().minY + 0.5D, this.posZ - (double)this.width * 0.35D);
