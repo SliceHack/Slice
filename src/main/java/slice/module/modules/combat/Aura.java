@@ -1,5 +1,7 @@
 package slice.module.modules.combat;
 
+import net.arikia.dev.drpc.DiscordRPC;
+import net.arikia.dev.drpc.DiscordRichPresence;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
@@ -41,36 +43,38 @@ public class Aura extends Module {
     public void onEvent(Event event) {
         if(event instanceof EventUpdate) {
             EventUpdate e = (EventUpdate) event;
-            if(target == null) target = getTarget();
 
-            if(target == null)
-                return;
+            target = getTarget();
 
-            if((target.getHealth() <= 0 || (mc.thePlayer.getDistanceToEntity(target) > range.getValue().doubleValue() || target.isDead))) {
-                target = null;
+            if(target != null) {
+                boolean block = mc.thePlayer.getHeldItem() != null && !blockMode.getValue().equalsIgnoreCase("None");
+                if(!noSwing.getValue()) mc.thePlayer.swingItem();
+
+                attack();
+                e.setYaw(getRotate(target)[0]);
+                e.setPitch(getRotate(target)[1]);
+                fakeBlock = block && (blockMode.getValue().equalsIgnoreCase("Fake") || !(mc.thePlayer.getHeldItem().getItem() instanceof ItemSword));
+
+                if(block && blockMode.getValue().equalsIgnoreCase("Vanilla")) {
+                    mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem());
+                }
             }
 
-            attack();
-            e.setYaw(getRotate(target)[0]);
-            e.setPitch(getRotate(target)[1]);
-            boolean block = mc.thePlayer.getHeldItem() != null && !blockMode.getValue().equalsIgnoreCase("None");
-            fakeBlock = block && (blockMode.getValue().equalsIgnoreCase("Fake") || !(mc.thePlayer.getHeldItem().getItem() instanceof ItemSword));
-
-            if(block && blockMode.getValue().equalsIgnoreCase("Vanilla")) {
-                mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem());
-            }
         }
     }
 
     public void attack() {
         if(timer.hasReached(1000 / cps.getValue().intValue())) {
-            if(!noSwing.getValue()) {
-                mc.thePlayer.swingItem();
-            }
             if(keepSprint.getValue()) {
+                if(target == null)
+                    return;
+
                 mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(target, C02PacketUseEntity.Action.ATTACK));
                 return;
             }
+            if(target == null)
+                return;
+
             mc.playerController.attackEntity(mc.thePlayer, target);
         }
     }
@@ -89,6 +93,7 @@ public class Aura extends Module {
         return new float[]{yaw, pitch};
     }
 
+    @SuppressWarnings("all")
     public EntityLivingBase getTarget() {
         double dist = range.getValue().doubleValue();
         EntityLivingBase target = null;
