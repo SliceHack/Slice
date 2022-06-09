@@ -19,6 +19,9 @@ import slice.module.data.ModuleInfo;
 import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
+import slice.util.LoggerUtil;
+
+import java.util.logging.Logger;
 
 @ModuleInfo(name = "Aura", description = "Kills players around you!", key = Keyboard.KEY_R, category = Category.COMBAT)
 public class Aura extends Module {
@@ -60,6 +63,10 @@ public class Aura extends Module {
 
             target = getTarget();
 
+            if((target == null || target.isDead || target.getHealth() <= 0) && fakeBlock) {
+                fakeBlock = false;
+            }
+
             if(target != null) {
                 boolean block = mc.thePlayer.getHeldItem() != null && !blockMode.getValue().equalsIgnoreCase("None");
                 if(!noSwing.getValue()) mc.thePlayer.swingItem();
@@ -69,7 +76,7 @@ public class Aura extends Module {
                 e.setPitch(getRotate(target, e)[1]);
                 fakeBlock = block && (blockMode.getValue().equalsIgnoreCase("Fake") || !(mc.thePlayer.getHeldItem().getItem() instanceof ItemSword));
 
-                if(block && blockMode.getValue().equalsIgnoreCase("Vanilla")) {
+                if((block && !fakeBlock) && blockMode.getValue().equalsIgnoreCase("Vanilla")) {
                     mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem());
                 }
             }
@@ -103,19 +110,9 @@ public class Aura extends Module {
         double dist = Math.sqrt(x * x + y * y + z * z);
         float yaw = (float) (Math.atan2(z, x) * 180.0D / Math.PI) - 90.0F;
         float pitch = (float) -(Math.atan2(y, dist) * 180.0D / Math.PI);
-
-        if(deltaYaw < yaw) deltaYaw += 0.1F;
-        else if(deltaYaw > yaw) deltaYaw -= 0.1F;
-        else reachedYaw = true;
-
-        if(deltaPitch < pitch) deltaPitch += 0.1F;
-        else if(deltaYaw > pitch) deltaPitch -= 0.1F;
-        else reachedPitch = true;
-
-        if(pitch < -90.0F) pitch = -90.0F;
-        else if(pitch > 90.0F) pitch = 90.0F;
-
-        return new float[]{deltaYaw, deltaPitch};
+        reachedYaw = true;
+        reachedPitch = true;
+        return new float[] {yaw, pitch};
     }
 
     @SuppressWarnings("all")

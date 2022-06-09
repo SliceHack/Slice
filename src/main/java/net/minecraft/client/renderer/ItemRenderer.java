@@ -318,6 +318,24 @@ public class ItemRenderer
         GlStateManager.scale(0.4F, 0.4F, 0.4F);
     }
 
+
+    /**
+     * Performs transformations prior to the rendering of a held item in first person.
+     */
+    @SuppressWarnings("all")
+    private void e(float equipProgress, float swingProgress)
+    {
+        GlStateManager.translate(0.26F, -0.15F, -0.71999997F);
+        GlStateManager.translate(0.0F, equipProgress * -0.6F, 0.0F);
+        GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
+        float f = MathHelper.sin(swingProgress * swingProgress * (float)Math.PI);
+        float f1 = MathHelper.sin(MathHelper.sqrt_float(swingProgress) * (float)Math.PI);
+        GlStateManager.rotate(0, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(-(System.currentTimeMillis() / 2 % 360), 0.0F, 0.0F, 1.0F);
+        GlStateManager.rotate(0, 1.0F, 0.0F, 0.0F);
+        GlStateManager.scale(0.25F, 0.25F, 0.25F);
+    }
+
     /**
      * Translate and rotate the render to look like holding a bow
      *  
@@ -406,7 +424,7 @@ public class ItemRenderer
                             break;
 
                         case BLOCK:
-                            this.transformFirstPersonItem(f, f1);
+                            this.e(f, f1);
                             this.doBlockTransformations();
                             break;
 

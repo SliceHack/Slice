@@ -33,7 +33,7 @@ public class StartDiscordRPC {
 
     public void setPresence(String line1, String line2) {
         DiscordRichPresence.Builder presence = new DiscordRichPresence.Builder(line2);
-        presence.setBigImage("large", Slice.VERSION);
+        presence.setBigImage("slice", Slice.VERSION);
         presence.setDetails(line1);
         presence.setStartTimestamps(timestamp);
 

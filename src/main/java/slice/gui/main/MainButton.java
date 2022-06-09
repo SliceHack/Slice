@@ -51,10 +51,8 @@ public class MainButton extends GuiButton {
             timeSpan = 80;
         }
 
-        if(hovered)
-            timeSpan += 5;
-        else
-            timeSpan = 80;
+        if(hovered) timeSpan += 5;
+        else timeSpan = 80;
 
         if(timeSpan >= 200) {
             timeSpan = 200;
