@@ -4,6 +4,7 @@ import slice.command.Command;
 import slice.command.commands.CommandSetting;
 import slice.event.events.EventChat;
 import slice.module.Module;
+import slice.util.LoggerUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,21 +26,35 @@ public class CommandManager {
      * */
     public void handleChat(EventChat event) {
         String message = event.getMessage();
-        String command = message.split(" ")[0];
-        String[] args = message.split(" ");
-        args = removeFirstArgument(args);
-        String[] finalArgs = args;
+        if(message.startsWith(".")) {
+            event.setCancelled(true);
+            String command = message.split(" ")[0].replace(".", "");
+            String[] args = message.split(" ");
+            String[] newArgs = removeFirstArgument(args);
+            event.setCancelled(true);
 
-        commands.forEach(command1 -> {
-            if(command1.getName().equalsIgnoreCase(command)) {
-                command1.handle(command, finalArgs);
-            }
-            for(String alias : command1.getAliases()) {
-                if(alias.equalsIgnoreCase(command)) {
-                    command1.handle(command, finalArgs);
+            for(Command command1 : commands) {
+                if(command1.getName().equalsIgnoreCase(command)) {
+                    command1.handle(command, newArgs);
+                    return;
+                }
+                for(String alias : command1.getAliases()) {
+                    if(alias.equalsIgnoreCase(command)) {
+                        command1.handle(command, newArgs);
+                        return;
+                    }
                 }
             }
-        });
+            LoggerUtil.addMessage("Command " + command + " can not be found.");
+        }
+    }
+
+    /**
+     * Gets command by name
+     * @param name - name of command
+     * */
+    public Command getCommand(String name) {
+        return commands.stream().filter(command -> command.getName().equals(name)).findFirst().orElse(null);
     }
 
     /**

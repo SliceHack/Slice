@@ -29,7 +29,7 @@ public class CommandSetting extends Command {
             return false;
         }
         if(args.length < 2) {
-            addMessage("&cUsage: .<module> <setting> <value>");
+            addMessage("&cUsage: ." + name + " <setting> <value>");
             return false;
         }
         Setting setting = module.getSetting(args[0]);
@@ -43,7 +43,7 @@ public class CommandSetting extends Command {
             for(String s : mode.getValues()) {
                 if(s.equalsIgnoreCase(args[1])) {
                     mode.setValue(s);
-                    addMessage("&aSetting set to " + s);
+                    addMessage("&a" + args[0] + " set to " + s);
                     return true;
                 }
             }
@@ -55,7 +55,7 @@ public class CommandSetting extends Command {
             if(args[1] == null) value = !booleanValue.getValue();
             else value = Boolean.parseBoolean(args[1]);
             booleanValue.setValue(value);
-            addMessage("&aSetting set to " + value);
+            addMessage("&a" + args[0] + " set to " + value);
         }
         if(setting instanceof NumberValue) {
             NumberValue numberValue = (NumberValue) setting;
@@ -64,7 +64,7 @@ public class CommandSetting extends Command {
             else value = Double.parseDouble(args[1]);
 
             numberValue.setValue(value);
-            addMessage("&aSetting set to " + value);
+            addMessage("&a" + args[0] + " set to " + value);
         }
         return false;
     }
