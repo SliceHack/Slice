@@ -33,6 +33,7 @@ public class ModuleManager {
         register(new Disabler());
         register(new NoFall());
         register(new ChatSpammer());
+
         register(new Aura());
     }
 
