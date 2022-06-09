@@ -3,29 +3,18 @@ package slice;
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.client.C00PacketKeepAlive;
-import net.minecraft.network.play.client.C03PacketPlayer;
-import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
-import net.minecraft.network.play.server.S32PacketConfirmTransaction;
 import org.lwjgl.input.Keyboard;
 import slice.clickgui.ClickGui;
 import slice.discord.StartDiscordRPC;
 import slice.event.Event;
 import slice.event.events.EventChat;
 import slice.event.events.EventKey;
-import slice.event.events.EventPacket;
 import slice.file.Saver;
 import slice.font.FontManager;
 import slice.manager.CommandManager;
 import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
 import slice.module.Module;
-import slice.util.LoggerUtil;
-import slice.util.ResourceUtil;
-import slice.util.account.LoginUtil;
 
 /**
 * Main Class for the Client
@@ -46,7 +35,7 @@ public enum Slice {
 
     /* data */
     private final ClickGui clickGui;
-    private Saver saver;
+    private final Saver saver;
     private final StartDiscordRPC discordRPC;
 
     /**
