@@ -33,7 +33,7 @@ public class Saver {
         load();
     }
 
-    private void save() {
+    public void save() {
         try {
             JSONObject json = new JSONObject();
 

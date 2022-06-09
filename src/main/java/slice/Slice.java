@@ -64,6 +64,10 @@ public enum Slice {
         discordRPC.start();
     }
 
+    public void stop() {
+        saver.save();
+    }
+
     /**
      * Where all events are handled
      *
