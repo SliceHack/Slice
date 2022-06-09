@@ -7,6 +7,7 @@ import slice.module.data.Category;
 import slice.module.modules.misc.Disabler;
 import slice.module.modules.movement.Fly;
 import slice.module.modules.movement.InvMove;
+import slice.module.modules.movement.NoFall;
 import slice.module.modules.movement.Speed;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class ModuleManager {
         register(new Speed());
         register(new InvMove());
         register(new Disabler());
+        register(new NoFall());
     }
 
     /**
