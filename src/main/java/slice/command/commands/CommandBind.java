@@ -12,11 +12,11 @@ public class CommandBind extends Command {
     @Override
     public boolean handle(String name, String[] args) {
         if(args.length == 0) {
-            addMessage("&cUsage: bind <key> <command>");
+            addMessage("&cUsage: .bind <module> <key>");
             return true;
         }
         if(args.length == 1) {
-            addMessage("&cUsage: bind <command> <key>");
+            addMessage("&cUsage: .bind <module> <key>");
             return true;
         }
 
