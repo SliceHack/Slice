@@ -41,10 +41,14 @@ public class Aura extends Module {
     public void onEvent(Event event) {
         if(event instanceof EventUpdate) {
             EventUpdate e = (EventUpdate) event;
-            target = getTarget();
+            if(target == null) target = getTarget();
 
             if(target == null)
                 return;
+
+            if((target.getHealth() <= 0 || (mc.thePlayer.getDistanceToEntity(target) > range.getValue().doubleValue() || target.isDead))) {
+                target = null;
+            }
 
             attack();
             e.setYaw(getRotate(target)[0]);
