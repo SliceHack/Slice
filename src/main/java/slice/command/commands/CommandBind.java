@@ -28,6 +28,7 @@ public class CommandBind extends Command {
         int key = Keyboard.getKeyIndex(args[1].toUpperCase());
         args[1] = args[1].toUpperCase();
         addMessage("&aBound " + module.getName() + " to " + args[1]);
+        module.setKey(key);
         return true;
     }
 }
