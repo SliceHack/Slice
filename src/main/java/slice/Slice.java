@@ -12,6 +12,7 @@ import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 import net.minecraft.network.play.server.S32PacketConfirmTransaction;
 import org.lwjgl.input.Keyboard;
 import slice.clickgui.ClickGui;
+import slice.discord.StartDiscordRPC;
 import slice.event.Event;
 import slice.event.events.EventChat;
 import slice.event.events.EventKey;
@@ -44,6 +45,7 @@ public enum Slice {
 
     /* data */
     private final ClickGui clickGui;
+    private final StartDiscordRPC discordRPC;
 
     /**
      * TODO:
@@ -55,6 +57,8 @@ public enum Slice {
         settingsManager = new SettingsManager(moduleManager);
         fontManager = new FontManager();
         clickGui = new ClickGui();
+        discordRPC = new StartDiscordRPC();
+        discordRPC.start();
     }
 
     /**
