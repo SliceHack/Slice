@@ -1,6 +1,5 @@
 package slice.module.modules.movement;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.MathHelper;
 import org.lwjgl.input.Keyboard;
