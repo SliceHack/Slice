@@ -40,6 +40,10 @@ public class Aura extends Module {
 
     public static boolean fakeBlock;
 
+    /** smooth rotating */
+    private float deltaYaw, deltaPitch;
+    private boolean reachedYaw, reachedPitch;
+
     public void onEvent(Event event) {
         if(event instanceof EventUpdate) {
             EventUpdate e = (EventUpdate) event;
@@ -51,8 +55,8 @@ public class Aura extends Module {
                 if(!noSwing.getValue()) mc.thePlayer.swingItem();
 
                 attack();
-                e.setYaw(getRotate(target)[0]);
-                e.setPitch(getRotate(target)[1]);
+                e.setYaw(getRotate(target, e)[0]);
+                e.setPitch(getRotate(target, e)[1]);
                 fakeBlock = block && (blockMode.getValue().equalsIgnoreCase("Fake") || !(mc.thePlayer.getHeldItem().getItem() instanceof ItemSword));
 
                 if(block && blockMode.getValue().equalsIgnoreCase("Vanilla")) {
@@ -64,6 +68,9 @@ public class Aura extends Module {
     }
 
     public void attack() {
+        if(!reachedPitch && !reachedYaw)
+            return;
+
         if(timer.hasReached(1000 / cps.getValue().intValue())) {
             if(keepSprint.getValue()) {
                 if(target == null)
@@ -79,7 +86,7 @@ public class Aura extends Module {
         }
     }
 
-    public float[] getRotate(Entity e) {
+    public float[] getRotate(Entity e, EventUpdate event) {
         double x = e.posX - mc.thePlayer.posX;
         double y = e.posY - mc.thePlayer.posY;
         double z = e.posZ - mc.thePlayer.posZ;
@@ -87,10 +94,18 @@ public class Aura extends Module {
         float yaw = (float) (Math.atan2(z, x) * 180.0D / Math.PI) - 90.0F;
         float pitch = (float) -(Math.atan2(y, dist) * 180.0D / Math.PI);
 
+        if(event.getYaw() < yaw) deltaYaw += 0.1F;
+        else if(event.getYaw() > yaw) deltaYaw -= 0.1F;
+        else reachedYaw = true;
+
+        if(event.getPitch() < pitch) deltaPitch += 0.1F;
+        else if(event.getPitch() > pitch) deltaPitch -= 0.1F;
+        else reachedPitch = true;
+
         if(pitch < -90.0F) pitch = -90.0F;
         else if(pitch > 90.0F) pitch = 90.0F;
 
-        return new float[]{yaw, pitch};
+        return new float[]{deltaYaw, deltaPitch};
     }
 
     @SuppressWarnings("all")
