@@ -44,6 +44,16 @@ public class Aura extends Module {
     private float deltaYaw, deltaPitch;
     private boolean reachedYaw, reachedPitch;
 
+    public void onDisable() {
+        deltaPitch = 0;
+        deltaYaw = 0;
+    }
+
+    public void onEnable() {
+        deltaPitch = mc.thePlayer.rotationPitch;
+        deltaYaw = mc.thePlayer.rotationYaw;
+    }
+
     public void onEvent(Event event) {
         if(event instanceof EventUpdate) {
             EventUpdate e = (EventUpdate) event;
@@ -94,12 +104,12 @@ public class Aura extends Module {
         float yaw = (float) (Math.atan2(z, x) * 180.0D / Math.PI) - 90.0F;
         float pitch = (float) -(Math.atan2(y, dist) * 180.0D / Math.PI);
 
-        if(event.getYaw() < yaw) deltaYaw += 0.1F;
-        else if(event.getYaw() > yaw) deltaYaw -= 0.1F;
+        if(deltaYaw < yaw) deltaYaw += 0.1F;
+        else if(deltaYaw > yaw) deltaYaw -= 0.1F;
         else reachedYaw = true;
 
-        if(event.getPitch() < pitch) deltaPitch += 0.1F;
-        else if(event.getPitch() > pitch) deltaPitch -= 0.1F;
+        if(deltaPitch < pitch) deltaPitch += 0.1F;
+        else if(deltaYaw > pitch) deltaPitch -= 0.1F;
         else reachedPitch = true;
 
         if(pitch < -90.0F) pitch = -90.0F;
