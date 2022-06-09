@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import slice.module.Module;
 import slice.module.data.Category;
+import slice.module.modules.misc.Disabler;
 import slice.module.modules.movement.Fly;
 import slice.module.modules.movement.InvMove;
 import slice.module.modules.movement.Speed;
@@ -26,6 +27,7 @@ public class ModuleManager {
         register(new Fly());
         register(new Speed());
         register(new InvMove());
+        register(new Disabler());
     }
 
     /**

@@ -213,6 +213,15 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
         }
     }
 
+    public void sendPacketNoEvent(Packet packetIn) {
+        if (this.channel != null && this.channel.isOpen()) {
+            flushOutboundQueue();
+            dispatchPacket(packetIn, (GenericFutureListener[])null);
+        } else {
+            this.outboundPacketsQueue.add(new InboundHandlerTuplePacketListener(packetIn, (GenericFutureListener[])null));
+        }
+    }
+
     public void sendPacket(Packet packetIn, GenericFutureListener <? extends Future <? super Void >> listener, GenericFutureListener <? extends Future <? super Void >> ... listeners)
     {
         if (this.isChannelOpen())

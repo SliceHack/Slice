@@ -8,6 +8,7 @@ import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
 import slice.setting.Setting;
 import slice.util.LoggerUtil;
+import slice.util.Timer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public abstract class Module {
 
     /* Module fields */
     protected Minecraft mc = Minecraft.getMinecraft();
+    protected Timer timer = new Timer();
 
     /* info */
     private ModuleInfo info = getClass().getAnnotation(ModuleInfo.class);
