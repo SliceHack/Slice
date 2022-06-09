@@ -8,6 +8,7 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemSword;
 import net.minecraft.network.play.client.C02PacketUseEntity;
+import org.lwjgl.input.Keyboard;
 import slice.event.Event;
 import slice.event.events.EventUpdate;
 import slice.module.Module;
@@ -17,7 +18,7 @@ import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
 
-@ModuleInfo(name = "Aura", description = "Kills players around you!", category = Category.COMBAT)
+@ModuleInfo(name = "Aura", description = "Kills players around you!", key = Keyboard.KEY_R, category = Category.COMBAT)
 public class Aura extends Module {
 
     ModeValue blockMode = new ModeValue("Block Mode", "Vanilla", "None", "Fake");
@@ -64,6 +65,9 @@ public class Aura extends Module {
                 return;
             }
             mc.playerController.attackEntity(mc.thePlayer, target);
+            if(!noSwing.getValue()) {
+                mc.thePlayer.swingItem();
+            }
         }
     }
 
