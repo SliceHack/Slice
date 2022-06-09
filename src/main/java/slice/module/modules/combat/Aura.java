@@ -6,6 +6,7 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.network.play.client.C02PacketUseEntity;
 import slice.event.Event;
 import slice.event.events.EventUpdate;
 import slice.module.Module;
@@ -17,16 +18,40 @@ import slice.setting.settings.NumberValue;
 @ModuleInfo(name = "Aura", description = "Kills players around you!", category = Category.COMBAT)
 public class Aura extends Module {
 
+    NumberValue cps = new NumberValue("CPS", 8, 1, 20, NumberValue.Type.INTEGER);
     NumberValue range = new NumberValue("Range", 3.0, 0.2, 10.0, NumberValue.Type.DOUBLE);
+
+    BooleanValue keepSprint = new BooleanValue("KeepSprint", true);
+
     BooleanValue noSwing = new BooleanValue("NoSwing", false);
     BooleanValue invis = new BooleanValue("Invisible", true);
     BooleanValue players = new BooleanValue("Players", true);
     BooleanValue mobs = new BooleanValue("Mobs", true);
     BooleanValue teams = new BooleanValue("Teams", false);
 
+    EntityLivingBase target;
+
     public void onEvent(Event event) {
         if(event instanceof EventUpdate) {
+            EventUpdate e = (EventUpdate) event;
+            target = getTarget();
 
+            if(target == null)
+                return;
+
+            attack();
+            e.setYaw(getRotate(target)[0]);
+            e.setPitch(getRotate(target)[1]);
+        }
+    }
+
+    public void attack() {
+        if(timer.hasReached(1000 / cps.getValue().intValue())) {
+            if(keepSprint.getValue()) {
+                mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(target, C02PacketUseEntity.Action.ATTACK));
+                return;
+            }
+            mc.playerController.attackEntity(mc.thePlayer, target);
         }
     }
 
@@ -40,7 +65,7 @@ public class Aura extends Module {
 
         if(pitch < -90.0F) pitch = -90.0F;
         else if(pitch > 90.0F) pitch = 90.0F;
-        
+
         return new float[]{yaw, pitch};
     }
 
