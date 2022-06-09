@@ -7,10 +7,7 @@ import slice.module.data.Category;
 import slice.module.modules.combat.Aura;
 import slice.module.modules.misc.ChatSpammer;
 import slice.module.modules.misc.Disabler;
-import slice.module.modules.movement.Fly;
-import slice.module.modules.movement.InvMove;
-import slice.module.modules.movement.NoFall;
-import slice.module.modules.movement.Speed;
+import slice.module.modules.movement.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +30,8 @@ public class ModuleManager {
         register(new Disabler());
         register(new NoFall());
         register(new ChatSpammer());
-
         register(new Aura());
+        register(new NoSlow());
     }
 
     /**
