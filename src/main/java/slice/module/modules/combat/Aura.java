@@ -60,14 +60,14 @@ public class Aura extends Module {
 
     public void attack() {
         if(timer.hasReached(1000 / cps.getValue().intValue())) {
+            if(!noSwing.getValue()) {
+                mc.thePlayer.swingItem();
+            }
             if(keepSprint.getValue()) {
                 mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(target, C02PacketUseEntity.Action.ATTACK));
                 return;
             }
             mc.playerController.attackEntity(mc.thePlayer, target);
-            if(!noSwing.getValue()) {
-                mc.thePlayer.swingItem();
-            }
         }
     }
 
