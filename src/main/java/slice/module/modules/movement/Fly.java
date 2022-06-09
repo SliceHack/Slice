@@ -13,13 +13,14 @@ import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
 import slice.util.KeyUtil;
+import slice.util.LoggerUtil;
 import slice.util.MoveUtil;
 import slice.util.RotationUtil;
 
 @ModuleInfo(name = "Fly", key = Keyboard.KEY_G, description = "Allows you to fly like a bird", category = Category.MOVEMENT)
 public class Fly extends Module {
 
-    ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla", "UwUGuard");
+    ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla", "UwUGuard", "UwUGuardGlide");
     BooleanValue bobbing = new BooleanValue("Bobbing", true);
     NumberValue speed = new NumberValue("Speed", 3.0D, 0.1D, 6.0D, NumberValue.Type.DOUBLE);
 
@@ -75,6 +76,10 @@ public class Fly extends Module {
                     for (KeyBinding keyBinding : KeyUtil.moveKeys()) {
                         keyBinding.pressed = false;
                     }
+                    break;
+                case "UwUGuardGlide":
+                    if(mc.thePlayer.onGround) return;
+                    MoveUtil.strafe(7);
                     break;
             }
 

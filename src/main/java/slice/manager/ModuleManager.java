@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import slice.module.Module;
 import slice.module.data.Category;
+import slice.module.modules.combat.AntiBot;
 import slice.module.modules.combat.Aura;
 import slice.module.modules.misc.ChatSpammer;
 import slice.module.modules.misc.Disabler;
@@ -32,6 +33,7 @@ public class ModuleManager {
         register(new ChatSpammer());
         register(new Aura());
         register(new NoSlow());
+        register(new AntiBot());
     }
 
     /**
