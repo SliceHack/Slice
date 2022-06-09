@@ -61,7 +61,7 @@ public class DefaultResourcePack implements IResourcePack
         return inputstream != null ? inputstream : DefaultResourcePack.class.getResourceAsStream(s);
     }
 
-    public boolean resourceExists(File location)
+    public boolean resourceExists(ResourceLocation location)
     {
         return this.getResourceStream(location) != null || this.mapAssets.containsKey(location.toString());
     }

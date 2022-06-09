@@ -44,7 +44,7 @@ public abstract class AbstractResourcePack implements IResourcePack
         return this.getInputStreamByName(locationToName(location));
     }
 
-    public boolean resourceExists(File location)
+    public boolean resourceExists(ResourceLocation location)
     {
         return this.hasResourceName(locationToName(location));
     }
