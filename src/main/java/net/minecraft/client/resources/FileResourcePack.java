@@ -3,8 +3,6 @@ package net.minecraft.client.resources;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import net.minecraft.util.ResourceLocation;
-
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
@@ -61,11 +59,6 @@ public class FileResourcePack extends AbstractResourcePack implements Closeable
         {
             return false;
         }
-    }
-
-    @Override
-    public boolean resourceExists(ResourceLocation location) {
-        return false;
     }
 
     public Set<String> getResourceDomains()
