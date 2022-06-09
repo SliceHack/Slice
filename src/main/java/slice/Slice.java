@@ -17,6 +17,7 @@ import slice.event.Event;
 import slice.event.events.EventChat;
 import slice.event.events.EventKey;
 import slice.event.events.EventPacket;
+import slice.file.Saver;
 import slice.font.FontManager;
 import slice.manager.CommandManager;
 import slice.manager.ModuleManager;
@@ -45,6 +46,7 @@ public enum Slice {
 
     /* data */
     private final ClickGui clickGui;
+    private Saver saver;
     private final StartDiscordRPC discordRPC;
 
     /**
@@ -57,6 +59,7 @@ public enum Slice {
         settingsManager = new SettingsManager(moduleManager);
         fontManager = new FontManager();
         clickGui = new ClickGui();
+        saver = new Saver(moduleManager);
         discordRPC = new StartDiscordRPC();
         discordRPC.start();
     }

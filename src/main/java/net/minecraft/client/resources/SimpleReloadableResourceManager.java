@@ -6,6 +6,8 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -52,7 +54,7 @@ public class SimpleReloadableResourceManager implements IReloadableResourceManag
         return this.setResourceDomains;
     }
 
-    public IResource getResource(ResourceLocation location) throws IOException
+    public IResource getResource(File location) throws IOException
     {
         IResourceManager iresourcemanager = (IResourceManager)this.domainResourceManagers.get(location.getResourceDomain());
 
