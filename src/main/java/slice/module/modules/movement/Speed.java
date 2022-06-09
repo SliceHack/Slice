@@ -44,9 +44,11 @@ public class Speed extends Module {
 
                         break;
                     case "UwUGuard":
+                        if (!MoveUtil.isMoving()) return;
                         if (mc.thePlayer.onGround) {
-                            MoveUtil.strafe(3);
+                            MoveUtil.jump();
                         }
+                        MoveUtil.strafe(5);
                         break;
                 }
         }
