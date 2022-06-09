@@ -44,7 +44,7 @@ public class MojangAltLogin extends GuiScreen {
     }
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-
+        drawDefaultBackground();
         username.drawTextBox();
         password.drawTextBox();
 

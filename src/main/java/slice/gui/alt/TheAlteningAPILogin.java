@@ -4,7 +4,6 @@ import com.mojang.authlib.Agent;
 import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication;
-import com.sun.security.ntlm.Client;
 import com.thealtening.AlteningAPI;
 import com.thealtening.AlteningServiceType;
 import com.thealtening.SSLController;
@@ -18,6 +17,7 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.Session;
 import org.lwjgl.input.Keyboard;
 import slice.Slice;
+import slice.font.TTFFontRenderer;
 
 import java.io.IOException;
 import java.net.Proxy;
@@ -35,13 +35,13 @@ public class TheAlteningAPILogin extends GuiScreen {
     private GuiScreen parent;
 
     public TheAlteningAPILogin(GuiScreen parent) {
-        super();
         this.parent = parent;
     }
 
     public void initGui() {
         this.token = new GuiTextField(height / 4 + 24, this.mc.fontRendererObj, width / 2 - 100, 60, 200, 20);
         this.login = new GuiButton(0, width / 2 - 100, height / 2 + 20, 200, 20, "Login");
+        this.generate = new GuiButton(1, width / 2 - 100, height / 2 + 40, 200, 20, "Generate Token");
         this.buttonList.add(this.login);
         this.buttonList.add(this.generate);
         loginText = null;
@@ -51,7 +51,8 @@ public class TheAlteningAPILogin extends GuiScreen {
         drawDefaultBackground();
         drawCenteredString(this.fontRendererObj, "TheAltening Login", width / 2, 20, 16777215);
         if(loginText != null) {
-            drawCenteredString(Slice.INSTANCE.getFontManager().getFont("Poppins-Thin", 23), loginText, (float)width / 2, (float)height / 2, -1);
+            TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 25);
+            drawCenteredString(font, loginText, (float)width / 2, (float)height / 2, -1);
         }
         token.drawTextBox();
         super.drawScreen(mouseX, mouseY, partialTicks);

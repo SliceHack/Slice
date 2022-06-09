@@ -5,6 +5,7 @@ import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.GlStateManager;
 import slice.Slice;
 import slice.font.TTFFontRenderer;
+import slice.gui.alt.GuiAlt;
 import slice.gui.alt.MicrosoftAltLogin;
 import slice.util.RenderUtil;
 import viamcp.gui.GuiProtocolSelector;
@@ -25,7 +26,7 @@ public class MainMenu extends GuiScreen {
         int y = 200;
         this.buttonList.add(new MainButton(0, x, y, "Singleplayer", () -> mc.displayGuiScreen(new GuiSelectWorld(this))));
         this.buttonList.add(new MainButton(1, x, y+60, "Multiplayer", () -> mc.displayGuiScreen(new GuiMultiplayer(this))));
-        this.buttonList.add(new MainButton(2, x, y+120, "Alt Manager", () -> mc.displayGuiScreen(new MicrosoftAltLogin(this))));
+        this.buttonList.add(new MainButton(2, x, y+120, "Alt Manager", () -> mc.displayGuiScreen(new GuiAlt(this))));
         this.buttonList.add(new MainButton(3, x, y+180, "Version Switcher", () -> mc.displayGuiScreen(new GuiProtocolSelector(this))));
         super.initGui();
     }
