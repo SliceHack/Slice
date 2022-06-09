@@ -51,8 +51,12 @@ public enum Slice {
         saver = new Saver(moduleManager);
         discordRPC = new StartDiscordRPC();
         discordRPC.start();
+
     }
 
+    /**
+     * Called when the client is stopped
+     * */
     public void stop() {
         saver.save();
     }

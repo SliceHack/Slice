@@ -1,7 +1,10 @@
 package slice.file;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.client.Minecraft;
 import org.json.JSONObject;
+import slice.Slice;
 import slice.manager.ModuleManager;
 import slice.module.Module;
 import slice.setting.Setting;
@@ -9,140 +12,120 @@ import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.awt.*;
+import java.io.*;
 
+@Getter @Setter
 @SuppressWarnings("all")
 public class Saver {
 
-    public File main, modules;
+    private File modules = new File(Minecraft.getMinecraft().mcDataDir, "Slice\\client.json");
+
     private ModuleManager moduleManager;
 
     public Saver(ModuleManager moduleManager) {
-        main = new File(Minecraft.getMinecraft().mcDataDir, "Slice");
-        modules = new File(main, "modules.json");
+        this.moduleManager = moduleManager;
+        this.load();
+    }
 
-        if(modules.exists()) {
+    public void load() {
+        if(!modules.exists()) {
             modules.getParentFile().mkdirs();
             return;
         }
 
-        this.moduleManager = moduleManager;
-        load();
-    }
-
-    public void save() {
         try {
-            JSONObject json = new JSONObject();
-
-            JSONObject modules = new JSONObject();
-            for(Module module : moduleManager.getModules()) {
-                JSONObject moduleJson = new JSONObject();
-                moduleJson.put("enabled", module.isEnabled());
-                moduleJson.put("key", module.getKey());
-                modules.put(module.getName(), moduleJson);
-
-                JSONObject settings = new JSONObject();
-                for(Setting setting : module.getSettings()) {
-                    JSONObject settingJson = new JSONObject();
-                    if(setting instanceof ModeValue) {
-                        ModeValue mv = (ModeValue) setting;
-                        settingJson.put("value", mv.getValue());
-                    }
-                    if(setting instanceof BooleanValue) {
-                        BooleanValue bv = (BooleanValue) setting;
-                        settingJson.put("value", bv.getValue());
-                    }
-                    if(setting instanceof NumberValue) {
-                        NumberValue nv = (NumberValue) setting;
-                        settingJson.put("value", nv.getValue());
-                    }
-                }
-            }
-            json.put("modules", modules);
-
-            FileWriter writer = new FileWriter(this.modules);
-            writer.write(json.toString());
-            writer.flush();
-            writer.close();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void load() {
-        JSONObject jsonObject = new JSONObject(readFile());
-
-        JSONObject modules = jsonObject.getJSONObject("modules");
-        for(Module module : moduleManager.getModules()) {
-
-            // module data
-            JSONObject moduleObject;
+            BufferedReader reader;
             try {
-                moduleObject = modules.getJSONObject(module.getName());
-                module.setEnabled(moduleObject.getBoolean("enabled"));
-                module.setKey(moduleObject.getInt("key"));
-            } catch (Exception ignored){
+                reader = new BufferedReader(new FileReader(modules));
+            } catch (FileNotFoundException e) {
                 return;
             }
 
-            // module settings
-            JSONObject settings = moduleObject.getJSONObject("settings");
-            for(Setting s : module.getSettings()) {
-                JSONObject setting = settings.getJSONObject(s.getName());
-
+            String line;
+            StringBuilder builder = new StringBuilder();
+            while((line = reader.readLine()) != null) {
+                builder.append(line);
+            }
+            reader.close();
+            JSONObject json = new JSONObject(builder.toString());
+            for(Module module : moduleManager.getModules()) {
+                JSONObject moduleJson;
                 try {
-                    if (s instanceof ModeValue) {
-                        ModeValue mv = (ModeValue) s;
-                        mv.setValue(setting.getString("value"));
-                    }
+                    moduleJson = json.getJSONObject(module.getName());
+                } catch (Exception e) {
+                    return;
+                }
+                module.setEnabled(moduleJson.getBoolean("enabled"));
+                module.setKey(moduleJson.getInt("key"));
 
-                    if(s instanceof BooleanValue) {
-                        BooleanValue bv = (BooleanValue) s;
-                        bv.setValue(setting.getBoolean("value"));
-                    }
+                JSONObject settingsJson = moduleJson.getJSONObject("settings");
+                for(Setting key : module.getSettings()) {
+                    if(!settingsJson.has(key.getName()))
+                        return;
 
-                    if(s instanceof NumberValue) {
-                        NumberValue nv = (NumberValue) s;
-                        switch (nv.getType()) {
-                            case INTEGER:
-                                nv.setValue(setting.getInt("value"));
-                                break;
+                    if(key instanceof BooleanValue) {
+                        ((BooleanValue) key).setValue(settingsJson.getBoolean(key.getName()));
+                    }
+                    if(key instanceof ModeValue) {
+                        ((ModeValue) key).setValue(settingsJson.getString(key.getName()));
+                    }
+                    if(key instanceof NumberValue) {
+                        NumberValue value1 = (NumberValue) module.getSetting(key.getName());
+                        Number value;
+                        switch (value1.getType()) {
                             case DOUBLE:
-                                nv.setValue(setting.getDouble("value"));
+                                value = settingsJson.getDouble(key.getName());
                                 break;
                             case FLOAT:
-                                nv.setValue(setting.getFloat("value"));
+                                value = settingsJson.getFloat(key.getName());
                                 break;
                             case LONG:
-                                nv.setValue(setting.getLong("value"));
+                                value = settingsJson.getLong(key.getName());
+                                break;
+                            default:
+                                value = settingsJson.getInt(key.getName());
                                 break;
                         }
+                        value1.setValue(value);
                     }
-                } catch (Exception ignored){}
-
+                }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    private String readFile() {
-        StringBuilder sb = new StringBuilder();
-        FileReader fr;
-        BufferedReader br;
-        try {
-            fr = new FileReader(modules);
-            br = new BufferedReader(fr);
-            String line;
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
+    public void save() {
+        JSONObject json = new JSONObject();
+        for(Module module : moduleManager.getModules()) {
+            JSONObject moduleJson = new JSONObject();
+            moduleJson.put("enabled", module.isEnabled());
+            moduleJson.put("key", module.getKey());
+
+            JSONObject settingsJson = new JSONObject();
+            for(Setting key : module.getSettings()) {
+                if(key instanceof BooleanValue) {
+                    settingsJson.put(key.getName(), ((BooleanValue) key).getValue());
+                }
+                if(key instanceof ModeValue) {
+                    settingsJson.put(key.getName(), ((ModeValue) key).getValue());
+                }
+                if(key instanceof NumberValue) {
+                    settingsJson.put(key.getName(), ((NumberValue) key).getValue());
+                }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            moduleJson.put("settings", settingsJson);
+            json.put(module.getName(), moduleJson);
+
+            json.put("build", Slice.VERSION);
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(modules));
+                writer.write(json.toString());
+                writer.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        return sb.toString();
-
-
     }
 }
