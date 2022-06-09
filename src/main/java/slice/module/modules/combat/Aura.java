@@ -71,7 +71,10 @@ public class Aura extends Module {
                 boolean block = mc.thePlayer.getHeldItem() != null && !blockMode.getValue().equalsIgnoreCase("None");
                 if(!noSwing.getValue()) mc.thePlayer.swingItem();
 
-                attack();
+                // fix flags on anticheats
+                if(e.isPre())
+                    attack();
+
                 e.setYaw(getRotate(target, e)[0]);
                 e.setPitch(getRotate(target, e)[1]);
                 fakeBlock = block && (blockMode.getValue().equalsIgnoreCase("Fake") || !(mc.thePlayer.getHeldItem().getItem() instanceof ItemSword));

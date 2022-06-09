@@ -22,10 +22,12 @@ public class Speed extends Module {
         if(event instanceof EventUpdate) {
                 switch (mode.getValue()) {
                     case "Bhop":
-                        if(mc.thePlayer.onGround) {
-                            MoveUtil.jump();
+                        if(MoveUtil.isMoving()) {
+                            if (mc.thePlayer.onGround) {
+                                MoveUtil.jump();
+                            }
+                            MoveUtil.strafe((MoveUtil.getSpeed())+0.02);
                         }
-                        MoveUtil.strafe(0.5D);
                         break;
                     case "Astro":
                         if (mc.thePlayer.onGround) {
