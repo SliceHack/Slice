@@ -6,6 +6,7 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemSword;
 import net.minecraft.network.play.client.C02PacketUseEntity;
 import slice.event.Event;
 import slice.event.events.EventUpdate;
@@ -13,10 +14,13 @@ import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
 import slice.setting.settings.BooleanValue;
+import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
 
 @ModuleInfo(name = "Aura", description = "Kills players around you!", category = Category.COMBAT)
 public class Aura extends Module {
+
+    ModeValue blockMode = new ModeValue("Block Mode", "Vanilla", "None", "Fake");
 
     NumberValue cps = new NumberValue("CPS", 8, 1, 20, NumberValue.Type.INTEGER);
     NumberValue range = new NumberValue("Range", 3.0, 0.2, 10.0, NumberValue.Type.DOUBLE);
@@ -31,6 +35,8 @@ public class Aura extends Module {
 
     EntityLivingBase target;
 
+    public static boolean fakeBlock;
+
     public void onEvent(Event event) {
         if(event instanceof EventUpdate) {
             EventUpdate e = (EventUpdate) event;
@@ -42,6 +48,12 @@ public class Aura extends Module {
             attack();
             e.setYaw(getRotate(target)[0]);
             e.setPitch(getRotate(target)[1]);
+            boolean block = mc.thePlayer.getHeldItem() != null && !blockMode.getValue().equalsIgnoreCase("None");
+            fakeBlock = block && (blockMode.getValue().equalsIgnoreCase("Fake") || !(mc.thePlayer.getHeldItem().getItem() instanceof ItemSword));
+
+            if(block && blockMode.getValue().equalsIgnoreCase("Vanilla")) {
+                mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem());
+            }
         }
     }
 

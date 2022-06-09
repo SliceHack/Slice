@@ -31,6 +31,7 @@ import net.optifine.DynamicLights;
 import net.optifine.reflect.Reflector;
 import net.optifine.shaders.Shaders;
 import org.lwjgl.opengl.GL11;
+import slice.module.modules.combat.Aura;
 
 public class ItemRenderer
 {
@@ -384,29 +385,33 @@ public class ItemRenderer
                 {
                     this.renderItemMap(abstractclientplayer, f2, f, f1);
                 }
-                else if (abstractclientplayer.getItemInUseCount() > 0)
+                else if (abstractclientplayer.getItemInUseCount() > 0 || Aura.fakeBlock)
                 {
                     EnumAction enumaction = this.itemToRender.getItemUseAction();
+
+                    if(Aura.fakeBlock) {
+                    	enumaction = EnumAction.BLOCK;
+                    }
 
                     switch (enumaction)
                     {
                         case NONE:
-                            this.transformFirstPersonItem(f, 0.0F);
+                            this.transformFirstPersonItem(f, f1);
                             break;
 
                         case EAT:
                         case DRINK:
                             this.performDrinking(abstractclientplayer, partialTicks);
-                            this.transformFirstPersonItem(f, 0.0F);
+                            this.transformFirstPersonItem(f, f1);
                             break;
 
                         case BLOCK:
-                            this.transformFirstPersonItem(f, 0.0F);
+                            this.transformFirstPersonItem(f, f1);
                             this.doBlockTransformations();
                             break;
 
                         case BOW:
-                            this.transformFirstPersonItem(f, 0.0F);
+                            this.transformFirstPersonItem(f, f1);
                             this.doBowTransformations(partialTicks, abstractclientplayer);
                     }
                 }
