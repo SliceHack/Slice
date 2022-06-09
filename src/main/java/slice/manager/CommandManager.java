@@ -1,6 +1,7 @@
 package slice.manager;
 
 import slice.command.Command;
+import slice.command.commands.CommandBind;
 import slice.command.commands.CommandSetting;
 import slice.command.commands.CommandToggle;
 import slice.event.events.EventChat;
@@ -17,6 +18,7 @@ public class CommandManager {
     public CommandManager(ModuleManager moduleManager) {
         register(new CommandSetting(moduleManager));
         register(new CommandToggle());
+        register(new CommandBind());
     }
 
     public void register(Command command) {
