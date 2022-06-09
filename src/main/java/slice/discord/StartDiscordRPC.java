@@ -6,23 +6,28 @@ import net.arikia.dev.drpc.DiscordRichPresence;
 import slice.util.LoggerUtil;
 
 public class StartDiscordRPC {
+    long timestamp = 0;
 
     public void start() {
+        timestamp = System.currentTimeMillis();
+
         DiscordEventHandlers handlers = new DiscordEventHandlers.Builder().setReadyEventHandler((user) -> {
-            LoggerUtil.addTerminalMessage("Discord: " + user.username + "#" + user.discriminator);
-            System.exit(0);
+            System.out.println("Welcome " + user.username + "#" + user.discriminator);
         }).build();
 
+        new Thread(DiscordRPC::discordRunCallbacks).start();
+
         DiscordRPC.discordInitialize("984300399534170113", handlers, true);
-        updateDiscord("Slice Client", "Haxor Client");
-
-        new Thread(DiscordRPC::discordRunCallbacks);
-
     }
 
     public void updateDiscord(String line1, String line2) {
-        DiscordRichPresence rich = new DiscordRichPresence.Builder(line1).setDetails(line2).build();
-        DiscordRPC.discordUpdatePresence(rich);
+        DiscordRichPresence presence = new DiscordRichPresence.Builder(line2)
+                .setBigImage("large", "")
+                .setDetails(line1)
+                .setStartTimestamps(timestamp)
+                .build();
+
+        DiscordRPC.discordUpdatePresence(presence);
     }
 
 }
