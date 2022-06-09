@@ -11,7 +11,7 @@ public abstract class Command {
     /* CommandInfo */
     private CommandInfo info = getClass().getAnnotation(CommandInfo.class);
 
-    /* data */
+
     private String name, description;
     private String[] aliases;
 
