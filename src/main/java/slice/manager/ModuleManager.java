@@ -9,6 +9,7 @@ import slice.module.modules.combat.Aura;
 import slice.module.modules.misc.ChatSpammer;
 import slice.module.modules.misc.Disabler;
 import slice.module.modules.movement.*;
+import slice.module.modules.world.TimeChanger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ public class ModuleManager {
         register(new Aura());
         register(new NoSlow());
         register(new AntiBot());
+        register(new TimeChanger());
     }
 
     /**
