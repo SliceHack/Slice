@@ -7,7 +7,7 @@ import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
 import slice.setting.settings.NumberValue;
 
-@ModuleInfo(name = "ChatSpammer", description = "Spams a chat message", category = Category.MISC)
+@ModuleInfo(name = "Spammer", description = "Spams a chat message", category = Category.MISC)
 public class ChatSpammer extends Module {
 
     NumberValue delay = new NumberValue("Delay", 1500L, 250L, 5000L, NumberValue.Type.LONG);

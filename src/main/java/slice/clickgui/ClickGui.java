@@ -9,6 +9,11 @@ import slice.module.data.Category;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * ClickGui
+ *
+ * @author Nick
+ * */
 @Getter @Setter
 public class ClickGui extends GuiScreen {
 

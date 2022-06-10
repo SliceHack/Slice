@@ -10,7 +10,7 @@ import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
 import slice.setting.settings.NumberValue;
 
-@ModuleInfo(name = "TimeChanger", description = "Changes the time of the day.", category = Category.WORLD)
+@ModuleInfo(name = "Time", description = "Changes the time of the day.", category = Category.WORLD)
 public class TimeChanger extends Module {
 
     NumberValue time = new NumberValue("Time", 16000L, 0L, 24000L, NumberValue.Type.LONG);
@@ -28,4 +28,6 @@ public class TimeChanger extends Module {
             }
         }
     }
+
+
 }
