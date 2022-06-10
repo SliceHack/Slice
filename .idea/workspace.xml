@@ -7,17 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8147b0a-d056-47d0-a2a5-6dd175316f42" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/slice/clickgui/setting/settings/SliderButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/minecraft/client/entity/EntityPlayerSP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/minecraft/client/entity/EntityPlayerSP.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/slice/clickgui/ClickGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/slice/clickgui/ClickGui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/slice/clickgui/module/ModuleButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/slice/clickgui/module/ModuleButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/slice/clickgui/pane/DropdownPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/slice/clickgui/pane/DropdownPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/slice/clickgui/pane/SettingPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/slice/clickgui/pane/SettingPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/slice/clickgui/setting/SettingComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/slice/clickgui/setting/SettingComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/slice/clickgui/setting/settings/BooleanButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/slice/clickgui/setting/settings/BooleanButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/slice/clickgui/setting/settings/ModeButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/slice/clickgui/setting/settings/ModeButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/slice/module/modules/combat/Aura.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/slice/module/modules/combat/Aura.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/slice/module/modules/movement/Fly.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/slice/module/modules/movement/Fly.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
