@@ -12,7 +12,7 @@ import slice.util.MoveUtil;
 @ModuleInfo(name = "Speed", description = "Allows you to move fast!!", key = Keyboard.KEY_X, category = Category.MOVEMENT)
 public class Speed extends Module {
 
-    ModeValue mode = new ModeValue("Mode", "Bhop", "Bhop", "Astro", "UwUGuard");
+    ModeValue mode = new ModeValue("Mode", "Bhop", "Bhop", "Dev", "Astro", "UwUGuard");
 
     public void onDisable() {
         mc.timer.timerSpeed = 1.0F;
@@ -26,8 +26,14 @@ public class Speed extends Module {
                             if (mc.thePlayer.onGround) {
                                 MoveUtil.jump();
                             }
-                            MoveUtil.strafe((MoveUtil.getSpeed())+0.02);
+                            MoveUtil.strafe((MoveUtil.getSpeed()));
                         }
+                        break;
+                    case "Dev":
+                        if(mc.thePlayer.onGround) {
+                            MoveUtil.jump();
+                        }
+                        MoveUtil.strafe(MoveUtil.getSpeed()+0.01);
                         break;
                     case "Astro":
                         if (mc.thePlayer.onGround) {
@@ -48,9 +54,12 @@ public class Speed extends Module {
                         if (mc.thePlayer.onGround) {
                             MoveUtil.jump();
                         }
+                        
                         MoveUtil.strafe(5);
                         break;
                 }
         }
     }
+
+
 }

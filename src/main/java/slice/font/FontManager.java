@@ -14,10 +14,6 @@ public class FontManager {
 
     private final HashMap<String, TTFFontRenderer> fonts = new HashMap<>();
 
-    public FontManager() {
-
-    }
-
     private void createFont(String name, int size) {
         Font font;
 

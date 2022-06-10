@@ -50,6 +50,7 @@ public class Aura extends Module {
     public void onDisable() {
         deltaPitch = 0;
         deltaYaw = 0;
+        fakeBlock = false;
     }
 
     public void onEnable() {
@@ -68,42 +69,30 @@ public class Aura extends Module {
             }
 
             if(target != null) {
-                boolean block = mc.thePlayer.getHeldItem() != null && !blockMode.getValue().equalsIgnoreCase("None");
-                if(!noSwing.getValue()) mc.thePlayer.swingItem();
-
-                // fix flags on anticheats
-                if(e.isPre())
-                    attack();
-
                 e.setYaw(getRotate(target, e)[0]);
                 e.setPitch(getRotate(target, e)[1]);
+
+                boolean block = mc.thePlayer.getHeldItem() != null && !blockMode.getValue().equalsIgnoreCase("None");
+
                 fakeBlock = block && (blockMode.getValue().equalsIgnoreCase("Fake") || !(mc.thePlayer.getHeldItem().getItem() instanceof ItemSword));
 
                 if((block && !fakeBlock) && blockMode.getValue().equalsIgnoreCase("Vanilla")) {
                     mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem());
+                }
+
+                if (timer.hasReached(1000 / cps.getValue().intValue())) {
+                    attack();
+                    timer.reset();
                 }
             }
 
         }
     }
 
-    public void attack() {
-        if(!reachedPitch && !reachedYaw)
-            return;
-
-        if(timer.hasReached(1000 / cps.getValue().intValue())) {
-            if(keepSprint.getValue()) {
-                if(target == null)
-                    return;
-
-                mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(target, C02PacketUseEntity.Action.ATTACK));
-                return;
-            }
-            if(target == null)
-                return;
-
-            mc.playerController.attackEntity(mc.thePlayer, target);
-        }
+    private void attack() {
+        mc.thePlayer.swingItem();
+        if(keepSprint.getValue()) mc.getNetHandler().addToSendQueue(new C02PacketUseEntity(target, C02PacketUseEntity.Action.ATTACK));
+        else mc.playerController.attackEntity(mc.thePlayer, target);
     }
 
     public float[] getRotate(Entity e, EventUpdate event) {
