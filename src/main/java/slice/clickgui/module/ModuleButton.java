@@ -37,7 +37,7 @@ public class ModuleButton {
     }
 
     public void drawButton(int mouseX, int mouseY) {
-        pane = new SettingPane(module, x, y, width);
+        pane = new SettingPane(module, x + width, y, width);
         open = Slice.INSTANCE.getClickGui().isVisible(module);
 
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 20);

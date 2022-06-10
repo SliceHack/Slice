@@ -40,7 +40,7 @@ public enum Slice {
 
     /**
      * TODO:
-        * - Fix ClickGui module opening
+        * - Add ClickGui Settings
      * */
     Slice() {
         moduleManager = new ModuleManager();

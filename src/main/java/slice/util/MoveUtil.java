@@ -3,6 +3,7 @@ package slice.util;
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
 
@@ -22,6 +23,16 @@ public class MoveUtil {
      * */
     public boolean isMoving() {
         return Minecraft.getMinecraft().thePlayer != null && (Minecraft.getMinecraft().thePlayer.moveForward != 0.0F || Minecraft.getMinecraft().thePlayer.moveStrafing != 0.0F);
+    }
+
+    /**
+     * Stops the player from moving
+     * */
+    public void stop() {
+        Minecraft.getMinecraft().thePlayer.motionX = 0.0D;
+        Minecraft.getMinecraft().thePlayer.motionZ = 0.0D;
+
+        for (KeyBinding key : KeyUtil.moveKeys()) key.pressed = false;
     }
 
     /**

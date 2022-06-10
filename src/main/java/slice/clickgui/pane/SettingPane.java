@@ -39,7 +39,6 @@ public class SettingPane {
     }
 
     public void drawPane(int mouseX, int mouseY) {
-        LoggerUtil.addMessage("Drawing Setting Pane for module " + module.getName());
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 20);
 
         height = 180;

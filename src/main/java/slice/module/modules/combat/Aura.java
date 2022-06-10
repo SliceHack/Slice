@@ -87,11 +87,6 @@ public class Aura extends Module {
                 e.setYaw(getRotationsFixedSens(target)[0]);
                 e.setPitch(getRotationsFixedSens(target)[1]);
 
-                if(timer.hasReached(50L)) {
-                    hasRotated = true;
-                    timer.reset();
-                }
-
                 boolean block = mc.thePlayer.getHeldItem() != null && !blockMode.getValue().equalsIgnoreCase("None");
 
                 fakeBlock = block && (blockMode.getValue().equalsIgnoreCase("Fake") || !(mc.thePlayer.getHeldItem().getItem() instanceof ItemSword));
@@ -102,13 +97,11 @@ public class Aura extends Module {
 
                 deltaCps = deltaCps == cps.getValue().intValue() ? (cps.getValue().intValue() != 1 ? (cps.getValue().intValue() - 1) : 1) : cps.getValue().intValue();
 
-                if(hasRotated) {
-                    if (timer.hasReached(1000 / deltaCps)) {
-                        attack();
-                        if(!noSwing.getValue()) mc.thePlayer.swingItem();
-                        timer.reset();
+                if (timer.hasReached(1000 / deltaCps)) {
+                    attack();
+                    if(!noSwing.getValue()) mc.thePlayer.swingItem();
+                    timer.reset();
 
-                    }
                 }
             }
 
