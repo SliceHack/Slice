@@ -2,6 +2,7 @@ package slice.util;
 
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 
 /**
  * Easier rotation methods without doing alot of math
@@ -29,5 +30,14 @@ public class RotationUtil {
         if (Minecraft.getMinecraft().thePlayer.moveStrafing < 0F) rotationYaw += 90F * forward;
 
         return Math.toRadians(rotationYaw);
+    }
+
+    public boolean isInFov(Entity entity, double fov) {
+        double xDiff = entity.posX - Minecraft.getMinecraft().thePlayer.posX;
+        double yDiff = entity.posY - Minecraft.getMinecraft().thePlayer.posY;
+        double zDiff = entity.posZ - Minecraft.getMinecraft().thePlayer.posZ;
+        double distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff);
+        double angle = Math.toDegrees(Math.acos(xDiff / distance));
+        return angle < fov;
     }
 }
