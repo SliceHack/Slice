@@ -36,6 +36,7 @@ public class ModuleManager {
         register(new NoSlow());
         register(new AntiBot());
         register(new TimeChanger());
+        register(new Velocity());
     }
 
     /**
