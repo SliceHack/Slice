@@ -26,14 +26,10 @@ public class Speed extends Module {
                             if (mc.thePlayer.onGround) {
                                 MoveUtil.jump();
                             }
-                            MoveUtil.strafe((MoveUtil.getSpeed()));
+                            MoveUtil.strafe((MoveUtil.getSpeed())+0.02);
                         }
                         break;
                     case "Dev":
-                        if(mc.thePlayer.onGround) {
-                            MoveUtil.jump();
-                        }
-                        MoveUtil.strafe(MoveUtil.getSpeed()+0.01);
                         break;
                     case "Astro":
                         if (mc.thePlayer.onGround) {

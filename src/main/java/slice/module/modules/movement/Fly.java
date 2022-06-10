@@ -60,11 +60,13 @@ public class Fly extends Module {
                 case "UwUGuard":
                     double direction = RotationUtil.getDirection();
 
-                    mc.timer.timerSpeed = 0.1f;
 
                     if(mc.thePlayer.ticksExisted % 4 != 0) {
-                        MoveUtil.jump();
+                        mc.thePlayer.motionY = -0.42F;
+                        mc.timer.timerSpeed = 1.0F;
                     }
+                    else mc.timer.timerSpeed = 0.1f;
+
                     if(mc.thePlayer.ticksExisted % 5 != 0) {
                         mc.thePlayer.motionX = -MathHelper.sin((float) direction);
                         mc.thePlayer.motionZ = MathHelper.cos((float) direction);

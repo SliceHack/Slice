@@ -68,7 +68,7 @@ public abstract class Module {
      *             - if the setting is not found, null is returned
      * */
     public Setting getSetting(String name) {
-        return settings.stream().filter(setting -> setting.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+        return settings.stream().filter(setting -> setting.getName().replace(" ", "").equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 
 

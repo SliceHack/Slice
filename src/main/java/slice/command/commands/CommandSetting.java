@@ -41,7 +41,7 @@ public class CommandSetting extends Command {
         if(setting instanceof ModeValue) {
             ModeValue mode = (ModeValue) setting;
             for(String s : mode.getValues()) {
-                if(s.equalsIgnoreCase(args[1])) {
+                if(s.replace(" ", "").equalsIgnoreCase(args[1])) {
                     mode.setValue(s);
                     addMessage("&a" + args[0] + " set to " + s);
                     return true;

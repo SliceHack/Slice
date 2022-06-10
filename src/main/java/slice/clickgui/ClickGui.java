@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.gui.GuiScreen;
 import slice.clickgui.pane.DropdownPane;
+import slice.module.Module;
 import slice.module.data.Category;
 
 import java.io.IOException;
@@ -18,6 +19,8 @@ import java.util.*;
 public class ClickGui extends GuiScreen {
 
     private List<DropdownPane> paneList = new ArrayList<>();
+
+    private List<Module> openModules = new ArrayList<>();
 
     public ClickGui() {
         int xAdd = 0;
@@ -41,5 +44,14 @@ public class ClickGui extends GuiScreen {
 
     public boolean doesGuiPauseGame() {
         return false;
+    }
+
+    public boolean isVisible(Module module) {
+        return openModules.contains(module);
+    }
+
+    public void setVisible(Module module, boolean visible) {
+        if(visible) openModules.add(module);
+        else openModules.remove(module);
     }
 }

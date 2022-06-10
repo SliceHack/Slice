@@ -4,6 +4,7 @@ import net.arikia.dev.drpc.DiscordRPC;
 import net.arikia.dev.drpc.DiscordRichPresence;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityVillager;
@@ -26,7 +27,7 @@ import java.util.logging.Logger;
 @ModuleInfo(name = "Aura", description = "Kills players around you!", key = Keyboard.KEY_R, category = Category.COMBAT)
 public class Aura extends Module {
 
-    ModeValue blockMode = new ModeValue("Block Mode", "Vanilla", "None", "Fake");
+    ModeValue blockMode = new ModeValue("Block Mode", "Vanilla", "Vanilla", "None", "Fake");
 
     NumberValue cps = new NumberValue("CPS", 8, 1, 20, NumberValue.Type.INTEGER);
     NumberValue range = new NumberValue("Range", 3.0, 0.2, 10.0, NumberValue.Type.DOUBLE);
@@ -43,9 +44,13 @@ public class Aura extends Module {
 
     public static boolean fakeBlock;
 
+    /** for bypassing */
+    private int deltaCps;
+    private boolean reachedCps;
+
     /** smooth rotating */
     private float deltaYaw, deltaPitch;
-    private boolean reachedYaw, reachedPitch;
+    private boolean reachedYaw, reachedPitch, hasRotated;
 
     public void onDisable() {
         deltaPitch = 0;
@@ -68,9 +73,24 @@ public class Aura extends Module {
                 fakeBlock = false;
             }
 
+            if(target == null) {
+                reachedCps = false;
+                reachedPitch = false;
+                reachedYaw = false;
+                deltaYaw = mc.thePlayer.rotationYawHead;
+                deltaPitch = mc.thePlayer.rotationPitchHead;
+                deltaCps = 0;
+                hasRotated = false;
+            }
+
             if(target != null) {
-                e.setYaw(getRotate(target, e)[0]);
-                e.setPitch(getRotate(target, e)[1]);
+                e.setYaw(getRotationsFixedSens(target)[0]);
+                e.setPitch(getRotationsFixedSens(target)[1]);
+
+                if(timer.hasReached(50L)) {
+                    hasRotated = true;
+                    timer.reset();
+                }
 
                 boolean block = mc.thePlayer.getHeldItem() != null && !blockMode.getValue().equalsIgnoreCase("None");
 
@@ -80,9 +100,15 @@ public class Aura extends Module {
                     mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem());
                 }
 
-                if (timer.hasReached(1000 / cps.getValue().intValue())) {
-                    attack();
-                    timer.reset();
+                deltaCps = deltaCps == cps.getValue().intValue() ? (cps.getValue().intValue() != 1 ? (cps.getValue().intValue() - 1) : 1) : cps.getValue().intValue();
+
+                if(hasRotated) {
+                    if (timer.hasReached(1000 / deltaCps)) {
+                        attack();
+                        if(!noSwing.getValue()) mc.thePlayer.swingItem();
+                        timer.reset();
+
+                    }
                 }
             }
 
@@ -90,8 +116,7 @@ public class Aura extends Module {
     }
 
     private void attack() {
-        mc.thePlayer.swingItem();
-        if(keepSprint.getValue()) mc.getNetHandler().addToSendQueue(new C02PacketUseEntity(target, C02PacketUseEntity.Action.ATTACK));
+        if (keepSprint.getValue()) mc.getNetHandler().addToSendQueue(new C02PacketUseEntity(target, C02PacketUseEntity.Action.ATTACK));
         else mc.playerController.attackEntity(mc.thePlayer, target);
     }
 
@@ -127,6 +152,43 @@ public class Aura extends Module {
         return target;
     }
 
+    public float[] getRotationsFixedSens(Entity e) {
+        double x = e.posX - mc.thePlayer.posX;
+        double y = e.posY - mc.thePlayer.posY;
+        double z = e.posZ - mc.thePlayer.posZ;
+
+        double dist = Math.sqrt(x * x + y * y + z * z);
+        float yaw = (float) (Math.atan2(z, x) * 180.0D / Math.PI) - 90.0F;
+        float pitch = (float) -(Math.atan2(y, dist) * 180.0D / Math.PI);
+
+        if (pitch != deltaPitch) reachedPitch = false;
+        else if (yaw != deltaYaw) reachedYaw = false;
+        else if (pitch == deltaPitch) reachedPitch = true;
+        else if (yaw == deltaYaw) reachedYaw = true;
+
+        if(!reachedPitch) {
+            if(pitch > deltaPitch) {
+                deltaPitch += Math.abs(pitch - deltaPitch) / 10;
+            } else {
+                deltaPitch -= Math.abs(pitch - deltaPitch) / 10;
+            }
+        }
+        if(!reachedYaw) {
+            int smooth = 5;
+            if(yaw > deltaYaw) {
+                deltaYaw += Math.abs(yaw - deltaYaw) / smooth;
+            } else {
+                deltaYaw -= Math.abs(yaw - deltaYaw) / smooth;
+            }
+        }
+        if(deltaPitch > 90) deltaPitch = 90;
+        else if(deltaPitch < -90) deltaPitch = -90;
+
+
+
+        return new float[] {deltaYaw, deltaPitch};
+    }
+
     public boolean canAttack(EntityLivingBase entity) {
         boolean player = players.getValue();
         boolean invis = this.invis.getValue();
@@ -157,7 +219,7 @@ public class Aura extends Module {
         if(entity.isInvisible() && !invis) {
             return false;
         }
-        return entity != mc.thePlayer && entity.isEntityAlive() && mc.thePlayer.getDistanceToEntity(entity) <= reach;
+        return entity != mc.thePlayer && entity.isEntityAlive() && mc.thePlayer.getDistanceToEntity(entity) <= reach && !(entity instanceof EntityArmorStand && entity.isInvisible());
     }
 
 }
