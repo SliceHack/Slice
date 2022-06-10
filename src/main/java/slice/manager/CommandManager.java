@@ -4,6 +4,7 @@ import slice.command.Command;
 import slice.command.commands.CommandBind;
 import slice.command.commands.CommandSetting;
 import slice.command.commands.CommandToggle;
+import slice.command.commands.CommandVClip;
 import slice.event.events.EventChat;
 import slice.module.Module;
 import slice.util.LoggerUtil;
@@ -19,6 +20,7 @@ public class CommandManager {
         register(new CommandSetting(moduleManager));
         register(new CommandToggle());
         register(new CommandBind());
+        register(new CommandVClip());
     }
 
     public void register(Command command) {
