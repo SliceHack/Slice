@@ -25,4 +25,8 @@ public class MathUtil {
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
+
+    public boolean isPositive(Number number) {
+        return number.doubleValue() >= 0;
+    }
 }
