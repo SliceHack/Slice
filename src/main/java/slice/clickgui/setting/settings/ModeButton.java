@@ -18,7 +18,8 @@ public class ModeButton extends SettingComponent {
     private ModeValue modeValue;
 
     public ModeButton(ModeValue setting, int x, int y) {
-        super(setting);
+        super(setting, setting.getName() + ": " + setting.getValue());
+        this.modeValue = setting;
         this.x = x;
         this.y = y;
     }
@@ -27,7 +28,8 @@ public class ModeButton extends SettingComponent {
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 20);
         height = (int)font.getHeight(setting.getName() + ": " + modeValue.getValue())+5;
         width = (int)font.getWidth(setting.getName() + ": " + modeValue.getValue())+5;
-        font.drawString(setting.getName() + ": " + modeValue.getValue(), x, y, -1);
+        text = setting.getName() + ": " + modeValue.getValue();
+        font.drawString(text, x, y, -1);
     }
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {

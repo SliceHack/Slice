@@ -8,12 +8,15 @@ import slice.setting.Setting;
 public abstract class SettingComponent {
 
     public Setting setting;
+    public String text;
     public int x, y, width, height;
 
-    public SettingComponent(Setting setting) {
+    public SettingComponent(Setting setting, String text) {
         this.setting = setting;
+        this.text = text;
     }
 
     public abstract void draw(int mouseX, int mouseY);
     public abstract void mouseClicked(int mouseX, int mouseY, int mouseButton);
+    public void mouseReleased(int mouseX, int mouseY, int mouseButton) {}
 }

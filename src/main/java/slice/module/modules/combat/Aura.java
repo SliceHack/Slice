@@ -1,7 +1,5 @@
 package slice.module.modules.combat;
 
-import net.arikia.dev.drpc.DiscordRPC;
-import net.arikia.dev.drpc.DiscordRichPresence;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityArmorStand;
@@ -20,11 +18,9 @@ import slice.module.data.ModuleInfo;
 import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
-import slice.util.LoggerUtil;
-
-import java.util.logging.Logger;
 
 @ModuleInfo(name = "Aura", description = "Kills players around you!", key = Keyboard.KEY_R, category = Category.COMBAT)
+@SuppressWarnings("all")
 public class Aura extends Module {
 
     ModeValue blockMode = new ModeValue("Block Mode", "Vanilla", "Vanilla", "None", "Fake");

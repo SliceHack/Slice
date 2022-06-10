@@ -194,7 +194,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
      */
     public void onUpdateWalkingPlayer()
     {
-        EventUpdate e = new EventUpdate(posX, this.getEntityBoundingBox().minY, posZ, rotationYaw, rotationPitch, onGround, true);
+        EventUpdate e = new EventUpdate(posX, getEntityBoundingBox().minY, posZ, rotationYaw, rotationPitch, onGround, true);
         e.call();
 
         boolean flag = this.isSprinting();
@@ -231,11 +231,11 @@ public class EntityPlayerSP extends AbstractClientPlayer
 
         if (this.isCurrentViewEntity())
         {
-            double d0 = this.posX - this.lastReportedPosX;
-            double d1 = this.getEntityBoundingBox().minY - this.lastReportedPosY;
-            double d2 = this.posZ - this.lastReportedPosZ;
-            double d3 = (double)(e.getYaw() - this.lastReportedYaw);
-            double d4 = (double)(e.getPitch() - this.lastReportedPitch);
+            double d0 = e.getX() - this.lastReportedPosX;
+            double d1 = e.getY() - this.lastReportedPosY;
+            double d2 = e.getZ() - this.lastReportedPosZ;
+            double d3 = e.getYaw() - this.lastReportedYaw;
+            double d4 = (e.getPitch() - this.lastReportedPitch);
             boolean flag2 = d0 * d0 + d1 * d1 + d2 * d2 > 9.0E-4D || this.positionUpdateTicks >= 20;
             boolean flag3 = d3 != 0.0D || d4 != 0.0D;
 

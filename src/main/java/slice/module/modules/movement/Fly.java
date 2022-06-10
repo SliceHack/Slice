@@ -38,6 +38,8 @@ public class Fly extends Module {
 
             EventUpdate e = (EventUpdate) event;
 
+            speed.setHidden(!mode.getValue().equalsIgnoreCase("Vanilla"));
+
             // boobing
             if(bobbing.getValue() && MoveUtil.isMoving()) {
                 mc.thePlayer.cameraPitch = 0.1F;
@@ -63,7 +65,6 @@ public class Fly extends Module {
 
                     if(mc.thePlayer.ticksExisted % 4 != 0) {
                         mc.thePlayer.motionY = -0.42F;
-                        mc.timer.timerSpeed = 1.0F;
                     }
                     else mc.timer.timerSpeed = 0.1f;
 

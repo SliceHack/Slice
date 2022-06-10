@@ -54,4 +54,11 @@ public class ClickGui extends GuiScreen {
         if(visible) openModules.add(module);
         else openModules.remove(module);
     }
+
+    /**
+     * Gets pane by category
+     * */
+    public DropdownPane getPane(Category category) {
+        return paneList.stream().filter(pane -> pane.getCategory() == category).findFirst().orElse(null);
+    }
 }

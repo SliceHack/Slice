@@ -91,6 +91,7 @@ public class DropdownPane {
         if (dragging) {
             dragging = false;
         }
+        if(open) moduleButtons.forEach(moduleButton -> moduleButton.mouseReleased(mouseX, mouseY, mouseButton));
     }
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {

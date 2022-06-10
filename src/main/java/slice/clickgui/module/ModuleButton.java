@@ -7,7 +7,6 @@ import slice.Slice;
 import slice.clickgui.pane.SettingPane;
 import slice.font.TTFFontRenderer;
 import slice.module.Module;
-import slice.util.LoggerUtil;
 
 import java.awt.*;
 
@@ -37,7 +36,7 @@ public class ModuleButton {
     }
 
     public void drawButton(int mouseX, int mouseY) {
-        pane = new SettingPane(module, x + width, y, width);
+        pane = new SettingPane(module, x + Slice.INSTANCE.getClickGui().getPane(module.getCategory()).getWidth(), y, width);
         open = Slice.INSTANCE.getClickGui().isVisible(module);
 
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 20);
@@ -48,6 +47,10 @@ public class ModuleButton {
         GlStateManager.popMatrix();
 
         if(open) pane.drawPane(mouseX, mouseY);
+    }
+
+    public void mouseReleased(int mouseX, int mouseY, int mouseButton) {
+        if(open) pane.mouseReleased(mouseX, mouseY, mouseButton);
     }
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {

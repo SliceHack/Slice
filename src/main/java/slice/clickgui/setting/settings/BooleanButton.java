@@ -8,6 +8,9 @@ import slice.clickgui.setting.SettingComponent;
 import slice.font.TTFFontRenderer;
 import slice.setting.Setting;
 import slice.setting.settings.BooleanValue;
+import slice.util.RenderUtil;
+
+import java.awt.*;
 
 /**
  * Boolean Button
@@ -19,8 +22,9 @@ public class BooleanButton extends SettingComponent {
 
     private BooleanValue booleanValue;
 
-    public BooleanButton(Setting setting, int x, int y) {
-        super(setting);
+    public BooleanButton(BooleanValue setting, int x, int y) {
+        super(setting, setting.getName());
+        this.booleanValue = setting;
         this.x = x;
         this.y = y;
     }
@@ -28,12 +32,18 @@ public class BooleanButton extends SettingComponent {
     public void draw(int mouseX, int mouseY) {
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 20);
 
+        width = (int) (font.getWidth(booleanValue.getName()) + 20);
+        text = booleanValue.getName();
+
         font.drawString(setting.getName(), x, y, -1);
-        Gui.drawRect((x+5), y, (x+5) + width, y + height, booleanValue.getValue() ? 0xFF00FF00 : 0xFFFF0000);
+        int xAdd = (int) (font.getWidth(setting.getName()))+2;
+        RenderUtil.drawRoundedRect(x + xAdd, y, (x+xAdd) + 15, y + 15, 9, booleanValue.getValue() ? new Color(255, 155, 255).getRGB() : new Color(128, 155, 128).getRGB());
     }
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
-        if (mouseX >= (x+5) && mouseX <= (x+5) + width && mouseY >= y && mouseY <= y + height) {
+        int xAdd = (int) (Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 20).getWidth(setting.getName()))+2;
+
+        if (mouseX >= (x+xAdd) && mouseX <= (x+xAdd) + 15 && mouseY >= y && mouseY <= y + 15) {
             booleanValue.setValue(!booleanValue.getValue());
         }
     }
