@@ -6,6 +6,7 @@ import slice.Slice;
 import slice.clickgui.setting.SettingComponent;
 import slice.font.TTFFontRenderer;
 import slice.setting.settings.NumberValue;
+import slice.util.LoggerUtil;
 import slice.util.RenderUtil;
 
 import java.awt.*;
@@ -29,6 +30,8 @@ public class SliderButton extends SettingComponent {
         if(dragging) {
             x = mouseX - dragX;
             y = mouseY - dragY;
+            LoggerUtil.addMessage("SliderButton: Dragging");
+            value.setValue(value.getMax().doubleValue() * ((x - 2) + (int) (width * (value.getValue().doubleValue() / value.getMax().doubleValue())) - x) / width);
         }
 
         width = 80;
@@ -41,18 +44,20 @@ public class SliderButton extends SettingComponent {
         // draw off dragX and dragY
         RenderUtil.drawRoundedRect(x - 2, y + font.getHeight(value.getName())-3,  (x - 2) + width, (y+font.getHeight(value.getName())-3) + height, 5, new Color(128, 155, 128).getRGB());
         RenderUtil.drawRoundedRect(x - 2, y + font.getHeight(value.getName())-3, (x - 2) + (int) (width * (value.getValue().doubleValue() / value.getMax().doubleValue())), (y+font.getHeight(value.getName())-3) + height, 5, new Color(255, 155, 255).getRGB());
-
-        if(dragging) {
-            value.setValue(value.getMax().doubleValue() * ((x - 2) + (int) (width * (value.getValue().doubleValue() / value.getMax().doubleValue())) - x) / width);
-        }
     }
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 20);
         if(mouseX >= x - 2 && mouseX <= x - 2 + width && mouseY >= y + font.getHeight(value.getName()) && mouseY <= y + font.getHeight(value.getName()) + height) {
             dragging = true;
+            LoggerUtil.addMessage("SliderButton: Clicked");
             dragX = mouseX - x;
             dragY = mouseY - y;
         }
+    }
+
+    public void mouseReleased(int mouseX, int mouseY, int mouseButton) {
+        LoggerUtil.addMessage("SliderButton: Released");
+        dragging = false;
     }
 }

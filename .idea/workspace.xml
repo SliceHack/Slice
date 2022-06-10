@@ -7,7 +7,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8147b0a-d056-47d0-a2a5-6dd175316f42" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ViaMCP/ViaBackwards/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/ViaMCP/ViaBackwards/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ViaMCP/ViaRewind/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/ViaMCP/ViaRewind/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ViaMCP/ViaVersion/viaversion.yml" beforeDir="false" afterPath="$PROJECT_DIR$/ViaMCP/ViaVersion/viaversion.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/slice/clickgui/setting/settings/SliderButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/slice/clickgui/setting/settings/SliderButton.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +82,7 @@
     <configuration name="Start" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Start" />
       <module name="Slice" />
-      <option name="PROGRAM_PARAMETERS" value="--gameDir &quot;C:\Users\Nick\Minecraft Dir&quot; --assetsDir &quot;C:\Users\Nick\AppData\Roaming\.minecraft\assets&quot;" />
+      <option name="PROGRAM_PARAMETERS" value="--gameDir &quot;C:\Users\djlev\minecraft-dir&quot; --assetsDir &quot;C:\Users\djlev\AppData\Roaming\.minecraft\assets&quot;" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -105,6 +109,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Slice$Start.ic" NAME="Start Coverage Results" MODIFIED="1654635763270" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
