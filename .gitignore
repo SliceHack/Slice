@@ -2,6 +2,4 @@ out
 logs
 .idea
 Slice.iml
-ViaMCPgit rm --cached .
-      git add .
-      git commit -m "refreshed ignored files."
+ViaMCP
