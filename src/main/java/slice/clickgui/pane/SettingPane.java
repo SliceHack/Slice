@@ -85,6 +85,12 @@ public class SettingPane {
         GlStateManager.color(1, 1, 1, 1);
         int width = getLargestSetting() != null ? (int)font.getWidth(getLargestSetting().getText())+5 : 80;
 
+        if(getLargestSetting() != null) {
+            if (getLargestSetting() instanceof SliderButton) {
+                width = getLargestSetting().getWidth()+5;
+            }
+        }
+
         RenderUtil.drawRoundedRect(x, y, x + width, y + (height), 15, new Color(1, 0, 0, 155).getRGB());
         GlStateManager.popMatrix();
         settings.forEach(setting -> setting.draw(mouseX, mouseY));

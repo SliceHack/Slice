@@ -46,4 +46,8 @@ public class BooleanButton extends SettingComponent {
             booleanValue.setValue(!booleanValue.getValue());
         }
     }
+
+    public String formatDouble(int places, double value) {
+        return String.format("%." + places, value);
+    }
 }
