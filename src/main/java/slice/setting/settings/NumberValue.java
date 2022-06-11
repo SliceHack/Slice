@@ -23,8 +23,10 @@ public class NumberValue extends Setting {
 
         if(value.doubleValue() > max.doubleValue()) this.value = max;
         else if(value.doubleValue() < min.doubleValue()) this.value = min;
-
-        Slice.INSTANCE.getSaver().save();
+        try {
+            if (Slice.INSTANCE.getSaver() != null)
+                Slice.INSTANCE.getSaver().save();
+        }catch (Exception ignored){}
     }
 
     public enum Type {

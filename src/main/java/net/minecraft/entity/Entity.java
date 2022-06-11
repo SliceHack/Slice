@@ -46,6 +46,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import slice.event.events.EventSafeWalk;
 
 public abstract class Entity implements ICommandSender
 {
@@ -623,9 +624,12 @@ public abstract class Entity implements ICommandSender
             double d3 = x;
             double d4 = y;
             double d5 = z;
-            boolean flag = this.onGround && this.isSneaking() && this instanceof EntityPlayer;
 
-            if (flag)
+            boolean flag = this.onGround && this.isSneaking() && this instanceof EntityPlayer;
+            EventSafeWalk event = new EventSafeWalk(false);
+            event.call();
+
+            if (flag && !event.isCancelled())
             {
                 double d6;
 

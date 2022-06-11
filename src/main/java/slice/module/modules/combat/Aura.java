@@ -49,6 +49,8 @@ public class Aura extends Module {
     private float deltaYaw, deltaPitch;
     private boolean reachedYaw, reachedPitch, hasRotated;
 
+    private float yaw, pitch;
+
     public void onDisable() {
         deltaPitch = 0;
         deltaYaw = 0;
@@ -80,9 +82,12 @@ public class Aura extends Module {
                 hasRotated = false;
             }
 
+            e.setYaw(yaw);
+            e.setPitch(pitch);
+
             if(target != null) {
-                e.setYaw(getRotationsFixedSens(target)[0]);
-                e.setPitch(getRotationsFixedSens(target)[1]);
+                yaw = getRotationsFixedSens(target)[0];
+                pitch = getRotationsFixedSens(target)[1];
 
                 boolean block = mc.thePlayer.getHeldItem() != null && !blockMode.getValue().equalsIgnoreCase("None");
 

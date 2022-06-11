@@ -21,7 +21,10 @@ public class ModeValue extends Setting {
 
     public void setValue(String value) {
         this.value = value;
-        Slice.INSTANCE.getSaver().save();
+        try {
+            if (Slice.INSTANCE.getSaver() != null)
+                Slice.INSTANCE.getSaver().save();
+        }catch (Exception ignored){}
     }
 
     public void cycle() {

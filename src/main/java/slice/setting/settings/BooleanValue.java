@@ -16,7 +16,10 @@ public class BooleanValue extends Setting {
 
     public void setValue(boolean value) {
         this.value = value;
-        Slice.INSTANCE.getSaver().save();
+        try {
+            if (Slice.INSTANCE.getSaver() != null)
+                Slice.INSTANCE.getSaver().save();
+        }catch (Exception ignored){}
     }
 
     /**

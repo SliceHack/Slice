@@ -29,8 +29,10 @@ public class Disabler extends Module {
 
             if(mode.getValue().equalsIgnoreCase("WarzoneMC")) {
                 if (timer.hasReached(1000L)) {
-                    packets.forEach(mc.thePlayer.sendQueue::addToSendNoEvent);
-                    packets.clear();
+                    try {
+                        packets.forEach(mc.thePlayer.sendQueue::addToSendNoEvent);
+                        packets.clear();
+                    } catch (Exception ignored){}
                 }
             }
         }

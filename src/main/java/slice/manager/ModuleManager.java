@@ -39,6 +39,7 @@ public class ModuleManager {
         register(new TimeChanger());
         register(new Velocity());
         register(new AntiCrash());
+        register(new Scaffold());
     }
 
     /**
