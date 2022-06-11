@@ -18,6 +18,7 @@ import slice.module.data.ModuleInfo;
 import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
+import slice.util.LoggerUtil;
 
 @ModuleInfo(name = "Aura", description = "Kills players around you!", key = Keyboard.KEY_R, category = Category.COMBAT)
 @SuppressWarnings("all")
@@ -87,20 +88,19 @@ public class Aura extends Module {
 
                 fakeBlock = block && (blockMode.getValue().equalsIgnoreCase("Fake") || !(mc.thePlayer.getHeldItem().getItem() instanceof ItemSword));
 
-                if((block && !fakeBlock) && blockMode.getValue().equalsIgnoreCase("Vanilla") && e.isPre()) {
+                if ((block && !fakeBlock) && blockMode.getValue().equalsIgnoreCase("Vanilla") && e.isPre()) {
                     mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem());
                 }
 
                 deltaCps = deltaCps == cps.getValue().intValue() ? (cps.getValue().intValue() != 1 ? (cps.getValue().intValue() - 1) : 1) : cps.getValue().intValue();
 
-                if(getRotationsFixedSens(target)[0] != deltaYaw && getRotationsFixedSens(target)[1] != deltaPitch)
+                if (Math.min(deltaYaw, getRotationsFixedSens(target)[0]) < 1.0f)
                     return;
 
                 if (timer.hasReached(1000 / deltaCps)) {
                     attack();
-                    if(!noSwing.getValue()) mc.thePlayer.swingItem();
+                    if (!noSwing.getValue()) mc.thePlayer.swingItem();
                     timer.reset();
-
                 }
             }
 

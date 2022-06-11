@@ -6,6 +6,7 @@ import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.modules.combat.AntiBot;
 import slice.module.modules.combat.Aura;
+import slice.module.modules.misc.AntiCrash;
 import slice.module.modules.misc.ChatSpammer;
 import slice.module.modules.misc.Disabler;
 import slice.module.modules.movement.*;
@@ -37,6 +38,7 @@ public class ModuleManager {
         register(new AntiBot());
         register(new TimeChanger());
         register(new Velocity());
+        register(new AntiCrash());
     }
 
     /**
