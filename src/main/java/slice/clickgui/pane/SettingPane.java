@@ -71,9 +71,8 @@ public class SettingPane {
                     SliderButton sliderButton = new SliderButton(this, (NumberValue) setting, x, y + yAdd);
                     settings.add(sliderButton);
                 }
+                yAdd += font.getHeight(setting.getName())+5;
             }
-
-            yAdd += font.getHeight(setting.getName())+5;
         }
         height = yAdd;
 
@@ -87,7 +86,7 @@ public class SettingPane {
 
         if(getLargestSetting() != null) {
             if (getLargestSetting() instanceof SliderButton) {
-                width += getLargestSetting().getWidth()+5;
+                width = getLargestSetting().getWidth()+5;
             }
         }
 

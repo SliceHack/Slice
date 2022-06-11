@@ -33,12 +33,14 @@ public class Fly extends Module {
         mc.timer.timerSpeed = 1.0F;
     }
 
+    public void onUpdate(EventUpdate event) {
+        speed.setHidden(!mode.getValue().equalsIgnoreCase("Vanilla"));
+    }
+
     public void onEvent(Event event) {
         if(event instanceof EventUpdate) {
 
             EventUpdate e = (EventUpdate) event;
-
-            speed.setHidden(!mode.getValue().equalsIgnoreCase("Vanilla"));
 
             // boobing
             if(bobbing.getValue() && MoveUtil.isMoving()) {

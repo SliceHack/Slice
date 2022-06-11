@@ -9,6 +9,7 @@ import slice.discord.StartDiscordRPC;
 import slice.event.Event;
 import slice.event.events.EventChat;
 import slice.event.events.EventKey;
+import slice.event.events.EventUpdate;
 import slice.file.Saver;
 import slice.font.FontManager;
 import slice.manager.CommandManager;
@@ -69,6 +70,9 @@ public enum Slice {
     public void onEvent(Event event) {
         if(event instanceof EventChat) {
             commandManager.handleChat((EventChat) event);
+        }
+        if(event instanceof EventUpdate) {
+            moduleManager.getModules().forEach(module -> module.onUpdate((EventUpdate) event));
         }
         if(event instanceof EventKey) {
             EventKey e = (EventKey) event;

@@ -5,6 +5,7 @@ import lombok.Setter;
 import net.minecraft.client.Minecraft;
 import slice.Slice;
 import slice.event.Event;
+import slice.event.events.EventUpdate;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
 import slice.setting.Setting;
@@ -74,6 +75,10 @@ public abstract class Module {
      * */
     public ModeValue getMode() {
         return settings.stream().filter(setting -> (setting instanceof ModeValue && setting.getName().equalsIgnoreCase("mode"))).map(setting -> (ModeValue) setting).findFirst().orElse(null);
+    }
+
+    public void onUpdate(EventUpdate event) {
+
     }
 
 
