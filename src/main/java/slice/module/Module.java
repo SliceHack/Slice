@@ -8,6 +8,7 @@ import slice.event.Event;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
 import slice.setting.Setting;
+import slice.setting.settings.ModeValue;
 import slice.util.LoggerUtil;
 import slice.util.Timer;
 
@@ -66,6 +67,13 @@ public abstract class Module {
      * */
     public Setting getSetting(String name) {
         return settings.stream().filter(setting -> setting.getName().replace(" ", "").equalsIgnoreCase(name)).findFirst().orElse(null);
+    }
+
+    /**
+     * Gets the modules mode
+     * */
+    public ModeValue getMode() {
+        return settings.stream().filter(setting -> (setting instanceof ModeValue && setting.getName().equalsIgnoreCase("mode"))).map(setting -> (ModeValue) setting).findFirst().orElse(null);
     }
 
 

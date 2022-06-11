@@ -7,6 +7,7 @@ import slice.Slice;
 import slice.clickgui.pane.SettingPane;
 import slice.font.TTFFontRenderer;
 import slice.module.Module;
+import slice.setting.settings.ModeValue;
 
 import java.awt.*;
 
@@ -66,6 +67,5 @@ public class ModuleButton {
         }
         if(open) pane.mouseClicked(mouseX, mouseY, mouseButton);
     }
-
 
 }
