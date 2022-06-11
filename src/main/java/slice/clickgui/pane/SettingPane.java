@@ -58,17 +58,17 @@ public class SettingPane {
         for(Setting setting : module.getSettings()) {
             if(!setting.isHidden()) {
                 if (setting instanceof ModeValue) {
-                    ModeButton modeButton = new ModeButton((ModeValue) setting, x, y + yAdd);
+                    ModeButton modeButton = new ModeButton(this, (ModeValue) setting, x, y + yAdd);
                     settings.add(modeButton);
                 }
 
                 if (setting instanceof BooleanValue) {
-                    BooleanButton button = new BooleanButton((BooleanValue) setting, x, y + yAdd);
+                    BooleanButton button = new BooleanButton(this, (BooleanValue) setting, x, y + yAdd);
                     settings.add(button);
                 }
 
                 if (setting instanceof NumberValue) {
-                    SliderButton sliderButton = new SliderButton((NumberValue) setting, x, y + yAdd);
+                    SliderButton sliderButton = new SliderButton(this, (NumberValue) setting, x, y + yAdd);
                     settings.add(sliderButton);
                 }
             }

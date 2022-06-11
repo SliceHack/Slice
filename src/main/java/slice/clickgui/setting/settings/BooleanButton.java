@@ -2,11 +2,10 @@ package slice.clickgui.setting.settings;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.minecraft.client.gui.Gui;
 import slice.Slice;
+import slice.clickgui.pane.SettingPane;
 import slice.clickgui.setting.SettingComponent;
 import slice.font.TTFFontRenderer;
-import slice.setting.Setting;
 import slice.setting.settings.BooleanValue;
 import slice.util.RenderUtil;
 
@@ -22,8 +21,8 @@ public class BooleanButton extends SettingComponent {
 
     private BooleanValue booleanValue;
 
-    public BooleanButton(BooleanValue setting, int x, int y) {
-        super(setting, setting.getName());
+    public BooleanButton(SettingPane parent, BooleanValue setting, int x, int y) {
+        super(parent, setting, setting.getName());
         this.booleanValue = setting;
         this.x = x;
         this.y = y;

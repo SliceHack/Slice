@@ -2,9 +2,8 @@ package slice.clickgui.setting.settings;
 
 import lombok.Getter;
 import lombok.Setter;
-import slice.Slice;
+import slice.clickgui.pane.SettingPane;
 import slice.clickgui.setting.SettingComponent;
-import slice.font.TTFFontRenderer;
 import slice.setting.settings.NumberValue;
 import slice.util.LoggerUtil;
 import slice.util.RenderUtil;
@@ -19,8 +18,8 @@ public class SliderButton extends SettingComponent {
     private int dragX, dragY;
     private boolean dragging;
 
-    public SliderButton(NumberValue setting, int x, int y) {
-        super(setting, setting.getName());
+    public SliderButton(SettingPane parent, NumberValue setting, int x, int y) {
+        super(parent, setting, setting.getName());
         this.value = setting;
         this.x = x;
         this.y = y;

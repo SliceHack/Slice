@@ -3,6 +3,7 @@ package slice.clickgui.setting.settings;
 import lombok.Getter;
 import lombok.Setter;
 import slice.Slice;
+import slice.clickgui.pane.SettingPane;
 import slice.clickgui.setting.SettingComponent;
 import slice.font.TTFFontRenderer;
 import slice.setting.settings.ModeValue;
@@ -17,8 +18,8 @@ public class ModeButton extends SettingComponent {
 
     private ModeValue modeValue;
 
-    public ModeButton(ModeValue setting, int x, int y) {
-        super(setting, setting.getName() + ": " + setting.getValue());
+    public ModeButton(SettingPane parent, ModeValue setting, int x, int y) {
+        super(parent, setting, setting.getName() + ": " + setting.getValue());
         this.modeValue = setting;
         this.x = x;
         this.y = y;
