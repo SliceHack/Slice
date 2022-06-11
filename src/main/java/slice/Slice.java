@@ -39,10 +39,6 @@ public enum Slice {
     private final Saver saver;
     private final StartDiscordRPC discordRPC;
 
-    /**
-     * TODO:
-        * - Add ClickGui Slider
-     * */
     Slice() {
         moduleManager = new ModuleManager();
         commandManager = new CommandManager(moduleManager);
