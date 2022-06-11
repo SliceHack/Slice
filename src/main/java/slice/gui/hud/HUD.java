@@ -24,14 +24,14 @@ public class HUD {
 
     public static void draw() {
 
+        /* f3 */
+        if(Minecraft.getMinecraft().gameSettings.showDebugProfilerChart)
+            return;
+
         PlayerOnScreen playerOnScreen = new PlayerOnScreen();
         playerOnScreen.draw();
 
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-
-        /* f3 */
-        if(Minecraft.getMinecraft().gameSettings.showDebugProfilerChart)
-            return;
 
         int widthHeight = ((sr.getScaledHeight() + sr.getScaledWidth()) / 18);
 
