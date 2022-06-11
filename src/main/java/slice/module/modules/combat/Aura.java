@@ -93,7 +93,7 @@ public class Aura extends Module {
 
                 deltaCps = deltaCps == cps.getValue().intValue() ? (cps.getValue().intValue() != 1 ? (cps.getValue().intValue() - 1) : 1) : cps.getValue().intValue();
 
-                if((int)getRotationsFixedSens(target)[0] != (int)deltaYaw && (int)getRotationsFixedSens(target)[1] != (int)deltaPitch)
+                if(getRotationsFixedSens(target)[0] != deltaYaw && getRotationsFixedSens(target)[1] != deltaPitch)
                     return;
 
                 if (timer.hasReached(1000 / deltaCps)) {
