@@ -94,9 +94,6 @@ public class Aura extends Module {
 
                 deltaCps = deltaCps == cps.getValue().intValue() ? (cps.getValue().intValue() != 1 ? (cps.getValue().intValue() - 1) : 1) : cps.getValue().intValue();
 
-                if (!(Math.min(deltaYaw, getRotationsFixedSens(target)[0]) < 1.0f))
-                    return;
-
                 if (timer.hasReached(1000 / deltaCps)) {
                     attack();
                     if (!noSwing.getValue()) mc.thePlayer.swingItem();

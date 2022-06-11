@@ -27,37 +27,29 @@ public class SliderButton extends SettingComponent {
     }
 
     public void draw(int mouseX, int mouseY) {
-        if(dragging) {
-            x = mouseX - dragX;
-            y = mouseY - dragY;
-            LoggerUtil.addMessage("SliderButton: Dragging");
-            value.setValue(value.getMax().doubleValue() * ((x - 2) + (int) (width * (value.getValue().doubleValue() / value.getMax().doubleValue())) - x) / width);
-        }
-
-        width = 80;
+        width = 120;
         height = 10;
 
-        TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 20);
-        font.drawString(value.getName(), x, y - 4, -1);
-        font.drawString(value.getValue().doubleValue() + "", x + font.getWidth(value.getName()), y - 4, -1);
+        this.width = (int) (width * (value.getValue().doubleValue() / value.getMax().doubleValue()));
 
-        // draw off dragX and dragY
-        RenderUtil.drawRoundedRect(x - 2, y + font.getHeight(value.getName())-3,  (x - 2) + width, (y+font.getHeight(value.getName())-3) + height, 5, new Color(128, 155, 128).getRGB());
-        RenderUtil.drawRoundedRect(x - 2, y + font.getHeight(value.getName())-3, (x - 2) + (int) (width * (value.getValue().doubleValue() / value.getMax().doubleValue())), (y+font.getHeight(value.getName())-3) + height, 5, new Color(255, 155, 255).getRGB());
+        RenderUtil.drawRoundedRect(x, y, x + width, y + height, 10, new Color(128, 155, 128).getRGB());
+        RenderUtil.drawRoundedRect(x, y, x + (int) (width * value.getValue().doubleValue() / value.getMax().doubleValue()), y + height, 10, new Color(255, 155, 255).getRGB());
+        if(dragging) {
+            LoggerUtil.addMessage(((width - (mouseX - dragX)) * value.getMax().doubleValue() / width) + "");
+            value.setValue((width - (mouseX - dragX)) * value.getMax().doubleValue() / width);
+        }
     }
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
-        TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 20);
-        if(mouseX >= x - 2 && mouseX <= x - 2 + width && mouseY >= y + font.getHeight(value.getName()) && mouseY <= y + font.getHeight(value.getName()) + height) {
+        if(mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
+            LoggerUtil.addMessage("dragging " + value.getName());
             dragging = true;
-            LoggerUtil.addMessage("SliderButton: Clicked");
-            dragX = mouseX - x;
-            dragY = mouseY - y;
+            dragX = mouseX;
+            dragY = mouseY;
         }
     }
 
     public void mouseReleased(int mouseX, int mouseY, int mouseButton) {
-        LoggerUtil.addMessage("SliderButton: Released");
         dragging = false;
     }
 }
