@@ -2,6 +2,7 @@ package slice.module.modules.movement;
 
 import org.lwjgl.input.Keyboard;
 import slice.event.Event;
+import slice.event.events.EventClientTick;
 import slice.event.events.EventUpdate;
 import slice.module.Module;
 import slice.module.data.Category;
@@ -23,6 +24,15 @@ public class Speed extends Module {
     }
 
     public void onEvent(Event event) {
+        if(event instanceof EventClientTick) {
+            if(mc.thePlayer.onGround) {
+                offGroundTicks = 0;
+                onGroundTicks++;
+            } else {
+                onGroundTicks = 0;
+                offGroundTicks++;
+            }
+        }
         if(event instanceof EventUpdate) {
                 switch (mode.getValue()) {
                     case "Bhop":
@@ -43,8 +53,8 @@ public class Speed extends Module {
                             }
                         }
 
-                        if(!mc.thePlayer.onGround && mc.thePlayer.ticksExisted % 8 == 0) {
-                            mc.thePlayer.motionY = -1F;
+                        if(offGroundTicks > 8) {
+                          mc.thePlayer.motionY = -1F;
                         }
 
                         break;

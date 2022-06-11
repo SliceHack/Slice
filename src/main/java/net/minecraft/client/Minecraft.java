@@ -1760,7 +1760,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     public void runTick() throws IOException
     {
         EventClientTick event = new EventClientTick();
-        event.call();
+        if(theWorld != null || thePlayer != null) event.call();
         if(this.currentScreen instanceof MainMenu) {
             MainMenu mainMenu = (MainMenu) this.currentScreen;
             mainMenu.onTick();
