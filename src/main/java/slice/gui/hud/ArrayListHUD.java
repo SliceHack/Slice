@@ -20,8 +20,9 @@ public class ArrayListHUD {
         List<Module> modules = getEnabledModules(font);
         int i = 2;
         for(Module module : modules) {
-            font.drawStringWithShadow(module.getName(), sr.getScaledWidth() - font.getWidth(module.getName()) - 12, 10 + i, -1);
-            i += font.getHeight(module.getName()) + 2;
+            String text =  module.getMode() == null ? module.getName() : module.getName() + " §7" + module.getMode().getValue();
+            font.drawStringWithShadow(text, sr.getScaledWidth() - font.getWidth(text) - 12, 10 + i, -1);
+            i += font.getHeight(text) + 2;
         }
     }
 
@@ -34,7 +35,7 @@ public class ArrayListHUD {
         return Slice.INSTANCE.getModuleManager().getModules()
                 .stream()
                 .filter(Module::isEnabled)
-                .sorted((m1, m2) -> (int) (font.getWidth(m2.getName()) - font.getWidth(m1.getName())))
+                .sorted((m1, m2) -> (int) (font.getWidth(m2.getMode() == null ? m2.getName() : m2.getName() + " §7" + m2.getMode().getValue()) - font.getWidth(m1.getMode() == null ? m1.getName() : m1.getName() + " §7" + m1.getMode().getValue())))
                 .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
     }
 
