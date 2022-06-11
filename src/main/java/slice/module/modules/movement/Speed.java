@@ -1,13 +1,17 @@
 package slice.module.modules.movement;
 
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 import org.lwjgl.input.Keyboard;
 import slice.event.Event;
 import slice.event.events.EventClientTick;
+import slice.event.events.EventPacket;
 import slice.event.events.EventUpdate;
 import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
 import slice.setting.settings.ModeValue;
+import slice.util.LoggerUtil;
 import slice.util.MoveUtil;
 
 @ModuleInfo(name = "Speed", description = "Allows you to move fast!!", key = Keyboard.KEY_X, category = Category.MOVEMENT)
@@ -49,14 +53,13 @@ public class Speed extends Module {
                         if(MoveUtil.isMoving()) {
                             if(mc.thePlayer.onGround) {
                                 MoveUtil.jump();
-                                MoveUtil.strafe(0.44F);
+                                MoveUtil.strafe(0.48);
                             }
                         }
 
                         if(offGroundTicks > 8) {
                           mc.thePlayer.motionY = -1F;
                         }
-
                         break;
                     case "UwUGuard":
                         if (!MoveUtil.isMoving()) return;

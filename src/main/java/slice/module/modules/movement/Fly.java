@@ -83,6 +83,7 @@ public class Fly extends Module {
                 case "UwUGuardGlide":
                     if(mc.thePlayer.onGround) return;
                     MoveUtil.strafe(7);
+                    mc.timer.timerSpeed = 0.1f;
                     break;
             }
 
