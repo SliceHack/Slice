@@ -14,8 +14,12 @@ public class Speed extends Module {
 
     ModeValue mode = new ModeValue("Mode", "Bhop", "Bhop", "Dev", "Astro", "UwUGuard");
 
+    int onGroundTicks, offGroundTicks;
+
     public void onDisable() {
         mc.timer.timerSpeed = 1.0F;
+        onGroundTicks = 0;
+        offGroundTicks = 0;
     }
 
     public void onEvent(Event event) {
@@ -32,17 +36,16 @@ public class Speed extends Module {
                     case "Dev":
                         break;
                     case "Astro":
-                        if (mc.thePlayer.onGround) {
-                            mc.thePlayer.jump();
+                        if(MoveUtil.isMoving()) {
+                            if(mc.thePlayer.onGround) {
+                                MoveUtil.jump();
+                                MoveUtil.strafe(0.44F);
+                            }
                         }
 
-                        if (mc.thePlayer.fallDistance < 0.1 && !mc.thePlayer.onGround) {
-                            mc.timer.timerSpeed = 1000f;
-                            return;
+                        if(!mc.thePlayer.onGround && mc.thePlayer.ticksExisted % 8 == 0) {
+                            mc.thePlayer.motionY = -1F;
                         }
-
-                        if(!mc.thePlayer.onGround)
-                            mc.timer.timerSpeed = 0.1f;
 
                         break;
                     case "UwUGuard":

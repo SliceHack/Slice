@@ -87,11 +87,14 @@ public class Aura extends Module {
 
                 fakeBlock = block && (blockMode.getValue().equalsIgnoreCase("Fake") || !(mc.thePlayer.getHeldItem().getItem() instanceof ItemSword));
 
-                if((block && !fakeBlock) && blockMode.getValue().equalsIgnoreCase("Vanilla")) {
+                if((block && !fakeBlock) && blockMode.getValue().equalsIgnoreCase("Vanilla") && e.isPre()) {
                     mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem());
                 }
 
                 deltaCps = deltaCps == cps.getValue().intValue() ? (cps.getValue().intValue() != 1 ? (cps.getValue().intValue() - 1) : 1) : cps.getValue().intValue();
+
+                if((int)getRotationsFixedSens(target)[0] != (int)deltaYaw && (int)getRotationsFixedSens(target)[1] != (int)deltaPitch)
+                    return;
 
                 if (timer.hasReached(1000 / deltaCps)) {
                     attack();
@@ -157,9 +160,9 @@ public class Aura extends Module {
 
         if(!reachedPitch) {
             if(pitch > deltaPitch) {
-                deltaPitch += Math.abs(pitch - deltaPitch) / 10;
+                deltaPitch += Math.abs(pitch - deltaPitch) / 2;
             } else {
-                deltaPitch -= Math.abs(pitch - deltaPitch) / 10;
+                deltaPitch -= Math.abs(pitch - deltaPitch) / 2;
             }
         }
         if(!reachedYaw) {
@@ -173,9 +176,7 @@ public class Aura extends Module {
         if(deltaPitch > 90) deltaPitch = 90;
         else if(deltaPitch < -90) deltaPitch = -90;
 
-
-
-        return new float[] {deltaYaw, deltaPitch};
+        return new float[] {deltaYaw, deltaPitch+(float)(Math.random()-0.02)};
     }
 
     public boolean canAttack(EntityLivingBase entity) {

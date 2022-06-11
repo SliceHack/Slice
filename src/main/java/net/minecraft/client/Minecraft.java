@@ -46,6 +46,7 @@ import net.minecraft.client.gui.GuiControls;
 import net.minecraft.client.gui.GuiGameOver;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.GuiIngameMenu;
+import slice.event.events.EventClientTick;
 import slice.gui.hud.HUD;
 import slice.gui.main.MainMenu;
 import net.minecraft.client.gui.GuiMemoryErrorScreen;
@@ -1758,6 +1759,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage
      */
     public void runTick() throws IOException
     {
+        EventClientTick event = new EventClientTick();
+        event.call();
         if(this.currentScreen instanceof MainMenu) {
             MainMenu mainMenu = (MainMenu) this.currentScreen;
             mainMenu.onTick();
