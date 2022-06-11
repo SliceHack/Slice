@@ -35,6 +35,8 @@ public class DropdownPane {
 
     private int openHeight;
 
+    private Module openModule;
+
     public DropdownPane(Category category, int x, int y) {
         this.category = category;
         this.x = x;

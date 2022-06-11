@@ -37,7 +37,7 @@ public class ModuleButton {
 
     public void drawButton(int mouseX, int mouseY) {
         pane = new SettingPane(module, x + Slice.INSTANCE.getClickGui().getPane(module.getCategory()).getWidth(), y, width);
-        open = Slice.INSTANCE.getClickGui().isVisible(module);
+        open = Slice.INSTANCE.getClickGui().getPane(module.getCategory()).getOpenModule().equals(module);
 
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 20);
         GlStateManager.pushMatrix();
@@ -60,7 +60,7 @@ public class ModuleButton {
                 module.toggle();
 
             if(mouseButton == 1) {
-                Slice.INSTANCE.getClickGui().setVisible(module, !Slice.INSTANCE.getClickGui().isVisible(module));
+                Slice.INSTANCE.getClickGui().getPane(module.getCategory()).setOpenModule(module);
             }
 
         }

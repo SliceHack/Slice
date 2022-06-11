@@ -87,13 +87,17 @@ public class SettingPane {
 
         if(getLargestSetting() != null) {
             if (getLargestSetting() instanceof SliderButton) {
-                width = getLargestSetting().getWidth()+5;
+                width += getLargestSetting().getWidth()+5;
             }
         }
 
         RenderUtil.drawRoundedRect(x, y, x + width, y + (height), 15, new Color(1, 0, 0, 155).getRGB());
         GlStateManager.popMatrix();
         settings.forEach(setting -> setting.draw(mouseX, mouseY));
+    }
+
+    public String formatDouble(int places, double value) {
+        return String.format("%.2" + places + "f", value);
     }
 
     public SettingComponent getLargestSetting() {

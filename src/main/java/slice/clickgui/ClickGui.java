@@ -51,24 +51,6 @@ public class ClickGui extends GuiScreen {
     }
 
     /**
-     * checks if a module is open
-     * @param module the module to check
-     * */
-    public boolean isVisible(Module module) {
-        return openModules.contains(module);
-    }
-
-    /**
-     * Sets the visibility of a module.
-     * @param module The module to set the visibility of.
-     * @param visible Whether the module should be visible.
-     * */
-    public void setVisible(Module module, boolean visible) {
-        if(visible) openModules.add(module);
-        else openModules.remove(module);
-    }
-
-    /**
      * Gets pane by category
      * @param category Category
      * */
