@@ -23,6 +23,10 @@ public class HUD {
     public static void onTick() {}
 
     public static void draw() {
+
+        PlayerOnScreen playerOnScreen = new PlayerOnScreen();
+        playerOnScreen.draw();
+
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
 
         /* f3 */
