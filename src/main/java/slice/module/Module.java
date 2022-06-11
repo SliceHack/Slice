@@ -3,6 +3,7 @@ package slice.module;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
+import slice.Slice;
 import slice.event.Event;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
@@ -49,13 +50,9 @@ public abstract class Module {
 
     public void toggle() {
         enabled = !enabled;
-        if(enabled) {
-            onEnable();
-            LoggerUtil.addMessage("Enabled &a" + this.name);
-        } else {
-            onDisable();
-            LoggerUtil.addMessage("Disabled &c" + this.name);
-        }
+        if(enabled) onEnable();
+        else onDisable();
+        Slice.INSTANCE.getSaver().save();
     }
 
     public void onEnable() {}

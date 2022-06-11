@@ -2,6 +2,7 @@ package slice.setting.settings;
 
 import lombok.Getter;
 import lombok.Setter;
+import slice.Slice;
 import slice.setting.Setting;
 
 @Getter @Setter
@@ -22,6 +23,8 @@ public class NumberValue extends Setting {
 
         if(value.doubleValue() > max.doubleValue()) this.value = max;
         else if(value.doubleValue() < min.doubleValue()) this.value = min;
+
+        Slice.INSTANCE.getSaver().save();
     }
 
     public enum Type {
