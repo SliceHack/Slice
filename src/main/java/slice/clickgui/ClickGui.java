@@ -7,6 +7,8 @@ import slice.clickgui.pane.DropdownPane;
 import slice.clickgui.setting.settings.SliderButton;
 import slice.module.Module;
 import slice.module.data.Category;
+import slice.setting.Setting;
+import slice.setting.settings.NumberValue;
 
 import java.io.IOException;
 import java.util.*;
@@ -22,7 +24,7 @@ public class ClickGui extends GuiScreen {
     private List<DropdownPane> paneList = new ArrayList<>();
 
     private List<Module> openModules = new ArrayList<>();
-    private List<SliderButton> dragging = new ArrayList<>();
+    private List<NumberValue> dragging = new ArrayList<>();
 
     public ClickGui() {
         int xAdd = 0;
@@ -78,7 +80,7 @@ public class ClickGui extends GuiScreen {
      * Checks dragging state of a slider
      * @param slider Slider to check
      * */
-    public boolean isDragging(SliderButton slider) {
+    public boolean isDragging(NumberValue slider) {
         return dragging.contains(slider);
     }
 
@@ -87,7 +89,7 @@ public class ClickGui extends GuiScreen {
      * @param button the slider button
      * @param dragging true if dragging, false if not
      */
-    public void setDragging(SliderButton button, boolean dragging) {
+    public void setDragging(NumberValue button, boolean dragging) {
         if(dragging) this.dragging.add(button);
         else this.dragging.remove(button);
     }
