@@ -21,6 +21,7 @@ import slice.manager.CommandManager;
 import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
 import slice.module.Module;
+import slice.util.HardwareUtil;
 
 /**
 * Main Class for the Client
@@ -43,9 +44,6 @@ public enum Slice {
     private final ClickGui clickGui;
     private final Saver saver;
     private final StartDiscordRPC discordRPC;
-
-    /* Auth */
-    public String id;
 
     /** discord */
     public String discordName, discordID, discordDiscriminator;

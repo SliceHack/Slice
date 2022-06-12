@@ -44,7 +44,6 @@ public class API {
                 Minecraft.getMinecraft().crashed(new CrashReport("Authentication failed", new Exception("Authentication failed")));
                 System.exit(-1);
             }
-            Slice.INSTANCE.id = HardwareUtil.getHardwareID();
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
