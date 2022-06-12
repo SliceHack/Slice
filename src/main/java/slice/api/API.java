@@ -24,10 +24,9 @@ public class API {
             connection.setRequestProperty("Content-Language", "en-US");
             connection.setUseCaches(false);
             connection.setDoOutput(true);
-            connection.getOutputStream().flush();
-            connection.getOutputStream().close();
+            String response = readResponse(connection);
+            JSONObject json = new JSONObject(Objects.requireNonNull(response));
 
-            JSONObject json = new JSONObject(Objects.requireNonNull(readResponse(connection)));
             boolean status = Boolean.parseBoolean(json.getString("status"));
 
             if(!status) {
@@ -39,7 +38,7 @@ public class API {
         }
     }
 
-    private static String readResponse(HttpURLConnection connection) {
+    public static String readResponse(HttpURLConnection connection) {
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String inputLine;
