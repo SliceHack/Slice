@@ -18,6 +18,9 @@ public class StartDiscordRPC {
             @Override
             public void apply(DiscordUser discordUser) {
                 LoggerUtil.addTerminalMessage("Welcome " + discordUser.username + "#" + discordUser.discriminator);
+                Slice.INSTANCE.discordName = discordUser.username;
+                Slice.INSTANCE.discordID = discordUser.userId;
+                Slice.INSTANCE.discordDiscriminator = discordUser.discriminator;
                 setPresence("Slice Client", String.format("Version %s", Slice.VERSION));
             }
         }).build();

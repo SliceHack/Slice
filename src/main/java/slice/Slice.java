@@ -3,12 +3,16 @@ package slice;
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S02PacketChat;
+import net.minecraft.util.ChatComponentText;
 import org.lwjgl.input.Keyboard;
 import slice.clickgui.ClickGui;
 import slice.discord.StartDiscordRPC;
 import slice.event.Event;
 import slice.event.events.EventChat;
 import slice.event.events.EventKey;
+import slice.event.events.EventPacket;
 import slice.event.events.EventUpdate;
 import slice.file.Saver;
 import slice.font.FontManager;
@@ -39,6 +43,9 @@ public enum Slice {
     private final Saver saver;
     private final StartDiscordRPC discordRPC;
 
+    /** discord */
+    public String discordName, discordID, discordDiscriminator;
+
     Slice() {
         moduleManager = new ModuleManager();
         commandManager = new CommandManager(moduleManager);
@@ -63,6 +70,25 @@ public enum Slice {
      * @pamra event - the event to be handled
      * */
     public void onEvent(Event event) {
+        if(event instanceof EventPacket) {
+            EventPacket e = (EventPacket) event;
+            Packet<?> packet = e.getPacket();
+            if(packet instanceof S02PacketChat) {
+                S02PacketChat chat = (S02PacketChat) packet;
+                String message = chat.getChatComponent().getFormattedText();
+                event.setCancelled(true);
+
+                String lastColor = "";
+                for(int i = message.length() - 1; i >= 0; i--) {
+                    if(message.charAt(i) == '§') {
+                        lastColor = message.substring(i, i + 2);
+                        break;
+                    }
+                }
+                message = message.replaceAll(Minecraft.getMinecraft().getSession().getUsername(),  Minecraft.getMinecraft().getSession().getUsername() + " §c(§b" + discordName + "§c)" + lastColor);
+                Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentText(message));
+            }
+        }
         if(event instanceof EventChat) {
             commandManager.handleChat((EventChat) event);
         }

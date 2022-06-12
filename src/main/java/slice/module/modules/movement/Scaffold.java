@@ -25,6 +25,7 @@ import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
 import slice.setting.settings.BooleanValue;
 import slice.setting.settings.NumberValue;
+import slice.util.LoggerUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -61,7 +62,11 @@ public class Scaffold extends Module {
             EventUpdate e = (EventUpdate) event;
             placed = false;
 
-            data = getBlockData();
+            if (data == null) data = getBlockData();
+            else if (timer.hasReached(1000L / 8)) {
+                data = getBlockData();
+                timer.reset();
+            }
 
             if(sameY.getValue()) mc.thePlayer.posY = posY;
 
@@ -88,6 +93,7 @@ public class Scaffold extends Module {
         }
         if(event instanceof EventSafeWalk) {
             EventSafeWalk e = (EventSafeWalk) event;
+            LoggerUtil.addMessage("SafeWalk");
             e.setCancelled(!safeWalk.getValue());
         }
     }
@@ -124,8 +130,10 @@ public class Scaffold extends Module {
                 EnumFacing.WEST };
 
         double yValue = 0.0;
-        BlockPos pos = sameY.getValue() ? new BlockPos(mc.thePlayer.posX, posY, mc.thePlayer.posZ).offset(EnumFacing.DOWN).add(0.0, yValue, 0.0) :
-                new BlockPos(mc.thePlayer.getPositionVector()).offset(EnumFacing.DOWN).add(0.0, yValue, 0.0);
+        BlockPos pos = sameY.getValue() ?
+                new BlockPos(mc.thePlayer.posX, posY, mc.thePlayer.posZ).offset(EnumFacing.DOWN).add(0.0, yValue, 0.0)
+                    :
+                        new BlockPos(mc.thePlayer.getPositionVector()).offset(EnumFacing.DOWN).add(0.0, yValue, 0.0);
 
         final EnumFacing[] facingVals = EnumFacing.values();
         for (EnumFacing facingVal : facingVals) {
