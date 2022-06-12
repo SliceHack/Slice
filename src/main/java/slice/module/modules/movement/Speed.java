@@ -17,7 +17,7 @@ import slice.util.MoveUtil;
 @ModuleInfo(name = "Speed", description = "Allows you to move fast!!", key = Keyboard.KEY_X, category = Category.MOVEMENT)
 public class Speed extends Module {
 
-    ModeValue mode = new ModeValue("Mode", "Bhop", "Bhop", "Dev", "Astro", "UwUGuard");
+    ModeValue mode = new ModeValue("Mode", "Bhop", "Bhop", "Dev", "Astro", "MMC", "UwUGuard");
 
     int onGroundTicks, offGroundTicks;
 
@@ -40,21 +40,27 @@ public class Speed extends Module {
         if(event instanceof EventUpdate) {
                 switch (mode.getValue()) {
                     case "Bhop":
-                        if(MoveUtil.isMoving()) {
-                            if (mc.thePlayer.onGround) {
-                                MoveUtil.jump();
-                            }
-                            MoveUtil.strafe((MoveUtil.getSpeed())+0.02);
+                        if(MoveUtil.isMoving()) return;
+
+                        if (mc.thePlayer.onGround) {
+                            MoveUtil.jump();
+                        }
+                        MoveUtil.strafe((MoveUtil.getSpeed())+0.02);
+                        break;
+                    case "MMC":
+                        if(!MoveUtil.isMoving()) return;
+
+                        if(mc.thePlayer.onGround) {
+                            mc.thePlayer.motionY = 0.56F;
+                            MoveUtil.strafe(0.48D);
                         }
                         break;
-                    case "Dev":
-                        break;
                     case "Astro":
-                        if(MoveUtil.isMoving()) {
-                            if(mc.thePlayer.onGround) {
-                                MoveUtil.jump();
-                                MoveUtil.strafe(0.48);
-                            }
+                        if(MoveUtil.isMoving()) return;
+
+                        if(mc.thePlayer.onGround) {
+                            MoveUtil.jump();
+                            MoveUtil.strafe(0.48);
                         }
 
                         if(offGroundTicks > 8) {
@@ -63,6 +69,7 @@ public class Speed extends Module {
                         break;
                     case "UwUGuard":
                         if (!MoveUtil.isMoving()) return;
+
                         if (mc.thePlayer.onGround) {
                             MoveUtil.jump();
                         }

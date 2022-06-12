@@ -48,7 +48,6 @@ public enum Slice {
         saver = new Saver(moduleManager);
         discordRPC = new StartDiscordRPC();
         discordRPC.start();
-
     }
 
     /**

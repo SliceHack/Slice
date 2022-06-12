@@ -6,6 +6,7 @@ import net.minecraft.network.play.server.S27PacketExplosion;
 import slice.event.Event;
 import slice.event.events.EventClientTick;
 import slice.event.events.EventPacket;
+import slice.event.events.EventUpdate;
 import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
@@ -20,22 +21,32 @@ public class Velocity extends Module {
 
     int ticks = 0;
 
-    ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla", "Astro");
+    ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla", "Astro", "MMC");
 
     NumberValue horizontal = new NumberValue("Horizontal", 0.0D, 0.0D, 100.0D, NumberValue.Type.DOUBLE);
     NumberValue vertical = new NumberValue("Vertical", 0.0D, 0.0D, 100.0D, NumberValue.Type.DOUBLE);
 
+    public void onDisable() {
+        ticks = 0;
+        mc.timer.timerSpeed = 1.0F;
+    }
+
+    public void onUpdate(EventUpdate event) {
+        horizontal.setHidden(!mode.getValue().equalsIgnoreCase("Vanilla"));
+        vertical.setHidden(!mode.getValue().equalsIgnoreCase("Vanilla"));
+    }
+
     public void onEvent(Event event) {
-
         if (event instanceof EventClientTick) {
-            if (mode.getValue().equalsIgnoreCase("Astro")) {
-                if (mc.thePlayer.hurtResistantTime > 2) {
-                    ticks++;
-                }
-                if (mc.thePlayer.hurtResistantTime > 10) {
-                    ticks = 0;
-                }
-
+            switch (mode.getValue()) {
+                case "Astro":
+                    if (mc.thePlayer.hurtResistantTime > 2) {
+                        ticks++;
+                    }
+                    if (mc.thePlayer.hurtResistantTime >= 16) {
+                        ticks = 0;
+                    }
+                    break;
             }
         }
 
@@ -57,21 +68,27 @@ public class Velocity extends Module {
                         s12.motionY *= vertical.getValue().doubleValue() / 100.0;
                         s12.motionZ *= horizontal.getValue().doubleValue() / 100.0;
                     }
-                    if (p instanceof S27PacketExplosion) {
-                        S27PacketExplosion s27 = (S27PacketExplosion) p;
-                        e.setCancelled(true);
-                    }
                     break;
                 case "Astro":
                     if (p instanceof S12PacketEntityVelocity) {
                         S12PacketEntityVelocity s12 = (S12PacketEntityVelocity) p;
                         if (ticks > 4) {
-//                            s12.motionY = 0;
-//                            s12.motionX = 0;
-//                            s12.motionZ = 0;
                             e.setCancelled(true);
                         }
                     }
+                case "MMC":
+                    if(p instanceof S12PacketEntityVelocity) {
+                        S12PacketEntityVelocity s12 = (S12PacketEntityVelocity) p;
+                        s12.motionX *= 50.0D / 100.0;
+                        s12.motionZ *= 40.0D / 100.0;
+                        s12.motionY *= 50.0D / 100.0;
+                    }
+
+                    break;
+            }
+            if (p instanceof S27PacketExplosion) {
+                S27PacketExplosion s27 = (S27PacketExplosion) p;
+                e.setCancelled(true);
             }
         }
     }

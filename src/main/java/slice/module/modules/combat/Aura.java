@@ -160,15 +160,15 @@ public class Aura extends Module {
         else if (pitch == deltaPitch) reachedPitch = true;
         else if (yaw == deltaYaw) reachedYaw = true;
 
+        int smooth = 2;
         if(!reachedPitch) {
             if(pitch > deltaPitch) {
-                deltaPitch += Math.abs(pitch - deltaPitch) / 2;
+                deltaPitch += Math.abs(pitch - deltaPitch) / smooth;
             } else {
-                deltaPitch -= Math.abs(pitch - deltaPitch) / 2;
+                deltaPitch -= Math.abs(pitch - deltaPitch) / smooth;
             }
         }
         if(!reachedYaw) {
-            int smooth = 5;
             if(yaw > deltaYaw) {
                 deltaYaw += Math.abs(yaw - deltaYaw) / smooth;
             } else {

@@ -40,6 +40,7 @@ public class ModuleManager {
         register(new Velocity());
         register(new AntiCrash());
         register(new Scaffold());
+        register(new Sprint());
     }
 
     /**
