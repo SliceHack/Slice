@@ -77,6 +77,9 @@ public enum Slice {
             EventPacket e = (EventPacket) event;
             Packet<?> packet = e.getPacket();
             if(packet instanceof S02PacketChat) {
+                if(discordName == null)
+                    return;
+
                 S02PacketChat chat = (S02PacketChat) packet;
                 String message = chat.getChatComponent().getFormattedText();
                 event.setCancelled(true);
