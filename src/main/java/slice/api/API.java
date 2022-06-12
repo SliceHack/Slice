@@ -3,7 +3,6 @@ package slice.api;
 import net.minecraft.client.Minecraft;
 import net.minecraft.crash.CrashReport;
 import org.json.JSONObject;
-import slice.Slice;
 import slice.util.HardwareUtil;
 import slice.util.LoggerUtil;
 
