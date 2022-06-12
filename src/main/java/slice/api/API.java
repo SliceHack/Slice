@@ -11,10 +11,19 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Objects;
 
+/**
+ * Client API communication
+ *
+ * @author Nick & Dylan
+ * **/
 public class API {
 
+    /** API url */
     private static final String API_URL = "https://api.sliceclient.com/";
 
+    /**
+     * Checks if a user is authenticated with the server
+     * **/
     public static void sendAuthRequest() {
         try {
             URL url = new URL(API_URL + "checkAuth/" + HardwareUtil.getHardwareID());
@@ -39,6 +48,11 @@ public class API {
         }
     }
 
+    /**
+     * Reads the response from the server
+     *
+     * @param connection the connection to the server
+     * **/
     public static String readResponse(HttpURLConnection connection) {
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
