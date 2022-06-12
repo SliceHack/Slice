@@ -3,7 +3,9 @@ package slice.api;
 import net.minecraft.client.Minecraft;
 import net.minecraft.crash.CrashReport;
 import org.json.JSONObject;
+import slice.Slice;
 import slice.util.HardwareUtil;
+import slice.util.LoggerUtil;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -29,19 +31,20 @@ public class API {
             URL url = new URL(API_URL + "checkAuth/" + HardwareUtil.getHardwareID());
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+            connection.setRequestProperty("Accept", "application/json");
             connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestProperty("Content-Language", "en-US");
-            connection.setUseCaches(false);
             connection.setDoOutput(true);
-            String response = readResponse(connection);
-            JSONObject json = new JSONObject(Objects.requireNonNull(response));
+            connection.connect();
+            JSONObject json = new JSONObject(Objects.requireNonNull(readResponse(connection)));
 
-            boolean status = Boolean.parseBoolean(json.getString("status"));
-
-            if(!status) {
-                Minecraft.getMinecraft().crashed(new CrashReport("Not Authenticated", new Exception("Not Authenticated")));
+            boolean success = json.getBoolean("status");
+            if(!success) {
+                LoggerUtil.addTerminalMessage("[Slice] Authentication failed");
+                Minecraft.getMinecraft().crashed(new CrashReport("Authentication failed", new Exception("Authentication failed")));
                 System.exit(-1);
             }
+            Slice.INSTANCE.id = HardwareUtil.getHardwareID();
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);

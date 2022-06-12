@@ -44,6 +44,9 @@ public enum Slice {
     private final Saver saver;
     private final StartDiscordRPC discordRPC;
 
+    /* Auth */
+    public String id;
+
     /** discord */
     public String discordName, discordID, discordDiscriminator;
 
