@@ -18,7 +18,7 @@ public class InsultsClazz {
             "I have a good Slice config, don't blame me",
             "Want some skills? Check out slice client. com!",
             "Maybe I will be Slice, I am already Slice",
-            "Why Slice Cause it is the addition of pure skill and incredible intellectual abilities",
+            "Why Slice, Cause it is the addition of pure skill and incredible intellectual abilities",
             "Wow! My combo is Slice'n!",
             "You have been oofed by Slice oof oof"));
 }
