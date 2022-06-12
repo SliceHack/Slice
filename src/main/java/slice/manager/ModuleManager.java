@@ -9,6 +9,7 @@ import slice.module.modules.combat.Aura;
 import slice.module.modules.misc.AntiCrash;
 import slice.module.modules.misc.ChatSpammer;
 import slice.module.modules.misc.Disabler;
+import slice.module.modules.misc.Insults;
 import slice.module.modules.movement.*;
 import slice.module.modules.world.TimeChanger;
 
@@ -41,6 +42,7 @@ public class ModuleManager {
         register(new AntiCrash());
         register(new Scaffold());
         register(new Sprint());
+        register(new Insults());
     }
 
     /**

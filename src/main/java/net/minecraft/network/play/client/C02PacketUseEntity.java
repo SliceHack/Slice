@@ -7,6 +7,7 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayServer;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import slice.event.events.EventAttack;
 
 public class C02PacketUseEntity implements Packet<INetHandlerPlayServer>
 {
@@ -22,6 +23,10 @@ public class C02PacketUseEntity implements Packet<INetHandlerPlayServer>
     {
         this.entityId = entity.getEntityId();
         this.action = action;
+        if(action == Action.ATTACK) {
+            EventAttack event = new EventAttack(entity);
+            event.call();
+        }
     }
 
     public C02PacketUseEntity(Entity entity, Vec3 hitVec)

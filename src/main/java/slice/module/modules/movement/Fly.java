@@ -1,6 +1,8 @@
 package slice.module.modules.movement;
 
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.util.MathHelper;
 import org.lwjgl.input.Keyboard;
 import slice.event.Event;
@@ -20,7 +22,7 @@ import slice.util.RotationUtil;
 @ModuleInfo(name = "Fly", key = Keyboard.KEY_G, description = "Allows you to fly like a bird", category = Category.MOVEMENT)
 public class Fly extends Module {
 
-    ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla", "UwUGuard", "UwUGuardGlide");
+    ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla", "Dev", "Hycraft", "UwUGuard", "UwUGuardGlide");
     BooleanValue bobbing = new BooleanValue("Bobbing", true);
     NumberValue speed = new NumberValue("Speed", 3.0D, 0.1D, 6.0D, NumberValue.Type.DOUBLE);
 
@@ -87,13 +89,28 @@ public class Fly extends Module {
                     MoveUtil.strafe(7);
                     mc.timer.timerSpeed = 0.1f;
                     break;
+                case "Hycraft":
+                    mc.thePlayer.motionY = 0F;
+                    MoveUtil.strafe(0.5D);
+                    break;
             }
 
         }
         if(event instanceof EventPacket) {
             EventPacket e = (EventPacket) event;
+            Packet<?> p = e.getPacket();
+
             if(mc.theWorld == null)
                 return;
+
+            if (mode.getValue().equalsIgnoreCase("Hycraft")) {
+                if(p instanceof C03PacketPlayer.C06PacketPlayerPosLook
+                        || p instanceof C03PacketPlayer.C04PacketPlayerPosition
+                        || p instanceof C03PacketPlayer.C05PacketPlayerLook) {
+
+                    event.setCancelled(mc.thePlayer.ticksExisted % 5 != 0);
+                }
+            }
 
         }
     }

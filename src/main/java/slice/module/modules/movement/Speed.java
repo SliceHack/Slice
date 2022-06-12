@@ -1,6 +1,7 @@
 package slice.module.modules.movement;
 
 import net.minecraft.network.Packet;
+import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 import org.lwjgl.input.Keyboard;
 import slice.event.Event;
@@ -17,7 +18,7 @@ import slice.util.MoveUtil;
 @ModuleInfo(name = "Speed", description = "Allows you to move fast!!", key = Keyboard.KEY_X, category = Category.MOVEMENT)
 public class Speed extends Module {
 
-    ModeValue mode = new ModeValue("Mode", "Bhop", "Bhop", "Dev", "Astro", "MMC", "UwUGuard");
+    ModeValue mode = new ModeValue("Mode", "Bhop", "Bhop", "Hycraft", "Dev", "Astro", "MMC", "UwUGuard");
 
     int onGroundTicks, offGroundTicks;
 
@@ -39,8 +40,9 @@ public class Speed extends Module {
         }
         if(event instanceof EventUpdate) {
                 switch (mode.getValue()) {
+                    case "Hycraft":
                     case "Bhop":
-                        if(MoveUtil.isMoving()) return;
+                        if(!MoveUtil.isMoving()) return;
 
                         if (mc.thePlayer.onGround) {
                             MoveUtil.jump();
@@ -56,7 +58,7 @@ public class Speed extends Module {
                         }
                         break;
                     case "Astro":
-                        if(MoveUtil.isMoving()) return;
+                        if(!MoveUtil.isMoving()) return;
 
                         if(mc.thePlayer.onGround) {
                             MoveUtil.jump();
@@ -77,6 +79,21 @@ public class Speed extends Module {
                         MoveUtil.strafe(5);
                         break;
                 }
+        }
+        if(event instanceof EventPacket) {
+            EventPacket e = (EventPacket) event;
+            Packet<?> p = e.getPacket();
+
+            if(mc.theWorld == null) return;
+
+            if(mode.getValue().equalsIgnoreCase("Hycraft")) {
+                if(p instanceof C03PacketPlayer.C06PacketPlayerPosLook
+                        || p instanceof C03PacketPlayer.C04PacketPlayerPosition
+                        || p instanceof C03PacketPlayer.C05PacketPlayerLook) {
+
+                    event.setCancelled(mc.thePlayer.ticksExisted % 5 != 0);
+                }
+            }
         }
     }
 
