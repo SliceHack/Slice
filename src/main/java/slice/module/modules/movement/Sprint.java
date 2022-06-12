@@ -20,7 +20,7 @@ public class Sprint extends Module {
             if(!MoveUtil.isMoving()) return;
 
             if(omni.getValue()) {
-                if(mc.thePlayer.motionX != 0 && mc.thePlayer.motionZ != 0 && mc.thePlayer.motionY != 0
+                if(mc.thePlayer.motionX != 0 && mc.thePlayer.motionZ != 0 && mc.thePlayer.motionY != 0 && !mc.thePlayer.isSneaking()
                         && KeyUtil.moveKeys()[0].pressed && (Slice.INSTANCE.getModuleManager().getModule(NoSlow.class).isEnabled() || !mc.thePlayer.isUsingItem())) {
                     mc.thePlayer.setSprinting(true);
                 }
