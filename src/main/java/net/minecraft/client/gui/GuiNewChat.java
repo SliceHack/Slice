@@ -131,11 +131,14 @@ public class GuiNewChat extends Gui
     {
 
 
-
-        if(Slice.INSTANCE.getModuleManager().getTranslator().isEnabled())
-            chatComponent = new ChatComponentText(Slice.INSTANCE.getModuleManager().getTranslator().translate(chatComponent.getUnformattedText()));
-        GuiNewChat.translate = chatComponent;
-       this.printChatMessageWithOptionalDeletion(new ChatComponentText(GuiNewChat.translate.getUnformattedText().replace("Â", "").replace("»", "")), 0);
+        if(Slice.INSTANCE.getModuleManager().getTranslator().isEnabled()) {
+            new Thread(() -> {
+                GuiNewChat.translate = new ChatComponentText(Slice.INSTANCE.getModuleManager().getTranslator().translate(chatComponent.getUnformattedText()));
+                printChatMessageWithOptionalDeletion(new ChatComponentText(GuiNewChat.translate.getUnformattedText().replace("Â", "").replace("»", "")), 0);
+            }).start();
+        } else {
+            this.printChatMessageWithOptionalDeletion(new ChatComponentText(GuiNewChat.translate.getUnformattedText().replace("Â", "").replace("»", "")), 0);
+        }
     }
 
     /**

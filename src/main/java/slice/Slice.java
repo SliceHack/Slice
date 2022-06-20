@@ -49,10 +49,6 @@ public enum Slice {
     /** discord */
     public String discordName, discordID, discordDiscriminator;
 
-    /**
-     * TODO:
-        * - Fix Lag Spike with translating
-     * */
     Slice() {
         API.sendAuthRequest();
         moduleManager = new ModuleManager();
