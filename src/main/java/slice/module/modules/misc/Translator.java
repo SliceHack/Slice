@@ -27,17 +27,7 @@ import static slice.api.API.readResponse;
 @ModuleInfo(name = "Translator", description = "Translates a language", category = Category.MISC)
 public class Translator extends Module {
 
-    public void onEvent(Event event) {
-//        if(event instanceof EventChatMessage) {
-//            EventChatMessage e = (EventChatMessage) event;
-//            String text = translate(e.getChatComponent().getFormattedText());
-//            e.setChatComponent(new ChatComponentText(text));
-//            e.setCancelled(true);
-//
-//            LoggerUtil.addTerminalMessage(e.getFormattedMessage());
-//            mc.ingameGUI.getChatGUI().printChatMessage(e.getChatComponent());
-//        }
-    }
+    public void onEvent(Event event) {}
 
     public String translate(String text) {
         try {
