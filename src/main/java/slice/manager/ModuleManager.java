@@ -6,10 +6,7 @@ import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.modules.combat.AntiBot;
 import slice.module.modules.combat.Aura;
-import slice.module.modules.misc.AntiCrash;
-import slice.module.modules.misc.ChatSpammer;
-import slice.module.modules.misc.Disabler;
-import slice.module.modules.misc.Insults;
+import slice.module.modules.misc.*;
 import slice.module.modules.movement.*;
 import slice.module.modules.world.TimeChanger;
 
@@ -43,6 +40,7 @@ public class ModuleManager {
         register(new Scaffold());
         register(new Sprint());
         register(new Insults());
+        register(new Translator());
     }
 
     /**
@@ -71,5 +69,12 @@ public class ModuleManager {
      * */
     public Module getModule(String name) {
         return modules.stream().filter(module -> module.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+    }
+
+    /**
+     * Get Translator
+     * */
+    public Translator getTranslator() {
+        return (Translator) getModule(Translator.class);
     }
 }

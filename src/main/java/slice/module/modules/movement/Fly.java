@@ -3,6 +3,7 @@ package slice.module.modules.movement;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
+import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 import net.minecraft.util.MathHelper;
 import org.lwjgl.input.Keyboard;
 import slice.event.Event;
@@ -20,6 +21,7 @@ import slice.util.MoveUtil;
 import slice.util.RotationUtil;
 
 @ModuleInfo(name = "Fly", key = Keyboard.KEY_G, description = "Allows you to fly like a bird", category = Category.MOVEMENT)
+@SuppressWarnings("all")
 public class Fly extends Module {
 
     ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla", "Dev", "Hycraft", "UwUGuard", "UwUGuardGlide");
@@ -28,10 +30,23 @@ public class Fly extends Module {
 
     boolean up = false;
 
-    public void onDisable() {
+    private int stage;
+
+    public void onEnable() {
         if(mode.getValue().equalsIgnoreCase("UwUGuard") && mc.thePlayer.onGround) {
             MoveUtil.jump();
         }
+        if(mode.getValue().equalsIgnoreCase("PixelEdge")) {
+            for(double i = 0; i < 3.52F; i += 0.1F) {
+                mc.thePlayer.sendQueue.addToSendNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY - i, mc.thePlayer.posZ, false));
+            }
+            mc.thePlayer.sendQueue.addToSendNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, false));
+            mc.thePlayer.sendQueue.addToSendNoEvent(new C03PacketPlayer(true));
+        }
+    }
+
+    public void onDisable() {
+        stage = 0;
         mc.timer.timerSpeed = 1.0F;
     }
 

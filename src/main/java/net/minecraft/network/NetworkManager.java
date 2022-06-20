@@ -58,6 +58,7 @@ import viamcp.handler.MCPDecodeHandler;
 import viamcp.handler.MCPEncodeHandler;
 import viamcp.utils.NettyUtil;
 
+@SuppressWarnings("all")
 public class NetworkManager extends SimpleChannelInboundHandler<Packet>
 {
     private static final Logger logger = LogManager.getLogger();

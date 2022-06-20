@@ -21,6 +21,7 @@ import slice.manager.CommandManager;
 import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
 import slice.module.Module;
+import slice.module.modules.misc.Translator;
 import slice.util.HardwareUtil;
 
 /**
@@ -48,6 +49,10 @@ public enum Slice {
     /** discord */
     public String discordName, discordID, discordDiscriminator;
 
+    /**
+     * TODO:
+        * - Fix Lag Spike with translating
+     * */
     Slice() {
         API.sendAuthRequest();
         moduleManager = new ModuleManager();
@@ -77,21 +82,13 @@ public enum Slice {
             EventPacket e = (EventPacket) event;
             Packet<?> packet = e.getPacket();
             if(packet instanceof S02PacketChat) {
-                if(discordName == null)
+                if(moduleManager.getModule(Translator.class).isEnabled())
                     return;
 
                 S02PacketChat chat = (S02PacketChat) packet;
                 String message = chat.getChatComponent().getFormattedText();
                 event.setCancelled(true);
-
-                String lastColor = "";
-                for(int i = message.length() - 1; i >= 0; i--) {
-                    if(message.charAt(i) == '§') {
-                        lastColor = message.substring(i, i + 2);
-                        break;
-                    }
-                }
-                message = message.replaceAll(Minecraft.getMinecraft().getSession().getUsername(),  Minecraft.getMinecraft().getSession().getUsername() + " §c(§b" + discordName + "§c)" + lastColor);
+                message = replaceUsername(message);
                 Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentText(message));
             }
         }
@@ -108,6 +105,24 @@ public enum Slice {
             moduleManager.getModules().stream().filter(module -> module.getKey() == e.getKey()).forEach(Module::toggle); // key event
         }
         moduleManager.getModules().stream().filter(Module::isEnabled).forEach(module -> module.onEvent(event)); // Module events
+    }
+
+    /**
+     * Replaces the username in the message with the username of the players discord account
+     * @param message - the message to be replaced
+     **/
+    public String replaceUsername(String message) {
+        if(discordName == null)
+            return message;
+
+        String lastColor = "";
+        for(int i = message.length() - 1; i >= 0; i--) {
+            if(message.charAt(i) == '§') {
+                lastColor = message.substring(i, i + 2);
+                break;
+            }
+        }
+        return message.replaceAll(Minecraft.getMinecraft().getSession().getUsername(),  Minecraft.getMinecraft().getSession().getUsername() + " §c(§b" + discordName + "§c)" + lastColor);
     }
 
 

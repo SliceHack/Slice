@@ -11,6 +11,8 @@ import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import slice.Slice;
+import slice.event.events.EventChatMessage;
 
 public class GuiNewChat extends Gui
 {
@@ -21,6 +23,8 @@ public class GuiNewChat extends Gui
     private final List<ChatLine> drawnChatLines = Lists.<ChatLine>newArrayList();
     private int scrollPos;
     private boolean isScrolled;
+
+    public static IChatComponent translate;
 
     public GuiNewChat(Minecraft mcIn)
     {
@@ -125,7 +129,13 @@ public class GuiNewChat extends Gui
 
     public void printChatMessage(IChatComponent chatComponent)
     {
-        this.printChatMessageWithOptionalDeletion(chatComponent, 0);
+
+
+
+        if(Slice.INSTANCE.getModuleManager().getTranslator().isEnabled())
+            chatComponent = new ChatComponentText(Slice.INSTANCE.getModuleManager().getTranslator().translate(chatComponent.getUnformattedText()));
+        GuiNewChat.translate = chatComponent;
+       this.printChatMessageWithOptionalDeletion(new ChatComponentText(GuiNewChat.translate.getUnformattedText().replace("Â", "").replace("»", "")), 0);
     }
 
     /**
