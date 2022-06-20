@@ -8,6 +8,7 @@ import slice.module.modules.combat.AntiBot;
 import slice.module.modules.combat.Aura;
 import slice.module.modules.misc.*;
 import slice.module.modules.movement.*;
+import slice.module.modules.render.HUD;
 import slice.module.modules.world.TimeChanger;
 
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class ModuleManager {
         register(new Sprint());
         register(new Insults());
         register(new Translator());
+        register(new HUD());
     }
 
     /**

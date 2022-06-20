@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import slice.gui.hud.HUD;
 
 public class GuiChat extends GuiScreen
 {
@@ -183,6 +184,12 @@ public class GuiChat extends GuiScreen
 
         this.inputField.mouseClicked(mouseX, mouseY, mouseButton);
         super.mouseClicked(mouseX, mouseY, mouseButton);
+        HUD.getPlayerOnScreen().mouseClicked(mouseX, mouseY, mouseButton);
+    }
+
+    protected void mouseReleased(int mouseX, int mouseY, int state) {
+        super.mouseReleased(mouseX, mouseY, state);
+        HUD.getPlayerOnScreen().mouseReleased();
     }
 
     /**

@@ -171,7 +171,12 @@ public class GuiIngame extends Gui
             this.renderTooltip(scaledresolution, partialTicks);
         }
 
-        HUD.draw();
+        try {
+            HUD.draw();
+        } catch (Exception e){
+            e
+                    .printStackTrace();
+        }
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(icons);

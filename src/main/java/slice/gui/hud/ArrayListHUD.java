@@ -18,6 +18,7 @@ public class ArrayListHUD {
 
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", fontHeight);
         List<Module> modules = getEnabledModules(font);
+
         int i = 2;
         for(Module module : modules) {
             String text =  module.getMode() == null ? module.getName() : module.getName() + " §7" + module.getMode().getValue();
@@ -34,7 +35,7 @@ public class ArrayListHUD {
     public static List<Module> getEnabledModules(TTFFontRenderer font) {
         return Slice.INSTANCE.getModuleManager().getModules()
                 .stream()
-                .filter(Module::isEnabled)
+                .filter((module) -> module.isEnabled() && Slice.INSTANCE.getModuleManager().getModule(HUD.hudClass) != module)
                 .sorted((m1, m2) -> (int) (font.getWidth(m2.getMode() == null ? m2.getName() : m2.getName() + " §7" + m2.getMode().getValue()) - font.getWidth(m1.getMode() == null ? m1.getName() : m1.getName() + " §7" + m1.getMode().getValue())))
                 .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
     }

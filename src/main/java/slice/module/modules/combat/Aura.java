@@ -82,10 +82,10 @@ public class Aura extends Module {
                 hasRotated = false;
             }
 
-            e.setYaw(yaw);
-            e.setPitch(pitch);
-
             if(target != null) {
+                e.setYaw(yaw);
+                e.setPitch(pitch);
+
                 yaw = getRotationsFixedSens(target)[0];
                 pitch = getRotationsFixedSens(target)[1];
 

@@ -48,7 +48,10 @@ public abstract class Module {
         this.category = info.category();
         this.description = info.description();
         this.key = info.key();
+        this.init();
     }
+
+    public void init() {}
 
     public void toggle() {
         enabled = !enabled;

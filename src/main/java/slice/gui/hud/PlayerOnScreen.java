@@ -1,14 +1,15 @@
 package slice.gui.hud;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.GlStateManager;
-import slice.util.LoggerUtil;
-import slice.util.MathUtil;
 
+@Getter @Setter
 public class PlayerOnScreen {
 
-    public void draw() {
+    public void draw(int mouseX, int mouseY) {
         float yaw = Minecraft.getMinecraft().thePlayer.rotationYaw;
         yaw /= 2.5f;
 
@@ -19,5 +20,10 @@ public class PlayerOnScreen {
         GlStateManager.popMatrix();
         GlStateManager.disableAlpha();
         GlStateManager.disableBlend();
+    }
+
+    public void mouseClicked(int mouseX, int mouseY, int mouseButton) {}
+
+    public void mouseReleased(int mouseX, int mouseY) {
     }
 }
