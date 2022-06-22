@@ -2,6 +2,8 @@ package slice.notification;
 
 import lombok.Getter;
 import lombok.Setter;
+import slice.util.LoggerUtil;
+import slice.util.Timer;
 
 @Getter @Setter
 public class Notification {
@@ -14,6 +16,5 @@ public class Notification {
     }
 
     public void draw() {
-
     }
 }

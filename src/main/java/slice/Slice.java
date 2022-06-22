@@ -22,7 +22,6 @@ import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
 import slice.module.Module;
 import slice.module.modules.misc.Translator;
-import slice.util.HardwareUtil;
 
 /**
 * Main Class for the Client
@@ -91,9 +90,11 @@ public enum Slice {
         if(event instanceof EventChat) {
             commandManager.handleChat((EventChat) event);
         }
+
         if(event instanceof EventUpdate) {
             moduleManager.getModules().forEach(module -> module.onUpdate((EventUpdate) event));
         }
+
         if(event instanceof EventKey) {
             EventKey e = (EventKey) event;
             if(e.getKey() == Keyboard.KEY_RSHIFT) Minecraft.getMinecraft().displayGuiScreen(clickGui);

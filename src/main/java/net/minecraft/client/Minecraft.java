@@ -47,6 +47,7 @@ import net.minecraft.client.gui.GuiGameOver;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.GuiIngameMenu;
 import slice.event.events.EventClientTick;
+import slice.event.events.EventSwitchAccount;
 import slice.gui.hud.HUD;
 import slice.gui.main.MainMenu;
 import net.minecraft.client.gui.GuiMemoryErrorScreen;
@@ -188,6 +189,7 @@ import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
 import slice.Slice;
 import slice.event.events.EventKey;
+import slice.util.LoggerUtil;
 import viamcp.ViaMCP;
 
 @SuppressWarnings("all")
@@ -239,7 +241,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     private Entity renderViewEntity;
     public Entity pointedEntity;
     public EffectRenderer effectRenderer;
-    public Session session;
+    public Session session, lastSession;
     private boolean isGamePaused;
 
     /** The font renderer used for displaying and measuring text */
@@ -2296,6 +2298,16 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
         this.mcProfiler.endSection();
         this.systemTime = getSystemTime();
+
+        if(lastSession != session) {
+            EventSwitchAccount e = new EventSwitchAccount(session, session.getUsername(), session.getSessionID());
+            e.call();
+
+            if(e.isCancelled())
+                session = lastSession;
+        }
+
+        lastSession = session;
     }
 
     /**
