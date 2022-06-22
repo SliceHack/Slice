@@ -189,7 +189,7 @@ public class GuiChat extends GuiScreen
 
     protected void mouseReleased(int mouseX, int mouseY, int state) {
         super.mouseReleased(mouseX, mouseY, state);
-        HUD.getPlayerOnScreen().mouseReleased();
+        HUD.getPlayerOnScreen().mouseReleased(mouseX, mouseY);
     }
 
     /**

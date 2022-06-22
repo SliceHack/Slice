@@ -43,6 +43,7 @@ public class ModuleManager {
         register(new Insults());
         register(new Translator());
         register(new HUD());
+        register(new Minehut());
     }
 
     /**
@@ -78,5 +79,12 @@ public class ModuleManager {
      * */
     public Translator getTranslator() {
         return (Translator) getModule(Translator.class);
+    }
+
+    /**
+     * Gets MineHut Utility
+     * */
+    public Minehut getMinehut() {
+        return (Minehut) getModule(Minehut.class);
     }
 }

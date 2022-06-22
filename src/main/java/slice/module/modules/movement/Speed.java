@@ -57,7 +57,7 @@ public class Speed extends Module {
                             MoveUtil.strafe(0.48D);
                         }
                         break;
-                    case "Astro":
+                   case "Astro":
                         if(!MoveUtil.isMoving()) return;
 
                         if(mc.thePlayer.onGround) {

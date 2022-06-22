@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import slice.Slice;
 import slice.event.events.EventChatMessage;
+import slice.util.LoggerUtil;
 
 public class GuiNewChat extends Gui
 {
@@ -129,8 +130,6 @@ public class GuiNewChat extends Gui
 
     public void printChatMessage(IChatComponent chatComponent)
     {
-
-
         if(Slice.INSTANCE.getModuleManager().getTranslator().isEnabled()) {
             new Thread(() -> {
                 GuiNewChat.translate = new ChatComponentText(Slice.INSTANCE.getModuleManager().getTranslator().translate(chatComponent.getUnformattedText()));
@@ -146,6 +145,14 @@ public class GuiNewChat extends Gui
      */
     public void printChatMessageWithOptionalDeletion(IChatComponent chatComponent, int chatLineId)
     {
+        boolean cancel = false;
+        try {
+            if (Slice.INSTANCE.getModuleManager().getMinehut().isEnabled()) cancel = Slice.INSTANCE.getModuleManager().getMinehut().send(chatComponent.getUnformattedText());
+        } catch (Exception ignored){}
+
+        System.out.println(chatComponent.getUnformattedText());
+        if (cancel) return;
+
         this.setChatLine(chatComponent, chatLineId, this.mc.ingameGUI.getUpdateCounter(), false);
         logger.info("[CHAT] " + chatComponent.getUnformattedText());
     }
