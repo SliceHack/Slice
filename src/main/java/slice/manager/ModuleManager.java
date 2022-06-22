@@ -8,6 +8,7 @@ import slice.module.modules.combat.AntiBot;
 import slice.module.modules.combat.Aura;
 import slice.module.modules.misc.*;
 import slice.module.modules.movement.*;
+import slice.module.modules.render.Chams;
 import slice.module.modules.render.HUD;
 import slice.module.modules.world.TimeChanger;
 
@@ -44,6 +45,7 @@ public class ModuleManager {
         register(new Translator());
         register(new HUD());
         register(new Minehut());
+        register(new Chams());
     }
 
     /**
