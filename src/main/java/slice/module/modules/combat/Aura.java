@@ -29,6 +29,7 @@ public class Aura extends Module {
     NumberValue cps = new NumberValue("CPS", 8, 1, 20, NumberValue.Type.INTEGER);
     NumberValue range = new NumberValue("Range", 3.0, 0.2, 10.0, NumberValue.Type.DOUBLE);
 
+    BooleanValue rotate = new BooleanValue("Rotate", true);
     BooleanValue keepSprint = new BooleanValue("KeepSprint", true);
 
     BooleanValue noSwing = new BooleanValue("NoSwing", false);
@@ -83,8 +84,10 @@ public class Aura extends Module {
             }
 
             if(target != null) {
-                e.setYaw(yaw);
-                e.setPitch(pitch);
+                if(rotate.getValue()) {
+                    e.setYaw(yaw);
+                    e.setPitch(pitch);
+                }
 
                 yaw = getRotationsFixedSens(target)[0];
                 pitch = getRotationsFixedSens(target)[1];

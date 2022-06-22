@@ -31,8 +31,11 @@ import net.optifine.DynamicLights;
 import net.optifine.reflect.Reflector;
 import net.optifine.shaders.Shaders;
 import org.lwjgl.opengl.GL11;
+import slice.Slice;
 import slice.module.modules.combat.Aura;
+import slice.module.modules.render.Animations;
 
+@SuppressWarnings("all")
 public class ItemRenderer
 {
     private static final ResourceLocation RES_MAP_BACKGROUND = new ResourceLocation("textures/map/map_background.png");
@@ -423,7 +426,22 @@ public class ItemRenderer
                             break;
 
                         case BLOCK:
-                            this.spin(f, f1);
+                            Animations animations = Slice.INSTANCE.getModuleManager().getAnimations();
+
+                            if(animations.isEnabled()) {
+                                switch (animations.getMode().getValue()) {
+                                    case "1.7":
+                                        this.transformFirstPersonItem(f, f1);
+                                        this.doBlockTransformations();
+                                        break;
+                                    case "Spin":
+                                        this.spin(f, f1);
+                                        this.doBlockTransformations();
+                                        break;
+                                }
+                                break;
+                            }
+                            this.transformFirstPersonItem(f, 0.0F);
                             this.doBlockTransformations();
                             break;
 
