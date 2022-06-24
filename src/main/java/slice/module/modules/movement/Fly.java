@@ -1,10 +1,12 @@
 package slice.module.modules.movement;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 import net.minecraft.util.MathHelper;
+import net.optifine.Log;
 import org.lwjgl.input.Keyboard;
 import slice.event.Event;
 import slice.event.events.EventPacket;
@@ -118,15 +120,14 @@ public class Fly extends Module {
             if(mc.theWorld == null)
                 return;
 
-            if (mode.getValue().equalsIgnoreCase("Hycraft")) {
-                if(p instanceof C03PacketPlayer.C06PacketPlayerPosLook
+            if(mode.getValue().equalsIgnoreCase("Hycraft")) {
+                if (p instanceof C03PacketPlayer.C06PacketPlayerPosLook
                         || p instanceof C03PacketPlayer.C04PacketPlayerPosition
                         || p instanceof C03PacketPlayer.C05PacketPlayerLook) {
 
                     event.setCancelled(mc.thePlayer.ticksExisted % 5 != 0);
                 }
             }
-
         }
     }
 }

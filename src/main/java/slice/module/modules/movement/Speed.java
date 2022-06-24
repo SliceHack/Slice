@@ -65,8 +65,8 @@ public class Speed extends Module {
                             MoveUtil.strafe(0.48);
                         }
 
-                        if(offGroundTicks > 8) {
-                          mc.thePlayer.motionY = -1F;
+                        if(offGroundTicks >= 7) {
+                          mc.thePlayer.motionY = -2F;
                         }
                         break;
                     case "UwUGuard":
