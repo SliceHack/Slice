@@ -38,6 +38,8 @@ public class Aura extends Module {
     BooleanValue mobs = new BooleanValue("Mobs", true);
     BooleanValue teams = new BooleanValue("Teams", false);
 
+    BooleanValue wait = new BooleanValue("Wait Rotation Smoothing", false);
+
     EntityLivingBase target;
 
     public static boolean fakeBlock;
@@ -59,8 +61,8 @@ public class Aura extends Module {
     }
 
     public void onEnable() {
-        deltaPitch = mc.thePlayer.rotationPitch;
-        deltaYaw = mc.thePlayer.rotationYaw;
+        deltaPitch = mc.thePlayer.rotationPitchHead;
+        deltaYaw = mc.thePlayer.rotationYawHead;
     }
 
     public void onEvent(Event event) {
@@ -89,8 +91,10 @@ public class Aura extends Module {
                     e.setPitch(pitch);
                 }
 
-                yaw = getRotationsFixedSens(target)[0];
-                pitch = getRotationsFixedSens(target)[1];
+                if(e.isPre()) {
+                    yaw = getRotationsFixedSens(target)[0];
+                    pitch = getRotationsFixedSens(target)[1];
+                }
 
                 boolean block = mc.thePlayer.getHeldItem() != null && !blockMode.getValue().equalsIgnoreCase("None");
 
@@ -102,10 +106,16 @@ public class Aura extends Module {
 
                 deltaCps = deltaCps == cps.getValue().intValue() ? (cps.getValue().intValue() != 1 ? (cps.getValue().intValue() - 1) : 1) : cps.getValue().intValue();
 
-                if (timer.hasReached(1000 / deltaCps)) {
-                    attack();
-                    if (!noSwing.getValue()) mc.thePlayer.swingItem();
-                    timer.reset();
+                if(wait.getValue() && reachedYaw && reachedPitch) {
+                    return;
+                }
+
+                if(!e.isPre()) {
+                    if (timer.hasReached(1000 / deltaCps)) {
+                        attack();
+                        if (!noSwing.getValue()) mc.thePlayer.swingItem();
+                        timer.reset();
+                    }
                 }
             }
 
@@ -157,11 +167,20 @@ public class Aura extends Module {
         double dist = Math.sqrt(x * x + y * y + z * z);
         float yaw = (float) (Math.atan2(z, x) * 180.0D / Math.PI) - 90.0F;
         float pitch = (float) -(Math.atan2(y, dist) * 180.0D / Math.PI);
+        float deltaY = (int)((deltaYaw) - (yaw));
+        float deltaP = (int)((deltaPitch - pitch));
 
-        if (pitch != deltaPitch) reachedPitch = false;
-        else if (yaw != deltaYaw) reachedYaw = false;
-        else if (pitch == deltaPitch) reachedPitch = true;
-        else if (yaw == deltaYaw) reachedYaw = true;
+        if(deltaY <= 0) {
+            reachedYaw = true;
+        } else {
+            reachedYaw = false;
+        }
+
+        if(deltaP == 0) {
+            reachedPitch = true;
+        } else {
+            reachedPitch = false;
+        }
 
         int smooth = 2;
         if(!reachedPitch) {
