@@ -73,21 +73,23 @@ public class Saver {
                     if(key instanceof NumberValue) {
                         NumberValue value1 = (NumberValue) module.getSetting(key.getName());
                         Number value;
-                        switch (value1.getType()) {
-                            case DOUBLE:
-                                value = settingsJson.getDouble(key.getName());
-                                break;
-                            case FLOAT:
-                                value = settingsJson.getFloat(key.getName());
-                                break;
-                            case LONG:
-                                value = settingsJson.getLong(key.getName());
-                                break;
-                            default:
-                                value = settingsJson.getInt(key.getName());
-                                break;
-                        }
-                        value1.setValue(value);
+                        try {
+                            switch (value1.getType()) {
+                                case DOUBLE:
+                                    value = settingsJson.getDouble(key.getName());
+                                    break;
+                                case FLOAT:
+                                    value = settingsJson.getFloat(key.getName());
+                                    break;
+                                case LONG:
+                                    value = settingsJson.getLong(key.getName());
+                                    break;
+                                default:
+                                    value = settingsJson.getInt(key.getName());
+                                    break;
+                            }
+                            value1.setValue(value);
+                        } catch (Exception ignored){}
                     }
                 }
             }

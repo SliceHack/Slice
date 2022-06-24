@@ -6,6 +6,7 @@ import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.modules.combat.AntiBot;
 import slice.module.modules.combat.Aura;
+import slice.module.modules.combat.PvPBot;
 import slice.module.modules.misc.*;
 import slice.module.modules.movement.*;
 import slice.module.modules.render.Animations;
@@ -48,6 +49,7 @@ public class ModuleManager {
         register(new Minehut());
         register(new Chams());
         register(new Animations());
+        register(new PvPBot());
     }
 
     /**
