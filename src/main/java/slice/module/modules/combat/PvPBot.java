@@ -31,15 +31,21 @@ public class PvPBot extends Module {
             if(target == null)
                 return;
 
-            if (target.getHealth() <= 0 || target.isDead) target = null;
+            if (target.getHealth() <= 0 || target.isDead || (mc.thePlayer.isDead || mc.thePlayer.getHealth() <= 0)) {
+                target = null;
+                return;
+            }
 
-            assert target != null;
             mc.thePlayer.rotationYaw = getRotationsFixedSens(target)[0];
             mc.thePlayer.rotationPitch = getRotationsFixedSens(target)[1];
 
 
             if(mc.thePlayer.getDistanceToEntity(target) <= rangeToPlayer.getValue().doubleValue()) {
                 KeyUtil.moveKeys()[0].pressed = false;
+
+                if(subCPS && (cps.getValue().intValue() < 2)) {
+                    subCPS = false;
+                }
 
                 if(timer.hasReached(1000L / (subCPS ? cps.getValue().intValue() - 1 : cps.getValue().intValue()))) {
                     mc.clickMouse();

@@ -3,6 +3,7 @@ package slice.module.modules.misc;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C00PacketKeepAlive;
 import net.minecraft.network.play.client.C03PacketPlayer;
+import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 import net.minecraft.network.play.server.S18PacketEntityTeleport;
 import slice.event.Event;
 import slice.event.events.EventPacket;
@@ -26,7 +27,6 @@ public class Disabler extends Module {
 
     public void onEvent(Event event) {
         if(event instanceof EventUpdate) {
-
             if(mode.getValue().equalsIgnoreCase("WarzoneMC")) {
                 if (timer.hasReached(1000L)) {
                     try {
@@ -39,13 +39,14 @@ public class Disabler extends Module {
         if(event instanceof EventPacket) {
             EventPacket e = (EventPacket) event;
             Packet<?> p = e.getPacket();
-
-            if(mode.getValue().equalsIgnoreCase("WarzoneMC")) {
-                if (p instanceof C00PacketKeepAlive) {
-                    e.setCancelled(true);
-                    packets.add((C00PacketKeepAlive) p);
-                    timer.reset();
-                }
+            switch (mode.getValue()) {
+                case "WarzoneMC":
+                    if (p instanceof C00PacketKeepAlive) {
+                        e.setCancelled(true);
+                        packets.add((C00PacketKeepAlive) p);
+                        timer.reset();
+                    }
+                    break;
             }
         }
     }

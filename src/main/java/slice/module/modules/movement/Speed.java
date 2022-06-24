@@ -77,6 +77,8 @@ public class Speed extends Module {
                             MoveUtil.strafe(0.5D);
                         }
                         break;
+                    case "Dev":
+                        break;
                 }
         }
         if(event instanceof EventPacket) {
