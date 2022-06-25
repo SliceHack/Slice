@@ -24,7 +24,7 @@ import java.net.URI;
 public class IRC {
 
     /** API url */
-    private static final String API_URL = "http://localhost:3001";
+    private static final String API_URL = "http://d24b-173-88-170-62.ngrok.io/";
 
     private Socket socket;
     private SocketEvents socketEvents;

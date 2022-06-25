@@ -52,6 +52,9 @@ public class GuiOfflineLogin extends GuiScreen {
 
     protected void mouseReleased(int mouseX, int mouseY, int state) {
         if(mouseX >= this.login.xPosition && mouseX <= this.login.xPosition + this.login.getButtonWidth() && mouseY >= this.login.yPosition && mouseY <= this.login.yPosition + this.login.getButtonWidth()) {
+            if(this.token.getText().isEmpty())
+                return;
+
             login(this.token.getText());
         }
     }

@@ -32,6 +32,7 @@ public class SocketEvents {
 
         socket.on("users", (args) -> {
             String message = (String) args[0];
+            System.out.println(message);
             JSONArray users = (JSONArray) args[1];
 
             List<String> strings = new ArrayList<>();
@@ -43,6 +44,7 @@ public class SocketEvents {
                 String[] split = user.split(":");
                 String username = split[0];
                 String discordName = split[1];
+                System.out.println(username + " " + discordName);
                 LoggerUtil.addMessageNoPrefix(Slice.INSTANCE.replaceUsername(username, discordName, message));
                 return;
             }
