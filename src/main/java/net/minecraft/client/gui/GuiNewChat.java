@@ -145,6 +145,13 @@ public class GuiNewChat extends Gui
      */
     public void printChatMessageWithOptionalDeletion(IChatComponent chatComponent, int chatLineId)
     {
+        EventChatMessage event = new EventChatMessage(chatComponent, chatComponent.getFormattedText(), chatComponent.getUnformattedText());
+        event.call();
+
+        if(event.isCancelled())
+            return;
+
+
         boolean cancel = false;
         try {
             if (Slice.INSTANCE.getModuleManager().getMinehut().isEnabled()) cancel = Slice.INSTANCE.getModuleManager().getMinehut().send(chatComponent.getUnformattedText());

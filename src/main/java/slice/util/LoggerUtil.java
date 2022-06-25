@@ -20,9 +20,28 @@ public class LoggerUtil {
      * @param message The message to log.
      */
     public static void addMessage(String message) {
+
+        if(Minecraft.getMinecraft().thePlayer == null || Minecraft.getMinecraft().theWorld == null)
+            return;
+
+
         Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentText(
                 "§cSlice §7» " + message.replace("&", "§")
         ));
+    }
+
+    /**
+     * Logs a message to the minecraft chat.
+     *
+     * @param message The message to log.
+     */
+    public static void addMessageNoPrefix(String message) {
+
+        if(Minecraft.getMinecraft().thePlayer == null || Minecraft.getMinecraft().theWorld == null)
+            return;
+
+
+        Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentText(message));
     }
 
     /**

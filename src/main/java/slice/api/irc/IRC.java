@@ -2,10 +2,13 @@ package slice.api.irc;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.server.S02PacketChat;
 import slice.api.irc.event.SocketEvents;
+import slice.event.events.EventChat;
+import slice.event.events.EventChatMessage;
 import slice.event.events.EventPacket;
 import slice.event.events.EventSwitchAccount;
 import slice.util.LoggerUtil;
@@ -21,7 +24,7 @@ import java.net.URI;
 public class IRC {
 
     /** API url */
-    private static final String API_URL = "https://api.sliceclient.com/";
+    private static final String API_URL = "http://localhost:3001";
 
     private Socket socket;
     private SocketEvents socketEvents;
@@ -69,13 +72,23 @@ public class IRC {
      * sends a packet to the server.
      *
      * @param e The event to send.
-     * @param s02 The chat packet to send.
      * */
-    public void onMessage(EventPacket e, S02PacketChat s02) {
+    public void onMessage(EventPacket ep, S02PacketChat e) {
         if(!socket.connected())
             return;
 
-        socket.emit("onS02", s02.getChatComponent().getFormattedText());
+        socket.emit("onChat", e.getChatComponent().getFormattedText());
+        ep.setCancelled(true);
+    }
+
+    /**
+     * Keeps the socket connection alive.
+     * */
+    public void onKeepAlive() {
+        if(!socket.connected())
+            return;
+
+        socket.emit("keepAlive", "keepAlive");
     }
 
     /**
@@ -86,14 +99,14 @@ public class IRC {
             return;
 
         socket.connect();
+        socketEvents.runConnected();
 
         if(Minecraft.getMinecraft().thePlayer == null && Minecraft.getMinecraft().theWorld == null)
             return;
 
-        if(socket.connected()) {
-            LoggerUtil.addMessage("Connected to the server!");
+        if(socket.connected())
             return;
-        }
+
         LoggerUtil.addMessage("Failed to connect to the server!");
     }
 }
