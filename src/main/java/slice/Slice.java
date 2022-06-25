@@ -7,8 +7,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S02PacketChat;
 import net.minecraft.util.ChatComponentText;
 import org.lwjgl.input.Keyboard;
-import slice.api.API;
-import slice.api.IRC;
+import slice.api.irc.IRC;
 import slice.clickgui.ClickGui;
 import slice.discord.StartDiscordRPC;
 import slice.event.Event;
@@ -50,7 +49,7 @@ public enum Slice {
     public String discordName, discordID, discordDiscriminator;
 
     Slice() {
-        API.sendAuthRequest();
+//        API.sendAuthRequest();
         moduleManager = new ModuleManager();
         commandManager = new CommandManager(moduleManager);
         settingsManager = new SettingsManager(moduleManager);

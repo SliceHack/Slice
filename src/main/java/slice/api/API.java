@@ -35,14 +35,25 @@ public class API {
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setDoOutput(true);
             connection.connect();
-            JSONObject json = new JSONObject(Objects.requireNonNull(readResponse(connection)));
+            String response = readResponse(connection);
 
-            boolean success = json.getBoolean("status");
-            if(!success) {
-                LoggerUtil.addTerminalMessage("[Slice] Authentication failed");
-                Minecraft.getMinecraft().crashed(new CrashReport("Authentication failed", new Exception("Authentication failed")));
-                System.exit(-1);
+            JSONObject json = null;
+            if(response != null) {
+                json = new JSONObject(response);
             }
+
+            if(json != null) {
+                boolean success = json.getBoolean("status");
+                if (!success) {
+                    LoggerUtil.addTerminalMessage("[Slice] Authentication failed");
+                    Minecraft.getMinecraft().crashed(new CrashReport("Authentication failed", new Exception("Authentication failed")));
+                    System.exit(-1);
+                }
+                return;
+            }
+            LoggerUtil.addTerminalMessage("[Slice] Authentication failed");
+            Minecraft.getMinecraft().crashed(new CrashReport("Authentication failed", new Exception("Authentication failed")));
+            System.exit(-1);
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);

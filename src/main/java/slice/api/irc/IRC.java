@@ -1,14 +1,10 @@
-package slice.api;
+package slice.api.irc;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import lombok.Getter;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.Session;
-import slice.Slice;
+import slice.api.irc.event.SocketEvents;
 import slice.event.events.EventSwitchAccount;
-import slice.util.HardwareUtil;
 import slice.util.LoggerUtil;
 
 import java.net.URI;
@@ -20,6 +16,7 @@ public class IRC {
     private static final String API_URL = "http://localhost:3001";
 
     private Socket socket;
+    private SocketEvents socketEvents;
 
     /***
      * Connect to an IRC server.
@@ -28,15 +25,7 @@ public class IRC {
         try {
             IO.Options options = IO.Options.builder().build();
             socket = IO.socket(URI.create(API_URL), options);
-
-            socket.on("newMessage", (args) -> {
-                String discordName = (String) args[0];
-                String message = (String) args[1];
-
-                LoggerUtil.addIRCMessage(discordName, message);
-            });
-
-            socket.emit("connected", Slice.INSTANCE.discordName, Minecraft.getMinecraft().getSession().getUsername()); // we need this for the username
+            socketEvents = new SocketEvents(socket);
             socket.connect();
         } catch (Exception ignored){}
     }
@@ -47,8 +36,10 @@ public class IRC {
      * @parma message The message to send to the server.
      * */
     public void sendMessage(String message) {
-        if(!socket.connected())
+        if(!socket.connected()) {
+            LoggerUtil.addMessage("Not connected to the IRC server.");
             return;
+        }
 
         socket.emit("message", message);
     }

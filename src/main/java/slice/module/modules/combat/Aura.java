@@ -104,7 +104,7 @@ public class Aura extends Module {
 
                 deltaCps = deltaCps == cps.getValue().intValue() ? (cps.getValue().intValue() != 1 ? (cps.getValue().intValue() - 1) : 1) : cps.getValue().intValue();
 
-                if(wait.getValue() && reachedYaw && reachedPitch) {
+                if(wait.getValue() && !reachedYaw && !reachedPitch) {
                     return;
                 }
 
