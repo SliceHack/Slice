@@ -17,8 +17,7 @@ import java.net.URI;
 public class IRC {
 
     /** API url */
-    private static final String API_URL = "https://api.sliceclient.com/irc/";
-    private static final String IRC_PATH = "chat";
+    private static final String API_URL = "http://localhost:3001";
 
     private Socket socket;
 
@@ -27,21 +26,20 @@ public class IRC {
      * */
     public IRC() {
         try {
-            IO.Options options = IO.Options.builder().setPath(IRC_PATH + "/").build();
+            IO.Options options = IO.Options.builder().build();
             socket = IO.socket(URI.create(API_URL), options);
 
             socket.on("newMessage", (args) -> {
                 String discordName = (String) args[0];
                 String message = (String) args[1];
 
-                LoggerUtil.addTerminalMessage(discordName + ": " + message);
+                LoggerUtil.addIRCMessage(discordName, message);
             });
 
             socket.emit("connected", Slice.INSTANCE.discordName, Minecraft.getMinecraft().getSession().getUsername()); // we need this for the username
             socket.connect();
         } catch (Exception ignored){}
     }
-
 
     /**
      * Sends a message to the socket server.

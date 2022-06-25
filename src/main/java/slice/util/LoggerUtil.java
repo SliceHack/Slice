@@ -34,4 +34,17 @@ public class LoggerUtil {
         LogManager.getLogger("Slice").info(message);
     }
 
+    /**
+     * Adds an irc message to chat.
+     *
+     * @param user The username
+     * @param message The message
+     */
+    public static void addIRCMessage(String user, String message) {
+        try {
+            Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentText(
+                    "§6IRC §7» §5" + user + "§r: " + message.replace("&", "§").replace("§k","")
+            ));
+        } catch(Exception ignored){}
+    }
 }
