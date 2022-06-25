@@ -77,14 +77,11 @@ public enum Slice {
             EventPacket e = (EventPacket) event;
             Packet<?> packet = e.getPacket();
             if(packet instanceof S02PacketChat) {
-                if(moduleManager.getModule(Translator.class).isEnabled())
-                    return;
+                S02PacketChat s02 = (S02PacketChat) packet;
 
-                S02PacketChat chat = (S02PacketChat) packet;
-                String message = chat.getChatComponent().getFormattedText();
-                event.setCancelled(true);
-                message = replaceUsername(message);
-                Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentText(message));
+                if(irc == null) return;
+
+                irc.onMessage(e, s02);
             }
         }
         if(event instanceof EventChat) {
@@ -126,7 +123,7 @@ public enum Slice {
      * Replaces the username in the message with the username of the players discord account
      * @param message - the message to be replaced
      **/
-    public String replaceUsername(String message) {
+    public String replaceUsername(String username, String discordName, String message) {
         if(discordName == null)
             return message;
 
@@ -137,7 +134,7 @@ public enum Slice {
                 break;
             }
         }
-        return message.replaceAll(Minecraft.getMinecraft().getSession().getUsername(),  Minecraft.getMinecraft().getSession().getUsername() + " §c(§b" + discordName + "§c)" + lastColor);
+        return message.replaceAll(username,  username + " §c(§b" + discordName + "§c)" + lastColor);
     }
 
 
