@@ -29,7 +29,7 @@ public class IRC {
                 String discordName = (String) args[0];
                 String message = (String) args[1];
 
-                LoggerUtil.addTerminalMessage(discordName + ": " + message);
+                LoggerUtil.addIRCMessage(discordName, message);
             });
 
             socket.emit("connected", Slice.INSTANCE.discordName); // we need this for the username
