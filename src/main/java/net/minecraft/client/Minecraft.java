@@ -2300,7 +2300,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         this.systemTime = getSystemTime();
 
         if(lastSession != session) {
-            EventSwitchAccount e = new EventSwitchAccount(session, session.getUsername(), session.getSessionID());
+            EventSwitchAccount e = new EventSwitchAccount(session, lastSession, session.getUsername(), session.getSessionID());
             e.call();
 
             if(e.isCancelled())

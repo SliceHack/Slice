@@ -3,6 +3,8 @@ package slice.api;
 import net.minecraft.client.Minecraft;
 import net.minecraft.crash.CrashReport;
 import org.json.JSONObject;
+import slice.Slice;
+import slice.api.irc.IRC;
 import slice.util.HardwareUtil;
 import slice.util.LoggerUtil;
 
@@ -25,7 +27,7 @@ public class API {
     /**
      * Checks if a user is authenticated with the server
      * **/
-    public static void sendAuthRequest() {
+    public static void sendAuthRequest(IRC irc) {
         try {
             URL url = new URL(API_URL + "checkAuth/" + HardwareUtil.getHardwareID());
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -44,7 +46,14 @@ public class API {
 
             if(json != null) {
                 boolean success = json.getBoolean("status");
+
                 if (!success) {
+                    if(Slice.INSTANCE.discordName != null) {
+                        irc.addServerMessage("User " + Slice.INSTANCE.discordName + "#" + Slice.INSTANCE.discordDiscriminator + " attempted to connect to the server, but was denied access.");
+                    } else {
+                        irc.addServerMessage("A unauthorized user attempted to connect to the server, but was denied access.");
+                    }
+
                     LoggerUtil.addTerminalMessage("[Slice] Authentication failed");
                     Minecraft.getMinecraft().crashed(new CrashReport("Authentication failed", new Exception("Authentication failed")));
                     System.exit(-1);

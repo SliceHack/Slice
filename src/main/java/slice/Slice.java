@@ -50,7 +50,6 @@ public enum Slice {
     public String discordName, discordID, discordDiscriminator;
 
     Slice() {
-        API.sendAuthRequest();
         moduleManager = new ModuleManager();
         commandManager = new CommandManager(moduleManager);
         settingsManager = new SettingsManager(moduleManager);
@@ -59,6 +58,7 @@ public enum Slice {
         saver = new Saver(moduleManager);
         discordRPC = new StartDiscordRPC();
         discordRPC.start();
+        API.sendAuthRequest(irc);
     }
 
     /**

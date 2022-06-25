@@ -37,8 +37,20 @@ public class IRC {
             IO.Options options = IO.Options.builder().build();
             socket = IO.socket(URI.create(API_URL), options);
             socketEvents = new SocketEvents(socket);
+
+            socket.on("addMessage", (args) -> {
+                LoggerUtil.addMessage(args[0] + "");
+            });
+
             connect();
         } catch (Exception ignored){}
+    }
+
+    /**
+     * Add server message
+     * */
+    public void addServerMessage(String message) {
+        socket.emit("serverMessage", message);
     }
 
     /**
@@ -65,7 +77,9 @@ public class IRC {
         if(!socket.connected())
             return;
 
-        socket.emit("setUsername", event.getUsername());
+        try {
+            socket.emit("setUsername", event.getUsername(), event.getLastSession().getUsername());
+        } catch (Exception ignored) {}
     }
 
     /**

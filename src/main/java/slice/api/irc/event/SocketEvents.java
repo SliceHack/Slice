@@ -18,8 +18,8 @@ public class SocketEvents {
 
     public SocketEvents(Socket socket) {
         this.socket = socket;
-        runOnEvent();
-        runConnected();
+        this.runOnEvent();
+        this.runConnected();
     }
 
     private void runOnEvent() {

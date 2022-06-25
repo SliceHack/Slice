@@ -9,6 +9,6 @@ import slice.event.Event;
 @Getter @Setter
 @AllArgsConstructor
 public class EventSwitchAccount extends Event {
-    private Session session;
+    private Session session, lastSession;
     private String username, uuid;
 }
