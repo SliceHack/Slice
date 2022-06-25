@@ -8,6 +8,7 @@ import net.minecraft.network.play.server.S02PacketChat;
 import net.minecraft.util.ChatComponentText;
 import org.lwjgl.input.Keyboard;
 import slice.api.API;
+import slice.api.IRC;
 import slice.clickgui.ClickGui;
 import slice.discord.StartDiscordRPC;
 import slice.event.Event;
@@ -44,6 +45,7 @@ public enum Slice {
     private final ClickGui clickGui;
     private final Saver saver;
     private final StartDiscordRPC discordRPC;
+    private final IRC irc;
 
     /** discord */
     public String discordName, discordID, discordDiscriminator;
@@ -56,6 +58,7 @@ public enum Slice {
         fontManager = new FontManager();
         clickGui = new ClickGui();
         saver = new Saver(moduleManager);
+        irc = new IRC();
         discordRPC = new StartDiscordRPC();
         discordRPC.start();
     }
