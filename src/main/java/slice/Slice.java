@@ -45,7 +45,9 @@ public enum Slice {
     private final ClickGui clickGui;
     private final Saver saver;
     private final StartDiscordRPC discordRPC;
-    private final IRC irc;
+
+    /** Server */
+    public IRC irc;
 
     /** discord */
     public String discordName, discordID, discordDiscriminator;
@@ -58,7 +60,6 @@ public enum Slice {
         fontManager = new FontManager();
         clickGui = new ClickGui();
         saver = new Saver(moduleManager);
-        irc = new IRC();
         discordRPC = new StartDiscordRPC();
         discordRPC.start();
     }
@@ -91,7 +92,18 @@ public enum Slice {
             }
         }
         if(event instanceof EventChat) {
-            commandManager.handleChat((EventChat) event);
+            EventChat e = (EventChat) event;
+            String message = e.getMessage();
+            commandManager.handleChat(e);
+
+            if(irc == null)
+                return;
+
+            if(message.startsWith("#")) {
+                message = message.substring(1);
+                irc.sendMessage(message);
+                event.setCancelled(true);
+            }
         }
 
         if(event instanceof EventUpdate) {
