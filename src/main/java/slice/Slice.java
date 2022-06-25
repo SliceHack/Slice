@@ -12,10 +12,7 @@ import slice.api.IRC;
 import slice.clickgui.ClickGui;
 import slice.discord.StartDiscordRPC;
 import slice.event.Event;
-import slice.event.events.EventChat;
-import slice.event.events.EventKey;
-import slice.event.events.EventPacket;
-import slice.event.events.EventUpdate;
+import slice.event.events.*;
 import slice.file.Saver;
 import slice.font.FontManager;
 import slice.manager.CommandManager;
@@ -104,6 +101,13 @@ public enum Slice {
                 irc.sendMessage(message);
                 event.setCancelled(true);
             }
+        }
+
+        if(event instanceof EventSwitchAccount) {
+            if(irc == null)
+                return;
+
+            irc.accountSwitch((EventSwitchAccount) event);
         }
 
         if(event instanceof EventUpdate) {
