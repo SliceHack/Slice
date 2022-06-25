@@ -13,8 +13,7 @@ import java.net.URI;
 public class IRC {
 
     /** API url */
-    private static final String API_URL = "https://api.sliceclient.com/irc/";
-    private static final String IRC_PATH = "chat";
+    private static final String API_URL = "http://localhost:3001";
 
     private Socket socket;
 
@@ -23,7 +22,7 @@ public class IRC {
      * */
     public IRC() {
         try {
-            IO.Options options = IO.Options.builder().setPath(IRC_PATH + "/").build();
+            IO.Options options = IO.Options.builder().build();
             socket = IO.socket(URI.create(API_URL), options);
 
             socket.on("newMessage", (args) -> {
@@ -38,7 +37,7 @@ public class IRC {
         } catch (Exception ignored){}
     }
 
-    private void sendMessage(String message) {
+    public void sendMessage(String message) {
         if(!socket.connected())
             return;
 

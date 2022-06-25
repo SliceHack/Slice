@@ -100,7 +100,7 @@ public enum Slice {
                 return;
 
             if(message.startsWith("#")) {
-                message = message.substring(1);
+                message = message.substring(1).replaceFirst(" ","");
                 irc.sendMessage(message);
                 event.setCancelled(true);
             }
