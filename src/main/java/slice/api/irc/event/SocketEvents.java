@@ -25,6 +25,17 @@ public class SocketEvents {
 
             LoggerUtil.addIRCMessage(discordName, message);
         });
+
+
+        socket.on("ircConnection", (args) -> {
+            String discordName = (String) args[0];
+            LoggerUtil.addMessage(discordName + " has connected");
+        });
+
+        socket.on("ircDisconnection", (args) -> {
+            String discordName = (String) args[0];
+            LoggerUtil.addMessage(discordName + " has disconnected");
+        });
     }
 
     private void runConnected() {

@@ -21,7 +21,7 @@ import java.net.URI;
 public class IRC {
 
     /** API url */
-    private static final String API_URL = "http://localhost:3001";
+    private static final String API_URL = "https://api.sliceclient.com/";
 
     private Socket socket;
     private SocketEvents socketEvents;
