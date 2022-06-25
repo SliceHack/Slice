@@ -91,10 +91,8 @@ public class Aura extends Module {
                     e.setPitch(pitch);
                 }
 
-                if(e.isPre()) {
-                    yaw = getRotationsFixedSens(target)[0];
-                    pitch = getRotationsFixedSens(target)[1];
-                }
+                yaw = getRotationsFixedSens(target)[0];
+                pitch = getRotationsFixedSens(target)[1];
 
                 boolean block = mc.thePlayer.getHeldItem() != null && !blockMode.getValue().equalsIgnoreCase("None");
 
@@ -110,7 +108,7 @@ public class Aura extends Module {
                     return;
                 }
 
-                if(!e.isPre()) {
+                if(e.isPre()) {
                     if (timer.hasReached(1000 / deltaCps)) {
                         attack();
                         if (!noSwing.getValue()) mc.thePlayer.swingItem();
