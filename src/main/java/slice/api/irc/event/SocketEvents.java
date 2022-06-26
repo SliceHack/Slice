@@ -30,6 +30,12 @@ public class SocketEvents {
             LoggerUtil.addIRCMessage(args[2] + " §c(§b" + discordName + "§c)§r", message);
         });
 
+        socket.on("usernameSet", (args) -> {
+            for(Object obj : args) {
+                System.out.println(obj.getClass().getName());
+            }
+        });
+
         socket.on("users", (args) -> {
             String message = (String) args[0];
             System.out.println(message);
