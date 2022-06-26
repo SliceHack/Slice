@@ -104,8 +104,9 @@ public class IRC {
                 LoggerUtil.addMessageNoPrefix(Slice.INSTANCE.replaceUsername(s.split(":")[0], s.split("1")[1], message));
                 return;
             }
-            return;
+            LoggerUtil.addMessageNoPrefix(message);
         }
+        ep.setCancelled(true);
     }
 
     /**
