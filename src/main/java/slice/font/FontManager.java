@@ -45,6 +45,12 @@ public class FontManager {
         return getFont("Roboto-Regular", 16);
     }
 
+    public TTFFontRenderer getArialFont(int size) {
+        if(fonts.get("Arial" + size) == null) {
+            fonts.put("Arial" + size, new TTFFontRenderer(new Font("Arial", Font.PLAIN, size)));
+        }
+        return fonts.get("Arial" + size);
+    }
 
     private TTFFontRenderer getDefaultFont() {
         if(fonts.get("default") == null)
