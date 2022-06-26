@@ -29,9 +29,7 @@ public class Util
                 throw outofmemoryerror;
             }
         }
-        catch (InterruptedException interruptedexception)
-        {
-        }
+        catch (InterruptedException ignored) {}
 
         return (V)((Object)null);
     }

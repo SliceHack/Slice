@@ -46,7 +46,6 @@ public class SocketEvents {
                 assert args[0] instanceof String;
                 String s = (String) args[0];
                 s = s.replace("[", "").replace("]", "").replace("\"", "").replace(",", "\n");
-                // loop through all lines and add them to the list
                 String[] lines = s.split("\n");
                 List<String> list = new ArrayList<>(Arrays.asList(lines));
                 System.out.println(list);

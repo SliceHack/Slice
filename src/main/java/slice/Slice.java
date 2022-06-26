@@ -79,8 +79,12 @@ public enum Slice {
             Packet<?> packet = e.getPacket();
             if(packet instanceof S02PacketChat) {
                 S02PacketChat s02 = (S02PacketChat) packet;
-                irc.onMessage(e, s02);
 
+                if(!irc.getSocket().connected()) {
+                    irc.getSocket().connect();
+                }
+
+                irc.onMessage(e, s02);
             }
         }
         if(event instanceof EventChat) {
