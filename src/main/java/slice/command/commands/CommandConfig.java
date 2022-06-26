@@ -54,8 +54,6 @@ public class CommandConfig extends Command {
         }
 
         if(action.equalsIgnoreCase("save")) {
-            if(!configFile.getParentFile().exists()) configFile.getParentFile().mkdirs();
-
             configS.save();
             addMessage("Saved " + config);
         }

@@ -92,6 +92,8 @@ public class ConfigSaver {
     }
 
     public void save() {
+        if(!modules.getParentFile().exists()) modules.getParentFile().mkdirs();
+
         JSONObject json = new JSONObject();
         for(Module module : moduleManager.getModules()) {
             JSONObject moduleJson = new JSONObject();
