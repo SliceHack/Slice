@@ -4,8 +4,10 @@ import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.server.S02PacketChat;
+import slice.Slice;
 import slice.api.irc.event.SocketEvents;
 import slice.event.events.EventChat;
 import slice.event.events.EventChatMessage;
@@ -14,13 +16,16 @@ import slice.event.events.EventSwitchAccount;
 import slice.util.LoggerUtil;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * The class used for handling the Socket connection
  *
  * @author Nick & Dylan
  */
-@Getter
+@Getter @Setter
 public class IRC {
 
     /** API url */
@@ -28,6 +33,8 @@ public class IRC {
 
     private Socket socket;
     private SocketEvents socketEvents;
+
+    private List<String> list = new ArrayList<>();
 
     /***
      * Connect to an IRC server.
@@ -83,7 +90,7 @@ public class IRC {
     }
 
     /**
-     * sends a packet to the server.
+     * handles the chat message event.
      *
      * @param e The event to send.
      * */
@@ -91,8 +98,14 @@ public class IRC {
         if(!socket.connected())
             return;
 
-        socket.emit("onChat", e.getChatComponent().getFormattedText());
-        ep.setCancelled(true);
+        String message = e.getChatComponent().getUnformattedText();
+        for(String s : list) {
+            if (message.contains(s)) {
+                LoggerUtil.addMessageNoPrefix(Slice.INSTANCE.replaceUsername(s.split(":")[0], s.split("1")[1], message));
+                return;
+            }
+            return;
+        }
     }
 
     /**

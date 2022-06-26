@@ -31,9 +31,14 @@ public class SocketEvents {
         });
 
         socket.on("usernameSet", (args) -> {
-            for(Object obj : args) {
-                System.out.println(obj.getClass().getName() + ": " + obj);
+            JSONArray array = (JSONArray) args[0];
+            List<String> list = new ArrayList<>();
+
+            for (int i = 0; i < array.length(); i++) {
+                String name = array.getString(i);
+                list.add(name);
             }
+            Slice.INSTANCE.getIrc().setList(list);
         });
 
         socket.on("users", (args) -> {
