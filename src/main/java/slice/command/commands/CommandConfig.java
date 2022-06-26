@@ -25,7 +25,7 @@ public class CommandConfig extends Command {
         File configFile = new File(Minecraft.getMinecraft().mcDataDir, "Slice\\configs\\" + config + ".json");
 
         if(action.equalsIgnoreCase("load") && !configFile.exists()) {
-            addMessage("&cConfig &7" + config + " &cdoes not exist!");
+            addMessage("&cConfig &7" + config + " &c" + "does not exist!");
             return true;
         }
 
