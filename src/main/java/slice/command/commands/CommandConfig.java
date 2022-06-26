@@ -45,7 +45,12 @@ public class CommandConfig extends Command {
                 if (Double.parseDouble(configObject.getString("build")) < Double.parseDouble(Slice.VERSION)) {
                     addMessage("&cThis config was made in a older version of Slice and may not work properly!");
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception e) {
+                addMessage("&c" + e.getMessage());
+                for(StackTraceElement element : e.getStackTrace()) {
+                    addMessage(element.toString());
+                }
+            }
         }
 
         if(action.equalsIgnoreCase("load")) {
