@@ -32,7 +32,7 @@ public class SocketEvents {
 
         socket.on("usernameSet", (args) -> {
             for(Object obj : args) {
-                System.out.println(obj.getClass().getName());
+                System.out.println(obj.getClass().getName() + ": " + obj);
             }
         });
 
