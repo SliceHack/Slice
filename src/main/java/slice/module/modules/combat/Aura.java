@@ -106,7 +106,7 @@ public class Aura extends Module {
                     mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem());
                 }
 
-                if(!fakeBlock && blockMode.getValue().equalsIgnoreCase("NCP")) {
+                if((block && !fakeBlock) && blockMode.getValue().equalsIgnoreCase("NCP")) {
                     if(e.isPre()) {
                         mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
                     } else {
@@ -170,48 +170,40 @@ public class Aura extends Module {
     }
 
     public float[] getRotationsFixedSens(Entity e) {
-        double x = e.posX - mc.thePlayer.posX;
-        double y = e.posY - mc.thePlayer.posY;
-        double z = e.posZ - mc.thePlayer.posZ;
+        try {
+            double x = e.posX - mc.thePlayer.posX;
+            double y = e.posY - mc.thePlayer.posY;
+            double z = e.posZ - mc.thePlayer.posZ;
 
-        double dist = Math.sqrt(x * x + y * y + z * z);
-        float yaw = (float) (Math.atan2(z, x) * 180.0D / Math.PI) - 90.0F;
-        float pitch = (float) -(Math.atan2(y, dist) * 180.0D / Math.PI);
-        float deltaY = (int)((deltaYaw) - (yaw));
-        float deltaP = (int)((deltaPitch - pitch));
+            double dist = Math.sqrt(x * x + y * y + z * z);
+            float yaw = (float) (Math.atan2(z, x) * 180.0D / Math.PI) - 90.0F;
+            float pitch = (float) -(Math.atan2(y, dist) * 180.0D / Math.PI);
 
-        if(deltaY <= 0) {
-            reachedYaw = true;
-        } else {
-            reachedYaw = false;
-        }
+            if (pitch != deltaPitch) reachedPitch = false;
+            else if (yaw != deltaYaw) reachedYaw = false;
+            else if (pitch == deltaPitch) reachedPitch = true;
+            else if (yaw == deltaYaw) reachedYaw = true;
 
-        if(deltaP == 0) {
-            reachedPitch = true;
-        } else {
-            reachedPitch = false;
-        }
-
-        int smooth = 2;
-        if(!reachedPitch) {
-            if(pitch > deltaPitch) {
-                deltaPitch += Math.abs(pitch - deltaPitch) / smooth;
-            } else {
-                deltaPitch -= Math.abs(pitch - deltaPitch) / smooth;
+            int smooth = 2;
+            if (!reachedPitch) {
+                if (pitch > deltaPitch) {
+                    deltaPitch += Math.abs(pitch - deltaPitch) / smooth;
+                } else {
+                    deltaPitch -= Math.abs(pitch - deltaPitch) / smooth;
+                }
             }
-        }
-        if(!reachedYaw) {
-            if(yaw > deltaYaw) {
-                deltaYaw += Math.abs(yaw - deltaYaw) / smooth;
-            } else {
-                deltaYaw -= Math.abs(yaw - deltaYaw) / smooth;
+            if (!reachedYaw) {
+                if (yaw > deltaYaw) {
+                    deltaYaw += Math.abs(yaw - deltaYaw) / 3;
+                } else {
+                    deltaYaw -= Math.abs(yaw - deltaYaw) / 3;
+                }
             }
-        }
+            if (deltaPitch > 90) deltaPitch = 90;
+            else if (deltaPitch < -90) deltaPitch = -90;
+        } catch (Exception ignored){}
 
-        if(deltaPitch > 90) deltaPitch = 90;
-        else if(deltaPitch < -90) deltaPitch = -90;
-
-        return new float[] {yaw+(float)(Math.random()*2), deltaPitch+(float)(Math.random()-0.02)};
+        return new float[] {deltaYaw, deltaPitch+(float)(Math.random()-0.02)};
     }
 
     public boolean canAttack(EntityLivingBase entity) {
