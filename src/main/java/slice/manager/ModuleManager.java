@@ -12,6 +12,7 @@ import slice.module.modules.movement.*;
 import slice.module.modules.render.Animations;
 import slice.module.modules.render.Chams;
 import slice.module.modules.render.HUD;
+import slice.module.modules.render.Interface;
 import slice.module.modules.world.TimeChanger;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class ModuleManager {
     private List<Module> modules = new ArrayList<>();
 
     public ModuleManager() {
+        register(new Interface());
         register(new Fly());
         register(new Speed());
         register(new InvMove());
@@ -100,5 +102,12 @@ public class ModuleManager {
      * */
     public Animations getAnimations() {
         return (Animations) getModule(Animations.class);
+    }
+
+    /**
+     * Gets Interface
+     */
+    public Interface getInterface() {
+        return (Interface) getModule(Interface.class);
     }
 }

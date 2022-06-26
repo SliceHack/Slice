@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import slice.Slice;
 import slice.event.events.EventChatMessage;
+import slice.font.TTFFontRenderer;
 import slice.util.LoggerUtil;
 
 public class GuiNewChat extends Gui
@@ -84,10 +85,31 @@ public class GuiNewChat extends Gui
                             {
                                 int i2 = 0;
                                 int j2 = -i1 * 9;
-                                drawRect(i2, j2 - 9, i2 + l + 4, j2, l1 / 2 << 24);
+                                if(!Slice.INSTANCE.getModuleManager().getInterface().getClearChat().getValue()) {
+                                    drawRect(i2, j2 - 9, i2 + l + 4, j2, l1 / 2 << 24);
+                                }
                                 String s = chatline.getChatComponent().getFormattedText();
                                 GlStateManager.enableBlend();
-                                this.mc.fontRendererObj.drawStringWithShadow(s, (float)i2, (float)(j2 - 8), 16777215 + (l1 << 24));
+
+                                if(!Slice.INSTANCE.getModuleManager().getInterface().getFontChat().getValue()) {
+                                    this.mc.fontRendererObj.drawStringWithShadow(s, (float) i2, (float) (j2 - 8), 16777215 + (l1 << 24));
+                                } else {
+                                    TTFFontRenderer font = null;
+
+                                    switch (Slice.INSTANCE.getModuleManager().getInterface().getFontChatMode().getValue()) {
+                                        case "Poppins":
+                                            font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 19);
+                                            break;
+                                        case "Arial":
+                                            font = Slice.INSTANCE.getFontManager().getArialFont(19);
+                                            break;
+                                    }
+
+                                    if(font == null)
+                                        return;
+
+                                    font.drawStringWithShadow(s, (float) i2, (float) (j2 - 8), 16777215 + (l1 << 24));
+                                }
                                 GlStateManager.disableAlpha();
                                 GlStateManager.disableBlend();
                             }
@@ -97,7 +119,21 @@ public class GuiNewChat extends Gui
 
                 if (flag)
                 {
-                    int k2 = this.mc.fontRendererObj.FONT_HEIGHT;
+                    TTFFontRenderer font = null;
+
+                    switch (Slice.INSTANCE.getModuleManager().getInterface().getFontChatMode().getValue()) {
+                        case "Poppins":
+                            font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 19);
+                            break;
+                        case "Arial":
+                            font = Slice.INSTANCE.getFontManager().getArialFont(19);
+                            break;
+                    }
+
+                    if(font == null)
+                        return;
+
+                    int k2 = Slice.INSTANCE.getModuleManager().getInterface().getClearChat().getValue() ? font.getFont().getSize() : mc.fontRendererObj.FONT_HEIGHT;
                     GlStateManager.translate(-3.0F, 0.0F, 0.0F);
                     int l2 = k * k2 + k;
                     int i3 = j * k2 + j;
@@ -108,8 +144,10 @@ public class GuiNewChat extends Gui
                     {
                         int k3 = j3 > 0 ? 170 : 96;
                         int l3 = this.isScrolled ? 13382451 : 3355562;
-                        drawRect(0, -j3, 2, -j3 - k1, l3 + (k3 << 24));
-                        drawRect(2, -j3, 1, -j3 - k1, 13421772 + (k3 << 24));
+                        if(!Slice.INSTANCE.getModuleManager().getInterface().getClearChat().getValue()) {
+                            drawRect(0, -j3, 2, -j3 - k1, l3 + (k3 << 24));
+                            drawRect(2, -j3, 1, -j3 - k1, 13421772 + (k3 << 24));
+                        }
                     }
                 }
 
