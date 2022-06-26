@@ -13,6 +13,7 @@ import slice.event.events.EventChat;
 import slice.event.events.EventChatMessage;
 import slice.event.events.EventPacket;
 import slice.event.events.EventSwitchAccount;
+import slice.util.HardwareUtil;
 import slice.util.LoggerUtil;
 
 import java.net.URI;

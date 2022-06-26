@@ -30,18 +30,6 @@ public class SocketEvents {
             String discordName = (String) args[0];
             String message = (String) args[1];
 
-            if(args.length > 2) {
-                String message2 = (String) args[2];
-                String message3 = (String) args[3];
-
-                if(!message2.equalsIgnoreCase("muted"))
-                    return;
-
-                if(Slice.INSTANCE.getDiscordName().equalsIgnoreCase(discordName)) {
-                    LoggerUtil.addMessage("You have been muted! Reason: " + message3);
-                }
-            }
-
             LoggerUtil.addIRCMessage(args[2] + " §c(§b" + discordName + "§c)§r", message);
         });
 
@@ -86,7 +74,6 @@ public class SocketEvents {
                 return;
             }
             LoggerUtil.addMessageNoPrefix(message);
-
         });
 
         socket.on("ircConnection", (args) -> {
