@@ -8,6 +8,7 @@ import slice.clickgui.module.ModuleButton;
 import slice.font.TTFFontRenderer;
 import slice.module.Module;
 import slice.module.data.Category;
+import slice.util.LoggerUtil;
 import slice.util.RenderUtil;
 
 import java.awt.*;
@@ -63,7 +64,7 @@ public class DropdownPane {
         int yAdd = 20;
         for(Module module : Slice.INSTANCE.getModuleManager().getModules(category)) {
             TTFFontRenderer font2 = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 20);
-            moduleButtons.add(new ModuleButton(module, x + 10, y + yAdd, (int) (font2.getWidth(module.getName()) + 20), (int)font2.getHeight(module.getName())));
+            moduleButtons.add(new ModuleButton(module, x + 11, y + yAdd, (int) (font2.getWidth(module.getName()) + 20), (int)font2.getHeight(module.getName())));
             yAdd += font2.getHeight(module.getName())+5;
             openHeight += yAdd;
         }
@@ -75,10 +76,10 @@ public class DropdownPane {
         }
 
         GlStateManager.color(255, 255, 255, 155);
-        RenderUtil.drawRoundedRect(x, y, x + (width+20), y + 20, 10, new Color(255, 165, 255).getRGB());
+        RenderUtil.drawRoundedRect(x, y, x + (width+20), y + 20, 10, new Color(255,171,171).getRGB());
 
         GlStateManager.popMatrix();
-        font.drawCenteredString(category.getName(), x+((float)width/2)+9, y + (height/2f), -1);
+        font.drawCenteredString(category.getName(), x+((float)width/2)+9, y + ((height/2f)+1), -1);
 
         if(open) moduleButtons.forEach(moduleButton -> moduleButton.drawButton(mouseX, mouseY));
 

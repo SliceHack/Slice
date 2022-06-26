@@ -43,7 +43,7 @@ public class ModuleButton {
         GlStateManager.pushMatrix();
         GlStateManager.enableAlpha();
         GlStateManager.color(1, 1, 1, 1);
-        font.drawString(module.getName(), x, y, !module.isEnabled() ? -1 : new Color(206, 163, 29).getRGB());
+        font.drawString(module.getName(), x, y, !module.isEnabled() ? -1 : new Color(255,171,171).getRGB());
         GlStateManager.popMatrix();
 
         if(open) pane.drawPane(mouseX, mouseY);

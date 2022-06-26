@@ -53,6 +53,8 @@ public class SettingPane {
 
         settings = new ArrayList<>();
 
+        Slice.INSTANCE.getClickGui().getWidths().putIfAbsent(module, 0);
+        width = Slice.INSTANCE.getClickGui().getWidths().get(module);
 
         int yAdd = 0;
         for(Setting setting : module.getSettings()) {
@@ -81,18 +83,14 @@ public class SettingPane {
         GlStateManager.enableAlpha();
         GlStateManager.enableBlend();
         GlStateManager.enableTexture2D();
-        GlStateManager.color(1, 1, 1, 1);
-        int width = getLargestSetting() != null ? (int)font.getWidth(getLargestSetting().getText())+5 : 80;
+        GlStateManager.color(255, 255, 255, 155);
 
-        if(getLargestSetting() != null) {
-            if (getLargestSetting() instanceof SliderButton) {
-                width = getLargestSetting().getWidth()+5;
-            }
-        }
+        RenderUtil.drawRoundedRect(x, y, x + width, y + (height), 10, new Color(1, 0, 0, 155).getRGB());
 
-        RenderUtil.drawRoundedRect(x, y, x + width, y + (height), 15, new Color(1, 0, 0, 155).getRGB());
-        GlStateManager.popMatrix();
         settings.forEach(setting -> setting.draw(mouseX, mouseY));
+        Slice.INSTANCE.getClickGui().setWidth(module, getLargestSetting().getWidth());
+
+        GlStateManager.popMatrix();
     }
 
     public String formatDouble(int places, double value) {

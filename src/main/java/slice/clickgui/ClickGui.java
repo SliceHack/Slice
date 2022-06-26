@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.gui.GuiScreen;
 import slice.clickgui.pane.DropdownPane;
+import slice.clickgui.pane.SettingPane;
 import slice.clickgui.setting.settings.SliderButton;
 import slice.module.Module;
 import slice.module.data.Category;
@@ -25,6 +26,8 @@ public class ClickGui extends GuiScreen {
 
     private List<Module> openModules = new ArrayList<>();
     private List<NumberValue> dragging = new ArrayList<>();
+
+    private Map<Module, Integer> widths = new HashMap<>();
 
     public ClickGui() {
         int xAdd = 0;
@@ -66,6 +69,15 @@ public class ClickGui extends GuiScreen {
     public void setVisible(Module module, boolean visible) {
         if(visible) openModules.add(module);
         else openModules.remove(module);
+    }
+
+    /**
+     * Sets the width of a setting pane.
+     * @param pane The pane to set the width of.
+     * @param width The width to set the pane to.
+     * */
+    public void setWidth(Module pane, int width) {
+        widths.put(pane, width);
     }
 
     /**

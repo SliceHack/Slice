@@ -81,24 +81,13 @@ public class Fly extends Module {
                     break;
                 // wip
                 case "UwUGuard":
-                    double direction = RotationUtil.getDirection();
+                    if(mc.thePlayer.ticksExisted % 20 == 0) {
+                        float yaw = mc.thePlayer.rotationYaw;
 
-
-                    if(mc.thePlayer.ticksExisted % 4 != 0) {
-                        mc.thePlayer.motionY = -0.42F;
-                    }
-                    else mc.timer.timerSpeed = 0.1f;
-
-                    if(mc.thePlayer.ticksExisted % 5 != 0) {
-                        mc.thePlayer.motionX = -MathHelper.sin((float) direction);
-                        mc.thePlayer.motionZ = MathHelper.cos((float) direction);
-                        return;
-                    }
-                    mc.thePlayer.motionY = 0F;
-                    mc.thePlayer.motionX = 0F;
-                    mc.thePlayer.motionZ = 0F;
-                    for (KeyBinding keyBinding : KeyUtil.moveKeys()) {
-                        keyBinding.pressed = false;
+                        double x = mc.thePlayer.posX + Math.cos(Math.toRadians(yaw + 90));
+                        double z = mc.thePlayer.posZ + Math.sin(Math.toRadians(yaw + 90));
+                        double y = mc.thePlayer.posY;
+                        mc.thePlayer.setPosition(x, y, z);
                     }
                     break;
                 case "UwUGuardGlide":
@@ -127,6 +116,8 @@ public class Fly extends Module {
 
                     event.setCancelled(mc.thePlayer.ticksExisted % 5 != 0);
                 }
+            }
+            if(mode.getValue().equalsIgnoreCase("UwUGuard")) {
             }
         }
     }

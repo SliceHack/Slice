@@ -51,6 +51,8 @@ public class SliderButton extends SettingComponent {
 
             value.setValue(val);
         }
+
+        width += 5;
     }
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {

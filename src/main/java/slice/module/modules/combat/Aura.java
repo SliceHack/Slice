@@ -42,7 +42,7 @@ public class Aura extends Module {
     BooleanValue mobs = new BooleanValue("Mobs", true);
     BooleanValue teams = new BooleanValue("Teams", false);
 
-    BooleanValue wait = new BooleanValue("Wait Rotation Smoothing", false);
+    BooleanValue wait = new BooleanValue("Rotation Smoothing", false);
 
     EntityLivingBase target;
 

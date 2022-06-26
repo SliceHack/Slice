@@ -31,12 +31,13 @@ public class BooleanButton extends SettingComponent {
     public void draw(int mouseX, int mouseY) {
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 20);
 
-        width = (int) (font.getWidth(booleanValue.getName()) + 20);
         text = booleanValue.getName();
 
         font.drawString(setting.getName(), x, y, -1);
         int xAdd = (int) (font.getWidth(setting.getName()))+2;
         RenderUtil.drawRoundedRect(x + xAdd, y, (x+xAdd) + 15, y + 15, 9, booleanValue.getValue() ? new Color(255, 155, 255).getRGB() : new Color(128, 155, 128).getRGB());
+
+        width = (int) (font.getWidth(booleanValue.getName()) + 19);
     }
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
