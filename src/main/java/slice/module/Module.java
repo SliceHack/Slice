@@ -80,9 +80,11 @@ public abstract class Module {
         return settings.stream().filter(setting -> (setting instanceof ModeValue && setting.getName().equalsIgnoreCase("mode"))).map(setting -> (ModeValue) setting).findFirst().orElse(null);
     }
 
-    public void onUpdate(EventUpdate event) {
-
-    }
+    /**
+     * Client onUpdate method
+     * without being enabled
+     * */
+    public void onUpdate(EventUpdate event) {}
 
 
 }
