@@ -79,18 +79,10 @@ public class SettingPane {
         height = yAdd;
 
 
-        GlStateManager.pushMatrix();
-        GlStateManager.enableAlpha();
-        GlStateManager.enableBlend();
-        GlStateManager.enableTexture2D();
-        GlStateManager.color(255, 255, 255, 155);
-
-        RenderUtil.drawRoundedRect(x, y, x + width, y + (height), 10, new Color(1, 0, 0, 155).getRGB());
+        RenderUtil.drawRoundedRect(x, y, x + width, y + (height), 10, new Color(1, 1, 1, 155).getRGB());
 
         settings.forEach(setting -> setting.draw(mouseX, mouseY));
         Slice.INSTANCE.getClickGui().setWidth(module, getLargestSetting().getWidth());
-
-        GlStateManager.popMatrix();
     }
 
     public String formatDouble(int places, double value) {

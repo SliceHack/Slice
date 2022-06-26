@@ -6,6 +6,7 @@ import slice.Slice;
 import slice.command.Command;
 import slice.command.data.CommandInfo;
 import slice.file.ConfigSaver;
+import slice.module.modules.render.HUD;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -54,6 +55,12 @@ public class CommandConfig extends Command {
         }
 
         if(action.equalsIgnoreCase("load")) {
+            Slice.INSTANCE.getModuleManager().getModules().forEach(module -> {
+                if(module instanceof HUD)
+                    return;
+
+                module.setEnabled(false);
+            });
             configS.load();
             addMessage("Loaded " + config);
         }

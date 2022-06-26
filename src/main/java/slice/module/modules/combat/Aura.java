@@ -73,6 +73,11 @@ public class Aura extends Module {
         if(event instanceof EventUpdate) {
             EventUpdate e = (EventUpdate) event;
 
+            if(target == null) {
+                deltaYaw = mc.thePlayer.rotationYawHead;
+                deltaPitch = mc.thePlayer.rotationPitchHead;
+            }
+
             target = getTarget();
 
             if((target == null || target.isDead || target.getHealth() <= 0) && fakeBlock) {
