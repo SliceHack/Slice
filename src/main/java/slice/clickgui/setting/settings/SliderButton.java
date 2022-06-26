@@ -35,7 +35,7 @@ public class SliderButton extends SettingComponent {
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 20);
 
         int down = new Color(128, 155, 128).getRGB();
-        int over = new Color(255, 155, 255).getRGB();
+        int over = new Color(255, 171, 171).getRGB();
 
         int yAdd = ((int) font.getHeight(value.getName() + " " + value.getValue()));
         RenderUtil.drawRoundedRect(x, (y+3), x + width, (y+3) + height, 9, down);
