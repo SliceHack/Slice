@@ -113,7 +113,6 @@ public class IRC {
             return;
 
         socket.connect();
-        socketEvents.runConnected();
 
         if(Minecraft.getMinecraft().thePlayer == null && Minecraft.getMinecraft().theWorld == null)
             return;
