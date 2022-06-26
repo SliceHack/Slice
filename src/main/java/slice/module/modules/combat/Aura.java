@@ -104,7 +104,7 @@ public class Aura extends Module {
 
                 deltaCps = deltaCps == cps.getValue().intValue() ? (cps.getValue().intValue() != 1 ? (cps.getValue().intValue() - 1) : 1) : cps.getValue().intValue();
 
-                if(wait.getValue() && !reachedYaw && !reachedPitch) {
+                if(wait.getValue() && !reachedPitch) {
                     return;
                 }
 
@@ -195,10 +195,11 @@ public class Aura extends Module {
                 deltaYaw -= Math.abs(yaw - deltaYaw) / smooth;
             }
         }
+
         if(deltaPitch > 90) deltaPitch = 90;
         else if(deltaPitch < -90) deltaPitch = -90;
 
-        return new float[] {deltaYaw, deltaPitch+(float)(Math.random()-0.02)};
+        return new float[] {yaw, deltaPitch+(float)(Math.random()-0.02)};
     }
 
     public boolean canAttack(EntityLivingBase entity) {
