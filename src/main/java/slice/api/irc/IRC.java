@@ -29,7 +29,7 @@ import java.util.Locale;
 public class IRC {
 
     /** API url */
-    private static final String API_URL = "http://d24b-173-88-170-62.ngrok.io/";
+    private static final String API_URL = "https://api.sliceclient.com";
 
     private Socket socket;
     private SocketEvents socketEvents;
