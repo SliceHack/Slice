@@ -9,6 +9,10 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemSword;
 import net.minecraft.network.play.client.C02PacketUseEntity;
+import net.minecraft.network.play.client.C07PacketPlayerDigging;
+import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import org.lwjgl.input.Keyboard;
 import slice.event.Event;
 import slice.event.events.EventUpdate;
@@ -24,7 +28,7 @@ import slice.util.LoggerUtil;
 @SuppressWarnings("all")
 public class Aura extends Module {
 
-    ModeValue blockMode = new ModeValue("Block Mode", "Vanilla", "Vanilla", "None", "Fake");
+    ModeValue blockMode = new ModeValue("Block Mode", "Vanilla", "Vanilla", "None", "NCP", "Fake");
 
     NumberValue cps = new NumberValue("CPS", 8, 1, 20, NumberValue.Type.INTEGER);
     NumberValue range = new NumberValue("Range", 3.0, 0.2, 10.0, NumberValue.Type.DOUBLE);
@@ -100,6 +104,14 @@ public class Aura extends Module {
 
                 if ((block && !fakeBlock) && blockMode.getValue().equalsIgnoreCase("Vanilla") && e.isPre()) {
                     mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem());
+                }
+
+                if(!fakeBlock && blockMode.getValue().equalsIgnoreCase("NCP")) {
+                    if(e.isPre()) {
+                        mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
+                    } else {
+                        mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem());
+                    }
                 }
 
                 deltaCps = deltaCps == cps.getValue().intValue() ? (cps.getValue().intValue() != 1 ? (cps.getValue().intValue() - 1) : 1) : cps.getValue().intValue();
@@ -199,7 +211,7 @@ public class Aura extends Module {
         if(deltaPitch > 90) deltaPitch = 90;
         else if(deltaPitch < -90) deltaPitch = -90;
 
-        return new float[] {yaw, deltaPitch+(float)(Math.random()-0.02)};
+        return new float[] {yaw+(float)(Math.random()*2), deltaPitch+(float)(Math.random()-0.02)};
     }
 
     public boolean canAttack(EntityLivingBase entity) {
