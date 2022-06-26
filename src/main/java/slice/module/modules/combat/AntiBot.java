@@ -8,7 +8,5 @@ import slice.module.data.ModuleInfo;
 
 @ModuleInfo(name = "AntiBot", description = "Removes all of the bots from the game.", category = Category.COMBAT)
 public class AntiBot extends Module {
-
-
     public void onEvent(Event event) {}
 }
