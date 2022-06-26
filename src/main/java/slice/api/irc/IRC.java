@@ -98,15 +98,12 @@ public class IRC {
         if(!socket.connected())
             return;
 
-        String message = e.getChatComponent().getUnformattedText();
-        for(String s : list) {
-            if (message.contains(s)) {
-                LoggerUtil.addMessageNoPrefix(Slice.INSTANCE.replaceUsername(s.split(":")[0], s.split("1")[1], message));
-                return;
-            }
-            LoggerUtil.addMessageNoPrefix(message);
-        }
         ep.setCancelled(true);
+        String message = e.getChatComponent().getFormattedText();
+        for(String s : list) {
+            message = Slice.INSTANCE.replaceUsername(s.split(":")[0], s.split(":")[1], message);
+        }
+        LoggerUtil.addMessageNoPrefix(message);
     }
 
     /**

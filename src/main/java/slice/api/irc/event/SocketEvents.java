@@ -9,6 +9,7 @@ import slice.Slice;
 import slice.util.LoggerUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Getter @Setter
@@ -31,14 +32,26 @@ public class SocketEvents {
         });
 
         socket.on("usernameSet", (args) -> {
-            JSONArray array = (JSONArray) args[0];
-            List<String> list = new ArrayList<>();
+            try {
+                JSONArray array = (JSONArray) args[0];
+                List<String> list = new ArrayList<>();
 
-            for (int i = 0; i < array.length(); i++) {
-                String name = array.getString(i);
-                list.add(name);
+                for (int i = 0; i < array.length(); i++) {
+                    String name = array.getString(i);
+                    list.add(name);
+                    System.out.println(name);
+                }
+                Slice.INSTANCE.getIrc().setList(list);
+            } catch (Exception e) {
+                assert args[0] instanceof String;
+                String s = (String) args[0];
+                s = s.replace("[", "").replace("]", "").replace("\"", "").replace(",", "\n");
+                // loop through all lines and add them to the list
+                String[] lines = s.split("\n");
+                List<String> list = new ArrayList<>(Arrays.asList(lines));
+                System.out.println(list);
+                Slice.INSTANCE.getIrc().setList(list);
             }
-            Slice.INSTANCE.getIrc().setList(list);
         });
 
         socket.on("users", (args) -> {
