@@ -19,6 +19,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.WorldSettings;
+import slice.Slice;
 
 public class GuiPlayerTabOverlay extends Gui
 {
@@ -47,7 +48,15 @@ public class GuiPlayerTabOverlay extends Gui
      */
     public String getPlayerName(NetworkPlayerInfo networkPlayerInfoIn)
     {
-        return networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getFormattedText() : ScorePlayerTeam.formatPlayerName(networkPlayerInfoIn.getPlayerTeam(), networkPlayerInfoIn.getGameProfile().getName());
+        String s = networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getFormattedText() : ScorePlayerTeam.formatPlayerName(networkPlayerInfoIn.getPlayerTeam(), networkPlayerInfoIn.getGameProfile().getName());;
+
+        for(String s1 : Slice.INSTANCE.getIrc().getList()) {
+            String name = s1.split(":")[0];
+            String discord = s1.split(":")[1];
+
+            s = Slice.INSTANCE.replaceUsername(name, discord, s);
+        }
+        return s;
     }
 
     /**
