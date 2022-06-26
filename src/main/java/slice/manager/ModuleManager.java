@@ -50,6 +50,7 @@ public class ModuleManager {
         register(new Chams());
         register(new Animations());
         register(new PvPBot());
+        register(new FullBright());
     }
 
     /**
