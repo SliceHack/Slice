@@ -43,7 +43,6 @@ public class ModuleManager {
         register(new TimeChanger());
         register(new Velocity());
         register(new AntiCrash());
-        register(new Scaffold());
         register(new Sprint());
         register(new Insults());
         register(new Translator());
