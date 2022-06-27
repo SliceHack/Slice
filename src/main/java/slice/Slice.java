@@ -49,6 +49,10 @@ public enum Slice {
     /** discord */
     public String discordName, discordID, discordDiscriminator;
 
+    /** server */
+    public float serverYaw, serverPitch, serverLastYaw, serverLastPitch;
+    public double serverX, serverLastX, serverY, serverLastY, serverZ, serverLastZ;
+
     Slice() {
         moduleManager = new ModuleManager();
         commandManager = new CommandManager(moduleManager);
@@ -74,6 +78,21 @@ public enum Slice {
      * @pamra event - the event to be handled
      * */
     public void onEvent(Event event) {
+        if(event instanceof EventUpdate) {
+            EventUpdate e = (EventUpdate) event;
+
+            serverLastYaw = Minecraft.getMinecraft().thePlayer.lastReportedYaw;
+            serverLastPitch = Minecraft.getMinecraft().thePlayer.lastReportedPitch;
+            serverLastX = Minecraft.getMinecraft().thePlayer.lastReportedPosX;
+            serverLastY = Minecraft.getMinecraft().thePlayer.lastReportedPosY;
+            serverLastZ = Minecraft.getMinecraft().thePlayer.lastReportedPosZ;
+
+            serverYaw = e.getYaw();
+            serverPitch = e.getPitch();
+            serverX = e.getX();
+            serverY = e.getY();
+            serverZ = e.getZ();
+        }
         if(event instanceof EventPacket) {
             EventPacket e = (EventPacket) event;
             Packet<?> packet = e.getPacket();

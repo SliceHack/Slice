@@ -34,15 +34,18 @@ public class Derp extends Module {
         yaw.setHidden(!mode.getValue().equals("Spin"));
         pitch.setHidden(!mode.getValue().equals("Spin"));
 
-        if(mode.getValue().equalsIgnoreCase("Spin")) {
 
-            yawSpeed.setHidden(!yaw.getValue());
 
-            pitchSpeed.setHidden(!pitch.getValue());
-            throughHead.setHidden(!pitch.getValue());
+        if(!mode.getValue().equalsIgnoreCase("Random")) {
+            yawSpeed.setHidden(!yaw.getValue() && mode.getValue().equals("Spin"));
 
+            pitchSpeed.setHidden(!pitch.getValue() && mode.getValue().equals("Spin"));
+            throughHead.setHidden(!pitch.getValue() && mode.getValue().equals("Spin"));
+            return;
         }
-
+        yawSpeed.setHidden(true);
+        pitchSpeed.setHidden(true);
+        throughHead.setHidden(true);
     }
 
     public void onEvent(Event event) {

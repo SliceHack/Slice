@@ -64,34 +64,34 @@ public class EntityPlayerSP extends AbstractClientPlayer
      * The last X position which was transmitted to the server, used to determine when the X position changes and needs
      * to be re-trasmitted
      */
-    private double lastReportedPosX;
+    public double lastReportedPosX;
 
     /**
      * The last Y position which was transmitted to the server, used to determine when the Y position changes and needs
      * to be re-transmitted
      */
-    private double lastReportedPosY;
+    public double lastReportedPosY;
 
     /**
      * The last Z position which was transmitted to the server, used to determine when the Z position changes and needs
      * to be re-transmitted
      */
-    private double lastReportedPosZ;
+    public double lastReportedPosZ;
 
     /**
      * The last yaw value which was transmitted to the server, used to determine when the yaw changes and needs to be
      * re-transmitted
      */
-    private float lastReportedYaw;
+    public float lastReportedYaw;
 
     /**
      * The last pitch value which was transmitted to the server, used to determine when the pitch changes and needs to
      * be re-transmitted
      */
-    private float lastReportedPitch;
+    public float lastReportedPitch;
 
     /** the last sneaking state sent to the server */
-    private boolean serverSneakState;
+    public boolean serverSneakState;
 
     /** the last sprinting state sent to the server */
     private boolean serverSprintState;

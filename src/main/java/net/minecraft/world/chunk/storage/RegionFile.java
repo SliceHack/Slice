@@ -331,9 +331,13 @@ public class RegionFile
      */
     private void setChunkTimestamp(int x, int z, int timestamp) throws IOException
     {
-        this.chunkTimestamps[x + z * 32] = timestamp;
-        this.dataFile.seek((long)(4096 + (x + z * 32) * 4));
-        this.dataFile.writeInt(timestamp);
+        try {
+            this.chunkTimestamps[x + z * 32] = timestamp;
+            this.dataFile.seek((long) (4096 + (x + z * 32) * 4));
+            this.dataFile.writeInt(timestamp);
+        }
+        catch (Exception ignored)
+        {}
     }
 
     /**

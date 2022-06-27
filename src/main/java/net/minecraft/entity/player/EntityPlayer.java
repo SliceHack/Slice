@@ -11,6 +11,7 @@ import net.minecraft.block.BlockBed;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.command.server.CommandBlockLogic;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -74,6 +75,8 @@ import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.LockCode;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSettings;
+import slice.Slice;
+import slice.module.modules.combat.Aura;
 
 @SuppressWarnings("incomplete-switch")
 public abstract class EntityPlayer extends EntityLivingBase
@@ -343,42 +346,70 @@ public abstract class EntityPlayer extends EntityLivingBase
             this.extinguish();
         }
 
-        this.prevChasingPosX = this.chasingPosX;
-        this.prevChasingPosY = this.chasingPosY;
-        this.prevChasingPosZ = this.chasingPosZ;
         double d5 = this.posX - this.chasingPosX;
         double d0 = this.posY - this.chasingPosY;
         double d1 = this.posZ - this.chasingPosZ;
         double d2 = 10.0D;
+        if(this != Minecraft.getMinecraft().thePlayer) {
+            this.prevChasingPosX = this.chasingPosX;
+            this.prevChasingPosY = this.chasingPosY;
+            this.prevChasingPosZ = this.chasingPosZ;
 
-        if (d5 > d2)
-        {
-            this.prevChasingPosX = this.chasingPosX = this.posX;
-        }
 
-        if (d1 > d2)
-        {
-            this.prevChasingPosZ = this.chasingPosZ = this.posZ;
-        }
+            if (d5 > d2) {
+                this.prevChasingPosX = this.chasingPosX = this.posX;
+            }
 
-        if (d0 > d2)
-        {
-            this.prevChasingPosY = this.chasingPosY = this.posY;
-        }
+            if (d1 > d2) {
+                this.prevChasingPosZ = this.chasingPosZ = this.posZ;
+            }
 
-        if (d5 < -d2)
-        {
-            this.prevChasingPosX = this.chasingPosX = this.posX;
-        }
+            if (d0 > d2) {
+                this.prevChasingPosY = this.chasingPosY = this.posY;
+            }
 
-        if (d1 < -d2)
-        {
-            this.prevChasingPosZ = this.chasingPosZ = this.posZ;
-        }
+            if (d5 < -d2) {
+                this.prevChasingPosX = this.chasingPosX = this.posX;
+            }
 
-        if (d0 < -d2)
-        {
-            this.prevChasingPosY = this.chasingPosY = this.posY;
+            if (d1 < -d2) {
+                this.prevChasingPosZ = this.chasingPosZ = this.posZ;
+            }
+
+            if (d0 < -d2) {
+                this.prevChasingPosY = this.chasingPosY = this.posY;
+            }
+        } else {
+            this.prevChasingPosX = this.chasingPosX;
+            this.prevChasingPosY = this.chasingPosY;
+            this.prevChasingPosZ = this.chasingPosZ;
+            d5 = Slice.INSTANCE.getServerX() - this.chasingPosX;
+            d0 = Slice.INSTANCE.getServerY() - this.chasingPosY;
+            d1 = Slice.INSTANCE.getServerZ() - this.chasingPosZ;
+
+            if (d5 > d2) {
+                this.prevChasingPosX = this.chasingPosX = Slice.INSTANCE.getServerX();
+            }
+
+            if (d1 > d2) {
+                this.prevChasingPosZ = this.chasingPosZ = Slice.INSTANCE.getServerZ();
+            }
+
+            if (d0 > d2) {
+                this.prevChasingPosY = this.chasingPosY = Slice.INSTANCE.getServerY();
+            }
+
+            if (d5 < -d2) {
+                this.prevChasingPosX = this.chasingPosX = Slice.INSTANCE.getServerX();
+            }
+
+            if (d1 < -d2) {
+                this.prevChasingPosZ = this.chasingPosZ = Slice.INSTANCE.getServerZ();
+            }
+
+            if (d0 < -d2) {
+                this.prevChasingPosY = this.chasingPosY = Slice.INSTANCE.getServerY();
+            }
         }
 
         this.chasingPosX += d5 * 0.25D;
@@ -558,8 +589,10 @@ public abstract class EntityPlayer extends EntityLivingBase
             float f = this.rotationYaw;
             float f1 = this.rotationPitch;
             super.updateRidden();
-            this.prevCameraYaw = this.cameraYaw;
-            this.cameraYaw = 0.0F;
+            if(this != Minecraft.getMinecraft().thePlayer && Slice.INSTANCE.getModuleManager().getModule(Aura.class).isEnabled()) {
+                this.prevCameraYaw = this.cameraYaw;
+                this.cameraYaw = 0.0F;
+            }
             this.addMountedMovementStat(this.posX - d0, this.posY - d1, this.posZ - d2);
 
             if (this.ridingEntity instanceof EntityPig)
