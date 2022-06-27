@@ -58,17 +58,20 @@ public class Speed extends Module {
                         }
                         break;
                    case "Astro":
-                        if(!MoveUtil.isMoving()) return;
+                       if(mc.thePlayer.fallDistance > 4)
+                           return;
 
-                        if(mc.thePlayer.onGround) {
-                            MoveUtil.jump();
-                            MoveUtil.strafe(0.48);
-                        }
+                       if(!MoveUtil.isMoving()) return;
 
-                        if(offGroundTicks >= 7) {
-                          mc.thePlayer.motionY = -2F;
-                        }
-                        break;
+                       if(mc.thePlayer.onGround) {
+                           MoveUtil.jump();
+                           MoveUtil.strafe(0.48);
+                       }
+
+                       if(offGroundTicks >= 7) {
+                           mc.thePlayer.motionY = -2F;
+                       }
+                       break;
                     case "UwUGuard":
                         if (!MoveUtil.isMoving()) return;
 
