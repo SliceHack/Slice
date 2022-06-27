@@ -9,6 +9,7 @@ import slice.module.modules.combat.Aura;
 import slice.module.modules.combat.PvPBot;
 import slice.module.modules.misc.*;
 import slice.module.modules.movement.*;
+import slice.module.modules.player.Derp;
 import slice.module.modules.render.Animations;
 import slice.module.modules.render.Chams;
 import slice.module.modules.render.HUD;
@@ -52,6 +53,7 @@ public class ModuleManager {
         register(new Animations());
         register(new PvPBot());
         register(new FullBright());
+        register(new Derp());
     }
 
     /**
