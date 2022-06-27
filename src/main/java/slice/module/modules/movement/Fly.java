@@ -3,8 +3,11 @@ package slice.module.modules.movement;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.network.Packet;
+import net.minecraft.network.play.client.C00PacketKeepAlive;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
+import net.minecraft.network.play.server.S08PacketPlayerPosLook;
+import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraft.util.MathHelper;
 import net.optifine.Log;
 import org.lwjgl.input.Keyboard;
@@ -81,7 +84,7 @@ public class Fly extends Module {
                     break;
                 // wip
                 case "UwUGuard":
-                    if(mc.thePlayer.ticksExisted % 20 == 0) {
+                    if(mc.thePlayer.ticksExisted % 2 == 0) {
                         float yaw = mc.thePlayer.rotationYaw;
 
                         double x = mc.thePlayer.posX + Math.cos(Math.toRadians(yaw + 90));
@@ -116,8 +119,6 @@ public class Fly extends Module {
 
                     event.setCancelled(mc.thePlayer.ticksExisted % 5 != 0);
                 }
-            }
-            if(mode.getValue().equalsIgnoreCase("UwUGuard")) {
             }
         }
     }

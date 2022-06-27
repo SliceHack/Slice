@@ -6,6 +6,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
+import slice.Slice;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -31,6 +32,9 @@ public class MoveUtil {
     public void stop() {
         Minecraft.getMinecraft().thePlayer.motionX = 0.0D;
         Minecraft.getMinecraft().thePlayer.motionZ = 0.0D;
+        Minecraft.getMinecraft().thePlayer.rotationYaw = Slice.INSTANCE.getServerYaw();
+        Minecraft.getMinecraft().thePlayer.rotationPitch = Slice.INSTANCE.getServerPitch();
+
 
         for (KeyBinding key : KeyUtil.moveKeys()) key.pressed = false;
     }

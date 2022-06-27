@@ -72,14 +72,7 @@ public class HUD {
     public static void drawStandard(ScaledResolution sr, int widthHeight) {
         RenderUtil.drawRoundedRect(5, 5, 10 + (widthHeight + 5), 10 + (widthHeight + 5), 10, Integer.MIN_VALUE);
 
-        GlStateManager.pushMatrix();
-        GlStateManager.enableTexture2D();
-        GlStateManager.enableBlend();
-        GlStateManager.enableAlpha();
         RenderUtil.drawImage("icons/Slice.png", 10, 10, widthHeight, widthHeight);
-        GlStateManager.popMatrix();
-        GlStateManager.disableBlend();
-        GlStateManager.disableAlpha();
         int fontHeight2 = sr.getScaledHeight() / 18;
 
         ArrayListHUD arrayListHUD = new ArrayListHUD();

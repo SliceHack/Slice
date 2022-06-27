@@ -121,7 +121,7 @@ public class Aura extends Module {
 
                 deltaCps = deltaCps == cps.getValue().intValue() ? (cps.getValue().intValue() != 1 ? (cps.getValue().intValue() - 1) : 1) : cps.getValue().intValue();
 
-                if(wait.getValue() && !reachedPitch) {
+                if(wait.getValue() && !reachedPitch && !reachedYaw) {
                     return;
                 }
 
@@ -184,10 +184,10 @@ public class Aura extends Module {
             float yaw = (float) (Math.atan2(z, x) * 180.0D / Math.PI) - 90.0F;
             float pitch = (float) -(Math.atan2(y, dist) * 180.0D / Math.PI);
 
-            if (pitch != deltaPitch) reachedPitch = false;
-            else if (yaw != deltaYaw) reachedYaw = false;
-            else if (pitch == deltaPitch) reachedPitch = true;
-            else if (yaw == deltaYaw) reachedYaw = true;
+            if ((int)pitch != deltaPitch) reachedPitch = false;
+            else if ((int)yaw != deltaYaw) reachedYaw = false;
+            else if ((int)pitch == deltaPitch) reachedPitch = true;
+            else if ((int)yaw == deltaYaw) reachedYaw = true;
 
             int smooth = 2;
             if (!reachedPitch) {
@@ -208,7 +208,7 @@ public class Aura extends Module {
             else if (deltaPitch < -90) deltaPitch = -90;
         } catch (Exception ignored){}
 
-        return new float[] {deltaYaw, deltaPitch+(float)(Math.random()-0.02)};
+        return new float[] {deltaYaw, deltaPitch};
     }
 
     public boolean canAttack(EntityLivingBase entity) {
