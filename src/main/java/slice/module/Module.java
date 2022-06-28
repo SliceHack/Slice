@@ -67,8 +67,10 @@ public abstract class Module {
         enabled = !enabled;
         if(enabled) onEnable();
         else onDisable();
-        HUD.smoothArrayListHUD.onToggle(this);
-        Slice.INSTANCE.getSaver().save();
+        try {
+            HUD.smoothArrayListHUD.onToggle(this);
+            Slice.INSTANCE.getSaver().save();
+        } catch (Exception ignored){}
     }
 
     public void onEnable() {}

@@ -321,6 +321,39 @@ public class ItemRenderer
         GlStateManager.scale(0.4F, 0.4F, 0.4F);
     }
 
+    /**
+     * Performs transformations prior to the rendering of a held item in first person.
+     */
+    private void push(float equipProgress, float swingProgress)
+    {
+        GlStateManager.translate(0.96F, -0.52F, -0.71999997F);
+        GlStateManager.translate(0.0F, equipProgress * -0.2F, 0.0F);
+        GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
+        float f = MathHelper.sin(swingProgress * swingProgress * (float)Math.PI);
+        float f1 = MathHelper.sin(MathHelper.sqrt_float(swingProgress) * (float)Math.PI);
+        GlStateManager.rotate(f * -Slice.INSTANCE.getModuleManager().getAnimations().getPush().getValue().floatValue(), 0.0F, 12.0F, 0.0F);
+        GlStateManager.rotate(f1 * -0.0F, 0.0F, 12.0F, 0.0F);
+        GlStateManager.rotate(f1 * -0.0F, 0.0F, 12.0F, 0.0F);
+        GlStateManager.scale(0.4F, 0.4F, 0.4F);
+    }
+
+    /**
+     * Performs transformations prior to the rendering of a held item in first person.
+     */
+    private void custom(float equipProgress, float swingProgress)
+    {
+        Animations animations = Slice.INSTANCE.getModuleManager().getAnimations();
+        GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
+        GlStateManager.translate(0.0F, equipProgress * -0.6F, 0.0F);
+        GlStateManager.rotate(animations.getAngle1().getValue().floatValue(), animations.getX1().getValue().floatValue(), animations.getY1().getValue().floatValue(), animations.getZ1().getValue().floatValue());
+        float f = MathHelper.sin(swingProgress * swingProgress * (float)Math.PI);
+        float f1 = MathHelper.sin(MathHelper.sqrt_float(swingProgress) * (float)Math.PI);
+        GlStateManager.rotate(f * animations.getAngle2().getValue().floatValue(), animations.getX2().getValue().floatValue(), animations.getY2().getValue().floatValue(), animations.getZ2().getValue().floatValue());
+        GlStateManager.rotate(!animations.getSpin().getValue() ? f1 * animations.getAngle3().getValue().floatValue() : -(int)(System.currentTimeMillis() / 2 % animations.getSpinAngle().getValue().floatValue()), animations.getX3().getValue().floatValue(), animations.getY3().getValue().floatValue(), animations.getZ3().getValue().floatValue());
+        GlStateManager.rotate(f1 * animations.getAngle4().getValue().floatValue(), animations.getX4().getValue().floatValue(), animations.getY4().getValue().floatValue(), animations.getZ4().getValue().floatValue());
+        GlStateManager.scale(animations.getScale().getValue().floatValue(), animations.getScale().getValue().floatValue(), animations.getScale().getValue().floatValue());
+    }
+
 
     /**
      * Performs transformations prior to the rendering of a held item in first person.
@@ -436,6 +469,14 @@ public class ItemRenderer
                                         break;
                                     case "Spin":
                                         this.spin(f, f1);
+                                        this.doBlockTransformations();
+                                        break;
+                                    case "Push":
+                                        this.push(f, f1);
+                                        this.doBlockTransformations();
+                                        break;
+                                    case "Custom":
+                                        this.custom(f, f1);
                                         this.doBlockTransformations();
                                         break;
                                 }
