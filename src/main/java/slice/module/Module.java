@@ -1,11 +1,14 @@
 package slice.module;
 
+import fr.lavache.anime.Animate;
+import fr.lavache.anime.Easing;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
 import slice.Slice;
 import slice.event.Event;
 import slice.event.events.EventUpdate;
+import slice.gui.hud.HUD;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
 import slice.setting.Setting;
@@ -40,6 +43,9 @@ public abstract class Module {
 
     private List<Setting> settings = new ArrayList<>();
 
+    /** ArrayList animation */
+    private Animate animate;
+
     public Module() {
         if(info == null) {
             throw new IllegalStateException("ModuleInfo is not present on module " + getClass().getName());
@@ -49,6 +55,10 @@ public abstract class Module {
         this.description = info.description();
         this.key = info.key();
         this.init();
+
+        animate = new Animate();
+        animate.setEase(Easing.BACK_IN);
+        animate.setReversed(true);
     }
 
     public void init() {}
@@ -57,6 +67,7 @@ public abstract class Module {
         enabled = !enabled;
         if(enabled) onEnable();
         else onDisable();
+        HUD.smoothArrayListHUD.onToggle(this);
         Slice.INSTANCE.getSaver().save();
     }
 
@@ -85,6 +96,39 @@ public abstract class Module {
      * without being enabled
      * */
     public void onUpdate(EventUpdate event) {}
+
+    /** Animation */
+    public void updateAnimation() {
+        animate.update();
+    }
+
+    public void setMaxAnimation(float max) {
+        animate.setMax(max);
+    }
+
+    public void setMinAnimation(float min) {
+        animate.setMin(min);
+    }
+
+    public void setSpeedAnimation(float speed) {
+        animate.setSpeed(speed);
+    }
+
+    public float getAnimationValue() {
+        return animate.getValue();
+    }
+
+    public void setAnimationValue(float value) {
+        animate.setValue(value);
+    }
+
+    public void setAnimationEasingValue(Easing easing) {
+        animate.setEase(easing);
+    }
+
+    public void setReversedAnimation(boolean reversed) {
+        animate.setReversed(reversed);
+    }
 
 
 }

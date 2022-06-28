@@ -8,16 +8,15 @@ import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.input.Mouse;
 import slice.Slice;
 import slice.font.TTFFontRenderer;
+import slice.gui.hud.arraylist.ArrayListHUD;
+import slice.gui.hud.arraylist.SmoothArrayListHUD;
 import slice.module.Module;
 import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
-import slice.util.LoggerUtil;
 import slice.util.MoveUtil;
 import slice.util.RenderUtil;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Renders the client's heads-up-display.
@@ -33,6 +32,8 @@ public class HUD {
 
     public static Class<? extends Module> hudClass = slice.module.modules.render.HUD.class;
     private static ModeValue mode;
+
+    public static SmoothArrayListHUD smoothArrayListHUD;
 
     public static void draw() {
 
@@ -80,32 +81,31 @@ public class HUD {
     }
 
     public static void drawSmooth(ScaledResolution sr, int widthHeight) {
-        RenderUtil.drawRoundedRect(5, 5, 10 + (widthHeight + 5), 10 + (widthHeight + 5), 10, Integer.MIN_VALUE);
+        try {
+            RenderUtil.drawRoundedRect(5, 5, 10 + (widthHeight + 5), 10 + (widthHeight + 5), 10, Integer.MIN_VALUE);
 
-        GlStateManager.pushMatrix();
-        GlStateManager.enableTexture2D();
-        GlStateManager.enableBlend();
-        GlStateManager.enableAlpha();
-        RenderUtil.drawImage("icons/Slice.png", 10, 10, widthHeight, widthHeight);
-        GlStateManager.popMatrix();
-        GlStateManager.disableBlend();
-        GlStateManager.disableAlpha();
-        int fontHeight2 = sr.getScaledHeight() / 18;
+            GlStateManager.pushMatrix();
+            GlStateManager.enableTexture2D();
+            GlStateManager.enableBlend();
+            GlStateManager.enableAlpha();
+            RenderUtil.drawImage("icons/Slice.png", 10, 10, widthHeight, widthHeight);
+            GlStateManager.popMatrix();
+            GlStateManager.disableBlend();
+            GlStateManager.disableAlpha();
 
-        ArrayListHUD arrayListHUD = new ArrayListHUD();
-        arrayListHUD.draw(fontHeight2);
+            int fontHeight2 = sr.getScaledHeight() / 18;
+
+            if (smoothArrayListHUD == null)
+                smoothArrayListHUD = new SmoothArrayListHUD();
+            smoothArrayListHUD.draw(fontHeight2);
+        } catch (Exception ignored){}
     }
 
     public static void onTick() {
+        if(Minecraft.getMinecraft().theWorld == null || smoothArrayListHUD == null || mode.getValue().equalsIgnoreCase("Standard"))
+            return;
+
+        smoothArrayListHUD.tick();
     }
 
-    public static int getAnimatedColorWave(float seconds, float saturation, float brightness, int index) {
-        float hue = ((System.currentTimeMillis() + index) % (int) (seconds * 1000) / (seconds / 1000f));
-        return Color.HSBtoRGB(hue, saturation, brightness);
-    }
-
-    public static int getAnimatedColor(float seconds, float saturation, float brightness) {
-        float hue = ((System.currentTimeMillis()) % (int) (seconds * 1000) / (seconds / 1000f));
-        return Color.HSBtoRGB(hue, saturation, brightness);
-    }
 }
