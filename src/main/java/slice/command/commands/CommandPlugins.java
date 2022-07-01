@@ -59,12 +59,21 @@ public class CommandPlugins extends Command {
                 if(command.contains(":")) {
                     String plugin = command.split(":")[0].replaceAll("/", "");
 
-                    if(!plugin.equalsIgnoreCase("spigot")
+                    if(!plugin.equalsIgnoreCase("Spigot")
                             && !plugin.equalsIgnoreCase("Bukkit")
-                            && !plugin.equalsIgnoreCase("paper")
-                            && !plugin.equalsIgnoreCase("minecraft")
-                            && !plugin.equalsIgnoreCase("purpur")
-                            && !plugin.equalsIgnoreCase("pufferfish")) { // removes things that are most likely not a plugin
+                            && !plugin.equalsIgnoreCase("Paper")
+                            && !plugin.equalsIgnoreCase("Minecraft")
+                            && !plugin.equalsIgnoreCase("PurPur")
+                            && !plugin.equalsIgnoreCase("PufferFish")) { // removes things that are most likely not plugins
+
+
+                        plugin = plugin.substring(0, 1).toUpperCase() + plugin.substring(1);
+
+
+                        if(plugin.contains("-")) {
+                            String[] split = plugin.split("-");
+                            plugin = split[0] + "-" + split[1].substring(0, 1).toUpperCase() + split[1].substring(1);
+                        }
 
                         if (!plugins.contains(plugin)) {
                             plugins.add(plugin);
