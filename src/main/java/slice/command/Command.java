@@ -2,15 +2,24 @@ package slice.command;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.multiplayer.WorldClient;
 import slice.command.data.CommandInfo;
 import slice.util.LoggerUtil;
+import slice.util.Timer;
 
 @Getter @Setter
 public abstract class Command {
 
+    /** Command fields */
+    protected Minecraft mc = Minecraft.getMinecraft();
+    protected EntityPlayerSP player = mc.thePlayer;
+    protected WorldClient world = mc.theWorld;
+    protected Timer timer = new Timer();
+
     /* CommandInfo */
     private CommandInfo info = getClass().getAnnotation(CommandInfo.class);
-
 
     private String name, description;
     private String[] aliases;

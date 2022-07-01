@@ -10,6 +10,7 @@ import org.lwjgl.input.Keyboard;
 import slice.api.API;
 import slice.api.irc.IRC;
 import slice.clickgui.ClickGui;
+import slice.command.commands.CommandPlugins;
 import slice.discord.StartDiscordRPC;
 import slice.event.Event;
 import slice.event.events.*;
@@ -96,12 +97,14 @@ public enum Slice {
         if(event instanceof EventPacket) {
             EventPacket e = (EventPacket) event;
             Packet<?> packet = e.getPacket();
+
+            CommandPlugins plugins = ((CommandPlugins) commandManager.getCommand("plugins"));
+            if(plugins.searching) {
+                plugins.onPacketReceive(e);
+            }
+
             if(packet instanceof S02PacketChat) {
                 S02PacketChat s02 = (S02PacketChat) packet;
-
-                if(!irc.getSocket().connected()) {
-                    irc.getSocket().connect();
-                }
 
                 irc.onMessage(e, s02);
             }
@@ -129,6 +132,14 @@ public enum Slice {
         }
 
         if(event instanceof EventUpdate) {
+
+            if(!irc.getSocket().connected()) {
+                irc.getSocket().connect();
+            }
+
+            CommandPlugins plugins = ((CommandPlugins) commandManager.getCommand("plugins"));
+            plugins.onUpdate();
+
             moduleManager.getModules().forEach(module -> module.onUpdate((EventUpdate) event));
         }
 

@@ -37,6 +37,8 @@ public class Fly extends Module {
 
     private int stage;
 
+    private int posY;
+
     public void onEnable() {
         if(mode.getValue().equalsIgnoreCase("UwUGuard") && mc.thePlayer.onGround) {
             MoveUtil.jump();
@@ -53,6 +55,7 @@ public class Fly extends Module {
     public void onDisable() {
         stage = 0;
         mc.timer.timerSpeed = 1.0F;
+        posY = (int) mc.thePlayer.posY;
     }
 
     public void onUpdate(EventUpdate event) {
@@ -118,6 +121,10 @@ public class Fly extends Module {
                         || p instanceof C03PacketPlayer.C05PacketPlayerLook) {
 
                     event.setCancelled(mc.thePlayer.ticksExisted % 5 != 0);
+                }
+            }
+            if(mode.getValue().equalsIgnoreCase("Dev")) {
+                if(p instanceof S12PacketEntityVelocity) {
                 }
             }
         }

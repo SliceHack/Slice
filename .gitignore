@@ -1,5 +1,6 @@
 out
 logs
+plugins
 .idea
 <<<<<<< HEAD
 Slice.iml
@@ -9,3 +10,5 @@ Slice.iml
 ViaMCP/ViaBackwards/config.yml
 ViaMCP/ViaRewind/config.yml
 ViaMCP/ViaVersion/viaversion.yml
+eula.txt
+server.properties

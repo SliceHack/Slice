@@ -8,7 +8,7 @@ package slice.util;
 public class Timer {
 
     /** the last ms */
-    private long lastMS = 0L;
+    public long lastMS = 0L;
 
     /**
      * Converts a delay to milliseconds.

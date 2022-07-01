@@ -19,6 +19,7 @@ public class CommandManager {
         register(new CommandBind());
         register(new CommandVClip());
         register(new CommandConfig());
+        register(new CommandPlugins());
     }
 
     public void register(Command command) {
