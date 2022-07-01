@@ -28,7 +28,7 @@ public class Disabler extends Module {
     public void onEvent(Event event) {
         if(event instanceof EventUpdate) {
             if(mode.getValue().equalsIgnoreCase("WarzoneMC")) {
-                if (timer.hasReached(200L)) {
+                if (timer.hasReached(5000L)) {
                     try {
                         packets.forEach(mc.thePlayer.sendQueue::addToSendNoEvent);
                         packets.clear();

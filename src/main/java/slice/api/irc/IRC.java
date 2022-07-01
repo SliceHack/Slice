@@ -2,24 +2,19 @@ package slice.api.irc;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
-import io.socket.emitter.Emitter;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.server.S02PacketChat;
 import slice.Slice;
 import slice.api.irc.event.SocketEvents;
-import slice.event.events.EventChat;
-import slice.event.events.EventChatMessage;
 import slice.event.events.EventPacket;
 import slice.event.events.EventSwitchAccount;
-import slice.util.HardwareUtil;
 import slice.util.LoggerUtil;
 
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * The class used for handling the Socket connection
@@ -52,6 +47,23 @@ public class IRC {
 
             connect();
         } catch (Exception ignored){}
+    }
+
+    /**
+     * Gets the username in the server
+     * */
+    public String getUser() {
+        for(String s : list) {
+
+            String[] split = s.split(":");
+
+            if(split[0].equals(Minecraft.getMinecraft().getSession().getUsername()) && !split[1].equalsIgnoreCase("undefined")) {
+                return s;
+            } else {
+                return null;
+            }
+        }
+        return null;
     }
 
     /**

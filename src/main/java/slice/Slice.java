@@ -137,6 +137,10 @@ public enum Slice {
                 irc.getSocket().connect();
             }
 
+            if(irc.getUser() == null) {
+                irc.getSocket().disconnect();
+            }
+
             CommandPlugins plugins = ((CommandPlugins) commandManager.getCommand("plugins"));
             plugins.onUpdate();
 
