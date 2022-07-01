@@ -20,7 +20,19 @@ public class CommandHelp extends Command {
             Command command = Slice.INSTANCE.getCommandManager().getCommand(args[0]);
             addMessage("." + command.getName() + ": " + command.getDescription());
         } catch (Exception e) {
-            addMessage("There is no command with the name " + args[0]);
+            try {
+                for(Command command : Slice.INSTANCE.getCommandManager().commands) {
+
+                    for(String s : command.getAliases()) {
+                        if(s.equalsIgnoreCase(args[0])) {
+                            addMessage("." + command.getName() + ": " + command.getDescription());
+                            return true;
+                        }
+                    }
+                }
+            } catch (Exception e1) {
+                addMessage("There is no command with the name " + args[0]);
+            }
         }
         return true;
     }
