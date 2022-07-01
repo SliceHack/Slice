@@ -133,12 +133,12 @@ public enum Slice {
 
         if(event instanceof EventUpdate) {
 
-            if(!irc.getSocket().connected()) {
-                irc.getSocket().connect();
-            }
-
             if(irc.getUser() == null) {
                 irc.getSocket().disconnect();
+            }
+
+            if(!irc.getSocket().connected()) {
+                irc.getSocket().connect();
             }
 
             CommandPlugins plugins = ((CommandPlugins) commandManager.getCommand("plugins"));
