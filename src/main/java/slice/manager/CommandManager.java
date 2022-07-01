@@ -20,6 +20,7 @@ public class CommandManager {
         register(new CommandVClip());
         register(new CommandConfig());
         register(new CommandPlugins());
+        register(new CommandHelp());
     }
 
     public void register(Command command) {
