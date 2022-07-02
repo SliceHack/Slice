@@ -180,6 +180,7 @@ import slice.Slice;
 import slice.event.events.EventKey;
 import slice.util.LoggerUtil;
 import viamcp.ViaMCP;
+import viamcp.gui.GuiProtocolSelector;
 
 @SuppressWarnings("all")
 public class Minecraft implements IThreadListener, IPlayerUsage
@@ -1763,6 +1764,10 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         if(this.currentScreen instanceof GuiSelectWorld) {
             GuiSelectWorld guiSelectWorld = (GuiSelectWorld) this.currentScreen;
             guiSelectWorld.onTick();
+        }
+        if(this.currentScreen instanceof GuiProtocolSelector) {
+            GuiProtocolSelector guiProtocolSelector = (GuiProtocolSelector) this.currentScreen;
+            guiProtocolSelector.onTick();
         }
         HUD.onTick();
         if (this.rightClickDelayTimer > 0)

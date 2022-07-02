@@ -4,6 +4,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.EnumChatFormatting;
+import slice.Slice;
+import slice.util.RenderUtil;
 import viamcp.ViaMCP;
 import viamcp.protocols.ProtocolCollection;
 
@@ -54,6 +56,7 @@ public class GuiProtocolSelector extends GuiScreen
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
+        drawBackground();
         list.drawScreen(mouseX, mouseY, partialTicks);
         GlStateManager.pushMatrix();
         GlStateManager.scale(2.0, 2.0, 2.0);
@@ -118,5 +121,27 @@ public class GuiProtocolSelector extends GuiScreen
             drawCenteredString(mc.fontRendererObj, "PVN: " + ProtocolCollection.getProtocolById(ProtocolCollection.values()[i].getVersion().getVersion()).getVersion(), width, (i2 + 2) * 2 + 20, -1);
             GlStateManager.popMatrix();
         }
+    }
+
+    private void drawBackground() {
+        GlStateManager.pushMatrix();
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.enableAlpha();
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        RenderUtil.drawImage("main/background/frame_" + format3Places(Slice.INSTANCE.mainIndex) + "_delay-0.03s" + ".png", 0, 0,this.width, this.height);
+        GlStateManager.popMatrix();
+    }
+
+    public String format3Places(int places) {
+        if(places < 10) return "00" + places;
+        else if(places == 100) return "100";
+        else if(places < 100) return "0" + places;
+        else return "" + places;
+    }
+
+    public void onTick() {
+        if(Slice.INSTANCE.mainIndex >= 215) Slice.INSTANCE.mainIndex = 0;
+        else Slice.INSTANCE.mainIndex++;
     }
 }

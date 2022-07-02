@@ -44,7 +44,9 @@ public class Disabler extends Module {
             }
 
             if(timer.hasReached(5000L)) {
-                packets.forEach(mc.thePlayer.sendQueue::addToSendNoEvent);
+                try {
+                    packets.forEach(mc.thePlayer.sendQueue::addToSendNoEvent);
+                } catch (Exception ignored){}
                 timer.reset();
             }
         }

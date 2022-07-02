@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.MathHelper;
 import org.lwjgl.input.Mouse;
+import viamcp.gui.GuiProtocolSelector;
 
 public abstract class GuiSlot
 {
@@ -245,8 +246,8 @@ public abstract class GuiSlot
             GlStateManager.disableDepth();
             int i1 = 4;
 
-//            this.overlayBackground(0, this.top, 255, 255);
-//            this.overlayBackground(this.bottom, this.height, 255, 255);
+//                this.overlayBackground(0, this.top, 255, 255);
+//                this.overlayBackground(this.bottom, this.height, 255, 255);
             GlStateManager.pushMatrix();
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(770, 771, 0, 1);
