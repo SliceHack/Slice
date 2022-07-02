@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Date;
 import net.minecraft.client.AnvilConverterException;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.WorldSettings;
@@ -18,6 +19,8 @@ import net.minecraft.world.storage.WorldInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import slice.Slice;
+import slice.util.RenderUtil;
 
 public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
 {
@@ -235,6 +238,7 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
+        drawBackground();
         this.availableWorlds.drawScreen(mouseX, mouseY, partialTicks);
         this.drawCenteredString(this.fontRendererObj, this.screenTitle, this.width / 2, 20, 16777215);
         super.drawScreen(mouseX, mouseY, partialTicks);
@@ -339,5 +343,27 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
             GuiSelectWorld.this.drawString(GuiSelectWorld.this.fontRendererObj, s1, p_180791_2_ + 2, p_180791_3_ + 12, 8421504);
             GuiSelectWorld.this.drawString(GuiSelectWorld.this.fontRendererObj, s2, p_180791_2_ + 2, p_180791_3_ + 12 + 10, 8421504);
         }
+    }
+
+    private void drawBackground() {
+        GlStateManager.pushMatrix();
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.enableAlpha();
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        RenderUtil.drawImage("main/background/frame_" + format3Places(Slice.INSTANCE.mainIndex) + "_delay-0.03s" + ".png", 0, 0,this.width, this.height);
+        GlStateManager.popMatrix();
+    }
+
+    public String format3Places(int places) {
+        if(places < 10) return "00" + places;
+        else if(places == 100) return "100";
+        else if(places < 100) return "0" + places;
+        else return "" + places;
+    }
+
+    public void onTick() {
+        if(Slice.INSTANCE.mainIndex >= 215) Slice.INSTANCE.mainIndex = 0;
+        else Slice.INSTANCE.mainIndex++;
     }
 }

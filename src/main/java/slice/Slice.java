@@ -54,6 +54,9 @@ public enum Slice {
     public float serverYaw, serverPitch, serverLastYaw, serverLastPitch;
     public double serverX, serverLastX, serverY, serverLastY, serverZ, serverLastZ;
 
+    /** MainMenu */
+    public int mainIndex;
+
     Slice() {
         moduleManager = new ModuleManager();
         commandManager = new CommandManager(moduleManager);

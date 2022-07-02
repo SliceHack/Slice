@@ -13,8 +13,6 @@ import java.io.IOException;
 
 public class MainMenu extends GuiScreen {
 
-    private int index;
-
     public void initGui() {
         if(mc.currentScreen != this)
             return;
@@ -68,7 +66,7 @@ public class MainMenu extends GuiScreen {
     private void drawBackground() {
 //        Gui.drawRect(0, 0, this.width, this.height, new Color(1, 0, 0).getRGB());
 
-        RenderUtil.drawImage("main/background/frame_" + format3Places(index) + "_delay-0.03s" + ".png", 0, 0,this.width, this.height);
+        RenderUtil.drawImage("main/background/frame_" + format3Places(Slice.INSTANCE.mainIndex) + "_delay-0.03s" + ".png", 0, 0,this.width, this.height);
     }
 
     public String format3Places(int places) {
@@ -79,8 +77,8 @@ public class MainMenu extends GuiScreen {
     }
 
     public void onTick() {
-        if(index >= 215) index = 0;
-        else index++;
+        if(Slice.INSTANCE.mainIndex >= 215) Slice.INSTANCE.mainIndex = 0;
+        else Slice.INSTANCE.mainIndex++;
     }
 
 }

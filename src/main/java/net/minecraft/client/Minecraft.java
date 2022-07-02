@@ -40,22 +40,11 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.audio.MusicTicker;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiChat;
-import net.minecraft.client.gui.GuiControls;
-import net.minecraft.client.gui.GuiGameOver;
-import net.minecraft.client.gui.GuiIngame;
-import net.minecraft.client.gui.GuiIngameMenu;
+import net.minecraft.client.gui.*;
 import slice.event.events.EventClientTick;
 import slice.event.events.EventSwitchAccount;
 import slice.gui.hud.HUD;
 import slice.gui.main.MainMenu;
-import net.minecraft.client.gui.GuiMemoryErrorScreen;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiSleepMP;
-import net.minecraft.client.gui.GuiYesNo;
-import net.minecraft.client.gui.GuiYesNoCallback;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.achievement.GuiAchievement;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.gui.stream.GuiStreamUnavailable;
@@ -1766,6 +1755,14 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         if(this.currentScreen instanceof MainMenu) {
             MainMenu mainMenu = (MainMenu) this.currentScreen;
             mainMenu.onTick();
+        }
+        if(this.currentScreen instanceof GuiMultiplayer) {
+            GuiMultiplayer guiMultiplayer = (GuiMultiplayer) this.currentScreen;
+            guiMultiplayer.onTick();
+        }
+        if(this.currentScreen instanceof GuiSelectWorld) {
+            GuiSelectWorld guiSelectWorld = (GuiSelectWorld) this.currentScreen;
+            guiSelectWorld.onTick();
         }
         HUD.onTick();
         if (this.rightClickDelayTimer > 0)

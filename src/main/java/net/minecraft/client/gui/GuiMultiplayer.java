@@ -11,10 +11,13 @@ import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.ServerList;
 import net.minecraft.client.network.LanServerDetector;
 import net.minecraft.client.network.OldServerPinger;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
+import slice.Slice;
+import slice.util.RenderUtil;
 
 public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
 {
@@ -364,21 +367,41 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
         }
     }
 
+    private void drawBackground() {
+        GlStateManager.pushMatrix();
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.enableAlpha();
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        RenderUtil.drawImage("main/background/frame_" + format3Places(Slice.INSTANCE.mainIndex) + "_delay-0.03s" + ".png", 0, 0,this.width, this.height);
+        GlStateManager.popMatrix();
+    }
+
+    public String format3Places(int places) {
+        if(places < 10) return "00" + places;
+        else if(places == 100) return "100";
+        else if(places < 100) return "0" + places;
+        else return "" + places;
+    }
+
     /**
      * Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
+
         this.hoveringText = null;
-        Gui.drawRect(0, 0, this.width, this.height, new Color(1, 0, 0).getRGB());
+        drawBackground();
         this.serverListSelector.drawScreen(mouseX, mouseY, partialTicks);
-        this.drawCenteredString(this.fontRendererObj, I18n.format("multiplayer.title", new Object[0]), this.width / 2, 20, 16777215);
+
         super.drawScreen(mouseX, mouseY, partialTicks);
+        drawCenteredString(this.fontRendererObj, I18n.format("multiplayer.title"), this.width / 2, 20, 16777215);
 
         if (this.hoveringText != null)
         {
             this.drawHoveringText(Lists.newArrayList(Splitter.on("\n").split(this.hoveringText)), mouseX, mouseY);
         }
+        super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
     public void connectToSelected()
@@ -488,5 +511,10 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
         }
 
         this.serverListSelector.func_148195_a(this.savedServerList);
+    }
+
+    public void onTick() {
+        if(Slice.INSTANCE.mainIndex >= 215) Slice.INSTANCE.mainIndex = 0;
+        else Slice.INSTANCE.mainIndex++;
     }
 }

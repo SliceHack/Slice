@@ -225,7 +225,7 @@ public abstract class GuiSlot
         {
             this.mouseX = mouseXIn;
             this.mouseY = mouseYIn;
-            this.drawBackground();
+//            this.drawBackground();
             int i = this.getScrollBarX();
             int j = i + 6;
             this.bindAmountScrolled();
@@ -233,7 +233,7 @@ public abstract class GuiSlot
             GlStateManager.disableFog();
             Tessellator tessellator = Tessellator.getInstance();
             WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-            this.drawContainerBackground(tessellator);
+//            this.drawContainerBackground(tessellator);
             int k = this.left + this.width / 2 - this.getListWidth() / 2 + 2;
             int l = this.top + 4 - (int)this.amountScrolled;
 
@@ -241,12 +241,13 @@ public abstract class GuiSlot
             {
                 this.drawListHeader(k, l, tessellator);
             }
-
             this.drawSelectionBox(k, l, mouseXIn, mouseYIn);
             GlStateManager.disableDepth();
             int i1 = 4;
-            this.overlayBackground(0, this.top, 255, 255);
-            this.overlayBackground(this.bottom, this.height, 255, 255);
+
+//            this.overlayBackground(0, this.top, 255, 255);
+//            this.overlayBackground(this.bottom, this.height, 255, 255);
+            GlStateManager.pushMatrix();
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(770, 771, 0, 1);
             GlStateManager.disableAlpha();
@@ -302,6 +303,7 @@ public abstract class GuiSlot
             GlStateManager.shadeModel(7424);
             GlStateManager.enableAlpha();
             GlStateManager.disableBlend();
+            GlStateManager.popMatrix();
         }
     }
 
