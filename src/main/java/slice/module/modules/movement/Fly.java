@@ -29,17 +29,17 @@ import slice.util.RotationUtil;
 @SuppressWarnings("all")
 public class Fly extends Module {
 
-    ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla", "Dev", "Hycraft", "UwUGuard", "UwUGuardGlide");
+    ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla", "Dev", "PvPGym", "Hycraft", "UwUGuard", "UwUGuardGlide");
     BooleanValue bobbing = new BooleanValue("Bobbing", true);
     NumberValue speed = new NumberValue("Speed", 3.0D, 0.1D, 6.0D, NumberValue.Type.DOUBLE);
 
     boolean up = false;
-
     private int stage;
 
     private int posY;
 
     public void onEnable() {
+        stage = 0;
         if(mode.getValue().equalsIgnoreCase("UwUGuard") && mc.thePlayer.onGround) {
             MoveUtil.jump();
         }
@@ -94,6 +94,24 @@ public class Fly extends Module {
                         double z = mc.thePlayer.posZ + Math.sin(Math.toRadians(yaw + 90));
                         double y = mc.thePlayer.posY;
                         mc.thePlayer.setPosition(x, y, z);
+                    }
+                    break;
+                case "PvPGym":
+                    if(stage < 2) {
+                        MoveUtil.stop();
+                    }
+
+                    if(stage == 0) {
+                        damage(3.4F);
+                        stage = 1;
+                    }
+
+                    if(stage == 1 && mc.thePlayer.hurtResistantTime > 6) {
+                        stage = 2;
+                    }
+
+                    if(stage == 2) {
+                        mc.thePlayer.motionY = 0F;
                     }
                     break;
                 case "UwUGuardGlide":

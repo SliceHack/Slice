@@ -5,6 +5,7 @@ import fr.lavache.anime.Easing;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.play.client.C03PacketPlayer;
 import slice.Slice;
 import slice.event.Event;
 import slice.event.events.EventUpdate;
@@ -91,6 +92,12 @@ public abstract class Module {
      * */
     public ModeValue getMode() {
         return settings.stream().filter(setting -> (setting instanceof ModeValue && setting.getName().equalsIgnoreCase("mode"))).map(setting -> (ModeValue) setting).findFirst().orElse(null);
+    }
+
+    public void damage(float fallDamage) {
+        mc.thePlayer.sendQueue.addToSendNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY + fallDamage, mc.thePlayer.posZ, false));
+        mc.thePlayer.sendQueue.addToSendNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, false));
+        mc.thePlayer.sendQueue.addToSendNoEvent(new C03PacketPlayer(true));
     }
 
     /**
