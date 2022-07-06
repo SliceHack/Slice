@@ -8,6 +8,7 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
+import net.minecraft.network.play.server.S32PacketConfirmTransaction;
 import net.minecraft.util.MathHelper;
 import net.optifine.Log;
 import org.lwjgl.input.Keyboard;
@@ -29,7 +30,7 @@ import slice.util.RotationUtil;
 @SuppressWarnings("all")
 public class Fly extends Module {
 
-    ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla", "Dev", "PvPGym", "Hycraft", "UwUGuard", "UwUGuardGlide");
+    ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla", "Dev", "PvPGym", "Hycraft", "UwUGuard", "Vulcan", "UwUGuardGlide");
     BooleanValue bobbing = new BooleanValue("Bobbing", true);
     NumberValue speed = new NumberValue("Speed", 3.0D, 0.1D, 6.0D, NumberValue.Type.DOUBLE);
 
@@ -74,6 +75,24 @@ public class Fly extends Module {
             }
 
             switch (mode.getValue()) {
+                case "Vulcan":
+                    if(stage == 0 && mc.thePlayer.hurtResistantTime > 12 && mc.thePlayer.onGround) {
+                        mc.thePlayer.motionY = 2F;
+                        stage = 1;
+                    }
+
+                    if(stage == 1 && mc.thePlayer.hurtResistantTime <= 0) {
+                        stage = 2;
+                    }
+
+                    if(stage == 2) {
+                        if (mc.thePlayer.ticksExisted % 5 == 0) mc.thePlayer.motionY = -0.1F;
+
+                        if(mc.thePlayer.onGround) {
+                            stage = 0;
+                        }
+                    }
+                    break;
                 case "Vanilla":
                     if(mc.gameSettings.keyBindSneak.isKeyDown()) {
                         mc.thePlayer.motionY = speed.getValue().doubleValue();
@@ -87,7 +106,7 @@ public class Fly extends Module {
                     break;
                 // wip
                 case "UwUGuard":
-                    if(mc.thePlayer.ticksExisted % 2 == 0) {
+                    if(mc.thePlayer.ticksExisted % 10 == 0) {
                         float yaw = mc.thePlayer.rotationYaw;
 
                         double x = mc.thePlayer.posX + Math.cos(Math.toRadians(yaw + 90));
@@ -121,7 +140,7 @@ public class Fly extends Module {
                     break;
                 case "Hycraft":
                     mc.thePlayer.motionY = 0F;
-                    MoveUtil.strafe(0.5D);
+                    mc.timer.timerSpeed = 10.0F;
                     break;
             }
 
@@ -142,7 +161,9 @@ public class Fly extends Module {
                 }
             }
             if(mode.getValue().equalsIgnoreCase("Dev")) {
-                if(p instanceof S12PacketEntityVelocity) {
+                if(p instanceof C0FPacketConfirmTransaction
+                || p instanceof S32PacketConfirmTransaction) {
+                    e.setCancelled(true);
                 }
             }
         }
