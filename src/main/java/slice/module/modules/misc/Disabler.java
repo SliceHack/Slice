@@ -16,6 +16,7 @@ import slice.setting.settings.ModeValue;
 import slice.util.LoggerUtil;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 @ModuleInfo(name = "Disabler", description = "Disables an anticheat", category = Category.MISC)
@@ -27,6 +28,7 @@ public class Disabler extends Module {
      public final List<C00PacketKeepAlive> packets = new ArrayList<>();
 
      private long index, index2;
+     private boolean swap;
 
     public void onEnable() {
         index = 0;
@@ -38,16 +40,22 @@ public class Disabler extends Module {
             if(!mode.getValue().equalsIgnoreCase("WarzoneMC"))
                 return;
 
-            if(index % 2 == 0) {
-                mc.thePlayer.sendQueue.addToSendQueue(new C00PacketKeepAlive());
-                mc.thePlayer.sendQueue.addToSendNoEvent(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.OPEN_INVENTORY));
-            }
+            if(mc.isSingleplayer())
+                return;
 
-            if(timer.hasReached(5000L)) {
+            if(timer.hasReached(swap ? 150 : 0)) {
+                if(packets.isEmpty())
+                    return;
+
                 try {
                     packets.forEach(mc.thePlayer.sendQueue::addToSendNoEvent);
-                } catch (Exception ignored){}
+                } catch (ConcurrentModificationException ignored){}
+
                 timer.reset();
+                if(index > 2) {
+                    swap = !swap;
+                    index = 0;
+                }
             }
         }
 
@@ -56,9 +64,15 @@ public class Disabler extends Module {
             Packet<?> p = e.getPacket();
             switch (mode.getValue()) {
                 case "WarzoneMC":
+                    if(mc.isSingleplayer())
+                        return;
+
                     if(p instanceof C00PacketKeepAlive) {
-                        packets.add((C00PacketKeepAlive) p);
-                        event.setCancelled(true);
+                        if(index++ % 2 == 0) {
+                            packets.add((C00PacketKeepAlive) p);
+                            e.setCancelled(true);
+                            return;
+                        }
                     }
                     break;
             }

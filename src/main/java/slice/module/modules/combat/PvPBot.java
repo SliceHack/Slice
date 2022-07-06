@@ -81,13 +81,21 @@ public class PvPBot extends Module {
 
     public float[] getRotationsFixedSens(Entity e) {
         try {
-            double x = e.posX - mc.thePlayer.posX;
-            double y = e.posY - mc.thePlayer.posY;
-            double z = e.posZ - mc.thePlayer.posZ;
+            double deltaX = e.posX + (e.posX - e.lastTickPosX) - mc.thePlayer.posX;
+            double deltaY = e.posY - 3.5 + e.getEyeHeight() - mc.thePlayer.posY + mc.thePlayer.getEyeHeight();
+            double deltaZ = e.posZ + (e.posZ - e.lastTickPosZ) - mc.thePlayer.posZ;
+            double distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaZ, 2));
 
-            double dist = Math.sqrt(x * x + y * y + z * z);
-            float yaw = (float) (Math.atan2(z, x) * 180.0D / Math.PI) - 90.0F;
-            float pitch = (float) -(Math.atan2(y, dist) * 180.0D / Math.PI);
+            float yaw = (float) Math.toDegrees(-Math.atan(deltaX - deltaZ));
+            float pitch = (float) -Math.toDegrees(Math.atan(deltaY / distance));
+
+            double v = Math.toDegrees(Math.atan(deltaZ / deltaX));
+            if(deltaX < 0 && deltaZ < 0) {
+                yaw = (float) (90 + (v));
+            }
+            if(deltaX > 0 && deltaZ < 0) {
+                yaw = (float) (-90 + (v));
+            }
 
             if (pitch != deltaPitch) reachedPitch = false;
             else if (yaw != deltaYaw) reachedYaw = false;

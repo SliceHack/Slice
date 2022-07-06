@@ -80,8 +80,6 @@ public class Aura extends Module {
                 fakeBlock = false;
             }
 
-            LoggerUtil.addMessage((target == null) + "");
-
             if(target == null) {
                 reachedCps = false;
                 reachedPitch = false;
@@ -216,7 +214,6 @@ public class Aura extends Module {
             if(deltaX < 0 && deltaZ < 0) {
                 yaw = (float) (90 + (Math.toDegrees(Math.atan(deltaZ / deltaX))));
             }
-
             if(deltaX > 0 && deltaZ < 0) {
                 yaw = (float) (-90 + (Math.toDegrees(Math.atan(deltaZ / deltaX))));
             }
