@@ -2,10 +2,6 @@ package slice.module.modules.misc;
 
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C00PacketKeepAlive;
-import net.minecraft.network.play.client.C03PacketPlayer;
-import net.minecraft.network.play.client.C0BPacketEntityAction;
-import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
-import net.minecraft.network.play.server.*;
 import slice.event.Event;
 import slice.event.events.EventPacket;
 import slice.event.events.EventUpdate;
@@ -13,7 +9,6 @@ import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
 import slice.setting.settings.ModeValue;
-import slice.util.LoggerUtil;
 
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
