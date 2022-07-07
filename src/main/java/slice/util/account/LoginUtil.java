@@ -1,14 +1,19 @@
 package slice.util.account;
 
 import com.mojang.authlib.Agent;
+import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication;
+import com.thealtening.AlteningServiceType;
+import com.thealtening.SSLController;
+import com.thealtening.TheAlteningAuthentication;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthResult;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticator;
 import fr.litarvan.openauth.microsoft.model.response.MinecraftProfile;
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Session;
+import slice.util.LoggerUtil;
 import slice.util.account.microsoft.MicrosoftAccount;
 
 import java.net.Proxy;
@@ -21,12 +26,17 @@ import java.net.Proxy;
 @UtilityClass
 public class LoginUtil {
 
+    private static final SSLController ssl = new SSLController();
+    private static final TheAlteningAuthentication serviceSwitch = TheAlteningAuthentication.mojang();
+
     /**
      * Logins in using email and password.
      * */
     public static Session loginMojang(String email, String password) {
         final YggdrasilAuthenticationService service = new YggdrasilAuthenticationService(Proxy.NO_PROXY, "");
         final YggdrasilUserAuthentication auth = (YggdrasilUserAuthentication) service.createUserAuthentication(Agent.MINECRAFT);
+
+        serviceSwitch.updateService(AlteningServiceType.MOJANG);
 
         auth.setUsername(email);
         auth.setPassword(password);
@@ -41,10 +51,33 @@ public class LoginUtil {
     }
 
     /**
+     * Logins in using an altening token.
+     * */
+    public static Session loginAlteining(String token) {
+        YggdrasilAuthenticationService service = new YggdrasilAuthenticationService(Proxy.NO_PROXY, "");
+        YggdrasilUserAuthentication auth = (YggdrasilUserAuthentication) service.createUserAuthentication(Agent.MINECRAFT);
+
+        ssl.disableCertificateValidation();
+        serviceSwitch.updateService(AlteningServiceType.THEALTENING);
+
+        auth.setUsername(token);
+        auth.setPassword(token);
+
+        try {
+            auth.logIn();
+        } catch (Exception ignored){}
+
+        return new Session(auth.getSelectedProfile().getName(), auth.getSelectedProfile().getId().toString(), auth.getAuthenticatedToken(), "mojang");
+    }
+
+    /**
      * Logins user in using Microsoft Authenticator.
      */
     public static MicrosoftAccount loginMicrosoft(String email, String password) {
         try {
+
+            serviceSwitch.updateService(AlteningServiceType.MOJANG);
+
             MicrosoftAuthenticator authenticator = new MicrosoftAuthenticator();
             MicrosoftAuthResult result = authenticator.loginWithCredentials(email, password);
             MinecraftProfile profile = result.getProfile();
@@ -62,6 +95,7 @@ public class LoginUtil {
      * Logs user in as offline. (cracked account)
      */
     public static Session loginOffline(String username) {
+        serviceSwitch.updateService(AlteningServiceType.MOJANG);
         return Minecraft.getMinecraft().session = new Session(username, "0", "0", "legacy");
     }
 }

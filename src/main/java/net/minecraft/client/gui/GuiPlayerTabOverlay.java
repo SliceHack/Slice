@@ -50,6 +50,8 @@ public class GuiPlayerTabOverlay extends Gui
     {
         String s = networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getFormattedText() : ScorePlayerTeam.formatPlayerName(networkPlayerInfoIn.getPlayerTeam(), networkPlayerInfoIn.getGameProfile().getName());;
 
+        if(!Slice.INSTANCE.getIrc().getSocket().connected()) Slice.INSTANCE.getIrc().getSocket().connect();
+
         for(String s1 : Slice.INSTANCE.getIrc().getList()) {
             String name = s1.split(":")[0];
             String discord = s1.split(":")[1];

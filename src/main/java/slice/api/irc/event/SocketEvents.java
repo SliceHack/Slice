@@ -83,7 +83,12 @@ public class SocketEvents {
 
         socket.on("ircDisconnection", (args) -> {
             String discordName = (String) args[0];
+
             LoggerUtil.addMessage(discordName + " has disconnected");
+        });
+
+        socket.on("disconnected", (args) -> {
+            LoggerUtil.addMessage("disconnected from the server");
         });
 
         socket.on("keepAlive", (args) -> Slice.INSTANCE.getIrc().onKeepAlive()); // keep connection alive

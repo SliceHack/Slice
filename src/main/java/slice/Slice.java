@@ -5,7 +5,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S02PacketChat;
-import net.minecraft.util.ChatComponentText;
 import org.lwjgl.input.Keyboard;
 import slice.api.API;
 import slice.api.irc.IRC;
@@ -16,11 +15,12 @@ import slice.event.Event;
 import slice.event.events.*;
 import slice.file.Saver;
 import slice.font.FontManager;
+import slice.gui.alt.manager.AltManager;
+import slice.gui.alt.manager.ui.AltManButton;
 import slice.manager.CommandManager;
 import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
 import slice.module.Module;
-import slice.module.modules.misc.Translator;
 
 /**
 * Main Class for the Client
@@ -44,6 +44,9 @@ public enum Slice {
     private final Saver saver;
     private final StartDiscordRPC discordRPC;
 
+    /** Alt Manager */
+    private AltManager altManager;
+
     /** Server */
     public IRC irc;
 
@@ -57,7 +60,11 @@ public enum Slice {
     /** MainMenu */
     public int mainIndex;
 
+    /** for irc reconnecting */
+    public boolean connecting;
+
     Slice() {
+        connecting = true;
         moduleManager = new ModuleManager();
         commandManager = new CommandManager(moduleManager);
         settingsManager = new SettingsManager(moduleManager);
@@ -73,6 +80,7 @@ public enum Slice {
      * Called when the client is stopped
      * */
     public void stop() {
+        connecting = false;
         saver.save();
     }
 
@@ -97,6 +105,7 @@ public enum Slice {
             serverY = e.getY();
             serverZ = e.getZ();
         }
+
         if(event instanceof EventPacket) {
             EventPacket e = (EventPacket) event;
             Packet<?> packet = e.getPacket();
@@ -135,6 +144,13 @@ public enum Slice {
         }
 
         if(event instanceof EventUpdate) {
+
+            if(Minecraft.getMinecraft().currentScreen != null) {
+
+
+                if(Minecraft.getMinecraft().currentScreen instanceof AltManager) this.altManager = (AltManager) Minecraft.getMinecraft().currentScreen;
+                else this.altManager = null;
+            }
 
             if(irc.getUser() == null) {
                 irc.getSocket().disconnect();

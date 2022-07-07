@@ -81,12 +81,12 @@ public class Speed extends Module {
                         }
                         break;
                     case "Dev":
-                        if(!MoveUtil.isMoving()) return;
+                        if(!MoveUtil.isMoving())
+                            return;
 
                         if(mc.thePlayer.onGround) {
-                            mc.thePlayer.motionY = 0.56F;
+                            MoveUtil.jump();
                         }
-                        MoveUtil.strafe(0.5D);
                         break;
                 }
         }

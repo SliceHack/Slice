@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import slice.Slice;
 import slice.font.TTFFontRenderer;
 import slice.gui.alt.GuiAlt;
+import slice.gui.alt.manager.AltManager;
 import slice.util.RenderUtil;
 import viamcp.gui.GuiProtocolSelector;
 

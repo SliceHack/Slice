@@ -43,6 +43,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.*;
 import slice.event.events.EventClientTick;
 import slice.event.events.EventSwitchAccount;
+import slice.gui.alt.manager.AltManager;
 import slice.gui.hud.HUD;
 import slice.gui.main.MainMenu;
 import net.minecraft.client.gui.achievement.GuiAchievement;
@@ -1577,8 +1578,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
     /**
      * Called when user clicked he's mouse right button (place)
-     */
-    private void rightClickMouse()
+     */ public void rightClickMouse()
     {
         if (!this.playerController.getIsHittingBlock())
         {
@@ -1764,6 +1764,10 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         if(this.currentScreen instanceof GuiSelectWorld) {
             GuiSelectWorld guiSelectWorld = (GuiSelectWorld) this.currentScreen;
             guiSelectWorld.onTick();
+        }
+        if(this.currentScreen instanceof AltManager) {
+            AltManager altManager = (AltManager) this.currentScreen;
+            altManager.onTick();
         }
         if(this.currentScreen instanceof GuiProtocolSelector) {
             GuiProtocolSelector guiProtocolSelector = (GuiProtocolSelector) this.currentScreen;

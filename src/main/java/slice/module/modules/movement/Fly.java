@@ -2,17 +2,21 @@ package slice.module.modules.movement;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBow;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.client.C00PacketKeepAlive;
-import net.minecraft.network.play.client.C03PacketPlayer;
-import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
+import net.minecraft.network.play.client.*;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraft.network.play.server.S32PacketConfirmTransaction;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
 import net.optifine.Log;
 import org.lwjgl.input.Keyboard;
 import slice.event.Event;
+import slice.event.events.EventClientTick;
 import slice.event.events.EventPacket;
 import slice.event.events.EventUpdate;
 import slice.module.Module;
@@ -37,10 +41,21 @@ public class Fly extends Module {
     boolean up = false;
     private int stage;
 
+    private int ticks;
+
     private int posY;
+
+    private int currentSlot;
+
+    private ItemStack bow;
+
+    private int i;
 
     public void onEnable() {
         stage = 0;
+        if(mode.getValue().equalsIgnoreCase("Vulcan")) {
+            LoggerUtil.addMessage("You must have a bow in your hotbar");
+        }
         if(mode.getValue().equalsIgnoreCase("UwUGuard") && mc.thePlayer.onGround) {
             MoveUtil.jump();
         }
@@ -54,6 +69,7 @@ public class Fly extends Module {
     }
 
     public void onDisable() {
+        ticks = 0;
         stage = 0;
         mc.timer.timerSpeed = 1.0F;
         posY = (int) mc.thePlayer.posY;
@@ -64,6 +80,24 @@ public class Fly extends Module {
     }
 
     public void onEvent(Event event) {
+        if(event instanceof EventClientTick) {
+            EventClientTick e = (EventClientTick) event;
+            if(mode.getValue().equalsIgnoreCase("Vulcan")) {
+                if (currentSlot != i) {
+                    if (ticks == 1) {
+                        mc.thePlayer.sendQueue.addToSendQueue(new C08PacketPlayerBlockPlacement(bow));
+                    }
+
+                    if (ticks == 2) {
+                    }
+
+                    if (ticks == 3) {
+                        mc.thePlayer.sendQueue.addToSendNoEvent(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
+                    }
+                    ticks++;
+                }
+            }
+        }
         if(event instanceof EventUpdate) {
 
             EventUpdate e = (EventUpdate) event;
@@ -75,21 +109,36 @@ public class Fly extends Module {
             }
 
             switch (mode.getValue()) {
+                case "Dev":
+                    break;
                 case "Vulcan":
-                    if(stage == 0 && mc.thePlayer.hurtResistantTime > 12 && mc.thePlayer.onGround) {
-                        mc.thePlayer.motionY = 2F;
-                        stage = 1;
+
+                    if(stage == 0) {
+                        mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, mc.thePlayer.rotationYaw, -90, mc.thePlayer.onGround));
+                        useBow();
+
+                        if(mc.thePlayer.hurtResistantTime > 3) {
+                            stage = 1;
+                        }
+                        MoveUtil.stop();
                     }
 
-                    if(stage == 1 && mc.thePlayer.hurtResistantTime <= 0) {
+
+                    if(stage == 1 && mc.thePlayer.hurtResistantTime > 12 && mc.thePlayer.onGround) {
+                        mc.thePlayer.motionY = 2F;
                         stage = 2;
                     }
 
-                    if(stage == 2) {
+                    if(stage == 2 && mc.thePlayer.hurtResistantTime <= 0) {
+                        stage = 3;
+                    }
+
+                    if(stage == 3) {
                         if (mc.thePlayer.ticksExisted % 5 == 0) mc.thePlayer.motionY = -0.1F;
 
                         if(mc.thePlayer.onGround) {
-                            stage = 0;
+                            onDisable();
+                            setEnabled(false);
                         }
                     }
                     break;
@@ -161,11 +210,37 @@ public class Fly extends Module {
                 }
             }
             if(mode.getValue().equalsIgnoreCase("Dev")) {
-                if(p instanceof C0FPacketConfirmTransaction
-                || p instanceof S32PacketConfirmTransaction) {
-                    e.setCancelled(true);
+                if(e.isOutgoing()) {
+                    e.setCancelled(mc.thePlayer.ticksExisted % 10 != 0);
                 }
             }
+        }
+    }
+
+    public void useBow() {
+        int i2;
+        for (i2 = 0; i2 < 9; ++i2) {
+            i = i2;
+            bow = mc.thePlayer.inventoryContainer.getSlot(i2 + 36).getStack();
+            if (bow != null) {
+                final Item item = bow.getItem();
+                if (item instanceof ItemBow) {
+                    for (int i = 0; i < mc.thePlayer.inventory.mainInventory.length; i++) {
+                        final ItemStack stack = mc.thePlayer.inventory.mainInventory[i];
+                        if (stack != null) {
+                            if (stack.getItem().getUnlocalizedName().contains("arrow")) {
+
+                                if (currentSlot != i2) {
+                                    mc.thePlayer.sendQueue.addToSendQueue(new C09PacketHeldItemChange(i2));
+                                    mc.thePlayer.inventory.currentItem = i2;
+                                }
+                                currentSlot = i2;
+                            }
+                        }
+                    }
+                }
+            }
+
         }
     }
 }

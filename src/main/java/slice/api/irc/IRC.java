@@ -12,7 +12,10 @@ import slice.event.events.EventPacket;
 import slice.event.events.EventSwitchAccount;
 import slice.util.LoggerUtil;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,20 +35,20 @@ public class IRC {
 
     private List<String> list = new ArrayList<>();
 
+
     /***
      * Connect to an IRC server.
      * */
     public IRC() {
         try {
+            Slice.INSTANCE.connecting = true;
             IO.Options options = IO.Options.builder().build();
             socket = IO.socket(URI.create(API_URL), options);
             socketEvents = new SocketEvents(socket);
 
-            socket.on("addMessage", (args) -> {
-                LoggerUtil.addMessage(args[0] + "");
-            });
+            socket.on("addMessage", (args) -> LoggerUtil.addMessage(args[0] + ""));
 
-            connect();
+            socket.connect();
         } catch (Exception ignored){}
     }
 
@@ -81,7 +84,6 @@ public class IRC {
     public void sendMessage(String message) {
         if(!socket.connected()) {
             LoggerUtil.addMessage("Not connected to the server.");
-            connect();
             return;
         }
 
@@ -123,29 +125,10 @@ public class IRC {
      * Keeps the socket connection alive.
      * */
     public void onKeepAlive() {
-        if(!socket.connected())
+        if(!socket.connected()) {
             return;
-
+        }
         socket.emit("keepAlive", "keepAlive");
     }
 
-
-
-    /**
-     * Connects to the server.
-     * */
-    private void connect() {
-        if(socket.connected())
-            return;
-
-        socket.connect();
-
-        if(Minecraft.getMinecraft().thePlayer == null && Minecraft.getMinecraft().theWorld == null)
-            return;
-
-        if(socket.connected())
-            return;
-
-        LoggerUtil.addMessage("Failed to connect to the server!");
-    }
 }

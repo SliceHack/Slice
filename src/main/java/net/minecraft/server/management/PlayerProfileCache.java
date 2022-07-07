@@ -224,36 +224,29 @@ public class PlayerProfileCache
      */
     public void load()
     {
-        BufferedReader bufferedreader = null;
+        try {
+            BufferedReader bufferedreader = null;
 
-        try
-        {
-            bufferedreader = Files.newReader(this.usercacheFile, Charsets.UTF_8);
-            List<PlayerProfileCache.ProfileEntry> list = (List)this.gson.fromJson((Reader)bufferedreader, TYPE);
-            this.usernameToProfileEntryMap.clear();
-            this.uuidToProfileEntryMap.clear();
-            this.gameProfiles.clear();
+            try {
+                bufferedreader = Files.newReader(this.usercacheFile, Charsets.UTF_8);
+                List<PlayerProfileCache.ProfileEntry> list = (List) this.gson.fromJson((Reader) bufferedreader, TYPE);
+                this.usernameToProfileEntryMap.clear();
+                this.uuidToProfileEntryMap.clear();
+                this.gameProfiles.clear();
 
-            for (PlayerProfileCache.ProfileEntry playerprofilecache$profileentry : Lists.reverse(list))
-            {
-                if (playerprofilecache$profileentry != null)
-                {
-                    this.addEntry(playerprofilecache$profileentry.getGameProfile(), playerprofilecache$profileentry.getExpirationDate());
+                for (PlayerProfileCache.ProfileEntry playerprofilecache$profileentry : Lists.reverse(list)) {
+                    if (playerprofilecache$profileentry != null) {
+                        this.addEntry(playerprofilecache$profileentry.getGameProfile(), playerprofilecache$profileentry.getExpirationDate());
+                    }
                 }
+            } catch (FileNotFoundException var9) {
+                ;
+            } catch (JsonParseException var10) {
+                ;
+            } finally {
+                IOUtils.closeQuietly((Reader) bufferedreader);
             }
-        }
-        catch (FileNotFoundException var9)
-        {
-            ;
-        }
-        catch (JsonParseException var10)
-        {
-            ;
-        }
-        finally
-        {
-            IOUtils.closeQuietly((Reader)bufferedreader);
-        }
+        } catch (Exception ignored){}
     }
 
     /**

@@ -735,80 +735,70 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
 
     public void updateTimeLightAndEntities()
     {
-        this.theProfiler.startSection("jobs");
+        try {
+            this.theProfiler.startSection("jobs");
 
-        synchronized (this.futureTaskQueue)
-        {
-            while (!this.futureTaskQueue.isEmpty())
-            {
-                Util.runTask((FutureTask)this.futureTaskQueue.poll(), logger);
+            synchronized (this.futureTaskQueue) {
+                while (!this.futureTaskQueue.isEmpty()) {
+                    Util.runTask((FutureTask) this.futureTaskQueue.poll(), logger);
+                }
             }
-        }
 
-        this.theProfiler.endStartSection("levels");
+            this.theProfiler.endStartSection("levels");
 
-        for (int j = 0; j < this.worldServers.length; ++j)
-        {
-            long i = System.nanoTime();
+            for (int j = 0; j < this.worldServers.length; ++j) {
+                long i = System.nanoTime();
 
-            if (j == 0 || this.getAllowNether())
-            {
-                WorldServer worldserver = this.worldServers[j];
-                this.theProfiler.startSection(worldserver.getWorldInfo().getWorldName());
+                if (j == 0 || this.getAllowNether()) {
+                    WorldServer worldserver = this.worldServers[j];
+                    this.theProfiler.startSection(worldserver.getWorldInfo().getWorldName());
 
-                if (this.tickCounter % 20 == 0)
-                {
-                    this.theProfiler.startSection("timeSync");
-                    this.serverConfigManager.sendPacketToAllPlayersInDimension(new S03PacketTimeUpdate(worldserver.getTotalWorldTime(), worldserver.getWorldTime(), worldserver.getGameRules().getBoolean("doDaylightCycle")), worldserver.provider.getDimensionId());
+                    if (this.tickCounter % 20 == 0) {
+                        this.theProfiler.startSection("timeSync");
+                        this.serverConfigManager.sendPacketToAllPlayersInDimension(new S03PacketTimeUpdate(worldserver.getTotalWorldTime(), worldserver.getWorldTime(), worldserver.getGameRules().getBoolean("doDaylightCycle")), worldserver.provider.getDimensionId());
+                        this.theProfiler.endSection();
+                    }
+
+                    this.theProfiler.startSection("tick");
+
+                    try {
+                        worldserver.tick();
+                    } catch (Throwable throwable1) {
+                        CrashReport crashreport = CrashReport.makeCrashReport(throwable1, "Exception ticking world");
+                        worldserver.addWorldInfoToCrashReport(crashreport);
+                        throw new ReportedException(crashreport);
+                    }
+
+                    try {
+                        worldserver.updateEntities();
+                    } catch (Throwable throwable) {
+                        CrashReport crashreport1 = CrashReport.makeCrashReport(throwable, "Exception ticking world entities");
+                        worldserver.addWorldInfoToCrashReport(crashreport1);
+                        throw new ReportedException(crashreport1);
+                    }
+
+                    this.theProfiler.endSection();
+                    this.theProfiler.startSection("tracker");
+                    worldserver.getEntityTracker().updateTrackedEntities();
+                    this.theProfiler.endSection();
                     this.theProfiler.endSection();
                 }
 
-                this.theProfiler.startSection("tick");
-
-                try
-                {
-                    worldserver.tick();
-                }
-                catch (Throwable throwable1)
-                {
-                    CrashReport crashreport = CrashReport.makeCrashReport(throwable1, "Exception ticking world");
-                    worldserver.addWorldInfoToCrashReport(crashreport);
-                    throw new ReportedException(crashreport);
-                }
-
-                try
-                {
-                    worldserver.updateEntities();
-                }
-                catch (Throwable throwable)
-                {
-                    CrashReport crashreport1 = CrashReport.makeCrashReport(throwable, "Exception ticking world entities");
-                    worldserver.addWorldInfoToCrashReport(crashreport1);
-                    throw new ReportedException(crashreport1);
-                }
-
-                this.theProfiler.endSection();
-                this.theProfiler.startSection("tracker");
-                worldserver.getEntityTracker().updateTrackedEntities();
-                this.theProfiler.endSection();
-                this.theProfiler.endSection();
+                this.timeOfLastDimensionTick[j][this.tickCounter % 100] = System.nanoTime() - i;
             }
 
-            this.timeOfLastDimensionTick[j][this.tickCounter % 100] = System.nanoTime() - i;
-        }
+            this.theProfiler.endStartSection("connection");
+            this.getNetworkSystem().networkTick();
+            this.theProfiler.endStartSection("players");
+            this.serverConfigManager.onTick();
+            this.theProfiler.endStartSection("tickables");
 
-        this.theProfiler.endStartSection("connection");
-        this.getNetworkSystem().networkTick();
-        this.theProfiler.endStartSection("players");
-        this.serverConfigManager.onTick();
-        this.theProfiler.endStartSection("tickables");
+            for (int k = 0; k < this.playersOnline.size(); ++k) {
+                ((ITickable) this.playersOnline.get(k)).update();
+            }
 
-        for (int k = 0; k < this.playersOnline.size(); ++k)
-        {
-            ((ITickable)this.playersOnline.get(k)).update();
-        }
-
-        this.theProfiler.endSection();
+            this.theProfiler.endSection();
+        } catch (Exception ignored){}
     }
 
     public boolean getAllowNether()
