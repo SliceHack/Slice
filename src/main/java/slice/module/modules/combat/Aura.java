@@ -7,6 +7,10 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemPickaxe;
+import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemSword;
 import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
@@ -32,6 +36,8 @@ public class Aura extends Module {
 
     NumberValue cps = new NumberValue("CPS", 8, 1, 20, NumberValue.Type.INTEGER);
     NumberValue range = new NumberValue("Range", 3.0, 0.2, 10.0, NumberValue.Type.DOUBLE);
+
+    BooleanValue delay9 = new BooleanValue("1.9 Delay", false);
 
     BooleanValue keepSprint = new BooleanValue("KeepSprint", true);
     BooleanValue noSwing = new BooleanValue("NoSwing", false);
@@ -91,11 +97,6 @@ public class Aura extends Module {
             }
 
             if(target != null) {
-                if(!rotateMode.getValue().equalsIgnoreCase("None")) {
-                    e.setYaw(yaw);
-                    e.setPitch(pitch);
-                }
-
                 switch (rotateMode.getValue()) {
                     case "Bypass":
                         yaw = getBypassRotate(target)[0];
@@ -110,9 +111,14 @@ public class Aura extends Module {
                         pitch = mc.thePlayer.rotationPitch;
                         break;
                     default:
-                        yaw = getRotate(target)[0];
-                        pitch = getRotate(target)[1];
+                        yaw = getRotationsFixedSens(target)[0];
+                        pitch = getRotationsFixedSens(target)[1];
                         break;
+                }
+
+                if(!rotateMode.getValue().equalsIgnoreCase("None")) {
+                    e.setYaw(yaw);
+                    e.setPitch(pitch);
                 }
 
 
@@ -134,15 +140,33 @@ public class Aura extends Module {
 
                 deltaCps = deltaCps == cps.getValue().intValue() ? (cps.getValue().intValue() != 1 ? (cps.getValue().intValue() - 1) : 1) : cps.getValue().intValue();
 
+                double cps = this.cps.getValue().intValue();
+                if(delay9.getValue()) {
+                    cps = 4;
+
+                    if (mc.thePlayer.getHeldItem() != null) {
+                        final Item item = mc.thePlayer.getHeldItem().getItem();
+
+                        if (item instanceof ItemSpade || item == Items.golden_axe || item == Items.diamond_axe || item == Items.wooden_hoe || item == Items.golden_hoe) cps = 1;
+                        else if (item == Items.wooden_axe || item == Items.stone_axe) cps = 0.8;
+                        else if (item instanceof ItemSword) cps = 1.6;
+                        else if (item instanceof ItemPickaxe) cps = 1.2;
+                        else if (item == Items.iron_axe) cps = 0.9;
+                        else if (item == Items.stone_hoe) cps = 2;
+                        else if (item == Items.iron_hoe) cps = 3;
+                        cps += 0.2;
+                    }
+
+                }
+
                 if(e.isPre()) {
-                    if (timer.hasReached(1000 / deltaCps)) {
+                    if (timer.hasReached((long) (1000 / cps))) {
                         attack();
                         if (!noSwing.getValue()) mc.thePlayer.swingItem();
                         timer.reset();
                     }
                 }
             }
-
         }
     }
 
@@ -160,12 +184,12 @@ public class Aura extends Module {
         float yaw = (float) Math.toDegrees(-Math.atan(deltaX - deltaZ));
         float pitch = (float) -Math.toDegrees(Math.atan(deltaY / distance));
 
-        if(deltaX < 0 && deltaZ < 0) {
-            yaw = (float) (90 + (Math.toDegrees(Math.atan(deltaZ / deltaX))));
-        }
-        if(deltaX > 0 && deltaZ < 0) {
-            yaw = (float) (-90 + (Math.toDegrees(Math.atan(deltaZ / deltaX))));
-        }
+        if(deltaX < 0 && deltaZ < 0) yaw = (float) (90 + (Math.toDegrees(Math.atan(deltaZ / deltaX))));
+        else if(deltaX > 0 && deltaZ < 0) yaw = (float) (-90 + (Math.toDegrees(Math.atan(deltaZ / deltaX))));
+
+        if(pitch > 90) pitch = 90;
+        else if(pitch < -90) pitch = -90;
+
         return new float[]{yaw, pitch};
     }
 
@@ -202,47 +226,23 @@ public class Aura extends Module {
     }
 
     public float[] getRotationsFixedSens(Entity e) {
+        float yaw = getBypassRotate(e)[0];
+        float pitch = getBypassRotate(e)[1];
+
         try {
-            double deltaX = e.posX + (e.posX - e.lastTickPosX) - mc.thePlayer.posX;
-            double deltaY = e.posY - 3.5 + e.getEyeHeight() - mc.thePlayer.posY + mc.thePlayer.getEyeHeight();
-            double deltaZ = e.posZ + (e.posZ - e.lastTickPosZ) - mc.thePlayer.posZ;
-            double distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaZ, 2));
+            int smooth = 3;
 
-            float yaw = (float) Math.toDegrees(-Math.atan(deltaX - deltaZ));
-            float pitch = (float) -Math.toDegrees(Math.atan(deltaY / distance));
+            if (deltaPitch < pitch) deltaPitch += Math.abs(pitch - deltaPitch) / smooth;
+            else deltaPitch -= Math.abs(pitch - deltaPitch) / smooth;
 
-            if(deltaX < 0 && deltaZ < 0) {
-                yaw = (float) (90 + (Math.toDegrees(Math.atan(deltaZ / deltaX))));
-            }
-            if(deltaX > 0 && deltaZ < 0) {
-                yaw = (float) (-90 + (Math.toDegrees(Math.atan(deltaZ / deltaX))));
-            }
+            if (deltaYaw < yaw) deltaYaw += Math.abs(yaw - deltaYaw) / 3;
+            else deltaYaw -= Math.abs(yaw - deltaYaw) / 3;
 
-            if ((int)pitch != deltaPitch) reachedPitch = false;
-            else if ((int)yaw != deltaYaw) reachedYaw = false;
-            else if ((int)pitch == deltaPitch) reachedPitch = true;
-            else if ((int)yaw == deltaYaw) reachedYaw = true;
-
-            int smooth = 2;
-            if (!reachedPitch) {
-                if (pitch > deltaPitch) {
-                    deltaPitch += Math.abs(pitch - deltaPitch) / smooth;
-                } else {
-                    deltaPitch -= Math.abs(pitch - deltaPitch) / smooth;
-                }
-            }
-            if (!reachedYaw) {
-                if (yaw > deltaYaw) {
-                    deltaYaw += Math.abs(yaw - deltaYaw) / 3;
-                } else {
-                    deltaYaw -= Math.abs(yaw - deltaYaw) / 3;
-                }
-            }
-            if (deltaPitch > 90) deltaPitch = 90;
-            else if (deltaPitch < -90) deltaPitch = -90;
+            if(deltaPitch > 90) deltaPitch = 90;
+            else if(deltaPitch < -90) deltaPitch = -90;
         } catch (Exception ignored){}
 
-        return new float[] {deltaYaw, deltaPitch};
+        return new float[] { deltaYaw, deltaPitch};
     }
 
     public boolean canAttack(EntityLivingBase entity) {
