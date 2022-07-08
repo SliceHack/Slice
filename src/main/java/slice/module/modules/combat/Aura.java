@@ -230,7 +230,7 @@ public class Aura extends Module {
         float pitch = getBypassRotate(e)[1];
 
         try {
-            int smooth = 3;
+            int smooth = 2;
 
             if (deltaPitch < pitch) deltaPitch += Math.abs(pitch - deltaPitch) / smooth;
             else deltaPitch -= Math.abs(pitch - deltaPitch) / smooth;
