@@ -99,6 +99,7 @@ import org.lwjgl.util.glu.Project;
 import slice.Slice;
 import slice.gui.main.MainMenu;
 import slice.module.modules.combat.Reach;
+import slice.util.LoggerUtil;
 
 public class EntityRenderer implements IResourceManagerReloadListener
 {
@@ -465,17 +466,16 @@ public class EntityRenderer implements IResourceManagerReloadListener
     public void getMouseOver(float partialTicks)
     {
         Reach reach = (Reach) Slice.INSTANCE.getModuleManager().getModule(Reach.class);
-        double reachValue;
-        if(reach == null) reachValue = mc.playerController.getBlockReachDistance();
-        else reachValue = reach.isEnabled() ? reach.getReach().getValue().doubleValue() : mc.playerController.getBlockReachDistance();
+
 
         Entity entity = this.mc.getRenderViewEntity();
 
         if (entity != null && this.mc.theWorld != null)
         {
+
             this.mc.mcProfiler.startSection("pick");
             this.mc.pointedEntity = null;
-            double d0 = reachValue;
+            double d0 = mc.playerController.getBlockReachDistance();
             this.mc.objectMouseOver = entity.rayTrace(d0, partialTicks);
             double d1 = d0;
             Vec3 vec3 = entity.getPositionEyes(partialTicks);

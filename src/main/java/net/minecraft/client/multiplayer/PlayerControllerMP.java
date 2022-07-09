@@ -28,6 +28,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSettings;
+import slice.Slice;
+import slice.module.modules.combat.Reach;
 
 public class PlayerControllerMP
 {
@@ -343,7 +345,9 @@ public class PlayerControllerMP
      */
     public float getBlockReachDistance()
     {
-        return this.currentGameType.isCreative() ? 5.0F : 4.5F;
+        Reach reach = (Reach) Slice.INSTANCE.getModuleManager().getModule(Reach.class);
+        double reachD = (double) reach.getReach().getValue();
+        return !reach.isEnabled() ? (this.currentGameType.isCreative() ? 5.0F : 4.5F) : (float) reachD;
     }
 
     public void updateController()
