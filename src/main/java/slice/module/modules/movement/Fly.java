@@ -100,6 +100,25 @@ public class Fly extends Module {
             }
 
             switch (mode.getValue()) {
+                case "Dev":
+                    if(stage <= 1) {
+                        MoveUtil.stop();
+                    }
+
+                    if(stage == 0) {
+                        damage(3.14F);
+                        stage = 1;
+                    }
+
+                    if(stage == 1 && mc.thePlayer.hurtResistantTime > 12) {
+                        stage = 2;
+                    }
+
+                    if(stage == 2) {
+                        mc.thePlayer.motionY = 0F;
+                        mc.timer.timerSpeed = 2F;
+                    }
+                    break;
                 case "Vulcan":
 
                     if(stage == 0) {
