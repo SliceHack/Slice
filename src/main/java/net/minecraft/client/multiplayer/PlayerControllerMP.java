@@ -345,9 +345,7 @@ public class PlayerControllerMP
      */
     public float getBlockReachDistance()
     {
-        Reach reach = (Reach) Slice.INSTANCE.getModuleManager().getModule(Reach.class);
-        double reachD = (double) reach.getBlockReach().getValue();
-        return !reach.isEnabled() ? (this.currentGameType.isCreative() ? 5.0F : 4.5F) : (float) reachD;
+        return this.currentGameType.isCreative() ? 5.0F : 4.5F;
     }
 
     public void updateController()
