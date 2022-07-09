@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import slice.module.Module;
 import slice.module.data.Category;
-import slice.module.modules.combat.AntiBot;
-import slice.module.modules.combat.Aura;
-import slice.module.modules.combat.PvPBot;
-import slice.module.modules.combat.Reach;
+import slice.module.modules.combat.*;
 import slice.module.modules.misc.*;
 import slice.module.modules.movement.*;
 import slice.module.modules.player.Derp;
@@ -31,6 +28,10 @@ public class ModuleManager {
     /* Every Module */
     private List<Module> modules = new ArrayList<>();
 
+    /**
+     * TODO:
+        * Finish AutoClicker
+     * */
     public ModuleManager() {
         register(new Interface());
         register(new Fly());

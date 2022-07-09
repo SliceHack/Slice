@@ -101,6 +101,7 @@ import slice.gui.main.MainMenu;
 import slice.module.modules.combat.Reach;
 import slice.util.LoggerUtil;
 
+@SuppressWarnings("all")
 public class EntityRenderer implements IResourceManagerReloadListener
 {
     private static final Logger logger = LogManager.getLogger();
