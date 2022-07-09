@@ -25,7 +25,7 @@ import slice.util.MoveUtil;
 @SuppressWarnings("all")
 public class Fly extends Module {
 
-    ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla", "Dev", "PvPGym", "Hycraft", "UwUGuard", "Vulcan", "UwUGuardGlide");
+    ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla", "Dev", "PvPGym", "Hycraft", "UwUGuard", "Vulcan", "Vulcan2", "UwUGuardGlide");
     BooleanValue bobbing = new BooleanValue("Bobbing", true);
     NumberValue speed = new NumberValue("Speed", 3.0D, 0.1D, 6.0D, NumberValue.Type.DOUBLE);
 
@@ -100,7 +100,7 @@ public class Fly extends Module {
             }
 
             switch (mode.getValue()) {
-                case "Dev":
+                case "Vulcan2":
                     if(stage <= 1) {
                         MoveUtil.stop();
                     }
