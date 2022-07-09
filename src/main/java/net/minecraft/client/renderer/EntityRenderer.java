@@ -465,7 +465,10 @@ public class EntityRenderer implements IResourceManagerReloadListener
     public void getMouseOver(float partialTicks)
     {
         Reach reach = (Reach) Slice.INSTANCE.getModuleManager().getModule(Reach.class);
-        double reachValue = reach.isEnabled() ? reach.getReach().getValue().doubleValue() : mc.playerController.getBlockReachDistance();
+        double reachValue;
+        if(reach == null) reachValue = mc.playerController.getBlockReachDistance();
+        else reachValue = reach.isEnabled() ? reach.getReach().getValue().doubleValue() : mc.playerController.getBlockReachDistance();
+
         Entity entity = this.mc.getRenderViewEntity();
 
         if (entity != null && this.mc.theWorld != null)
