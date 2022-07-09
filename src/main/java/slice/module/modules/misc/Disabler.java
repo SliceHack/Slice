@@ -63,11 +63,10 @@ public class Disabler extends Module {
                         return;
 
                     if(p instanceof C00PacketKeepAlive) {
-                        if(index++ % 2 == 0) {
-                            packets.add((C00PacketKeepAlive) p);
-                            e.setCancelled(true);
-                            return;
-                        }
+                        packets.add((C00PacketKeepAlive) p);
+                        e.setCancelled(true);
+                        index++;
+                        return;
                     }
                     break;
             }

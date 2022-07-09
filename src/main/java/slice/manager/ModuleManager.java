@@ -7,6 +7,7 @@ import slice.module.data.Category;
 import slice.module.modules.combat.AntiBot;
 import slice.module.modules.combat.Aura;
 import slice.module.modules.combat.PvPBot;
+import slice.module.modules.combat.Reach;
 import slice.module.modules.misc.*;
 import slice.module.modules.movement.*;
 import slice.module.modules.player.Derp;
@@ -54,6 +55,7 @@ public class ModuleManager {
         register(new PvPBot());
         register(new FullBright());
         register(new Derp());
+        register(new Reach());
     }
 
     /**

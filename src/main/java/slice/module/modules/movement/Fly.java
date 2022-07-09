@@ -1,19 +1,12 @@
 package slice.module.modules.movement;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.*;
-import net.minecraft.network.play.server.S08PacketPlayerPosLook;
-import net.minecraft.network.play.server.S12PacketEntityVelocity;
-import net.minecraft.network.play.server.S32PacketConfirmTransaction;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MathHelper;
-import net.optifine.Log;
 import org.lwjgl.input.Keyboard;
 import slice.event.Event;
 import slice.event.events.EventClientTick;
@@ -25,10 +18,8 @@ import slice.module.data.ModuleInfo;
 import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
-import slice.util.KeyUtil;
 import slice.util.LoggerUtil;
 import slice.util.MoveUtil;
-import slice.util.RotationUtil;
 
 @ModuleInfo(name = "Fly", key = Keyboard.KEY_G, description = "Allows you to fly like a bird", category = Category.MOVEMENT)
 @SuppressWarnings("all")
@@ -109,8 +100,6 @@ public class Fly extends Module {
             }
 
             switch (mode.getValue()) {
-                case "Dev":
-                    break;
                 case "Vulcan":
 
                     if(stage == 0) {
