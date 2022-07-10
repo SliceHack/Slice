@@ -14,6 +14,7 @@ public class HUD extends Module {
 
     ModeValue mode = new ModeValue("Mode", "Standard", "Standard", "Smooth");
     BooleanValue playerOnScreen = new BooleanValue("Player On Screen", true);
+    BooleanValue targetHUD = new BooleanValue("Target HUD", true);
     BooleanValue bps = new BooleanValue("BPS", true);
 
     public void init() {

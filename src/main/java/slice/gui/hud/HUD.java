@@ -17,6 +17,7 @@ import slice.util.MoveUtil;
 import slice.util.RenderUtil;
 
 import java.awt.*;
+import java.lang.annotation.Target;
 
 /**
  * Renders the client's heads-up-display.
@@ -29,6 +30,7 @@ public class HUD {
     @Getter
     @Setter
     private static PlayerOnScreen playerOnScreen = new PlayerOnScreen();
+    private static TargetHUD targetHUD = new TargetHUD();
 
     public static Class<? extends Module> hudClass = slice.module.modules.render.HUD.class;
     private static ModeValue mode;
@@ -43,9 +45,14 @@ public class HUD {
 
         mode = Slice.INSTANCE.getModuleManager().getModule(hudClass).getMode();
         BooleanValue playerOnScreenBoolean = (BooleanValue) Slice.INSTANCE.getModuleManager().getModule(hudClass).getSetting("PlayerOnScreen");
+        BooleanValue targetHUDBoolean = (BooleanValue) Slice.INSTANCE.getModuleManager().getModule(hudClass).getSetting("TargetHUD");
 
         if (playerOnScreenBoolean.getValue()) {
             playerOnScreen.draw(Mouse.getX(), Mouse.getY());
+        }
+
+        if (targetHUDBoolean.getValue()) {
+            targetHUD.draw(Mouse.getX(), Mouse.getY());
         }
 
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
