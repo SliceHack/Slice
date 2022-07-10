@@ -17,10 +17,16 @@ public class TargetHUD {
 
     public void draw(int mouseX, int mouseY) {
         EntityLivingBase target = Slice.INSTANCE.target;
-        if (target == null) {
+        if (target == null)
             return;
-        }
-        RenderUtil.drawRoundedRect(200, 100, 100 + 200, 100 + 100, 5, -1);
+
+        int x = 100;
+        int y = 100;
+        int width = x + 100;
+        int height = y + 100;
+        int radius = 10;
+
+        RenderUtil.drawRoundedRect(x, y, width, height, radius, -1);
     }
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {}
