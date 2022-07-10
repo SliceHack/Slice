@@ -17,6 +17,7 @@ import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import org.lwjgl.input.Keyboard;
+import slice.Slice;
 import slice.event.Event;
 import slice.event.events.EventUpdate;
 import slice.module.Module;
@@ -64,6 +65,7 @@ public class Aura extends Module {
         deltaPitch = 0;
         deltaYaw = 0;
         fakeBlock = false;
+        Slice.INSTANCE.target = null;
     }
 
     public void onEnable() {
@@ -225,6 +227,7 @@ public class Aura extends Module {
                 }
             }
         }
+        Slice.INSTANCE.target = target;
         return target;
     }
 

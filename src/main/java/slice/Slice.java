@@ -3,6 +3,7 @@ package slice;
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S02PacketChat;
 import org.lwjgl.input.Keyboard;
@@ -25,7 +26,7 @@ import slice.module.Module;
 /**
 * Main Class for the Client
 *
-* @author Nick
+* @author Nick & Dylan
 */
 @Getter
 public enum Slice {
@@ -62,6 +63,8 @@ public enum Slice {
 
     /** for irc reconnecting */
     public boolean connecting;
+    /** killaura target for target hud */
+    public EntityLivingBase target;
 
     Slice() {
         connecting = true;
