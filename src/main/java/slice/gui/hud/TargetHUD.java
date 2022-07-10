@@ -25,8 +25,8 @@ public class TargetHUD {
 
         int targetYaw = (int) target.rotationYaw;
         targetYaw /= 2.5f;
-        String distance = String.format("%.2f", target.getDistanceToEntity(mc.thePlayer));
-        String health = String.format("%.2f", target.getHealth());
+        String distance = String.format("%.1f", target.getDistanceToEntity(mc.thePlayer));
+        String health = String.format("%.1f", target.getHealth());
         String hurtTime = String.format("%.0f", (float) target.hurtTime);
 
 
@@ -55,7 +55,7 @@ public class TargetHUD {
 
         font.drawStringWithShadow("Distance: " + distance, x+80, y - (font.getHeight(distance) / 2) + 20, -1);
         font.drawStringWithShadow("Health: " + health, x+80, y - (font.getHeight(distance) / 2) + 35, -1);
-        font.drawStringWithShadow("Hurte: " + hurtTime, x+80, y - (font.getHeight(distance) / 2) + 50, -1);
+        font.drawStringWithShadow("Hurt: " + hurtTime, x+80, y - (font.getHeight(distance) / 2) + 50, -1);
 
     }
 
