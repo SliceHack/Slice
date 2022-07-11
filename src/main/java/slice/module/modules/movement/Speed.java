@@ -3,7 +3,9 @@ package slice.module.modules.movement;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
+import net.minecraft.util.MathHelper;
 import org.lwjgl.input.Keyboard;
+import slice.Slice;
 import slice.event.Event;
 import slice.event.events.EventClientTick;
 import slice.event.events.EventPacket;
@@ -12,13 +14,14 @@ import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
 import slice.setting.settings.ModeValue;
+import slice.util.KeyUtil;
 import slice.util.LoggerUtil;
 import slice.util.MoveUtil;
 
 @ModuleInfo(name = "Speed", description = "Allows you to move fast!!", key = Keyboard.KEY_X, category = Category.MOVEMENT)
 public class Speed extends Module {
 
-    ModeValue mode = new ModeValue("Mode", "Bhop", "Bhop", "Hycraft", "Dev", "Astro", "MMC", "UwUGuard");
+    ModeValue mode = new ModeValue("Mode", "Bhop", "Bhop", "Hycraft", "Dev", "Astro", "MMC", "UwUGuard", "Legit");
 
     int onGroundTicks, offGroundTicks;
 
@@ -26,6 +29,8 @@ public class Speed extends Module {
         mc.timer.timerSpeed = 1.0F;
         onGroundTicks = 0;
         offGroundTicks = 0;
+        KeyUtil.moveKeys()[0].pressed = false;
+        KeyUtil.moveKeys()[2].pressed = false;
     }
 
     public void onEvent(Event event) {
@@ -38,7 +43,9 @@ public class Speed extends Module {
                 offGroundTicks++;
             }
         }
+        boolean once = true;
         if(event instanceof EventUpdate) {
+
                 switch (mode.getValue()) {
                     case "Hycraft":
                     case "Bhop":
@@ -80,13 +87,54 @@ public class Speed extends Module {
                             MoveUtil.strafe(0.5D);
                         }
                         break;
-                    case "Dev":
-                        if(!MoveUtil.isMoving())
-                            return;
+                    case "Legit":
+                        mc.thePlayer.setSprinting(true);
+                        KeyUtil.moveKeys()[0].pressed = true;
+
+                        int setYaw;
+                        int direction = MathHelper.floor_double((double)((mc.thePlayer.rotationYaw * 4F) / 360F) + 0.5D) & 3;
+                        switch(direction) {
+                            case 0:
+                                setYaw = 0;
+                                break;
+                            case 1:
+                                setYaw = 90;
+                                break;
+                            case 2:
+                                setYaw = 180;
+                                break;
+                            case 3:
+                                setYaw = -90;
+                                break;
+                            default:
+                                setYaw = 0;
+                                break;
+                        }
 
                         if(mc.thePlayer.onGround) {
-                            MoveUtil.jump();
+                            new Thread(() -> {
+                                mc.thePlayer.rotationYaw = setYaw;
+                                KeyUtil.moveKeys()[2].pressed = false;
+                                try {
+                                    Thread.sleep(50);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                LoggerUtil.addMessage("Jumping");
+                                if (mc.thePlayer.onGround) {
+                                    MoveUtil.jump();
+                                }
+                            }).start();
+                            break;
                         }
+
+                        if (mc.thePlayer.lastReportedYaw == setYaw) {
+                            mc.thePlayer.rotationYaw = setYaw + 44.99F;
+                            KeyUtil.moveKeys()[2].pressed = true;
+                        }
+
+                        break;
+                    case "Dev":
                         break;
                 }
         }
