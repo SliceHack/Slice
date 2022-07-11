@@ -31,6 +31,7 @@ public class Speed extends Module {
         offGroundTicks = 0;
         KeyUtil.moveKeys()[0].pressed = false;
         KeyUtil.moveKeys()[2].pressed = false;
+        KeyUtil.moveKeys()[4].pressed = false;
     }
 
     public void onEvent(Event event) {
@@ -90,6 +91,7 @@ public class Speed extends Module {
                     case "Legit":
                         mc.thePlayer.setSprinting(true);
                         KeyUtil.moveKeys()[0].pressed = true;
+                        KeyUtil.moveKeys()[4].pressed = true;
 
                         int setYaw;
                         int direction = MathHelper.floor_double((double)((mc.thePlayer.rotationYaw * 4F) / 360F) + 0.5D) & 3;
@@ -112,18 +114,8 @@ public class Speed extends Module {
                         }
 
                         if(mc.thePlayer.onGround) {
-                            new Thread(() -> {
-                                mc.thePlayer.rotationYaw = setYaw;
-                                KeyUtil.moveKeys()[2].pressed = false;
-                                try {
-                                    Thread.sleep(50);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                if (mc.thePlayer.onGround) {
-                                    MoveUtil.jump();
-                                }
-                            }).start();
+                            mc.thePlayer.rotationYaw = setYaw;
+                            KeyUtil.moveKeys()[2].pressed = false;
                             break;
                         }
 
