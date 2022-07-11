@@ -120,7 +120,6 @@ public class Speed extends Module {
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
-                                LoggerUtil.addMessage("Jumping");
                                 if (mc.thePlayer.onGround) {
                                     MoveUtil.jump();
                                 }
