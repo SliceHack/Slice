@@ -13,7 +13,7 @@ import slice.module.data.ModuleInfo;
 import slice.setting.settings.ModeValue;
 import slice.util.LoggerUtil;
 
-@ModuleInfo(name = "Pihase", description = "Removes blocks on right click.", category = Category.WORLD)
+@ModuleInfo(name = "Phase", description = "Removes blocks on right click.", category = Category.WORLD)
 public class Phase extends Module {
 
     ModeValue mode = new ModeValue("Mode", "HCF", "HCF", "Dev");
