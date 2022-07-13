@@ -59,6 +59,8 @@ public class ModuleManager {
         register(new Derp());
         register(new Reach());
         register(new Phase());
+        register(new AirJump());
+        register(new Step());
     }
 
     /**
