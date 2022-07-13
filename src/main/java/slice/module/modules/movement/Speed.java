@@ -5,7 +5,6 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 import net.minecraft.util.MathHelper;
 import org.lwjgl.input.Keyboard;
-import slice.Slice;
 import slice.event.Event;
 import slice.event.events.EventClientTick;
 import slice.event.events.EventPacket;
@@ -44,7 +43,6 @@ public class Speed extends Module {
                 offGroundTicks++;
             }
         }
-        boolean once = true;
         if(event instanceof EventUpdate) {
 
                 switch (mode.getValue()) {
@@ -93,7 +91,7 @@ public class Speed extends Module {
                         KeyUtil.moveKeys()[0].pressed = true;
                         KeyUtil.moveKeys()[4].pressed = true;
 
-                        int setYaw;
+                        int setYaw = 0;
                         int direction = MathHelper.floor_double((double)((mc.thePlayer.rotationYaw * 4F) / 360F) + 0.5D) & 3;
                         switch(direction) {
                             case 0:
@@ -107,9 +105,6 @@ public class Speed extends Module {
                                 break;
                             case 3:
                                 setYaw = -90;
-                                break;
-                            default:
-                                setYaw = 0;
                                 break;
                         }
 

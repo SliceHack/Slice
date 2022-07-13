@@ -12,6 +12,7 @@ import slice.module.modules.render.Animations;
 import slice.module.modules.render.Chams;
 import slice.module.modules.render.HUD;
 import slice.module.modules.render.Interface;
+import slice.module.modules.world.Phase;
 import slice.module.modules.world.TimeChanger;
 
 import java.util.ArrayList;
@@ -57,6 +58,7 @@ public class ModuleManager {
         register(new FullBright());
         register(new Derp());
         register(new Reach());
+        register(new Phase());
     }
 
     /**
