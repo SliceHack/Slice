@@ -96,10 +96,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
-import slice.Slice;
-import slice.gui.main.MainMenu;
-import slice.module.modules.combat.Reach;
-import slice.util.LoggerUtil;
+import slice.event.events.EventPlayerReach;
 
 @SuppressWarnings("all")
 public class EntityRenderer implements IResourceManagerReloadListener
@@ -466,9 +463,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
      */
     public void getMouseOver(float partialTicks)
     {
-        Reach reach = (Reach) Slice.INSTANCE.getModuleManager().getModule(Reach.class);
-
-
         Entity entity = this.mc.getRenderViewEntity();
 
         if (entity != null && this.mc.theWorld != null)
@@ -559,10 +553,13 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 }
             }
 
-            if (this.pointedEntity != null && flag && vec3.distanceTo(vec33) > (reach.isEnabled() ? reach.getReach().getValue().doubleValue() : 3.0))
-            {
-                this.pointedEntity = null;
-                this.mc.objectMouseOver = new MovingObjectPosition(MovingObjectPosition.MovingObjectType.MISS, vec33, (EnumFacing)null, new BlockPos(vec33));
+            EventPlayerReach event = new EventPlayerReach(3.0);
+
+            if(!event.isCancelled()) {
+                if (this.pointedEntity != null && flag && vec3.distanceTo(vec33) > event.getReach()) {
+                    this.pointedEntity = null;
+                    this.mc.objectMouseOver = new MovingObjectPosition(MovingObjectPosition.MovingObjectType.MISS, vec33, (EnumFacing) null, new BlockPos(vec33));
+                }
             }
 
             if (this.pointedEntity != null && (d2 < d1 || this.mc.objectMouseOver == null))
