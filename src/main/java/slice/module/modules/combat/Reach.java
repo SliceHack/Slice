@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import slice.event.Event;
 import slice.event.events.EventPlayerReach;
+import slice.event.events.EventUpdate;
 import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
