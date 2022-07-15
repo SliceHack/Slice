@@ -3,6 +3,8 @@ package net.minecraft.entity.player;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.mojang.authlib.GameProfile;
+
+import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -76,6 +78,7 @@ import net.minecraft.world.LockCode;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSettings;
 import slice.Slice;
+import slice.event.events.EventJump;
 import slice.module.modules.combat.Aura;
 
 @SuppressWarnings("incomplete-switch")
@@ -1803,6 +1806,11 @@ public abstract class EntityPlayer extends EntityLivingBase
      */
     public void jump()
     {
+        EventJump event = new EventJump();
+        event.call();
+        if(event.isCancelled())
+            return;
+
         super.jump();
         this.triggerAchievement(StatList.jumpStat);
 
@@ -2261,6 +2269,16 @@ public abstract class EntityPlayer extends EntityLivingBase
     public String getName()
     {
         return this.gameProfile.getName();
+    }
+
+    public void setName(String name)
+    {
+        try {
+            Class<?> profileClass = this.gameProfile.getClass();
+            Field nameField = profileClass.getDeclaredField("name");
+            nameField.setAccessible(true);
+            nameField.set(this.gameProfile, name);
+        } catch (Exception ignored) {}
     }
 
     /**

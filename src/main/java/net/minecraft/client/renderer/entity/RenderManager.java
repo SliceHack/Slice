@@ -376,6 +376,11 @@ public class RenderManager
         return this.doRenderEntity(entityIn, x, y, z, entityYaw, partialTicks, false);
     }
 
+    public boolean renderEntityWithPosYaw(Entity entityIn, double x, double y, double z, float entityYaw, float partialTicks, boolean name)
+    {
+        return this.doRenderEntity(entityIn, x, y, z, entityYaw, partialTicks, false, name);
+    }
+
     public boolean doRenderEntity(Entity entity, double x, double y, double z, float entityYaw, float partialTicks, boolean hideDebugBox)
     {
         Render<Entity> render = null;
@@ -399,6 +404,80 @@ public class RenderManager
                     }
 
                     render.doRender(entity, x, y, z, entityYaw, partialTicks);
+                }
+                catch (Throwable throwable2)
+                {
+                    throw new ReportedException(CrashReport.makeCrashReport(throwable2, "Rendering entity in world"));
+                }
+
+                try
+                {
+                    if (!this.renderOutlines)
+                    {
+                        render.doRenderShadowAndFire(entity, x, y, z, entityYaw, partialTicks);
+                    }
+                }
+                catch (Throwable throwable1)
+                {
+                    throw new ReportedException(CrashReport.makeCrashReport(throwable1, "Post-rendering entity in world"));
+                }
+
+                if (this.debugBoundingBox && !entity.isInvisible() && !hideDebugBox)
+                {
+                    try
+                    {
+                        this.renderDebugBoundingBox(entity, x, y, z, entityYaw, partialTicks);
+                    }
+                    catch (Throwable throwable)
+                    {
+                        throw new ReportedException(CrashReport.makeCrashReport(throwable, "Rendering entity hitbox in world"));
+                    }
+                }
+            }
+            else if (this.renderEngine != null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        catch (Throwable throwable3)
+        {
+            CrashReport crashreport = CrashReport.makeCrashReport(throwable3, "Rendering entity in world");
+            CrashReportCategory crashreportcategory = crashreport.makeCategory("Entity being rendered");
+            entity.addEntityCrashInfo(crashreportcategory);
+            CrashReportCategory crashreportcategory1 = crashreport.makeCategory("Renderer details");
+            crashreportcategory1.addCrashSection("Assigned renderer", render);
+            crashreportcategory1.addCrashSection("Location", CrashReportCategory.getCoordinateInfo(x, y, z));
+            crashreportcategory1.addCrashSection("Rotation", Float.valueOf(entityYaw));
+            crashreportcategory1.addCrashSection("Delta", Float.valueOf(partialTicks));
+            throw new ReportedException(crashreport);
+        }
+    }
+
+    public boolean doRenderEntity(Entity entity, double x, double y, double z, float entityYaw, float partialTicks, boolean hideDebugBox, boolean name)
+    {
+        Render<Entity> render = null;
+
+        try
+        {
+            render = this.<Entity>getEntityRenderObject(entity);
+
+            if (render != null && this.renderEngine != null)
+            {
+                try
+                {
+                    if (render instanceof RendererLivingEntity)
+                    {
+                        ((RendererLivingEntity)render).setRenderOutlines(this.renderOutlines);
+                    }
+
+                    if (CustomEntityModels.isActive())
+                    {
+                        this.renderRender = render;
+                    }
+
+                    render.doRender(entity, x, y, z, entityYaw, partialTicks, name);
                 }
                 catch (Throwable throwable2)
                 {

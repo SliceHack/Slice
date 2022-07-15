@@ -217,9 +217,11 @@ public class Fly extends Module {
                     event.setCancelled(mc.thePlayer.ticksExisted % 5 != 0);
                 }
             }
-            if(mode.getValue().equalsIgnoreCase("Dev")) {
-                if(e.isOutgoing()) {
-                    e.setCancelled(mc.thePlayer.ticksExisted % 10 != 0);
+            if(mode.getValue().equalsIgnoreCase("Vulcan")) {
+                if(stage == 2) {
+                    if(e.isOutgoing() && !(p instanceof C03PacketPlayer)) {
+                        e.setCancelled(true);
+                    }
                 }
             }
         }

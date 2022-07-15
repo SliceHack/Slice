@@ -42,6 +42,7 @@ import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.*;
 import slice.event.events.EventClientTick;
+import slice.event.events.EventMouse;
 import slice.event.events.EventSwitchAccount;
 import slice.gui.alt.manager.AltManager;
 import slice.gui.hud.HUD;
@@ -1533,6 +1534,12 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
     public void clickMouse()
     {
+        EventMouse mouse = new EventMouse(0);
+        mouse.call();
+
+        if(mouse.isCancelled())
+            return;
+
         if (this.leftClickCounter <= 0)
         {
             this.thePlayer.swingItem();
@@ -1580,6 +1587,12 @@ public class Minecraft implements IThreadListener, IPlayerUsage
      * Called when user clicked he's mouse right button (place)
      */ public void rightClickMouse()
     {
+        EventMouse mouse = new EventMouse(1);
+        mouse.call();
+
+        if(mouse.isCancelled())
+            return;
+
         if (!this.playerController.getIsHittingBlock())
         {
             this.rightClickDelayTimer = 4;
@@ -2544,6 +2557,12 @@ public class Minecraft implements IThreadListener, IPlayerUsage
      */
     private void middleClickMouse()
     {
+        EventMouse mouse = new EventMouse(3);
+        mouse.call();
+
+        if(mouse.isCancelled())
+            return;
+
         if (this.objectMouseOver != null)
         {
             boolean flag = this.thePlayer.capabilities.isCreativeMode;

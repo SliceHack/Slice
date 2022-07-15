@@ -27,7 +27,7 @@ public class TargetHUD {
         targetYaw /= 2.5f;
         String distance = String.format("%.1f", target.getDistanceToEntity(mc.thePlayer));
         String health = String.format("%.1f", target.getHealth());
-        String hurtTime = String.format("%.0f", (float) target.hurtTime);
+        String hurtTime = target.hurtTime + "";
 
 
         int x = 100;
@@ -50,8 +50,8 @@ public class TargetHUD {
         RenderUtil.drawRoundedRect(borderX, borderY, borderWidth, borderHeight, borderRadius, new Color(255,171,171).getRGB());
         GlStateManager.popMatrix();
         RenderUtil.drawRoundedRect(x, y, width, height, radius, new Color(60, 60, 60).getRGB());
-        //TODO: remove nametag from player on screen
-        GuiInventory.drawEntityOnScreen(x + 40, y + 95, 40, targetYaw, 0, target);
+
+        GuiInventory.drawEntityOnScreen(x + 40, y + 95, 40, targetYaw, 0, target, false);
 
         font.drawStringWithShadow("Distance: " + distance, x+80, y - (font.getHeight(distance) / 2) + 20, -1);
         font.drawStringWithShadow("Health: " + health, x+80, y - (font.getHeight(distance) / 2) + 35, -1);

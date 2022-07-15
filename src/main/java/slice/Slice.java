@@ -17,7 +17,6 @@ import slice.event.events.*;
 import slice.file.Saver;
 import slice.font.FontManager;
 import slice.gui.alt.manager.AltManager;
-import slice.gui.alt.manager.ui.AltManButton;
 import slice.manager.CommandManager;
 import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
@@ -63,6 +62,7 @@ public enum Slice {
 
     /** for irc reconnecting */
     public boolean connecting;
+
     /** killaura target for target hud */
     public EntityLivingBase target;
 

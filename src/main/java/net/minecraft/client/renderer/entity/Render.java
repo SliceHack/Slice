@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.src.Config;
 import net.minecraft.util.AxisAlignedBB;
@@ -64,10 +65,30 @@ public abstract class Render<T extends Entity> implements IEntityRenderer
         this.renderName(entity, x, y, z);
     }
 
+    /**
+     * Renders the desired {@code T} type Entity.
+     */
+    public void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks, boolean label)
+    {
+        this.renderName(entity, x, y, z, label);
+    }
+
     protected void renderName(T entity, double x, double y, double z)
     {
         if (this.canRenderName(entity))
         {
+            this.renderLivingLabel(entity, entity.getDisplayName().getFormattedText(), x, y, z, 64);
+        }
+    }
+
+    protected void renderName(T entity, double x, double y, double z, boolean label)
+    {
+        if (this.canRenderName(entity))
+        {
+
+            if(!label)
+                return;
+
             this.renderLivingLabel(entity, entity.getDisplayName().getFormattedText(), x, y, z, 64);
         }
     }

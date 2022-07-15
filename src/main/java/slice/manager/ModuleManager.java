@@ -2,6 +2,7 @@ package slice.manager;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.entity.EntityLivingBase;
 import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.modules.combat.*;
