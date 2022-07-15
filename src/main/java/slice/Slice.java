@@ -13,6 +13,7 @@ import slice.clickgui.ClickGui;
 import slice.command.commands.CommandPlugins;
 import slice.discord.StartDiscordRPC;
 import slice.event.Event;
+import slice.event.EventManager;
 import slice.event.events.*;
 import slice.file.Saver;
 import slice.font.FontManager;
@@ -34,6 +35,7 @@ public enum Slice {
     public static String NAME = "Slice", VERSION = "1.0";
 
     /* managers */
+    private final EventManager eventManager;
     private final ModuleManager moduleManager;
     private final CommandManager commandManager;
     private final SettingsManager settingsManager;
@@ -68,6 +70,7 @@ public enum Slice {
 
     Slice() {
         connecting = true;
+        eventManager = new EventManager();
         moduleManager = new ModuleManager();
         commandManager = new CommandManager(moduleManager);
         settingsManager = new SettingsManager(moduleManager);
@@ -77,6 +80,7 @@ public enum Slice {
         discordRPC = new StartDiscordRPC();
         discordRPC.start();
         API.sendAuthRequest(irc);
+        eventManager.register(this);
     }
 
     /**

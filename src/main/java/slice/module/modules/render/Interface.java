@@ -26,6 +26,4 @@ public class Interface extends Module {
     public void onEnable() {
         setEnabled(false);
     }
-
-    public void onEvent(Event event) {}
 }
