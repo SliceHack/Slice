@@ -63,7 +63,7 @@ public enum Slice {
     /** for irc reconnecting */
     public boolean connecting;
 
-    /** killaura target for target hud */
+    /** KillAura target for target hud */
     public EntityLivingBase target;
 
     Slice() {
