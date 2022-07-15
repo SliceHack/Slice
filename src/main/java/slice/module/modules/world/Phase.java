@@ -3,6 +3,7 @@ package slice.module.modules.world;
 import net.minecraft.util.BlockPos;
 import org.lwjgl.input.Mouse;
 import slice.event.Event;
+import slice.event.data.EventInfo;
 import slice.event.events.EventMouse;
 import slice.event.events.EventUpdate;
 import slice.module.Module;
@@ -15,24 +16,22 @@ public class Phase extends Module {
 
     ModeValue mode = new ModeValue("Mode", "HCF", "HCF", "Dev");
 
-    public void onEvent(Event event) {
-        if (event instanceof EventUpdate) {
-            if (Mouse.isButtonDown(1)) {
-                switch(mode.getValue()) {
-                    case "HCF":
-                        BlockPos blockPos = mc.objectMouseOver.getBlockPos();
+    @EventInfo
+    public void onUpdate(EventUpdate e) {
+        if (Mouse.isButtonDown(1)) {
+            switch(mode.getValue()) {
+                case "HCF":
+                    BlockPos blockPos = mc.objectMouseOver.getBlockPos();
 
-                        if (mc.thePlayer.getDistance(blockPos) > 3) break;
+                    if (mc.thePlayer.getDistance(blockPos) > 3) break;
 
-                        mc.theWorld.setBlockToAir(blockPos);
-                        break;
-                    case "Dev":
-                    default:
-                        break;
-                }
+                    mc.theWorld.setBlockToAir(blockPos);
+                    break;
+                case "Dev":
+                default:
+                    break;
             }
         }
     }
-
 
 }
