@@ -19,6 +19,7 @@ import net.minecraft.util.EnumFacing;
 import org.lwjgl.input.Keyboard;
 import slice.Slice;
 import slice.event.Event;
+import slice.event.data.EventInfo;
 import slice.event.events.EventUpdate;
 import slice.module.Module;
 import slice.module.data.Category;
@@ -73,106 +74,103 @@ public class Aura extends Module {
         deltaYaw = mc.thePlayer.rotationYawHead;
     }
 
-    public void onEvent(Event event) {
-        if(event instanceof EventUpdate) {
-            try {
-                EventUpdate e = (EventUpdate) event;
+    @EventInfo
+    public void onUpdate(EventUpdate e) {
+        try {
+            if (target == null) {
+                deltaYaw = mc.thePlayer.rotationYawHead;
+                deltaPitch = mc.thePlayer.rotationPitchHead;
+            }
 
-                if (target == null) {
-                    deltaYaw = mc.thePlayer.rotationYawHead;
-                    deltaPitch = mc.thePlayer.rotationPitchHead;
+            target = getTarget();
+
+            if ((target == null || target.isDead || target.getHealth() <= 0) && fakeBlock) {
+                fakeBlock = false;
+            }
+
+            if (target == null) {
+                reachedCps = false;
+                reachedPitch = false;
+                reachedYaw = false;
+                deltaYaw = mc.thePlayer.rotationYawHead;
+                deltaPitch = mc.thePlayer.rotationPitchHead;
+                deltaCps = 0;
+                hasRotated = false;
+            }
+
+            if (target != null) {
+                switch (rotateMode.getValue()) {
+                    case "Bypass":
+                        yaw = getBypassRotate(target)[0];
+                        pitch = getBypassRotate(target)[1];
+                        break;
+                    case "Smooth":
+                        yaw = getRotationsFixedSens(target)[0];
+                        pitch = getRotationsFixedSens(target)[1];
+                        break;
+                    case "None":
+                        yaw = mc.thePlayer.rotationYaw;
+                        pitch = mc.thePlayer.rotationPitch;
+                        break;
+                    default:
+                        yaw = getRotationsFixedSens(target)[0];
+                        pitch = getRotationsFixedSens(target)[1];
+                        break;
                 }
 
-                target = getTarget();
-
-                if ((target == null || target.isDead || target.getHealth() <= 0) && fakeBlock) {
-                    fakeBlock = false;
+                if (!rotateMode.getValue().equalsIgnoreCase("None")) {
+                    e.setYaw(yaw);
+                    e.setPitch(pitch);
                 }
 
-                if (target == null) {
-                    reachedCps = false;
-                    reachedPitch = false;
-                    reachedYaw = false;
-                    deltaYaw = mc.thePlayer.rotationYawHead;
-                    deltaPitch = mc.thePlayer.rotationPitchHead;
-                    deltaCps = 0;
-                    hasRotated = false;
+
+                boolean block = mc.thePlayer.getHeldItem() != null && !blockMode.getValue().equalsIgnoreCase("None");
+
+                fakeBlock = block && (blockMode.getValue().equalsIgnoreCase("Fake") || !(mc.thePlayer.getHeldItem().getItem() instanceof ItemSword));
+
+                if ((block && !fakeBlock) && blockMode.getValue().equalsIgnoreCase("Vanilla") && e.isPre()) {
+                    mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem());
                 }
 
-                if (target != null) {
-                    switch (rotateMode.getValue()) {
-                        case "Bypass":
-                            yaw = getBypassRotate(target)[0];
-                            pitch = getBypassRotate(target)[1];
-                            break;
-                        case "Smooth":
-                            yaw = getRotationsFixedSens(target)[0];
-                            pitch = getRotationsFixedSens(target)[1];
-                            break;
-                        case "None":
-                            yaw = mc.thePlayer.rotationYaw;
-                            pitch = mc.thePlayer.rotationPitch;
-                            break;
-                        default:
-                            yaw = getRotationsFixedSens(target)[0];
-                            pitch = getRotationsFixedSens(target)[1];
-                            break;
-                    }
-
-                    if (!rotateMode.getValue().equalsIgnoreCase("None")) {
-                        e.setYaw(yaw);
-                        e.setPitch(pitch);
-                    }
-
-
-                    boolean block = mc.thePlayer.getHeldItem() != null && !blockMode.getValue().equalsIgnoreCase("None");
-
-                    fakeBlock = block && (blockMode.getValue().equalsIgnoreCase("Fake") || !(mc.thePlayer.getHeldItem().getItem() instanceof ItemSword));
-
-                    if ((block && !fakeBlock) && blockMode.getValue().equalsIgnoreCase("Vanilla") && e.isPre()) {
+                if ((block && !fakeBlock) && blockMode.getValue().equalsIgnoreCase("NCP")) {
+                    if (e.isPre()) {
+                        mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
+                    } else {
                         mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem());
                     }
+                }
 
-                    if ((block && !fakeBlock) && blockMode.getValue().equalsIgnoreCase("NCP")) {
-                        if (e.isPre()) {
-                            mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
-                        } else {
-                            mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem());
-                        }
+                deltaCps = deltaCps == cps.getValue().intValue() ? (cps.getValue().intValue() != 1 ? (cps.getValue().intValue() - 1) : 1) : cps.getValue().intValue();
+
+                double cps = this.cps.getValue().intValue();
+                if (delay9.getValue()) {
+                    cps = 4;
+
+                    if (mc.thePlayer.getHeldItem() != null) {
+                        final Item item = mc.thePlayer.getHeldItem().getItem();
+
+                        if (item instanceof ItemSpade || item == Items.golden_axe || item == Items.diamond_axe || item == Items.wooden_hoe || item == Items.golden_hoe)
+                            cps = 1;
+                        else if (item == Items.wooden_axe || item == Items.stone_axe) cps = 0.8;
+                        else if (item instanceof ItemSword) cps = 1.6;
+                        else if (item instanceof ItemPickaxe) cps = 1.2;
+                        else if (item == Items.iron_axe) cps = 0.9;
+                        else if (item == Items.stone_hoe) cps = 2;
+                        else if (item == Items.iron_hoe) cps = 3;
+                        cps += 0.9;
                     }
 
-                    deltaCps = deltaCps == cps.getValue().intValue() ? (cps.getValue().intValue() != 1 ? (cps.getValue().intValue() - 1) : 1) : cps.getValue().intValue();
+                }
 
-                    double cps = this.cps.getValue().intValue();
-                    if (delay9.getValue()) {
-                        cps = 4;
-
-                        if (mc.thePlayer.getHeldItem() != null) {
-                            final Item item = mc.thePlayer.getHeldItem().getItem();
-
-                            if (item instanceof ItemSpade || item == Items.golden_axe || item == Items.diamond_axe || item == Items.wooden_hoe || item == Items.golden_hoe)
-                                cps = 1;
-                            else if (item == Items.wooden_axe || item == Items.stone_axe) cps = 0.8;
-                            else if (item instanceof ItemSword) cps = 1.6;
-                            else if (item instanceof ItemPickaxe) cps = 1.2;
-                            else if (item == Items.iron_axe) cps = 0.9;
-                            else if (item == Items.stone_hoe) cps = 2;
-                            else if (item == Items.iron_hoe) cps = 3;
-                            cps += 0.9;
-                        }
-
-                    }
-
-                    if (e.isPre()) {
-                        if (timer.hasReached((long) (1000 / cps))) {
-                            attack();
-                            if (!noSwing.getValue()) mc.thePlayer.swingItem();
-                            timer.reset();
-                        }
+                if (e.isPre()) {
+                    if (timer.hasReached((long) (1000 / cps))) {
+                        attack();
+                        if (!noSwing.getValue()) mc.thePlayer.swingItem();
+                        timer.reset();
                     }
                 }
-            } catch(Exception ignored){}
-        }
+            }
+        } catch(Exception ignored){}
     }
 
     private void attack() {

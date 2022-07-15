@@ -15,7 +15,7 @@ public class Step extends Module {
 
     NumberValue height = new NumberValue("Height", 1, 1, 10, NumberValue.Type.INTEGER);
 
-    public void onUpdate(EventUpdate event) {
+    public void onUpdateNoToggle(EventUpdate event) {
         height.setVisible(mode.getValue().equals("Vanilla"));
     }
 

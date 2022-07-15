@@ -9,6 +9,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import org.lwjgl.input.Keyboard;
 import slice.event.Event;
+import slice.event.data.EventInfo;
 import slice.event.events.EventClientTick;
 import slice.event.events.EventPacket;
 import slice.event.events.EventUpdate;
@@ -66,162 +67,159 @@ public class Fly extends Module {
         posY = (int) mc.thePlayer.posY;
     }
 
-    public void onUpdate(EventUpdate event) {
+    public void onUpdateNoToggle(EventUpdate event) {
         speed.setHidden(!mode.getValue().equalsIgnoreCase("Vanilla"));
     }
 
-    public void onEvent(Event event) {
-        if(event instanceof EventClientTick) {
-            EventClientTick e = (EventClientTick) event;
-            if(mode.getValue().equalsIgnoreCase("Vulcan")) {
-                if (currentSlot != i) {
-                    if (ticks == 1) {
-                        mc.thePlayer.sendQueue.addToSendQueue(new C08PacketPlayerBlockPlacement(bow));
-                    }
-
-                    if (ticks == 2) {
-                    }
-
-                    if (ticks == 3) {
-                        mc.thePlayer.sendQueue.addToSendNoEvent(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
-                    }
-                    ticks++;
+    @EventInfo
+    public void onTick(EventClientTick e) {
+        if(mode.getValue().equalsIgnoreCase("Vulcan")) {
+            if (currentSlot != i) {
+                if (ticks == 1) {
+                    mc.thePlayer.sendQueue.addToSendQueue(new C08PacketPlayerBlockPlacement(bow));
                 }
+
+                if (ticks == 2) {
+                }
+
+                if (ticks == 3) {
+                    mc.thePlayer.sendQueue.addToSendNoEvent(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
+                }
+                ticks++;
             }
         }
-        if(event instanceof EventUpdate) {
+    }
 
-            EventUpdate e = (EventUpdate) event;
-
-            // boobing
-            if(bobbing.getValue() && MoveUtil.isMoving()) {
-                mc.thePlayer.cameraPitch = 0.1F;
-                mc.thePlayer.cameraYaw = 0.1F;
-            }
-
-            switch (mode.getValue()) {
-                case "Vulcan2":
-                    if(stage <= 1) {
-                        MoveUtil.stop();
-                    }
-
-                    if(stage == 0) {
-                        damage(3.14F);
-                        stage = 1;
-                    }
-
-                    if(stage == 1 && mc.thePlayer.hurtResistantTime > 12) {
-                        stage = 2;
-                    }
-
-                    if(stage == 2) {
-                        mc.thePlayer.motionY = 0F;
-                        mc.timer.timerSpeed = 2F;
-                    }
-                    break;
-                case "Vulcan":
-
-                    if(stage == 0) {
-                        mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, mc.thePlayer.rotationYaw, -90, mc.thePlayer.onGround));
-                        useBow();
-
-                        if(mc.thePlayer.hurtResistantTime > 3) {
-                            stage = 1;
-                        }
-                        MoveUtil.stop();
-                    }
-
-
-                    if(stage == 1 && mc.thePlayer.hurtResistantTime > 12 && mc.thePlayer.onGround) {
-                        mc.thePlayer.motionY = 2F;
-                        stage = 2;
-                    }
-
-                    if(stage == 2 && mc.thePlayer.hurtResistantTime <= 0) {
-                        stage = 3;
-                    }
-
-                    if(stage == 3) {
-                        if (mc.thePlayer.ticksExisted % 5 == 0) mc.thePlayer.motionY = -0.1F;
-
-                        if(mc.thePlayer.onGround) {
-                            onDisable();
-                            setEnabled(false);
-                        }
-                    }
-                    break;
-                case "Vanilla":
-                    if(mc.gameSettings.keyBindSneak.isKeyDown()) {
-                        mc.thePlayer.motionY = speed.getValue().doubleValue();
-                    } else if(mc.gameSettings.keyBindSprint.isKeyDown()) {
-                        mc.thePlayer.motionY = -speed.getValue().doubleValue();
-                    } else {
-                        mc.thePlayer.motionY = up ? 0 : 0.001;
-                        up = !up;
-                    }
-                    MoveUtil.strafe(speed.getValue().doubleValue());
-                    break;
-                // wip
-                case "UwUGuard":
-                    if(mc.thePlayer.ticksExisted % 10 == 0) {
-                        float yaw = mc.thePlayer.rotationYaw;
-
-                        double x = mc.thePlayer.posX + Math.cos(Math.toRadians(yaw + 90));
-                        double z = mc.thePlayer.posZ + Math.sin(Math.toRadians(yaw + 90));
-                        double y = mc.thePlayer.posY;
-                        mc.thePlayer.setPosition(x, y, z);
-                    }
-                    break;
-                case "PvPGym":
-                    if(stage < 2) {
-                        MoveUtil.stop();
-                    }
-
-                    if(stage == 0) {
-                        damage(3.4F);
-                        stage = 1;
-                    }
-
-                    if(stage == 1 && mc.thePlayer.hurtResistantTime > 6) {
-                        stage = 2;
-                    }
-
-                    if(stage == 2) {
-                        mc.thePlayer.motionY = 0F;
-                    }
-                    break;
-                case "UwUGuardGlide":
-                    if(mc.thePlayer.onGround) return;
-                    MoveUtil.strafe(7);
-                    mc.timer.timerSpeed = 0.1f;
-                    break;
-                case "Hycraft":
-                    mc.thePlayer.motionY = 0F;
-                    mc.timer.timerSpeed = 10.0F;
-                    break;
-            }
-
+    @EventInfo
+    public void onUpdate(EventUpdate e) {
+        // boobing
+        if(bobbing.getValue() && MoveUtil.isMoving()) {
+            mc.thePlayer.cameraPitch = 0.1F;
+            mc.thePlayer.cameraYaw = 0.1F;
         }
-        if(event instanceof EventPacket) {
-            EventPacket e = (EventPacket) event;
-            Packet<?> p = e.getPacket();
 
-            if(mc.theWorld == null)
-                return;
-
-            if(mode.getValue().equalsIgnoreCase("Hycraft")) {
-                if (p instanceof C03PacketPlayer.C06PacketPlayerPosLook
-                        || p instanceof C03PacketPlayer.C04PacketPlayerPosition
-                        || p instanceof C03PacketPlayer.C05PacketPlayerLook) {
-
-                    event.setCancelled(mc.thePlayer.ticksExisted % 5 != 0);
+        switch (mode.getValue()) {
+            case "Vulcan2":
+                if(stage <= 1) {
+                    MoveUtil.stop();
                 }
-            }
-            if(mode.getValue().equalsIgnoreCase("Vulcan")) {
+
+                if(stage == 0) {
+                    damage(3.14F);
+                    stage = 1;
+                }
+
+                if(stage == 1 && mc.thePlayer.hurtResistantTime > 12) {
+                    stage = 2;
+                }
+
                 if(stage == 2) {
-                    if(e.isOutgoing() && !(p instanceof C03PacketPlayer)) {
-                        e.setCancelled(true);
+                    mc.thePlayer.motionY = 0F;
+                    mc.timer.timerSpeed = 2F;
+                }
+                break;
+            case "Vulcan":
+
+                if(stage == 0) {
+                    mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, mc.thePlayer.rotationYaw, -90, mc.thePlayer.onGround));
+                    useBow();
+
+                    if(mc.thePlayer.hurtResistantTime > 3) {
+                        stage = 1;
                     }
+                    MoveUtil.stop();
+                }
+
+
+                if(stage == 1 && mc.thePlayer.hurtResistantTime > 12 && mc.thePlayer.onGround) {
+                    mc.thePlayer.motionY = 2F;
+                    stage = 2;
+                }
+
+                if(stage == 2 && mc.thePlayer.hurtResistantTime <= 0) {
+                    stage = 3;
+                }
+
+                if(stage == 3) {
+                    if (mc.thePlayer.ticksExisted % 5 == 0) mc.thePlayer.motionY = -0.1F;
+
+                    if(mc.thePlayer.onGround) {
+                        onDisable();
+                        setEnabled(false);
+                    }
+                }
+                break;
+            case "Vanilla":
+                if(mc.gameSettings.keyBindSneak.isKeyDown()) {
+                    mc.thePlayer.motionY = speed.getValue().doubleValue();
+                } else if(mc.gameSettings.keyBindSprint.isKeyDown()) {
+                    mc.thePlayer.motionY = -speed.getValue().doubleValue();
+                } else {
+                    mc.thePlayer.motionY = up ? 0 : 0.001;
+                    up = !up;
+                }
+                MoveUtil.strafe(speed.getValue().doubleValue());
+                break;
+            // wip
+            case "UwUGuard":
+                if(mc.thePlayer.ticksExisted % 10 == 0) {
+                    float yaw = mc.thePlayer.rotationYaw;
+
+                    double x = mc.thePlayer.posX + Math.cos(Math.toRadians(yaw + 90));
+                    double z = mc.thePlayer.posZ + Math.sin(Math.toRadians(yaw + 90));
+                    double y = mc.thePlayer.posY;
+                    mc.thePlayer.setPosition(x, y, z);
+                }
+                break;
+            case "PvPGym":
+                if(stage < 2) {
+                    MoveUtil.stop();
+                }
+
+                if(stage == 0) {
+                    damage(3.4F);
+                    stage = 1;
+                }
+
+                if(stage == 1 && mc.thePlayer.hurtResistantTime > 6) {
+                    stage = 2;
+                }
+
+                if(stage == 2) {
+                    mc.thePlayer.motionY = 0F;
+                }
+                break;
+            case "UwUGuardGlide":
+                if(mc.thePlayer.onGround) return;
+                MoveUtil.strafe(7);
+                mc.timer.timerSpeed = 0.1f;
+                break;
+            case "Hycraft":
+                mc.thePlayer.motionY = 0F;
+                mc.timer.timerSpeed = 10.0F;
+                break;
+        }
+    }
+
+    @EventInfo
+    public void onPacket(EventPacket e) {
+        Packet<?> p = e.getPacket();
+
+        if(mc.theWorld == null)
+            return;
+
+        if(mode.getValue().equalsIgnoreCase("Hycraft")) {
+            if (p instanceof C03PacketPlayer.C06PacketPlayerPosLook
+                    || p instanceof C03PacketPlayer.C04PacketPlayerPosition
+                    || p instanceof C03PacketPlayer.C05PacketPlayerLook) {
+
+                e.setCancelled(mc.thePlayer.ticksExisted % 5 != 0);
+            }
+        }
+        if(mode.getValue().equalsIgnoreCase("Vulcan")) {
+            if(stage == 2) {
+                if(e.isOutgoing() && !(p instanceof C03PacketPlayer)) {
+                    e.setCancelled(true);
                 }
             }
         }

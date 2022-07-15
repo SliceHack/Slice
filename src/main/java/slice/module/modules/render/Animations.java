@@ -2,6 +2,7 @@ package slice.module.modules.render;
 
 import lombok.Getter;
 import slice.event.Event;
+import slice.event.data.EventInfo;
 import slice.event.events.EventUpdate;
 import slice.module.Module;
 import slice.module.data.Category;
@@ -41,7 +42,7 @@ public class Animations extends Module {
     NumberValue angle4 = new NumberValue("Angle 4", -80.0F, -100.0, 360.0F, NumberValue.Type.FLOAT);
     NumberValue scale = new NumberValue("Scale", 0.4F, 0.1F, 100.0F, NumberValue.Type.FLOAT);
 
-    public void onUpdate(EventUpdate event) {
+    public void onUpdateNoToggle(EventUpdate event) {
         push.setHidden(!mode.getValue().equals("Push"));
 
         // custom
@@ -67,31 +68,31 @@ public class Animations extends Module {
         spinAngle.setHidden(!mode.getValue().equals("Custom") && !spin.getValue());
     }
 
-    public void onEvent(Event event) {
-        if(event instanceof EventUpdate) {
+    @EventInfo
+    public void onUpdate(EventUpdate e) {
 
-            if(restore.getValue()) {
-                x1.setValue(0.0F);
-                y1.setValue(1.0F);
-                z1.setValue(0.0F);
-                x2.setValue(0.0F);
-                y2.setValue(1.0F);
-                z2.setValue(0.0F);
-                x3.setValue(0.0F);
-                y3.setValue(0.0F);
-                z3.setValue(1.0F);
-                x4.setValue(1.0F);
-                y4.setValue(0.0F);
-                z4.setValue(0.0F);
-                angle1.setValue(45.0F);
-                angle2.setValue(-20.0F);
-                angle3.setValue(-20.0F);
-                angle4.setValue(-80.0F);
-                scale.setValue(0.4F);
-                spin.setValue(false);
-                spinAngle.setValue(360.0F);
-                restore.setValue(false);
-            }
+        if(restore.getValue()) {
+            x1.setValue(0.0F);
+            y1.setValue(1.0F);
+            z1.setValue(0.0F);
+            x2.setValue(0.0F);
+            y2.setValue(1.0F);
+            z2.setValue(0.0F);
+            x3.setValue(0.0F);
+            y3.setValue(0.0F);
+            z3.setValue(1.0F);
+            x4.setValue(1.0F);
+            y4.setValue(0.0F);
+            z4.setValue(0.0F);
+            angle1.setValue(45.0F);
+            angle2.setValue(-20.0F);
+            angle3.setValue(-20.0F);
+            angle4.setValue(-80.0F);
+            scale.setValue(0.4F);
+            spin.setValue(false);
+            spinAngle.setValue(360.0F);
+            restore.setValue(false);
         }
     }
+
 }

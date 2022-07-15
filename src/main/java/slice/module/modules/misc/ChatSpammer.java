@@ -1,6 +1,7 @@
 package slice.module.modules.misc;
 
 import slice.event.Event;
+import slice.event.data.EventInfo;
 import slice.event.events.EventUpdate;
 import slice.module.Module;
 import slice.module.data.Category;
@@ -12,13 +13,12 @@ public class ChatSpammer extends Module {
 
     NumberValue delay = new NumberValue("Delay", 1500L, 250L, 5000L, NumberValue.Type.LONG);
 
-    public void onEvent(Event event) {
-        if (event instanceof EventUpdate) {
-            EventUpdate e = (EventUpdate) event;
-            if (timer.hasReached(delay.getValue().longValue())) {
-                mc.thePlayer.sendChatMessage("Slice Client | gg/ | " +  (int) Math.floor(Math.random() * 10000));
-                timer.reset();
-            }
+    @EventInfo
+    public void onUpdate(EventUpdate e) {
+        if (timer.hasReached(delay.getValue().longValue())) {
+            mc.thePlayer.sendChatMessage("Slice Client | gg/ | " +  (int) Math.floor(Math.random() * 10000));
+            timer.reset();
         }
     }
+
 }

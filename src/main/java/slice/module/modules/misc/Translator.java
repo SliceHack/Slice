@@ -27,8 +27,6 @@ import static slice.api.API.readResponse;
 @ModuleInfo(name = "Translator", description = "Translates a language", category = Category.MISC)
 public class Translator extends Module {
 
-    public void onEvent(Event event) {}
-
     public String translate(String text) {
         try {
             URL url = new URL("http://translate.google.cn/translate_a/single?client=gtx&dt=t&dj=1&ie=UTF-8&sl=auto&tl=" + "en_us" + "&q=" + formatWeb(text));

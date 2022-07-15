@@ -2,6 +2,7 @@ package slice.module.modules.player;
 
 import java.util.concurrent.ThreadLocalRandom;
 import slice.event.Event;
+import slice.event.data.EventInfo;
 import slice.event.events.EventUpdate;
 import slice.module.Module;
 import slice.module.data.Category;
@@ -30,7 +31,7 @@ public class Derp extends Module {
         spinYaw = mc.thePlayer.rotationYaw;
     }
 
-    public void onUpdate(EventUpdate event) {
+    public void onUpdateNoToggle(EventUpdate event) {
         yaw.setHidden(!mode.getValue().equals("Spin"));
         pitch.setHidden(!mode.getValue().equals("Spin"));
 
@@ -48,32 +49,31 @@ public class Derp extends Module {
         throughHead.setHidden(true);
     }
 
-    public void onEvent(Event event) {
-        if (event instanceof EventUpdate) {
-            EventUpdate e = (EventUpdate) event;
-            switch (mode.getValue()) {
-                case "Random":
-                    int randomYaw = ThreadLocalRandom.current().nextInt(0, 360 + 1);
-                    int randomPitch = ThreadLocalRandom.current().nextInt(-90, 90 + 1);
-                    e.setYaw(randomYaw);
-                    e.setPitch(randomPitch);
-                    break;
-                case "Spin":
-                    if(yaw.getValue()) {
-                        e.setYaw(spinYaw);
+    @EventInfo
+    public void onUpdate(EventUpdate e) {
+        switch (mode.getValue()) {
+            case "Random":
+                int randomYaw = ThreadLocalRandom.current().nextInt(0, 360 + 1);
+                int randomPitch = ThreadLocalRandom.current().nextInt(-90, 90 + 1);
+                e.setYaw(randomYaw);
+                e.setPitch(randomPitch);
+                break;
+            case "Spin":
+                if(yaw.getValue()) {
+                    e.setYaw(spinYaw);
 
-                        if (spinYaw >= 360) spinYaw = 0;
-                        else spinYaw += yawSpeed.getValue().floatValue();
-                    }
-                    if(pitch.getValue()) {
-                        e.setPitch(spinPitch);
+                    if (spinYaw >= 360) spinYaw = 0;
+                    else spinYaw += yawSpeed.getValue().floatValue();
+                }
+                if(pitch.getValue()) {
+                    e.setPitch(spinPitch);
 
-                        float value = throughHead.getValue() ? 360 : 90;
-                        if(spinPitch >= value) spinPitch = 0;
-                        else spinPitch += pitchSpeed.getValue().floatValue();
-                    }
-                    break;
-            }
+                    float value = throughHead.getValue() ? 360 : 90;
+                    if(spinPitch >= value) spinPitch = 0;
+                    else spinPitch += pitchSpeed.getValue().floatValue();
+                }
+                break;
         }
     }
+
 }

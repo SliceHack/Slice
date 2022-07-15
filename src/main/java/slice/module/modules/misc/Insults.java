@@ -2,6 +2,7 @@ package slice.module.modules.misc;
 
 import net.minecraft.entity.player.EntityPlayer;
 import slice.event.Event;
+import slice.event.data.EventInfo;
 import slice.event.events.EventAttack;
 import slice.event.events.EventUpdate;
 import slice.module.Module;
@@ -19,20 +20,20 @@ public class Insults extends Module {
 
     private EntityPlayer target;
 
-    public void onEvent(Event event) {
-        if(event instanceof EventUpdate) {
-            if(target == null)
-                return;
+    @EventInfo
+    public void onUpdate(EventUpdate e) {
+        if(target == null)
+            return;
 
-            if(target.getHealth() <= 0 || target.isDead) {
-                send();
-            }
+        if(target.getHealth() <= 0 || target.isDead) {
+            send();
         }
-        if(event instanceof EventAttack) {
-            EventAttack e = (EventAttack) event;
+    }
 
-            if(e.getEntity() instanceof EntityPlayer) target = (EntityPlayer) e.getEntity();
-        }
+    @EventInfo
+    public void onAttack(EventAttack e) {
+
+        if(e.getEntity() instanceof EntityPlayer) target = (EntityPlayer) e.getEntity();
     }
 
     private void send() {

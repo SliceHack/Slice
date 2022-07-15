@@ -24,7 +24,7 @@ public class AutoClicker extends Module {
     private int lastMax, lastMin;
     private int index;
 
-    public void onUpdate(EventUpdate event) {
+    public void onUpdateNoToggle(EventUpdate event) {
         cps.setHidden(!mode.getValue().equals("CPS"));
     }
 

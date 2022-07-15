@@ -3,6 +3,7 @@ package slice.module.modules.misc;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C00PacketKeepAlive;
 import slice.event.Event;
+import slice.event.data.EventInfo;
 import slice.event.events.EventPacket;
 import slice.event.events.EventUpdate;
 import slice.module.Module;
@@ -30,46 +31,46 @@ public class Disabler extends Module {
         index2 = 0;
     }
 
-    public void onEvent(Event event) {
-        if(event instanceof EventUpdate) {
-            if(!mode.getValue().equalsIgnoreCase("WarzoneMC"))
+    @EventInfo
+    public void onUpdate(EventUpdate e) {
+        if(!mode.getValue().equalsIgnoreCase("WarzoneMC"))
+            return;
+
+        if(mc.isSingleplayer())
+            return;
+
+        if(timer.hasReached(swap ? 150 : 0)) {
+            if(packets.isEmpty())
                 return;
 
-            if(mc.isSingleplayer())
-                return;
+            try {
+                packets.forEach(mc.thePlayer.sendQueue::addToSendNoEvent);
+            } catch (ConcurrentModificationException ignored){}
 
-            if(timer.hasReached(swap ? 150 : 0)) {
-                if(packets.isEmpty())
-                    return;
-
-                try {
-                    packets.forEach(mc.thePlayer.sendQueue::addToSendNoEvent);
-                } catch (ConcurrentModificationException ignored){}
-
-                timer.reset();
-                if(index > 2) {
-                    swap = !swap;
-                    index = 0;
-                }
-            }
-        }
-
-        if(event instanceof EventPacket) {
-            EventPacket e = (EventPacket) event;
-            Packet<?> p = e.getPacket();
-            switch (mode.getValue()) {
-                case "WarzoneMC":
-                    if(mc.isSingleplayer())
-                        return;
-
-                    if(p instanceof C00PacketKeepAlive) {
-                        packets.add((C00PacketKeepAlive) p);
-                        e.setCancelled(true);
-                        index++;
-                        return;
-                    }
-                    break;
+            timer.reset();
+            if(index > 2) {
+                swap = !swap;
+                index = 0;
             }
         }
     }
+
+    @EventInfo
+    public void onPacket(EventPacket e) {
+        Packet<?> p = e.getPacket();
+        switch (mode.getValue()) {
+            case "WarzoneMC":
+                if(mc.isSingleplayer())
+                    return;
+
+                if(p instanceof C00PacketKeepAlive) {
+                    packets.add((C00PacketKeepAlive) p);
+                    e.setCancelled(true);
+                    index++;
+                    return;
+                }
+                break;
+        }
+    }
+
 }

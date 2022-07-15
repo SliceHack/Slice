@@ -20,6 +20,4 @@ public class HUD extends Module {
     public void init() {
         setEnabled(true);
     }
-
-    public void onEvent(Event event) {}
 }

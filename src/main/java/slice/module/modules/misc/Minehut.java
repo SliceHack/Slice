@@ -35,6 +35,4 @@ public class Minehut extends Module {
         }
         return cancel;
     }
-
-    public void onEvent(Event event) {}
 }

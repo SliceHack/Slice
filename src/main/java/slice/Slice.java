@@ -13,8 +13,9 @@ import slice.clickgui.ClickGui;
 import slice.command.commands.CommandPlugins;
 import slice.discord.StartDiscordRPC;
 import slice.event.Event;
-import slice.event.EventManager;
+import slice.event.data.EventInfo;
 import slice.event.events.*;
+import slice.event.manager.EventManager;
 import slice.file.Saver;
 import slice.font.FontManager;
 import slice.gui.alt.manager.AltManager;
@@ -91,95 +92,119 @@ public enum Slice {
         saver.save();
     }
 
+    @EventInfo
+    public void onUpdate(EventUpdate e) {
+        serverLastYaw = Minecraft.getMinecraft().thePlayer.lastReportedYaw;
+        serverLastPitch = Minecraft.getMinecraft().thePlayer.lastReportedPitch;
+        serverLastX = Minecraft.getMinecraft().thePlayer.lastReportedPosX;
+        serverLastY = Minecraft.getMinecraft().thePlayer.lastReportedPosY;
+        serverLastZ = Minecraft.getMinecraft().thePlayer.lastReportedPosZ;
+
+        serverYaw = e.getYaw();
+        serverPitch = e.getPitch();
+        serverX = e.getX();
+        serverY = e.getY();
+        serverZ = e.getZ();
+
+
+        if(Minecraft.getMinecraft().currentScreen != null) {
+
+
+            if(Minecraft.getMinecraft().currentScreen instanceof AltManager) this.altManager = (AltManager) Minecraft.getMinecraft().currentScreen;
+            else this.altManager = null;
+        }
+
+        if(irc.getUser() == null) {
+            irc.getSocket().disconnect();
+        }
+
+        if(!irc.getSocket().connected()) {
+            irc.getSocket().connect();
+        }
+
+        CommandPlugins plugins = ((CommandPlugins) commandManager.getCommand("plugins"));
+        plugins.onUpdate();
+
+        moduleManager.getModules().forEach(module -> module.onUpdateNoToggle(e));
+    }
+
+    @EventInfo
+    public void onPacket(EventPacket e) {
+        Packet<?> packet = e.getPacket();
+
+        CommandPlugins plugins = ((CommandPlugins) commandManager.getCommand("plugins"));
+        if(plugins.searching) {
+            plugins.onPacketReceive(e);
+        }
+
+        if(packet instanceof S02PacketChat) {
+            S02PacketChat s02 = (S02PacketChat) packet;
+
+            irc.onMessage(e, s02);
+        }
+    }
+
+    @EventInfo
+    public void onChat(EventChat e) {
+        String message = e.getMessage();
+        commandManager.handleChat(e);
+
+        if(irc == null)
+            return;
+
+        if(message.startsWith("#")) {
+            message = message.substring(1).replaceFirst(" ","");
+            irc.sendMessage(message);
+            e.setCancelled(true);
+        }
+    }
+
+    @EventInfo
+    public void switchAccount(EventSwitchAccount e) {
+        if(irc == null)
+            return;
+
+        irc.accountSwitch(e);
+    }
+
+    @EventInfo
+    public void onKey(EventKey e) {
+        if(e.getKey() == Keyboard.KEY_RSHIFT) Minecraft.getMinecraft().displayGuiScreen(clickGui);
+        if (e.getKey() == Keyboard.KEY_PERIOD) Minecraft.getMinecraft().displayGuiScreen(new GuiChat("."));
+        moduleManager.getModules().stream().filter(module -> module.getKey() == e.getKey()).forEach(Module::toggle); // key event
+    }
+
     /**
      * Where all events are handled
      *
      * @pamra event - the event to be handled
      * */
     public void onEvent(Event event) {
-        if(event instanceof EventUpdate) {
-            EventUpdate e = (EventUpdate) event;
-
-            serverLastYaw = Minecraft.getMinecraft().thePlayer.lastReportedYaw;
-            serverLastPitch = Minecraft.getMinecraft().thePlayer.lastReportedPitch;
-            serverLastX = Minecraft.getMinecraft().thePlayer.lastReportedPosX;
-            serverLastY = Minecraft.getMinecraft().thePlayer.lastReportedPosY;
-            serverLastZ = Minecraft.getMinecraft().thePlayer.lastReportedPosZ;
-
-            serverYaw = e.getYaw();
-            serverPitch = e.getPitch();
-            serverX = e.getX();
-            serverY = e.getY();
-            serverZ = e.getZ();
-        }
-
-        if(event instanceof EventPacket) {
-            EventPacket e = (EventPacket) event;
-            Packet<?> packet = e.getPacket();
-
-            CommandPlugins plugins = ((CommandPlugins) commandManager.getCommand("plugins"));
-            if(plugins.searching) {
-                plugins.onPacketReceive(e);
-            }
-
-            if(packet instanceof S02PacketChat) {
-                S02PacketChat s02 = (S02PacketChat) packet;
-
-                irc.onMessage(e, s02);
-            }
-        }
-        if(event instanceof EventChat) {
-            EventChat e = (EventChat) event;
-            String message = e.getMessage();
-            commandManager.handleChat(e);
-
-            if(irc == null)
-                return;
-
-            if(message.startsWith("#")) {
-                message = message.substring(1).replaceFirst(" ","");
-                irc.sendMessage(message);
-                event.setCancelled(true);
-            }
-        }
-
-        if(event instanceof EventSwitchAccount) {
-            if(irc == null)
-                return;
-
-            irc.accountSwitch((EventSwitchAccount) event);
-        }
-
-        if(event instanceof EventUpdate) {
-
-            if(Minecraft.getMinecraft().currentScreen != null) {
-
-
-                if(Minecraft.getMinecraft().currentScreen instanceof AltManager) this.altManager = (AltManager) Minecraft.getMinecraft().currentScreen;
-                else this.altManager = null;
-            }
-
-            if(irc.getUser() == null) {
-                irc.getSocket().disconnect();
-            }
-
-            if(!irc.getSocket().connected()) {
-                irc.getSocket().connect();
-            }
-
-            CommandPlugins plugins = ((CommandPlugins) commandManager.getCommand("plugins"));
-            plugins.onUpdate();
-
-            moduleManager.getModules().forEach(module -> module.onUpdate((EventUpdate) event));
-        }
-
-        if(event instanceof EventKey) {
-            EventKey e = (EventKey) event;
-            if(e.getKey() == Keyboard.KEY_RSHIFT) Minecraft.getMinecraft().displayGuiScreen(clickGui);
-            if (e.getKey() == Keyboard.KEY_PERIOD) Minecraft.getMinecraft().displayGuiScreen(new GuiChat("."));
-            moduleManager.getModules().stream().filter(module -> module.getKey() == e.getKey()).forEach(Module::toggle); // key event
-        }
-        moduleManager.getModules().stream().filter(Module::isEnabled).forEach(module -> module.onEvent(event)); // Module events
+//        if(event instanceof EventUpdate) {
+//            EventUpdate e = (EventUpdate) event;
+//        }
+//
+//        if(event instanceof EventPacket) {
+//            EventPacket e = (EventPacket) event;
+//
+//        }
+//        if(event instanceof EventChat) {
+//            EventChat e = (EventChat) event;
+//
+//        }
+//
+//        if(event instanceof EventSwitchAccount) {
+//
+//        }
+//
+//        if(event instanceof EventUpdate) {
+//
+//        }
+//
+//        if(event instanceof EventKey) {
+//
+//        }
+//        moduleManager.getModules().stream().filter(Module::isEnabled).forEach(module -> module.onEvent(event)); // Module events
     }
 
     /**

@@ -19,15 +19,11 @@ public class Interface extends Module {
 
     ModeValue fontChatMode = new ModeValue("Font Mode", "Poppins", "Poppins", "Arial");
 
-    public void onUpdate(EventUpdate event) {
+    public void onUpdateNoToggle(EventUpdate event) {
         fontChatMode.setHidden(!fontChat.getValue());
     }
 
     public void onEnable() {
         setEnabled(false);
-    }
-
-    public void onEvent(Event event) {
-
     }
 }

@@ -5,6 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import slice.event.Event;
+import slice.event.data.EventInfo;
 import slice.event.events.EventUpdate;
 import slice.module.Module;
 import slice.module.data.Category;
@@ -24,39 +25,38 @@ public class PvPBot extends Module {
     private float deltaYaw, deltaPitch;
     private boolean reachedYaw, reachedPitch, subCPS;
 
-    public void onEvent(Event event) {
-        if(event instanceof EventUpdate) {
-            if(target == null) target = getTarget();
+    @EventInfo
+    public void onUpdate(EventUpdate e) {
+        if(target == null) target = getTarget();
 
-            if(target == null)
-                return;
+        if(target == null)
+            return;
 
-            if (target.getHealth() <= 0 || target.isDead || (mc.thePlayer.isDead || mc.thePlayer.getHealth() <= 0)) {
-                target = null;
-                return;
-            }
-
-            mc.thePlayer.rotationYaw = getRotationsFixedSens(target)[0];
-            mc.thePlayer.rotationPitch = getRotationsFixedSens(target)[1];
-
-
-            if(mc.thePlayer.getDistanceToEntity(target) <= rangeToPlayer.getValue().doubleValue()) {
-                KeyUtil.moveKeys()[0].pressed = false;
-
-                if(subCPS && (cps.getValue().intValue() < 2)) {
-                    subCPS = false;
-                }
-
-                if(timer.hasReached(1000L / (subCPS ? cps.getValue().intValue() - 1 : cps.getValue().intValue()))) {
-                    mc.clickMouse();
-                    timer.reset();
-
-                    if(cps.getValue().intValue() > 2) subCPS = !subCPS;
-                }
-                return;
-            }
-            KeyUtil.moveKeys()[0].pressed = true;
+        if (target.getHealth() <= 0 || target.isDead || (mc.thePlayer.isDead || mc.thePlayer.getHealth() <= 0)) {
+            target = null;
+            return;
         }
+
+        mc.thePlayer.rotationYaw = getRotationsFixedSens(target)[0];
+        mc.thePlayer.rotationPitch = getRotationsFixedSens(target)[1];
+
+
+        if(mc.thePlayer.getDistanceToEntity(target) <= rangeToPlayer.getValue().doubleValue()) {
+            KeyUtil.moveKeys()[0].pressed = false;
+
+            if(subCPS && (cps.getValue().intValue() < 2)) {
+                subCPS = false;
+            }
+
+            if(timer.hasReached(1000L / (subCPS ? cps.getValue().intValue() - 1 : cps.getValue().intValue()))) {
+                mc.clickMouse();
+                timer.reset();
+
+                if(cps.getValue().intValue() > 2) subCPS = !subCPS;
+            }
+            return;
+        }
+        KeyUtil.moveKeys()[0].pressed = true;
     }
 
     @SuppressWarnings("all")

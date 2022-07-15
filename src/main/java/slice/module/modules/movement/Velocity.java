@@ -31,7 +31,7 @@ public class Velocity extends Module {
         mc.timer.timerSpeed = 1.0F;
     }
 
-    public void onUpdate(EventUpdate event) {
+    public void onUpdateNoToggle(EventUpdate event) {
         horizontal.setHidden(!mode.getValue().equalsIgnoreCase("Vanilla"));
         vertical.setHidden(!mode.getValue().equalsIgnoreCase("Vanilla"));
     }

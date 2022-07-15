@@ -14,7 +14,6 @@ import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
 import slice.setting.Setting;
 import slice.setting.settings.ModeValue;
-import slice.util.LoggerUtil;
 import slice.util.Timer;
 
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ import java.util.List;
  * @author Nick
  */
 @Getter @Setter
-public abstract class Module {
+public class Module {
 
     /* Module fields */
     protected Minecraft mc = Minecraft.getMinecraft();
@@ -66,17 +65,24 @@ public abstract class Module {
 
     public void toggle() {
         enabled = !enabled;
-        if(enabled) onEnable();
-        else onDisable();
+        if(enabled) startOnEnable();
+        else startOnDisable();
         try {
             HUD.smoothArrayListHUD.onToggle(this);
             Slice.INSTANCE.getSaver().save();
         } catch (Exception ignored){}
     }
 
+    public void startOnEnable() {
+        Slice.INSTANCE.getEventManager().register(this);
+    }
+
+    public void startOnDisable() {
+        Slice.INSTANCE.getEventManager().unregister(this);
+    }
+
     public void onEnable() {}
     public void onDisable() {}
-    public abstract void onEvent(Event event);
 
     /**
      * Gets a setting by name
@@ -107,7 +113,7 @@ public abstract class Module {
      * Client onUpdate method
      * without being enabled
      * */
-    public void onUpdate(EventUpdate event) {}
+    public void onUpdateNoToggle(EventUpdate event) {}
 
     /** Animation */
     public void updateAnimation() {
