@@ -86,4 +86,11 @@ public class MoveUtil {
         double motionZ = Minecraft.getMinecraft().thePlayer.motionZ;
         return Math.hypot(motionX, motionZ);
     }
+
+    /**
+     * Checks if the player is collied
+     * */
+    public static boolean isCollided() {
+        return Minecraft.getMinecraft().thePlayer.isCollided;
+    }
 }
