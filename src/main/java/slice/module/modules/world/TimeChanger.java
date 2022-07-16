@@ -2,7 +2,6 @@ package slice.module.modules.world;
 
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S03PacketTimeUpdate;
-import slice.event.Event;
 import slice.event.data.EventInfo;
 import slice.event.events.EventPacket;
 import slice.event.events.EventUpdate;

@@ -75,10 +75,12 @@ public class Module {
 
     public void startOnEnable() {
         Slice.INSTANCE.getEventManager().register(this);
+        onEnable();
     }
 
     public void startOnDisable() {
         Slice.INSTANCE.getEventManager().unregister(this);
+        onDisable();
     }
 
     public void onEnable() {}

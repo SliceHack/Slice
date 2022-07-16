@@ -5,10 +5,7 @@ import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.*;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import org.lwjgl.input.Keyboard;
-import slice.event.Event;
 import slice.event.data.EventInfo;
 import slice.event.events.EventClientTick;
 import slice.event.events.EventPacket;
@@ -75,16 +72,6 @@ public class Fly extends Module {
     public void onTick(EventClientTick e) {
         if(mode.getValue().equalsIgnoreCase("Vulcan")) {
             if (currentSlot != i) {
-                if (ticks == 1) {
-                    mc.thePlayer.sendQueue.addToSendQueue(new C08PacketPlayerBlockPlacement(bow));
-                }
-
-                if (ticks == 2) {
-                }
-
-                if (ticks == 3) {
-                    mc.thePlayer.sendQueue.addToSendNoEvent(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
-                }
                 ticks++;
             }
         }
