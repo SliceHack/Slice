@@ -1,4 +1,6 @@
 out
+out/production
+out/artifacts
 logs
 plugins
 .idea
