@@ -6,6 +6,7 @@ import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
 import slice.util.KeyUtil;
+import slice.util.MoveUtil;
 
 @ModuleInfo(name = "AirJump", description = "Let's you jump in the air", category = Category.MOVEMENT)
 public class AirJump extends Module {
@@ -15,7 +16,7 @@ public class AirJump extends Module {
         if(!KeyUtil.moveKeys()[4].pressed)
             return;
 
-        mc.thePlayer.onGround = true;
+        MoveUtil.jump();
     }
 
 }

@@ -12,7 +12,6 @@ import slice.api.irc.IRC;
 import slice.clickgui.ClickGui;
 import slice.command.commands.CommandPlugins;
 import slice.discord.StartDiscordRPC;
-import slice.event.Event;
 import slice.event.data.EventInfo;
 import slice.event.events.*;
 import slice.event.manager.EventManager;
@@ -94,6 +93,18 @@ public enum Slice {
 
     @EventInfo
     public void onUpdate(EventUpdate e) {
+
+        for(Module module : moduleManager.getModules()) {
+
+            if(!module.isEnabled() && eventManager.isRegistered(module)) {
+                eventManager.unregister(module);
+            }
+
+            if(module.isEnabled() && !eventManager.isRegistered(module)) {
+                eventManager.register(module);
+            }
+        }
+        
         serverLastYaw = Minecraft.getMinecraft().thePlayer.lastReportedYaw;
         serverLastPitch = Minecraft.getMinecraft().thePlayer.lastReportedPitch;
         serverLastX = Minecraft.getMinecraft().thePlayer.lastReportedPosX;
@@ -172,39 +183,6 @@ public enum Slice {
         if(e.getKey() == Keyboard.KEY_RSHIFT) Minecraft.getMinecraft().displayGuiScreen(clickGui);
         if (e.getKey() == Keyboard.KEY_PERIOD) Minecraft.getMinecraft().displayGuiScreen(new GuiChat("."));
         moduleManager.getModules().stream().filter(module -> module.getKey() == e.getKey()).forEach(Module::toggle); // key event
-    }
-
-    /**
-     * Where all events are handled
-     *
-     * @pamra event - the event to be handled
-     * */
-    public void onEvent(Event event) {
-//        if(event instanceof EventUpdate) {
-//            EventUpdate e = (EventUpdate) event;
-//        }
-//
-//        if(event instanceof EventPacket) {
-//            EventPacket e = (EventPacket) event;
-//
-//        }
-//        if(event instanceof EventChat) {
-//            EventChat e = (EventChat) event;
-//
-//        }
-//
-//        if(event instanceof EventSwitchAccount) {
-//
-//        }
-//
-//        if(event instanceof EventUpdate) {
-//
-//        }
-//
-//        if(event instanceof EventKey) {
-//
-//        }
-//        moduleManager.getModules().stream().filter(Module::isEnabled).forEach(module -> module.onEvent(event)); // Module events
     }
 
     /**

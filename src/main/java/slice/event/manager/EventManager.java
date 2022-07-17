@@ -21,7 +21,7 @@ public class EventManager {
     private final List<Object> registeredObjects = new ArrayList<>();
 
     /** The registered methods */
-    private final List<EventSender> registeredSenders = new ArrayList<>();
+    private List<EventSender> registeredSenders = new ArrayList<>();
 
     /**
      * Register an object to the event manager.
@@ -29,6 +29,9 @@ public class EventManager {
      * @param object The object to register.
      * */
     public void register(Object object) {
+        if(isRegistered(object))
+            return;
+
         registeredObjects.add(object);
     }
 
@@ -38,7 +41,19 @@ public class EventManager {
      * @param object The object to unregister.
      * */
     public void unregister(Object object) {
+        if(!isRegistered(object))
+            return;
+
         registeredObjects.remove(object);
+    }
+
+    /**
+     * Checks if an object is registered.
+     *
+     * @param object The object to check.
+     * */
+    public boolean isRegistered(Object object) {
+        return registeredObjects.contains(object);
     }
 
     /**
@@ -57,7 +72,10 @@ public class EventManager {
                         && method.isAnnotationPresent(EventInfo.class)
                         && method.getParameterTypes()[0].equals(event.getClass())) {
 
-                    new EventSender(event, method, object);
+                    List<EventSender> registeredSenders = new ArrayList<>(this.registeredSenders);
+                    if(getEventSender(event, method, object) != null) getEventSender(event, method, object).runEvent();
+                    else registeredSenders.add(new EventSender(event, method, object));
+                    this.registeredSenders = registeredSenders;
                 }
             }
         }
@@ -79,11 +97,11 @@ public class EventManager {
      * @param method The method to get the EventSender from.
      * @return The EventSender.
      * */
-    public EventSender getEventSender(Method method) {
-        for (EventSender sender : registeredSenders) {
-            if (sender.getMethod().equals(method)) {
+    public EventSender getEventSender(Event event, Method method, Object object) {
+        List<EventSender> registeredSenders = new ArrayList<>(this.registeredSenders);
+        for(EventSender sender : registeredSenders) {
+            if(sender.getEvent().equals(event) && sender.getMethod().equals(method) && sender.getObject().equals(object))
                 return sender;
-            }
         }
         return null;
     }
