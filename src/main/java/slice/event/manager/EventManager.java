@@ -73,8 +73,13 @@ public class EventManager {
                         && method.getParameterTypes()[0].equals(event.getClass())) {
 
                     List<EventSender> registeredSenders = new ArrayList<>(this.registeredSenders);
-                    if(getEventSender(event, method, object) != null) getEventSender(event, method, object).runEvent();
-                    else registeredSenders.add(new EventSender(event, method, object));
+
+                    try {
+                        if (getEventSender(event, method, object) != null)
+                            getEventSender(event, method, object).runEvent();
+                        else registeredSenders.add(new EventSender(event, method, object));
+                    } catch (Exception ignored){} // toggled off by the user
+
                     this.registeredSenders = registeredSenders;
                 }
             }
