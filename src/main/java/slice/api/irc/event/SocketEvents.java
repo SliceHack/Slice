@@ -33,6 +33,8 @@ public class SocketEvents {
             LoggerUtil.addIRCMessage(args[2] + " §c(§b" + discordName + "§c)§r", message);
         });
 
+        socket.on("connected", (args) -> runConnected());
+
         socket.on("usernameSet", (args) -> {
             try {
                 JSONArray array = (JSONArray) args[0];
@@ -53,6 +55,7 @@ public class SocketEvents {
                 System.out.println(list);
                 Slice.INSTANCE.getIrc().setList(list);
             }
+            socket.emit("runFix");
         });
 
         socket.on("users", (args) -> {
