@@ -8,7 +8,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S02PacketChat;
 import org.lwjgl.input.Keyboard;
 import slice.api.API;
-import slice.api.irc.IRC;
+import slice.api.IRC;
 import slice.clickgui.ClickGui;
 import slice.command.commands.CommandPlugins;
 import slice.discord.StartDiscordRPC;
@@ -120,17 +120,8 @@ public enum Slice {
 
         if(Minecraft.getMinecraft().currentScreen != null) {
 
-
             if(Minecraft.getMinecraft().currentScreen instanceof AltManager) this.altManager = (AltManager) Minecraft.getMinecraft().currentScreen;
             else this.altManager = null;
-        }
-
-        if(irc.getUser() == null) {
-            irc.getSocket().disconnect();
-        }
-
-        if(!irc.getSocket().connected()) {
-            irc.getSocket().connect();
         }
 
         CommandPlugins plugins = ((CommandPlugins) commandManager.getCommand("plugins"));

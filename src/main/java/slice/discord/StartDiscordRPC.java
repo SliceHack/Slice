@@ -6,7 +6,7 @@ import net.arikia.dev.drpc.DiscordRichPresence;
 import net.arikia.dev.drpc.DiscordUser;
 import net.arikia.dev.drpc.callbacks.ReadyCallback;
 import slice.Slice;
-import slice.api.irc.IRC;
+import slice.api.IRC;
 import slice.util.LoggerUtil;
 
 public class StartDiscordRPC {

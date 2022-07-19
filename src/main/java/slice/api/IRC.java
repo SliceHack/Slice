@@ -1,21 +1,16 @@
-package slice.api.irc;
+package slice.api;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import lombok.Getter;
 import lombok.Setter;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.server.S02PacketChat;
 import slice.Slice;
-import slice.api.irc.event.SocketEvents;
 import slice.event.events.EventPacket;
 import slice.event.events.EventSwitchAccount;
 import slice.util.LoggerUtil;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.URI;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +36,6 @@ public class IRC {
      * */
     public IRC() {
         try {
-            Slice.INSTANCE.connecting = true;
             IO.Options options = IO.Options.builder().build();
             socket = IO.socket(URI.create(API_URL), options);
             socketEvents = new SocketEvents(socket);
@@ -53,37 +47,13 @@ public class IRC {
     }
 
     /**
-     * Gets the username in the server
-     * */
-    public String getUser() {
-        for(String s : list) {
-
-            String[] split = s.split(":");
-
-            if(split[0].equals(Minecraft.getMinecraft().getSession().getUsername()) && !split[1].equalsIgnoreCase("undefined")) {
-                return s;
-            } else {
-                return null;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Add server message
-     * */
-    public void addServerMessage(String message) {
-        socket.emit("serverMessage", message);
-    }
-
-    /**
      * Sends a message to the socket server.
      *
      * @parma message The message to send to the server.
      * */
     public void sendMessage(String message) {
         if(!socket.connected()) {
-            LoggerUtil.addMessage("Not connected to the server.");
+            LoggerUtil.addMessage("Not connected to the server!");
             return;
         }
 
@@ -91,17 +61,15 @@ public class IRC {
     }
 
     /**
-     * changes the users logged in account on the server.
-     *
-     * @parma event The event to switch to.
+     * Broadcasts a message to the server.
      * */
-    public void accountSwitch(EventSwitchAccount event) {
-        if(!socket.connected())
+    public void broadcastMessage(String message) {
+        if(!socket.connected()) {
+            LoggerUtil.addMessage("Not connected to the server!");
             return;
+        }
 
-        try {
-            socket.emit("setUsername", event.getUsername(), event.getLastSession().getUsername());
-        } catch (Exception ignored) {}
+        socket.emit("broadcast", message);
     }
 
     /**
@@ -122,13 +90,16 @@ public class IRC {
     }
 
     /**
-     * Keeps the socket connection alive.
+     * changes the users logged in account on the server.
+     *
+     * @parma event The event to switch to.
      * */
-    public void onKeepAlive() {
-        if(!socket.connected()) {
+    public void accountSwitch(EventSwitchAccount event) {
+        if(!socket.connected())
             return;
-        }
-        socket.emit("keepAlive", "keepAlive");
-    }
 
+        try {
+            socket.emit("setUsername", event.getUsername(), event.getLastSession().getUsername());
+        } catch (Exception ignored) {}
+    }
 }

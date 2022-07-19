@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.crash.CrashReport;
 import org.json.JSONObject;
 import slice.Slice;
-import slice.api.irc.IRC;
+import slice.api.IRC;
 import slice.util.HardwareUtil;
 import slice.util.LoggerUtil;
 
@@ -48,12 +48,6 @@ public class API {
                 boolean success = json.getBoolean("status");
 
                 if (!success) {
-                    if(Slice.INSTANCE.discordName != null) {
-                        irc.addServerMessage("User " + Slice.INSTANCE.discordName + "#" + Slice.INSTANCE.discordDiscriminator + " attempted to connect to the server, but was denied access.");
-                    } else {
-                        irc.addServerMessage("A unauthorized user attempted to connect to the server, but was denied access.");
-                    }
-
                     LoggerUtil.addTerminalMessage("[Slice] Authentication failed");
                     Minecraft.getMinecraft().crashed(new CrashReport("Authentication failed", new Exception("Authentication failed")));
                     System.exit(-1);

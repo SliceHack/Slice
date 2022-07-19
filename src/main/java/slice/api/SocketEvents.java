@@ -1,4 +1,4 @@
-package slice.api.irc.event;
+package slice.api;
 
 import io.socket.client.Socket;
 import lombok.Getter;
@@ -43,7 +43,6 @@ public class SocketEvents {
                 for (int i = 0; i < array.length(); i++) {
                     String name = array.getString(i);
                     list.add(name);
-                    System.out.println(name);
                 }
                 Slice.INSTANCE.getIrc().setList(list);
             } catch (Exception e) {
@@ -52,52 +51,51 @@ public class SocketEvents {
                 s = s.replace("[", "").replace("]", "").replace("\"", "").replace(",", "\n");
                 String[] lines = s.split("\n");
                 List<String> list = new ArrayList<>(Arrays.asList(lines));
-                System.out.println(list);
                 Slice.INSTANCE.getIrc().setList(list);
             }
-            socket.emit("runFix");
-        });
-
-        socket.on("users", (args) -> {
-            String message = (String) args[0];
-            System.out.println(message);
-            JSONArray users = (JSONArray) args[1];
-
-            List<String> strings = new ArrayList<>();
-            for(int i = 0; i < users.length(); i++) {
-                strings.add(users.getString(i));
-            }
-
-            for(String user : strings) {
-                String[] split = user.split(":");
-                String username = split[0];
-                String discordName = split[1];
-                System.out.println(username + " " + discordName);
-                LoggerUtil.addMessageNoPrefix(Slice.INSTANCE.replaceUsername(username, discordName, message));
-                return;
-            }
-            LoggerUtil.addMessageNoPrefix(message);
         });
 
         socket.on("ircConnection", (args) -> {
             String discordName = (String) args[0];
+
+            if(discordName == null)
+                return;
+
             LoggerUtil.addMessage(discordName + " has connected");
         });
 
         socket.on("ircDisconnection", (args) -> {
             String discordName = (String) args[0];
 
+            if(discordName == null)
+                return;
+
             LoggerUtil.addMessage(discordName + " has disconnected");
         });
 
-        socket.on("disconnected", (args) -> {
-            LoggerUtil.addMessage("disconnected from the server");
-        });
+        socket.on("disconnected", (args) -> LoggerUtil.addMessage("Disconnected from the server"));
 
-        socket.on("keepAlive", (args) -> Slice.INSTANCE.getIrc().onKeepAlive()); // keep connection alive
+        new Thread(() -> {
+            while(true) onKeepAlive();
+        }).start();
     }
 
+    /**
+     * Runs when the socket is connected.
+     * */
     public void runConnected() {
         socket.emit("connected", Slice.INSTANCE.discordName, Minecraft.getMinecraft().getSession().getUsername(), HardwareUtil.getHardwareID());
+    }
+
+    /**
+     * onKeepAlive()
+     * */
+    public void onKeepAlive() {
+        try {
+            Thread.sleep(5000L);
+            socket.emit("keepAlive");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

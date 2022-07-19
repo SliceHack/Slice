@@ -49,9 +49,7 @@ public class EventSender {
             if(!getMethodParameterType(method, 0).equals(event.getClass())) return;
 
             method.invoke(object, event);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception ignored) {}
     }
 
     /**
