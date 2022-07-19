@@ -21,6 +21,7 @@ public class CommandManager {
         register(new CommandConfig());
         register(new CommandPlugins());
         register(new CommandHelp());
+        register(new CommandConnect());
     }
 
     public void register(Command command) {
