@@ -1,6 +1,6 @@
 package slice.module.modules.movement;
 
-import slice.event.Event;
+import slice.event.data.EventInfo;
 import slice.event.events.EventUpdate;
 import slice.module.Module;
 import slice.module.data.Category;
@@ -23,13 +23,13 @@ public class Step extends Module {
         mc.thePlayer.stepHeight = 0.6F;
     }
 
-    public void onEvent(Event event) {
-        if(event instanceof EventUpdate) {
-            switch (mode.getValue()) {
-                case "Vanilla":
-                    mc.thePlayer.stepHeight = height.getValue().floatValue();
-                    break;
-            }
+    @EventInfo
+    public void onUpdate(EventUpdate e) {
+        switch (mode.getValue()) {
+            case "Vanilla":
+                mc.thePlayer.stepHeight = height.getValue().floatValue();
+                break;
         }
     }
+
 }

@@ -20,6 +20,5 @@ public class Reach extends Module {
     @EventInfo
     public void onPlayerReach(EventPlayerReach e) {
         e.setReach(reach.getValue().doubleValue());
-
     }
 }

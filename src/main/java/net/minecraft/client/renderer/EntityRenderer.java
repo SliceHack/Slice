@@ -554,6 +554,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
             }
 
             EventPlayerReach event = new EventPlayerReach(3.0);
+            event.call();
 
             if(!event.isCancelled()) {
                 if (this.pointedEntity != null && flag && vec3.distanceTo(vec33) > event.getReach()) {
