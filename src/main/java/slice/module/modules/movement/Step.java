@@ -17,6 +17,10 @@ public class Step extends Module {
 
     public void onUpdateNoToggle(EventUpdate event) {
         height.setVisible(mode.getValue().equals("Vanilla"));
+
+        if(!isEnabled() && mc.thePlayer.stepHeight > 0.6F) {
+            mc.thePlayer.stepHeight = 0.6F;
+        }
     }
 
     public void onDisable() {

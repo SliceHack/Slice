@@ -3,6 +3,7 @@ package slice.module.modules.movement;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.MathHelper;
 import org.lwjgl.input.Keyboard;
 import slice.event.Event;
@@ -22,7 +23,7 @@ import slice.util.RotationUtil;
 @ModuleInfo(name = "Speed", description = "Allows you to move fast!!", key = Keyboard.KEY_X, category = Category.MOVEMENT)
 public class Speed extends Module {
 
-    ModeValue mode = new ModeValue("Mode", "Bhop", "Bhop", "Hycraft", "Dev", "Astro", "MMC", "UwUGuard", "Legit");
+    ModeValue mode = new ModeValue("Mode", "Bhop", "Bhop", "Hycraft", "Dev", "Astro", "MMC", "UwUGuard", "Legit", "Matrix");
 
     int onGroundTicks, offGroundTicks;
 
@@ -30,6 +31,7 @@ public class Speed extends Module {
         mc.timer.timerSpeed = 1.0F;
         onGroundTicks = 0;
         offGroundTicks = 0;
+        mc.thePlayer.speedInAir = 0.02F;
         KeyUtil.moveKeys()[0].pressed = false;
         KeyUtil.moveKeys()[2].pressed = false;
         KeyUtil.moveKeys()[4].pressed = false;
@@ -49,17 +51,26 @@ public class Speed extends Module {
     @EventInfo
     public void onUpdate(EventUpdate e) {
         switch (mode.getValue()) {
-            case "Dev":
+            case "Matrix":
                 if(!MoveUtil.isMoving()) break;
 
-                if(mc.thePlayer.onGround) {
-                    mc.thePlayer.jump();
-                    mc.timer.timerSpeed = 1.5F;
+                if(offGroundTicks > 4) {
+                    mc.thePlayer.speedInAir = 0.2F;
                 }
-                double yaw = RotationUtil.getDirection();
-                mc.thePlayer.motionX = (-Math.sin(yaw) * 0.25) * 1.0F;
-                mc.thePlayer.motionZ = (Math.cos(yaw) * 0.25) * 1.0F;
-                mc.timer.timerSpeed = 1.0F;
+
+                if(offGroundTicks > 2) {
+                    mc.thePlayer.motionX = 0F;
+                    mc.thePlayer.motionZ = 0F;
+                }
+
+                if(offGroundTicks == 1) {
+                    MoveUtil.stop();
+                }
+
+                if(onGroundTicks > 0) {
+                    mc.thePlayer.jump();
+                }
+
                 break;
             case "Hycraft":
             case "Bhop":
@@ -150,6 +161,15 @@ public class Speed extends Module {
                     || p instanceof C03PacketPlayer.C05PacketPlayerLook) {
 
                 e.setCancelled(mc.thePlayer.ticksExisted % 5 != 0);
+            }
+        }
+
+        if(mode.getValue().equalsIgnoreCase("Matrix")) {
+            if(p instanceof C0FPacketConfirmTransaction) {
+                C0FPacketConfirmTransaction c0f = (C0FPacketConfirmTransaction)p;
+                c0f.accepted = true;
+                c0f.windowId = (int)(Math.random() * 100);
+                c0f.uid = (short) (Math.random() * 100);
             }
         }
     }
