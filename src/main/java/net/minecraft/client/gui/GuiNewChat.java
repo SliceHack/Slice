@@ -130,10 +130,7 @@ public class GuiNewChat extends Gui
                             break;
                     }
 
-                    if(font == null)
-                        return;
-
-                    int k2 = Slice.INSTANCE.getModuleManager().getInterface().getClearChat().getValue() ? font.getFont().getSize() : mc.fontRendererObj.FONT_HEIGHT;
+                    int k2 = font != null ? font.getFont().getSize() : mc.fontRendererObj.FONT_HEIGHT;
                     GlStateManager.translate(-3.0F, 0.0F, 0.0F);
                     int l2 = k * k2 + k;
                     int i3 = j * k2 + j;

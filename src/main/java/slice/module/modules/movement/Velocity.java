@@ -4,6 +4,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraft.network.play.server.S27PacketExplosion;
 import slice.event.Event;
+import slice.event.data.EventInfo;
 import slice.event.events.EventClientTick;
 import slice.event.events.EventPacket;
 import slice.event.events.EventUpdate;
@@ -36,60 +37,54 @@ public class Velocity extends Module {
         vertical.setHidden(!mode.getValue().equalsIgnoreCase("Vanilla"));
     }
 
-    public void onEvent(Event event) {
-        if (event instanceof EventClientTick) {
-            switch (mode.getValue()) {
-                case "Astro":
-                    if (mc.thePlayer.hurtResistantTime > 2) {
-                        ticks++;
-                    }
-                    if (mc.thePlayer.hurtResistantTime >= 16) {
-                        ticks = 0;
-                    }
-                    break;
-            }
+    @EventInfo
+    public void onTick(EventClientTick e) {
+        if (mc.thePlayer.hurtResistantTime > 2) {
+            ticks++;
         }
+        if (mc.thePlayer.hurtResistantTime >= 16) {
+            ticks = 0;
+        }
+    }
 
-        if(event instanceof EventPacket) {
+    @EventInfo
+    public void onPacket(EventPacket e) {
+        Packet<?> p = e.getPacket();
 
-            EventPacket e = (EventPacket) event;
-            Packet<?> p = e.getPacket();
+        switch (mode.getValue()) {
+            case "Vanilla":
+                if (p instanceof S12PacketEntityVelocity) {
+                    S12PacketEntityVelocity s12 = (S12PacketEntityVelocity) p;
 
-            switch (mode.getValue()) {
-                case "Vanilla":
-                    if (p instanceof S12PacketEntityVelocity) {
-                        S12PacketEntityVelocity s12 = (S12PacketEntityVelocity) p;
-
-                        if (horizontal.getValue().doubleValue() == 0 && vertical.getValue().doubleValue() == 0) {
-                            e.setCancelled(true);
-                        }
-
-                        s12.motionX *= horizontal.getValue().doubleValue() / 100.0;
-                        s12.motionY *= vertical.getValue().doubleValue() / 100.0;
-                        s12.motionZ *= horizontal.getValue().doubleValue() / 100.0;
-                    }
-                    break;
-                case "Astro":
-                    if (p instanceof S12PacketEntityVelocity) {
-                        S12PacketEntityVelocity s12 = (S12PacketEntityVelocity) p;
-                        if (ticks > 4) {
-                            e.setCancelled(true);
-                        }
-                    }
-                case "MMC":
-                    if(p instanceof S12PacketEntityVelocity) {
-                        S12PacketEntityVelocity s12 = (S12PacketEntityVelocity) p;
-                        s12.motionX *= 50.0D / 100.0;
-                        s12.motionZ *= 40.0D / 100.0;
-                        s12.motionY *= 50.0D / 100.0;
+                    if (horizontal.getValue().doubleValue() == 0 && vertical.getValue().doubleValue() == 0) {
+                        e.setCancelled(true);
                     }
 
-                    break;
-            }
-            if (p instanceof S27PacketExplosion) {
-                S27PacketExplosion s27 = (S27PacketExplosion) p;
-                e.setCancelled(true);
-            }
+                    s12.motionX *= horizontal.getValue().doubleValue() / 100.0;
+                    s12.motionY *= vertical.getValue().doubleValue() / 100.0;
+                    s12.motionZ *= horizontal.getValue().doubleValue() / 100.0;
+                }
+                break;
+            case "Astro":
+                if (p instanceof S12PacketEntityVelocity) {
+                    S12PacketEntityVelocity s12 = (S12PacketEntityVelocity) p;
+                    if (ticks > 4) {
+                        e.setCancelled(true);
+                    }
+                }
+            case "MMC":
+                if(p instanceof S12PacketEntityVelocity) {
+                    S12PacketEntityVelocity s12 = (S12PacketEntityVelocity) p;
+                    s12.motionX *= 50.0D / 100.0;
+                    s12.motionZ *= 40.0D / 100.0;
+                    s12.motionY *= 50.0D / 100.0;
+                }
+
+                break;
+        }
+        if (p instanceof S27PacketExplosion) {
+            S27PacketExplosion s27 = (S27PacketExplosion) p;
+            e.setCancelled(true);
         }
     }
 }

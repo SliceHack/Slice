@@ -51,26 +51,20 @@ public class Speed extends Module {
     @EventInfo
     public void onUpdate(EventUpdate e) {
         switch (mode.getValue()) {
-            case "Matrix":
+            case "Dev":
                 if(!MoveUtil.isMoving()) break;
+                if(mc.thePlayer.hurtResistantTime > 2) break;
 
-                if(offGroundTicks > 4) {
+                if(mc.thePlayer.onGround) {
+                    mc.thePlayer.motionY = 0.42F;
+                }
+
+                if (offGroundTicks > 10) {
+                    mc.thePlayer.motionX *= 0.02F;
+                    mc.thePlayer.motionZ *= 0.02F;
                     mc.thePlayer.speedInAir = 0.2F;
+                    offGroundTicks = 0;
                 }
-
-                if(offGroundTicks > 2) {
-                    mc.thePlayer.motionX = 0F;
-                    mc.thePlayer.motionZ = 0F;
-                }
-
-                if(offGroundTicks == 1) {
-                    MoveUtil.stop();
-                }
-
-                if(onGroundTicks > 0) {
-                    mc.thePlayer.jump();
-                }
-
                 break;
             case "Hycraft":
             case "Bhop":
