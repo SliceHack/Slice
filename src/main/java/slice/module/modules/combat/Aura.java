@@ -33,6 +33,7 @@ import slice.util.LoggerUtil;
 @SuppressWarnings("all")
 public class Aura extends Module {
 
+    ModeValue mode = new ModeValue("Mode", "Switch", "Switch", "Lock");
     ModeValue blockMode = new ModeValue("Block Mode", "Vanilla", "Vanilla", "None", "NCP", "Fake");
     ModeValue rotateMode = new ModeValue("Rotation Mode", "Bypass", "Bypass", "Smooth", "None");
 
@@ -41,6 +42,7 @@ public class Aura extends Module {
     NumberValue rotateRange = new NumberValue("Rotate Range", 5.0, 0.2, 20.0, NumberValue.Type.DOUBLE);
 
     BooleanValue delay9 = new BooleanValue("1.9 Delay", false);
+    BooleanValue throughWalls = new BooleanValue("Through Walls", false);
 
     BooleanValue keepSprint = new BooleanValue("KeepSprint", true);
     BooleanValue noSwing = new BooleanValue("NoSwing", false);
@@ -62,9 +64,19 @@ public class Aura extends Module {
     private boolean reachedYaw, reachedPitch, hasRotated;
 
     private float yaw, pitch;
+    private boolean ran;
+
+
+    public void onUpdateNoToggle(EventUpdate event) {
+        if(rotateTarget == null) {
+            deltaPitch = mc.thePlayer.rotationYaw;
+            deltaYaw = mc.thePlayer.rotationYawHead;
+        }
+    }
 
     public void onDisable() {
         deltaPitch = 0;
+        ran = false;
         deltaYaw = 0;
         fakeBlock = false;
         Slice.INSTANCE.target = null;
@@ -72,48 +84,42 @@ public class Aura extends Module {
     }
 
     public void onEnable() {
-        deltaPitch = mc.thePlayer.rotationPitchHead;
+        deltaPitch = mc.thePlayer.rotationYaw;
         deltaYaw = mc.thePlayer.rotationYawHead;
     }
 
     @EventInfo
     public void onUpdate(EventUpdate e) {
-        rotateTarget = getRotateTarget();
-
-        if (rotateTarget != null) {
-            switch (rotateMode.getValue()) {
-                case "Bypass":
-                    yaw = getBypassRotate(rotateTarget)[0];
-                    pitch = getBypassRotate(rotateTarget)[1];
-                    break;
-                case "Smooth":
-                    yaw = getRotationsFixedSens(rotateTarget)[0];
-                    pitch = getRotationsFixedSens(rotateTarget)[1];
-                    break;
-                default:
-                    yaw = getRotationsFixedSens(rotateTarget)[0];
-                    pitch = getRotationsFixedSens(rotateTarget)[1];
-                    break;
-            }
-
-            if (!rotateMode.getValue().equalsIgnoreCase("None")) {
-                e.setYaw(yaw);
-                e.setPitch(pitch);
-            }
-        }
         try {
+            if(target == null) {
+                deltaYaw = mc.thePlayer.rotationYaw;
+                deltaPitch = mc.thePlayer.rotationPitch;
+            }
             if (rotateTarget == null) {
                 deltaYaw = mc.thePlayer.rotationYawHead;
                 deltaPitch = mc.thePlayer.rotationPitchHead;
             }
 
-            if(target != null) {
-                if (target.isDead || target.getHealth() <= 0 || target.getDistanceToEntity(mc.thePlayer) <= rotateRange.getValue().doubleValue() || target.getDistanceToEntity(mc.thePlayer) <= range.getValue().doubleValue())
+            switch (mode.getValue()) {
+                case "Switch":
+                    target = swapAura(target, range.getValue().doubleValue());
+                    break;
+                case "Lock":
                     target = getTarget();
-            } else target = getTarget();
+                    break;
+            }
 
             if ((target == null || target.isDead || target.getHealth() <= 0) && fakeBlock) {
                 fakeBlock = false;
+            }
+
+            if(!throughWalls.getValue() && !mc.thePlayer.canEntityBeSeen(target)) {
+                deltaPitch = mc.thePlayer.rotationYaw;
+                deltaYaw = mc.thePlayer.rotationYaw;
+                fakeBlock = false;
+                Slice.INSTANCE.target = null;
+                rotateTarget = null;
+                return;
             }
 
             if (target == null) {
@@ -168,15 +174,84 @@ public class Aura extends Module {
                 }
 
                 if (e.isPre()) {
-                    if (timer.hasReached((long) (1000 / cps))) {
+                    if (timer.hasReached((long) (1000 / cps)) && hasReached(target)) {
                         attack();
+
                         if (!noSwing.getValue()) mc.thePlayer.swingItem();
                         timer.reset();
                     }
                 }
             }
         } catch(Exception ignored){}
+        switch (mode.getValue()) {
+            case "Switch":
+                rotateTarget = swapAuraRotate(rotateTarget, rotateRange.getValue().doubleValue());
+                break;
+            case "Lock":
+                rotateTarget = getRotateTarget();
+                break;
+        }
+
+        if (rotateTarget != null) {
+            switch (rotateMode.getValue()) {
+                case "Bypass":
+                    yaw = getBypassRotate(rotateTarget)[0];
+                    pitch = getBypassRotate(rotateTarget)[1];
+                    break;
+                case "Smooth":
+                    yaw = getRotationsFixedSens(rotateTarget)[0];
+                    pitch = getRotationsFixedSens(rotateTarget)[1];
+                    break;
+                default:
+                    yaw = getRotationsFixedSens(rotateTarget)[0];
+                    pitch = getRotationsFixedSens(rotateTarget)[1];
+                    break;
+            }
+
+            if (!rotateMode.getValue().equalsIgnoreCase("None")) {
+                if(ran) {
+                    e.setYaw(yaw);
+                    e.setPitch(pitch);
+                }
+                ran = true;
+            }
+        }
+
+        if(rotateTarget == null) {
+            ran = false;
+        }
     }
+
+    public boolean hasReached(EntityLivingBase target) {
+        return  mode.getValue().equalsIgnoreCase("Smooth") ? ran : true;
+    }
+
+    public boolean isRoughlyEqual(float a, float b) {
+        return Math.abs(a - b) < 2.2;
+    }
+
+    public EntityLivingBase swapAura(EntityLivingBase target, double ranage) {
+        if(target != null) {
+            if(target.getDistanceToEntity(mc.thePlayer) > ranage || (target.isDead || target.getHealth() <= 0)) {
+                return target = null;
+            }
+        }
+        target = getTarget();
+
+        return target;
+    }
+
+    public EntityLivingBase swapAuraRotate(EntityLivingBase target, double ranage) {
+        if(target != null) {
+            if(target.getDistanceToEntity(mc.thePlayer) > ranage || (target.isDead || target.getHealth() <= 0)) {
+                return target = null;
+            }
+        }
+        target = getRotateTarget();
+
+        return target;
+    }
+
 
     private void attack() {
         if (keepSprint.getValue()) mc.getNetHandler().addToSendQueue(new C02PacketUseEntity(target, C02PacketUseEntity.Action.ATTACK));
@@ -261,16 +336,16 @@ public class Aura extends Module {
         float yaw = getBypassRotate(e)[0];
         float pitch = getBypassRotate(e)[1];
 
-        int smooth = 5;
+        int smooth = 2;
 
         if (deltaPitch < pitch) deltaPitch += Math.abs(pitch - deltaPitch) / smooth;
-        else deltaPitch -= Math.abs(pitch - deltaPitch) / smooth;
+        if(deltaPitch > pitch) deltaPitch -= Math.abs(pitch - deltaPitch) / smooth;
 
         if (deltaYaw < yaw) deltaYaw += Math.abs(yaw - deltaYaw) / smooth;
-        else deltaYaw -= Math.abs(yaw - deltaYaw) / smooth;
+        if(deltaYaw > yaw) deltaYaw -= Math.abs(yaw - deltaYaw) / smooth;
 
         if(deltaPitch > 90) deltaPitch = 90;
-        else if(deltaPitch < -90) deltaPitch = -90;
+        if(deltaPitch < -90) deltaPitch = -90;
 
         return new float[] { deltaYaw, deltaPitch};
     }

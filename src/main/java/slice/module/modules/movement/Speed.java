@@ -17,6 +17,7 @@ import slice.setting.settings.ModeValue;
 import slice.util.KeyUtil;
 import slice.util.LoggerUtil;
 import slice.util.MoveUtil;
+import slice.util.RotationUtil;
 
 @ModuleInfo(name = "Speed", description = "Allows you to move fast!!", key = Keyboard.KEY_X, category = Category.MOVEMENT)
 public class Speed extends Module {
@@ -48,9 +49,21 @@ public class Speed extends Module {
     @EventInfo
     public void onUpdate(EventUpdate e) {
         switch (mode.getValue()) {
+            case "Dev":
+                if(!MoveUtil.isMoving()) break;
+
+                if(mc.thePlayer.onGround) {
+                    mc.thePlayer.jump();
+                    mc.timer.timerSpeed = 1.5F;
+                }
+                double yaw = RotationUtil.getDirection();
+                mc.thePlayer.motionX = (-Math.sin(yaw) * 0.25) * 1.0F;
+                mc.thePlayer.motionZ = (Math.cos(yaw) * 0.25) * 1.0F;
+                mc.timer.timerSpeed = 1.0F;
+                break;
             case "Hycraft":
             case "Bhop":
-                if(!MoveUtil.isMoving()) return;
+                if(!MoveUtil.isMoving()) break;
 
                 if (mc.thePlayer.onGround) {
                     MoveUtil.jump();
@@ -58,7 +71,7 @@ public class Speed extends Module {
                 MoveUtil.strafe((MoveUtil.getSpeed())+0.02);
                 break;
             case "MMC":
-                if(!MoveUtil.isMoving()) return;
+                if(!MoveUtil.isMoving()) break;
 
                 if(mc.thePlayer.onGround) {
                     mc.thePlayer.motionY = 0.56F;
@@ -67,9 +80,9 @@ public class Speed extends Module {
                 break;
             case "Astro":
                 if(mc.thePlayer.fallDistance > 4)
-                    return;
+                    break;
 
-                if(!MoveUtil.isMoving()) return;
+                if(!MoveUtil.isMoving()) break;
 
                 if(mc.thePlayer.onGround) {
                     MoveUtil.jump();
@@ -81,7 +94,7 @@ public class Speed extends Module {
                 }
                 break;
             case "UwUGuard":
-                if (!MoveUtil.isMoving()) return;
+                if (!MoveUtil.isMoving()) break;
 
                 if(mc.thePlayer.onGround) {
                     mc.thePlayer.motionY = 0F;
@@ -121,8 +134,6 @@ public class Speed extends Module {
                     KeyUtil.moveKeys()[2].pressed = true;
                 }
 
-                break;
-            case "Dev":
                 break;
         }
     }
