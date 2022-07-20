@@ -329,6 +329,7 @@ public class Aura extends Module {
             }
         }
         rotateTarget = target;
+        Slice.INSTANCE.target = target;
         return target;
     }
 
