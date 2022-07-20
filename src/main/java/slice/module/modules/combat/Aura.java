@@ -77,7 +77,7 @@ public class Aura extends Module {
     }
 
     @EventInfo
-    public void onUpdateTarget(EventUpdate e) {
+    public void onUpdate(EventUpdate e) {
         rotateTarget = getRotateTarget();
 
         if (rotateTarget != null) {
@@ -101,18 +101,16 @@ public class Aura extends Module {
                 e.setPitch(pitch);
             }
         }
-    }
-
-    @EventInfo
-    public void onUpdate(EventUpdate e) {
-
         try {
             if (rotateTarget == null) {
                 deltaYaw = mc.thePlayer.rotationYawHead;
                 deltaPitch = mc.thePlayer.rotationPitchHead;
             }
 
-            target = getTarget();
+            if(target != null) {
+                if (target.isDead || target.getHealth() <= 0 || target.getDistanceToEntity(mc.thePlayer) <= rotateRange.getValue().doubleValue() || target.getDistanceToEntity(mc.thePlayer) <= range.getValue().doubleValue())
+                    target = getTarget();
+            } else target = getTarget();
 
             if ((target == null || target.isDead || target.getHealth() <= 0) && fakeBlock) {
                 fakeBlock = false;
@@ -263,13 +261,13 @@ public class Aura extends Module {
         float yaw = getBypassRotate(e)[0];
         float pitch = getBypassRotate(e)[1];
 
-        int smooth = 2;
+        int smooth = 5;
 
         if (deltaPitch < pitch) deltaPitch += Math.abs(pitch - deltaPitch) / smooth;
         else deltaPitch -= Math.abs(pitch - deltaPitch) / smooth;
 
-        if (deltaYaw < yaw) deltaYaw += Math.abs(yaw - deltaYaw) / 3;
-        else deltaYaw -= Math.abs(yaw - deltaYaw) / 3;
+        if (deltaYaw < yaw) deltaYaw += Math.abs(yaw - deltaYaw) / smooth;
+        else deltaYaw -= Math.abs(yaw - deltaYaw) / smooth;
 
         if(deltaPitch > 90) deltaPitch = 90;
         else if(deltaPitch < -90) deltaPitch = -90;
