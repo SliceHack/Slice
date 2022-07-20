@@ -62,6 +62,7 @@ public class ModuleManager {
         register(new Phase());
         register(new AirJump());
         register(new Step());
+        register(new FPSBooster());
     }
 
     /**
