@@ -37,25 +37,16 @@ public class LayerCape implements LayerRenderer<AbstractClientPlayer>
             float f2 = (float) (d0 * d3 + d2 * d4) * 100.0F;
             float f3 = (float) (d0 * d4 - d2 * d3) * 100.0F;
 
-            if(Slice.INSTANCE.getServerYaw() == Minecraft.getMinecraft().thePlayer.rotationYaw) {
-                if (f2 < 0.0F) {
-                    f2 = 0.0F;
-                }
+            if (f2 < 0.0F) {
+                f2 = 0.0F;
+            }
 
-                if (f2 > 165.0F) {
-                    f2 = 165.0F;
-                }
+            if (f2 > 165.0F) {
+                f2 = 165.0F;
+            }
 
-                if (f1 < -5.0F) {
-                    f1 = -5.0F;
-                }
-            } else {
-                if (f2 > 165.0F) {
-                    f2 = 165.0F;
-                }
-                if (f1 < -30.0F) {
-                    f1 = -30.0F;
-                }
+            if (f1 < -5.0F) {
+                f1 = -5.0F;
             }
 
             float f4 = entitylivingbaseIn.prevCameraYaw + (entitylivingbaseIn.cameraYaw - entitylivingbaseIn.prevCameraYaw) * partialTicks;

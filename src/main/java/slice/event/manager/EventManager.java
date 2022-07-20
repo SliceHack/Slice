@@ -65,22 +65,12 @@ public class EventManager {
         List<Object> registeredObjects = new ArrayList<>(this.registeredObjects);
 
         for (Object object : registeredObjects) {
-
             for (Method method : getMethods(object.getClass())) {
 
                 if(method.getParameterTypes().length == 1
                         && method.isAnnotationPresent(EventInfo.class)
                         && method.getParameterTypes()[0].equals(event.getClass())) {
-
-                    List<EventSender> registeredSenders = new ArrayList<>(this.registeredSenders);
-
-                    try {
-                        if (getEventSender(event, method, object) != null)
-                            getEventSender(event, method, object).runEvent();
-                        else registeredSenders.add(new EventSender(event, method, object));
-                    } catch (Exception ignored){} // toggled off by the user
-
-                    this.registeredSenders = registeredSenders;
+                    new EventSender(event, method, object);
                 }
             }
         }
@@ -103,11 +93,6 @@ public class EventManager {
      * @return The EventSender.
      * */
     public EventSender getEventSender(Event event, Method method, Object object) {
-        List<EventSender> registeredSenders = new ArrayList<>(this.registeredSenders);
-        for(EventSender sender : registeredSenders) {
-            if(sender.getEvent().equals(event) && sender.getMethod().equals(method) && sender.getObject().equals(object))
-                return sender;
-        }
-        return null;
+        return this.registeredSenders.stream().filter(eventSender -> eventSender.getMethod().equals(method) && eventSender.getObject().equals(object)).findFirst().orElse(null);
     }
 }

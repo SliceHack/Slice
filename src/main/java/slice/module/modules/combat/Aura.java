@@ -38,6 +38,7 @@ public class Aura extends Module {
 
     NumberValue cps = new NumberValue("CPS", 8, 1, 20, NumberValue.Type.INTEGER);
     NumberValue range = new NumberValue("Range", 3.0, 0.2, 10.0, NumberValue.Type.DOUBLE);
+    NumberValue rotateRange = new NumberValue("Rotate Range", 5.0, 0.2, 20.0, NumberValue.Type.DOUBLE);
 
     BooleanValue delay9 = new BooleanValue("1.9 Delay", false);
 
@@ -48,7 +49,7 @@ public class Aura extends Module {
     BooleanValue mobs = new BooleanValue("Mobs", true);
     BooleanValue teams = new BooleanValue("Teams", false);
 
-    EntityLivingBase target;
+    EntityLivingBase target, rotateTarget;
 
     public static boolean fakeBlock;
 
@@ -67,6 +68,7 @@ public class Aura extends Module {
         deltaYaw = 0;
         fakeBlock = false;
         Slice.INSTANCE.target = null;
+        rotateTarget = null;
     }
 
     public void onEnable() {
@@ -75,9 +77,37 @@ public class Aura extends Module {
     }
 
     @EventInfo
+    public void onUpdateTarget(EventUpdate e) {
+        rotateTarget = getRotateTarget();
+
+        if (rotateTarget != null) {
+            switch (rotateMode.getValue()) {
+                case "Bypass":
+                    yaw = getBypassRotate(rotateTarget)[0];
+                    pitch = getBypassRotate(rotateTarget)[1];
+                    break;
+                case "Smooth":
+                    yaw = getRotationsFixedSens(rotateTarget)[0];
+                    pitch = getRotationsFixedSens(rotateTarget)[1];
+                    break;
+                default:
+                    yaw = getRotationsFixedSens(rotateTarget)[0];
+                    pitch = getRotationsFixedSens(rotateTarget)[1];
+                    break;
+            }
+
+            if (!rotateMode.getValue().equalsIgnoreCase("None")) {
+                e.setYaw(yaw);
+                e.setPitch(pitch);
+            }
+        }
+    }
+
+    @EventInfo
     public void onUpdate(EventUpdate e) {
+
         try {
-            if (target == null) {
+            if (rotateTarget == null) {
                 deltaYaw = mc.thePlayer.rotationYawHead;
                 deltaPitch = mc.thePlayer.rotationPitchHead;
             }
@@ -99,29 +129,6 @@ public class Aura extends Module {
             }
 
             if (target != null) {
-                switch (rotateMode.getValue()) {
-                    case "Bypass":
-                        yaw = getBypassRotate(target)[0];
-                        pitch = getBypassRotate(target)[1];
-                        break;
-                    case "Smooth":
-                        yaw = getRotationsFixedSens(target)[0];
-                        pitch = getRotationsFixedSens(target)[1];
-                        break;
-                    case "None":
-                        yaw = mc.thePlayer.rotationYaw;
-                        pitch = mc.thePlayer.rotationPitch;
-                        break;
-                    default:
-                        yaw = getRotationsFixedSens(target)[0];
-                        pitch = getRotationsFixedSens(target)[1];
-                        break;
-                }
-
-                if (!rotateMode.getValue().equalsIgnoreCase("None")) {
-                    e.setYaw(yaw);
-                    e.setPitch(pitch);
-                }
 
 
                 boolean block = mc.thePlayer.getHeldItem() != null && !blockMode.getValue().equalsIgnoreCase("None");
@@ -179,19 +186,21 @@ public class Aura extends Module {
     }
 
     public float[] getBypassRotate(Entity e) {
-        double deltaX = e.posX + (e.posX - e.lastTickPosX) - mc.thePlayer.posX;
-        double deltaY = e.posY - 3.5 + e.getEyeHeight() - mc.thePlayer.posY + mc.thePlayer.getEyeHeight();
-        double deltaZ = e.posZ + (e.posZ - e.lastTickPosZ) - mc.thePlayer.posZ;
-        double distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaZ, 2));
+        double deltaX = e.posX + (e.posX - e.lastTickPosX) - mc.thePlayer.posX,
+                deltaY = e.posY - 3.5 + e.getEyeHeight() - mc.thePlayer.posY + mc.thePlayer.getEyeHeight(),
+                deltaZ = e.posZ + (e.posZ - e.lastTickPosZ) - mc.thePlayer.posZ,
+                distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaZ, 2));
 
-        float yaw = (float) Math.toDegrees(-Math.atan(deltaX - deltaZ));
-        float pitch = (float) -Math.toDegrees(Math.atan(deltaY / distance));
+        float yaw = (float) Math.toDegrees(-Math.atan(deltaX - deltaZ)),
+                pitch = (float) -Math.toDegrees(Math.atan(deltaY / distance));
 
         if(deltaX < 0 && deltaZ < 0) yaw = (float) (90 + (Math.toDegrees(Math.atan(deltaZ / deltaX))));
-        else if(deltaX > 0 && deltaZ < 0) yaw = (float) (-90 + (Math.toDegrees(Math.atan(deltaZ / deltaX))));
+        if(deltaX > 0 && deltaZ < 0) yaw = (float) (-90 + (Math.toDegrees(Math.atan(deltaZ / deltaX))));
+        if(deltaX < 0 && deltaZ > 0) yaw = (float) (90 + (Math.toDegrees(Math.atan(deltaZ / deltaX))));
+        if(deltaX > 0 && deltaZ > 0) yaw = (float) (-90 + (Math.toDegrees(Math.atan(deltaZ / deltaX))));
 
         if(pitch > 90) pitch = 90;
-        else if(pitch < -90) pitch = -90;
+        if(pitch < -90) pitch = -90;
 
         return new float[]{yaw, pitch};
     }
@@ -229,22 +238,41 @@ public class Aura extends Module {
         return target;
     }
 
+    @SuppressWarnings("all")
+    public EntityLivingBase getRotateTarget() {
+        double dist = rotateRange.getValue().doubleValue();
+        EntityLivingBase target = null;
+        for (Object object : mc.theWorld.loadedEntityList) {
+            Entity entity = (Entity) object;
+            if (entity instanceof EntityLivingBase) {
+                EntityLivingBase player = (EntityLivingBase) entity;
+                if (canAttack(player)) {
+                    double currentDist = mc.thePlayer.getDistanceToEntity(player);
+                    if (currentDist <= dist) {
+                        dist = currentDist;
+                        target = player;
+                    }
+                }
+            }
+        }
+        rotateTarget = target;
+        return target;
+    }
+
     public float[] getRotationsFixedSens(Entity e) {
         float yaw = getBypassRotate(e)[0];
         float pitch = getBypassRotate(e)[1];
 
-        try {
-            int smooth = 2;
+        int smooth = 2;
 
-            if (deltaPitch < pitch) deltaPitch += Math.abs(pitch - deltaPitch) / smooth;
-            else deltaPitch -= Math.abs(pitch - deltaPitch) / smooth;
+        if (deltaPitch < pitch) deltaPitch += Math.abs(pitch - deltaPitch) / smooth;
+        else deltaPitch -= Math.abs(pitch - deltaPitch) / smooth;
 
-            if (deltaYaw < yaw) deltaYaw += Math.abs(yaw - deltaYaw) / 3;
-            else deltaYaw -= Math.abs(yaw - deltaYaw) / 3;
+        if (deltaYaw < yaw) deltaYaw += Math.abs(yaw - deltaYaw) / 3;
+        else deltaYaw -= Math.abs(yaw - deltaYaw) / 3;
 
-            if(deltaPitch > 90) deltaPitch = 90;
-            else if(deltaPitch < -90) deltaPitch = -90;
-        } catch (Exception ignored){}
+        if(deltaPitch > 90) deltaPitch = 90;
+        else if(deltaPitch < -90) deltaPitch = -90;
 
         return new float[] { deltaYaw, deltaPitch};
     }
@@ -279,7 +307,7 @@ public class Aura extends Module {
         if(entity.isInvisible() && !invis) {
             return false;
         }
-        return entity != mc.thePlayer && entity.isEntityAlive() && mc.thePlayer.getDistanceToEntity(entity) <= reach && !(entity instanceof EntityArmorStand && entity.isInvisible());
+        return entity != mc.thePlayer && entity.isEntityAlive() && !(entity instanceof EntityArmorStand && entity.isInvisible());
     }
 
 }
