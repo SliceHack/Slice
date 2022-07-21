@@ -47,6 +47,7 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import slice.event.events.EventSafeWalk;
+import slice.module.modules.movement.Safewalk;
 
 public abstract class Entity implements ICommandSender
 {
@@ -625,11 +626,9 @@ public abstract class Entity implements ICommandSender
             double d4 = y;
             double d5 = z;
 
-            boolean flag = this.onGround && this.isSneaking() && this instanceof EntityPlayer;
-            EventSafeWalk event = new EventSafeWalk(false);
-            event.call();
+            boolean flag = this.onGround && (this.isSneaking() || slice.Slice.INSTANCE.getModuleManager().getModule(Safewalk.class).isEnabled()) && this instanceof EntityPlayer;
 
-            if (flag && !event.isCancelled())
+            if (flag)
             {
                 double d6;
 
