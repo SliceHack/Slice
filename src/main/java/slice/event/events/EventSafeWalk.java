@@ -1,10 +1,11 @@
 package slice.event.events;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import slice.event.Event;
 
+@Getter @AllArgsConstructor @Setter
 public class EventSafeWalk extends Event {
-
-    public EventSafeWalk(boolean cancelled) {
-        this.cancelled = cancelled;
-    }
+    private boolean safeWalk;
 }

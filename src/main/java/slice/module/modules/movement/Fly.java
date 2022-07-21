@@ -185,6 +185,9 @@ public class Fly extends Module {
                 mc.thePlayer.motionY = 0F;
                 mc.timer.timerSpeed = 10.0F;
                 break;
+            case "Dev":
+                mc.thePlayer.motionY = 0F;
+                break;
         }
     }
 
