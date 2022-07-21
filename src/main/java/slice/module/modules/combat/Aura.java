@@ -90,6 +90,39 @@ public class Aura extends Module {
 
     @EventInfo
     public void onUpdate(EventUpdate e) {
+        if (rotateTarget != null && !e.isPre()) {
+            float yaw, pitch;
+            switch (rotateMode.getValue()) {
+                case "Bypass":
+                    yaw = getBypassRotate(rotateTarget)[0];
+                    pitch = getBypassRotate(rotateTarget)[1];
+                    break;
+                case "Smooth":
+                    yaw = getRotationsFixedSens(rotateTarget)[0];
+                    pitch = getRotationsFixedSens(rotateTarget)[1];
+                    break;
+                default:
+                    yaw = getRotationsFixedSens(rotateTarget)[0];
+                    pitch = getRotationsFixedSens(rotateTarget)[1];
+                    break;
+            }
+
+            if(yaw != mc.thePlayer.rotationYaw && pitch != mc.thePlayer.rotationPitch && yaw != this.yaw && pitch != this.pitch) {
+                this.yaw = yaw;
+                this.pitch = pitch;
+            }
+
+            if (!rotateMode.getValue().equalsIgnoreCase("Smooth")) {
+                hasRotated = true;
+            }
+        }
+
+
+        if(rotateTarget != null) {
+            e.setYaw(yaw);
+            e.setPitch(pitch);
+        }
+
         try {
             if(target == null) {
                 deltaYaw = mc.thePlayer.rotationYaw;
@@ -175,10 +208,13 @@ public class Aura extends Module {
 
                 if (e.isPre()) {
                     if (timer.hasReached((long) (1000 / cps)) && hasReached(target)) {
-                        attack();
 
-                        if (!noSwing.getValue()) mc.thePlayer.swingItem();
-                        timer.reset();
+                        if(hasRotated) {
+                            if (!noSwing.getValue()) mc.thePlayer.swingItem();
+                            timer.reset();
+                            attack();
+                        }
+
                     }
                 }
             }
@@ -192,33 +228,8 @@ public class Aura extends Module {
                 break;
         }
 
-        if (rotateTarget != null) {
-            switch (rotateMode.getValue()) {
-                case "Bypass":
-                    yaw = getBypassRotate(rotateTarget)[0];
-                    pitch = getBypassRotate(rotateTarget)[1];
-                    break;
-                case "Smooth":
-                    yaw = getRotationsFixedSens(rotateTarget)[0];
-                    pitch = getRotationsFixedSens(rotateTarget)[1];
-                    break;
-                default:
-                    yaw = getRotationsFixedSens(rotateTarget)[0];
-                    pitch = getRotationsFixedSens(rotateTarget)[1];
-                    break;
-            }
-
-            if (!rotateMode.getValue().equalsIgnoreCase("None")) {
-                if(ran) {
-                    e.setYaw(yaw);
-                    e.setPitch(pitch);
-                }
-                ran = true;
-            }
-        }
-
         if(rotateTarget == null) {
-            ran = false;
+            hasRotated = false;
         }
     }
 
@@ -347,6 +358,9 @@ public class Aura extends Module {
 
         if(deltaPitch > 90) deltaPitch = 90;
         if(deltaPitch < -90) deltaPitch = -90;
+        ran = (((int)deltaPitch - (int)pitch) < 1) && (((int)deltaYaw - (int)yaw) < 1);
+        hasRotated = ran;
+
 
         return new float[] { deltaYaw, deltaPitch};
     }
