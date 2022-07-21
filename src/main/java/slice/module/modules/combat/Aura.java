@@ -168,7 +168,7 @@ public class Aura extends Module {
                         else if (item == Items.iron_axe) cps = 0.9;
                         else if (item == Items.stone_hoe) cps = 2;
                         else if (item == Items.iron_hoe) cps = 3;
-                        cps += 0.9;
+                        cps -= 0.1;
                     }
 
                 }
