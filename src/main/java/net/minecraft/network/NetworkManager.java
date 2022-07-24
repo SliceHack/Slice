@@ -26,6 +26,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.proxy.HttpProxyHandler;
+import io.netty.handler.proxy.ProxyHandler;
 import io.netty.handler.proxy.Socks4ProxyHandler;
 import io.netty.handler.proxy.Socks5ProxyHandler;
 import io.netty.handler.timeout.ReadTimeoutHandler;
@@ -462,12 +463,18 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
                                 .addLast((String) "prepender", (ChannelHandler) (new MessageSerializer2()))
                                 .addLast((String) "encoder", (ChannelHandler) (new MessageSerializer(EnumPacketDirection.SERVERBOUND)))
                                 .addLast((String) "packet_handler", (ChannelHandler) networkmanager);
+
+
+
                         if (p_initChannel_1_ instanceof SocketChannel && ViaMCP.getInstance().getVersion() != ViaMCP.PROTOCOL_VERSION) {
                             UserConnection user = new UserConnectionImpl(p_initChannel_1_, true);
                             new ProtocolPipelineImpl(user);
                             p_initChannel_1_.pipeline()
                                     .addBefore("encoder", CommonTransformer.HANDLER_ENCODER_NAME, new MCPEncodeHandler(user))
                                     .addBefore("decoder", CommonTransformer.HANDLER_DECODER_NAME, new MCPDecodeHandler(user));
+                        }
+                        if(p_initChannel_1_ instanceof SocketChannel) {
+                            p_initChannel_1_.pipeline().addLast("proxy", new HttpProxyHandler(new InetSocketAddress(userIP, userPort)));
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

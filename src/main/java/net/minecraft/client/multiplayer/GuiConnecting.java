@@ -120,7 +120,6 @@ public class GuiConnecting extends GuiScreen
 
     private void connect(final Session session, final String ip, final int port)
     {
-        System.out.println("Connecting to " + ip + ", " + port);
         (new Thread("Server Connector #" + CONNECTION_ID.incrementAndGet())
         {
             public void run()
