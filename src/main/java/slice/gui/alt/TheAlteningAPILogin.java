@@ -102,6 +102,7 @@ public class TheAlteningAPILogin extends GuiScreen {
 
         try {
             auth.logIn();
+            this.serviceSwitch.updateService(AlteningServiceType.MOJANG);
             Minecraft.getMinecraft().session = new Session(auth.getSelectedProfile().getName(), auth.getSelectedProfile().getId().toString(), auth.getAuthenticatedToken(), "mojang");
         } catch (final AuthenticationException localAuthenticationException) {
             localAuthenticationException.printStackTrace();

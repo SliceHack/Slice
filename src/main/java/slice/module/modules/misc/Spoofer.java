@@ -14,7 +14,7 @@ import slice.setting.settings.ModeValue;
 @SuppressWarnings("all") @ModuleInfo(name = "Spoofer", description = "Spoofs your client brand", category = Category.MISC)
 public class Spoofer extends Module {
 
-    ModeValue mode = new ModeValue("Mode", "Lunar", "Lunnar", "Geyser", "Forge");
+    ModeValue mode = new ModeValue("Mode", "Lunar", "Lunar", "Geyser", "Forge");
 
     @EventInfo
     public void onPacket(EventPacket e) {
@@ -31,7 +31,7 @@ public class Spoofer extends Module {
                     packet.data = packetBuffer("Geyser", false);
                     break;
                 }
-                case "Lunnar": {
+                case "Lunar": {
                     packet.channel = "REGISTER";
                     packet.data = packetBuffer("Lunar-Client", false);
                     break;
