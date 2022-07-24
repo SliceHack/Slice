@@ -16,10 +16,12 @@ import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.handshake.client.C00Handshake;
 import net.minecraft.network.login.client.C00PacketLoginStart;
+import net.minecraft.network.login.server.S02PacketLoginSuccess;
 import net.minecraft.network.play.client.C01PacketChatMessage;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.util.Session;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -118,26 +120,33 @@ public class GuiConnecting extends GuiScreen
 
     private void connect(final Session session, final String ip, final int port)
     {
-        (new Thread("Server Connector #" + CONNECTION_ID.incrementAndGet()) {
-            public void run() {
+        System.out.println("Connecting to " + ip + ", " + port);
+        (new Thread("Server Connector #" + CONNECTION_ID.incrementAndGet())
+        {
+            public void run()
+            {
                 InetAddress inetaddress = null;
+
+
+                String randomIP = generateIPAddress();
+                int randomPort = getRandomPort();
 
                 try {
                     if (cancel) return;
 
                     inetaddress = InetAddress.getByName(ip);
-
-                    String proxyIP = generateIPAddress();
-                    int proxyPort = getRandomPort();
-
-                    networkManager = NetworkManager.createNetworkManagerAndConnect(inetaddress, port, mc.gameSettings.isUsingNativeTransport(), proxyIP, proxyPort);
+                    networkManager = NetworkManager.createNetworkManagerAndConnect(inetaddress, port, mc.gameSettings.isUsingNativeTransport(), randomIP, randomPort);
                     networkManager.sendPacket(new C00Handshake(47, ip, port, EnumConnectionState.LOGIN));
                     networkManager.sendPacket(new C00PacketLoginStart(session.getProfile()));
-                    LoggerUtil.addMessage("Connected to &a" + ip + "&7 with username: &a" + session.getUsername() + "&7 with proxy: &a" + proxyIP + "&7");
+                    LoggerUtil.addMessage("Connected to &a" + ip + ":" + port + "&7 proxy: &a" + randomIP + "&7:" + randomPort);
+                } catch (UnknownHostException unknownhostexception) {
+                    if (cancel) return;
+
+                    LoggerUtil.addMessage("Connection failed to " + ip + ":" + port + " (" + "Unknown Host" + ")");
                 } catch (Exception exception) {
                     if (cancel) return;
 
-                    LoggerUtil.addMessage("&cCouldn't connect to server");
+
                     String s = exception.toString();
 
                     if (inetaddress != null)
@@ -145,6 +154,8 @@ public class GuiConnecting extends GuiScreen
                         String s1 = inetaddress.toString() + ":" + port;
                         s = s.replaceAll(s1, "");
                     }
+
+                    LoggerUtil.addMessage("Connection failed to " + ip + ":" + port + " (" + s + ")");
                 }
             }
         }).start();

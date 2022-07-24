@@ -96,6 +96,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
+import slice.event.events.Event3D;
 import slice.event.events.EventPlayerReach;
 
 @SuppressWarnings("all")
@@ -1902,6 +1903,9 @@ public class EntityRenderer implements IResourceManagerReloadListener
             this.mc.mcProfiler.endStartSection("forge_render_last");
             Reflector.callVoid(Reflector.ForgeHooksClient_dispatchRenderLast, new Object[] {renderglobal, Float.valueOf(partialTicks)});
         }
+
+        Event3D event = new Event3D(partialTicks);
+        event.call();
 
         this.mc.mcProfiler.endStartSection("hand");
 

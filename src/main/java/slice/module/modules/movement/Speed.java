@@ -1,5 +1,6 @@
 package slice.module.modules.movement;
 
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
@@ -32,6 +33,7 @@ public class Speed extends Module {
         onGroundTicks = 0;
         offGroundTicks = 0;
         mc.thePlayer.speedInAir = 0.02F;
+        mc.thePlayer.jumpMovementFactor = 0.02F;
         KeyUtil.moveKeys()[0].pressed = false;
         KeyUtil.moveKeys()[2].pressed = false;
         KeyUtil.moveKeys()[4].pressed = false;
@@ -52,19 +54,35 @@ public class Speed extends Module {
     public void onUpdate(EventUpdate e) {
         switch (mode.getValue()) {
             case "Dev":
-                if(!MoveUtil.isMoving()) break;
+
+                break;
+            case "Matrix":
+                if(mc.thePlayer.moveForward == 0) break;
                 if(mc.thePlayer.hurtResistantTime > 2) break;
+                if(mc.thePlayer.fallDistance > 2) break;
 
-                if(mc.thePlayer.onGround) {
-                    mc.thePlayer.motionY = 0.42F;
+
+                if(mc.thePlayer.onGround && offGroundTicks <= 2) {
+                    MoveUtil.jump();
                 }
 
-                if (offGroundTicks > 10) {
-                    mc.thePlayer.motionX *= 0.02F;
-                    mc.thePlayer.motionZ *= 0.02F;
-                    mc.thePlayer.speedInAir = 0.2F;
-                    offGroundTicks = 0;
+                mc.thePlayer.jumpMovementFactor = 0.2F;
+
+                boolean notFowardPressed = KeyUtil.moveKeys()[4].pressed
+                        || KeyUtil.moveKeys()[3].pressed
+                        || KeyUtil.moveKeys()[2].pressed
+                        || KeyUtil.moveKeys()[1].pressed;
+
+                if(mc.thePlayer.ticksExisted % 5 != 0) {
+                    mc.thePlayer.speedInAir = 0.2F*(notFowardPressed ? 4 : 10);
                 }
+                if(!mc.thePlayer.onGround && mc.thePlayer.ticksExisted % 5 != 0) {
+                    mc.thePlayer.motionX *= 0.59;
+                    mc.thePlayer.motionZ *= 0.59;
+                    break;
+                }
+                mc.thePlayer.motionX *= 0.5;
+                mc.thePlayer.motionZ *= 0.5;
                 break;
             case "Hycraft":
             case "Bhop":

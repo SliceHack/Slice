@@ -56,6 +56,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import slice.event.events.EventPacket;
+import slice.util.LoggerUtil;
 import viamcp.ViaMCP;
 import viamcp.handler.CommonTransformer;
 import viamcp.handler.MCPDecodeHandler;
@@ -450,18 +451,23 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
                     try {
 
                         try {
-                            p_initChannel_1_.pipeline().addFirst(new HttpProxyHandler(new InetSocketAddress(userIP, 25565)));
                             p_initChannel_1_.config().setOption(ChannelOption.TCP_NODELAY, Boolean.valueOf(true));
 
-                        } catch (ChannelException var3) {
-                            ;
-                        }
+                        } catch (ChannelException var3) {}
 
-                        p_initChannel_1_.pipeline().addLast((String) "timeout", (ChannelHandler) (new ReadTimeoutHandler(30))).addLast((String) "splitter", (ChannelHandler) (new MessageDeserializer2())).addLast((String) "decoder", (ChannelHandler) (new MessageDeserializer(EnumPacketDirection.CLIENTBOUND))).addLast((String) "prepender", (ChannelHandler) (new MessageSerializer2())).addLast((String) "encoder", (ChannelHandler) (new MessageSerializer(EnumPacketDirection.SERVERBOUND))).addLast((String) "packet_handler", (ChannelHandler) networkmanager);
+                        p_initChannel_1_.pipeline()
+                                .addLast((String) "timeout", (ChannelHandler) (new ReadTimeoutHandler(30)))
+                                .addLast((String) "splitter", (ChannelHandler) (new MessageDeserializer2()))
+                                .addLast((String) "decoder", (ChannelHandler) (new MessageDeserializer(EnumPacketDirection.CLIENTBOUND)))
+                                .addLast((String) "prepender", (ChannelHandler) (new MessageSerializer2()))
+                                .addLast((String) "encoder", (ChannelHandler) (new MessageSerializer(EnumPacketDirection.SERVERBOUND)))
+                                .addLast((String) "packet_handler", (ChannelHandler) networkmanager);
                         if (p_initChannel_1_ instanceof SocketChannel && ViaMCP.getInstance().getVersion() != ViaMCP.PROTOCOL_VERSION) {
                             UserConnection user = new UserConnectionImpl(p_initChannel_1_, true);
                             new ProtocolPipelineImpl(user);
-                            p_initChannel_1_.pipeline().addBefore("encoder", CommonTransformer.HANDLER_ENCODER_NAME, new MCPEncodeHandler(user)).addBefore("decoder", CommonTransformer.HANDLER_DECODER_NAME, new MCPDecodeHandler(user));
+                            p_initChannel_1_.pipeline()
+                                    .addBefore("encoder", CommonTransformer.HANDLER_ENCODER_NAME, new MCPEncodeHandler(user))
+                                    .addBefore("decoder", CommonTransformer.HANDLER_DECODER_NAME, new MCPDecodeHandler(user));
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
