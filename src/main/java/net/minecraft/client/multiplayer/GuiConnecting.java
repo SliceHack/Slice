@@ -16,11 +16,16 @@ import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.handshake.client.C00Handshake;
 import net.minecraft.network.login.client.C00PacketLoginStart;
+import net.minecraft.network.play.client.C01PacketChatMessage;
+import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.Session;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import slice.util.LoggerUtil;
 
+@SuppressWarnings("all")
 public class GuiConnecting extends GuiScreen
 {
     private static final AtomicInteger CONNECTION_ID = new AtomicInteger(0);
@@ -47,6 +52,16 @@ public class GuiConnecting extends GuiScreen
         this.connect(hostName, port);
     }
 
+    public GuiConnecting(Session session, String hostName, int port) {
+        this.previousGuiScreen = null;
+        this.mc = Minecraft.getMinecraft();
+        this.connect(session, hostName, port);
+    }
+
+    public GuiConnecting(Session session, String hostname) {
+        this(session, hostname, 25565);
+    }
+
     private void connect(final String ip, final int port)
     {
         logger.info("Connecting to " + ip + ", " + port);
@@ -71,9 +86,9 @@ public class GuiConnecting extends GuiScreen
                 }
                 catch (UnknownHostException unknownhostexception)
                 {
-                    if (GuiConnecting.this.cancel)
-                    {
-                        return;
+                        if (GuiConnecting.this.cancel)
+                        {
+                            return;
                     }
 
                     GuiConnecting.logger.error((String)"Couldn\'t connect to server", (Throwable)unknownhostexception);
@@ -100,6 +115,54 @@ public class GuiConnecting extends GuiScreen
             }
         }).start();
     }
+
+    private void connect(final Session session, final String ip, final int port)
+    {
+        (new Thread("Server Connector #" + CONNECTION_ID.incrementAndGet()) {
+            public void run() {
+                InetAddress inetaddress = null;
+
+                try {
+                    if (cancel) return;
+
+                    inetaddress = InetAddress.getByName(ip);
+
+                    String proxyIP = generateIPAddress();
+                    int proxyPort = getRandomPort();
+
+                    networkManager = NetworkManager.createNetworkManagerAndConnect(inetaddress, port, mc.gameSettings.isUsingNativeTransport(), proxyIP, proxyPort);
+                    networkManager.sendPacket(new C00Handshake(47, ip, port, EnumConnectionState.LOGIN));
+                    networkManager.sendPacket(new C00PacketLoginStart(session.getProfile()));
+                    LoggerUtil.addMessage("Connected to &a" + ip + "&7 with username: &a" + session.getUsername() + "&7 with proxy: &a" + proxyIP + "&7");
+                } catch (Exception exception) {
+                    if (cancel) return;
+
+                    LoggerUtil.addMessage("&cCouldn't connect to server");
+                    String s = exception.toString();
+
+                    if (inetaddress != null)
+                    {
+                        String s1 = inetaddress.toString() + ":" + port;
+                        s = s.replaceAll(s1, "");
+                    }
+                }
+            }
+        }).start();
+    }
+
+    public static String generateIPAddress() {
+        String ip = "";
+        for (int i = 0; i < 4; i++) {
+            ip += (int) (Math.random() * 255) + ".";
+        }
+        ip = ip.substring(0, ip.length() - 1);
+        return ip;
+    }
+
+    public static int getRandomPort() {
+        return (int) (Math.random() * 65535);
+    }
+
 
     /**
      * Called from the main game loop to update the screen.

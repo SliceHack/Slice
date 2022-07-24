@@ -19,7 +19,7 @@ public class CommandToggle extends Command {
             addMessage("Module not found");
             return false;
         }
-        module.setEnabled(!module.isEnabled());
+        module.toggle();
         addMessage("Module " + module.getName() + " is now " + (module.isEnabled() ? "enabled" : "disabled"));
         return false;
     }

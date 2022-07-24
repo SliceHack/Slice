@@ -16,15 +16,45 @@ import java.io.FileReader;
 public class CommandConfig extends Command {
 
     public boolean handle(String name, String[] args) {
-        if(args.length < 2) {
-            addMessage("&cUsage&7: .config <save/load> <config>");
+        if(args.length < 1) {
+            addMessage("&cUsage&7: .config <save/list/load> <config>");
             return true;
         }
         String action = args[0];
+
+
+        if(action.equalsIgnoreCase("list")) {
+            // loop through all the configs and print them out
+            File folder = new File(Minecraft.getMinecraft().mcDataDir, "Slice\\configs\\");
+            File[] listOfFiles = folder.listFiles();
+
+            StringBuilder sb = new StringBuilder();
+            sb.append("&7Configs: ");
+            if(listOfFiles != null) {
+                int index = 0;
+                for(File file : listOfFiles) {
+                    String fileName = file.getName();
+                    fileName = fileName.substring(0, fileName.lastIndexOf('.'));
+                    if(index == (listOfFiles.length - 1)) {
+                        sb.append("&c").append(fileName);
+                    } else {
+                        sb.append("&c").append(fileName).append(", ");
+                    }
+                }
+            }
+            addMessage(sb.toString());
+
+            return true;
+        }
+
+        if(args.length < 2) {
+            addMessage("&cUsage&7: .config <save/list/load> <config>");
+            return true;
+        }
+
         String config = args[1];
 
         File configFile = new File(Minecraft.getMinecraft().mcDataDir, "Slice\\configs\\" + config + ".json");
-
         if(action.equalsIgnoreCase("load") && !configFile.exists()) {
             addMessage("&cConfig &7" + config + " &c" + "does not exist!");
             return true;

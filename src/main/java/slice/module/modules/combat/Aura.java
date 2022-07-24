@@ -85,12 +85,22 @@ public class Aura extends Module {
 
     public void onEnable() {
         deltaPitch = mc.thePlayer.rotationYaw;
-        deltaYaw = mc.thePlayer.rotationYawHead;
+        deltaYaw = mc.thePlayer.rotationPitch;
     }
 
     @EventInfo
     public void onUpdate(EventUpdate e) {
-        if (rotateTarget != null && !e.isPre()) {
+
+        if (rotateTarget == null) {
+            deltaYaw = mc.thePlayer.rotationYaw;
+            deltaPitch = mc.thePlayer.rotationPitch;
+        }
+        if(rotateTarget != null) {
+            e.setYaw(yaw);
+            e.setPitch(pitch);
+        }
+
+        if (rotateTarget != null) {
             float yaw, pitch;
             switch (rotateMode.getValue()) {
                 case "Bypass":
@@ -117,21 +127,7 @@ public class Aura extends Module {
             }
         }
 
-
-        if(rotateTarget != null) {
-            e.setYaw(yaw);
-            e.setPitch(pitch);
-        }
-
         try {
-            if(target == null) {
-                deltaYaw = mc.thePlayer.rotationYaw;
-                deltaPitch = mc.thePlayer.rotationPitch;
-            }
-            if (rotateTarget == null) {
-                deltaYaw = mc.thePlayer.rotationYawHead;
-                deltaPitch = mc.thePlayer.rotationPitchHead;
-            }
 
             switch (mode.getValue()) {
                 case "Switch":
@@ -348,7 +344,7 @@ public class Aura extends Module {
         float yaw = getBypassRotate(e)[0];
         float pitch = getBypassRotate(e)[1];
 
-        int smooth = 2;
+        int smooth = 4;
 
         if (deltaPitch < pitch) deltaPitch += Math.abs(pitch - deltaPitch) / smooth;
         if(deltaPitch > pitch) deltaPitch -= Math.abs(pitch - deltaPitch) / smooth;
@@ -356,13 +352,11 @@ public class Aura extends Module {
         if (deltaYaw < yaw) deltaYaw += Math.abs(yaw - deltaYaw) / smooth;
         if(deltaYaw > yaw) deltaYaw -= Math.abs(yaw - deltaYaw) / smooth;
 
-        if(deltaPitch > 90) deltaPitch = 90;
-        if(deltaPitch < -90) deltaPitch = -90;
-        ran = (((int)deltaPitch - (int)pitch) < 1) && (((int)deltaYaw - (int)yaw) < 1);
+        ran = (((int)deltaPitch - (int)pitch) < 2) && (((int)deltaYaw - (int)yaw) < 2);
         hasRotated = ran;
 
 
-        return new float[] { deltaYaw, deltaPitch};
+        return new float[] { deltaYaw+(float) Math.random(), deltaPitch };
     }
 
     public boolean canAttack(EntityLivingBase entity) {

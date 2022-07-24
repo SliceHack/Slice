@@ -63,6 +63,7 @@ public class ModuleManager {
         register(new AirJump());
         register(new Step());
         register(new Safewalk());
+        register(new Botter());
     }
 
     /**

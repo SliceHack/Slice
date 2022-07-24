@@ -25,12 +25,16 @@ import io.netty.channel.local.LocalServerChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.proxy.HttpProxyHandler;
+import io.netty.handler.proxy.Socks4ProxyHandler;
+import io.netty.handler.proxy.Socks5ProxyHandler;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.TimeoutException;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.util.Queue;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -417,6 +421,68 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
             }
         })).channel(oclass)).connect(address, serverPort).syncUninterruptibly();
         return networkmanager;
+    }
+
+    /**
+     * Create a new NetworkManager from the server host and connect it to the server
+     *
+     * @param address The address of the server
+     * @param serverPort The server port
+     * @param useNativeTransport True if the client use the native transport system
+     */
+    public static NetworkManager createNetworkManagerAndConnect(InetAddress address, int serverPort, boolean useNativeTransport, String userIP, int userPort)
+    {
+        final NetworkManager networkmanager = new NetworkManager(EnumPacketDirection.CLIENTBOUND);
+        try {
+            Class<? extends SocketChannel> oclass;
+            LazyLoadBase<? extends EventLoopGroup> lazyloadbase;
+
+            if (Epoll.isAvailable() && useNativeTransport) {
+                oclass = EpollSocketChannel.class;
+                lazyloadbase = CLIENT_EPOLL_EVENTLOOP;
+            } else {
+                oclass = NioSocketChannel.class;
+                lazyloadbase = CLIENT_NIO_EVENTLOOP;
+            }
+
+            ((((new Bootstrap()).group(lazyloadbase.getValue())).handler(new ChannelInitializer<Channel>() {
+                protected void initChannel(Channel p_initChannel_1_) {
+                    try {
+
+                        try {
+                            p_initChannel_1_.pipeline().addFirst(new HttpProxyHandler(new InetSocketAddress(userIP, 25565)));
+                            p_initChannel_1_.config().setOption(ChannelOption.TCP_NODELAY, Boolean.valueOf(true));
+
+                        } catch (ChannelException var3) {
+                            ;
+                        }
+
+                        p_initChannel_1_.pipeline().addLast((String) "timeout", (ChannelHandler) (new ReadTimeoutHandler(30))).addLast((String) "splitter", (ChannelHandler) (new MessageDeserializer2())).addLast((String) "decoder", (ChannelHandler) (new MessageDeserializer(EnumPacketDirection.CLIENTBOUND))).addLast((String) "prepender", (ChannelHandler) (new MessageSerializer2())).addLast((String) "encoder", (ChannelHandler) (new MessageSerializer(EnumPacketDirection.SERVERBOUND))).addLast((String) "packet_handler", (ChannelHandler) networkmanager);
+                        if (p_initChannel_1_ instanceof SocketChannel && ViaMCP.getInstance().getVersion() != ViaMCP.PROTOCOL_VERSION) {
+                            UserConnection user = new UserConnectionImpl(p_initChannel_1_, true);
+                            new ProtocolPipelineImpl(user);
+                            p_initChannel_1_.pipeline().addBefore("encoder", CommonTransformer.HANDLER_ENCODER_NAME, new MCPEncodeHandler(user)).addBefore("decoder", CommonTransformer.HANDLER_DECODER_NAME, new MCPDecodeHandler(user));
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            })).channel(oclass)).connect(address, serverPort).syncUninterruptibly();
+        } catch (Exception ignored){}
+        return networkmanager;
+    }
+
+    public static String generateIPAddress() {
+        String ip = "";
+        for (int i = 0; i < 4; i++) {
+            ip += (int) (Math.random() * 255) + ".";
+        }
+        ip = ip.substring(0, ip.length() - 1);
+        return ip;
+    }
+
+    public static int getRandomPort() {
+        return (int) (Math.random() * 65535);
     }
 
     /**

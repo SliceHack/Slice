@@ -192,7 +192,6 @@ public class GuiNewChat extends Gui
             if (Slice.INSTANCE.getModuleManager().getMinehut().isEnabled()) cancel = Slice.INSTANCE.getModuleManager().getMinehut().send(chatComponent.getUnformattedText());
         } catch (Exception ignored){}
 
-        System.out.println(chatComponent.getUnformattedText());
         if (cancel) return;
 
         this.setChatLine(chatComponent, chatLineId, this.mc.ingameGUI.getUpdateCounter(), false);
