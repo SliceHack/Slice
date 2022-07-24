@@ -2,14 +2,15 @@ package net.minecraft.network.play.client;
 
 import io.netty.buffer.ByteBuf;
 import java.io.IOException;
+
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayServer;
 
 public class C17PacketCustomPayload implements Packet<INetHandlerPlayServer>
 {
-    private String channel;
-    private PacketBuffer data;
+    public String channel;
+    public PacketBuffer data;
 
     public C17PacketCustomPayload()
     {

@@ -64,6 +64,7 @@ public class ModuleManager {
         register(new Step());
         register(new Safewalk());
         register(new Botter());
+        register(new Spoofer());
     }
 
     /**

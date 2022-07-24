@@ -1,6 +1,5 @@
 package slice.module.modules.misc;
 
-import slice.event.Event;
 import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;

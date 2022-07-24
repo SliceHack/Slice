@@ -279,6 +279,11 @@ public class Aura extends Module {
         if(deltaX < 0 && deltaZ > 0) yaw = (float) (90 + (Math.toDegrees(Math.atan(deltaZ / deltaX))));
         if(deltaX > 0 && deltaZ > 0) yaw = (float) (-90 + (Math.toDegrees(Math.atan(deltaZ / deltaX))));
 
+        if(deltaX == 0 && deltaZ < 0) yaw = -90;
+        if(deltaX == 0 && deltaZ > 0) yaw = 90;
+        if(deltaX < 0 && deltaZ == 0) yaw = 180;
+        if(deltaX > 0 && deltaZ == 0) yaw = 0;
+        
         if(pitch > 90) pitch = 90;
         if(pitch < -90) pitch = -90;
 
