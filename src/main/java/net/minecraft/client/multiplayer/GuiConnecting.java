@@ -25,6 +25,7 @@ import net.minecraft.util.IChatComponent;
 import net.minecraft.util.Session;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import slice.module.modules.misc.Botter;
 import slice.util.LoggerUtil;
 
 @SuppressWarnings("all")
@@ -127,8 +128,9 @@ public class GuiConnecting extends GuiScreen
                 InetAddress inetaddress = null;
 
 
-                String randomIP = generateIPAddress();
-                int randomPort = getRandomPort();
+                String botIP = Botter.getRandomIP();
+                String randomIP = botIP.split(":")[0];
+                int randomPort = Integer.parseInt(botIP.split(":")[1]);
 
                 try {
                     if (cancel) return;
@@ -137,7 +139,7 @@ public class GuiConnecting extends GuiScreen
                     networkManager = NetworkManager.createNetworkManagerAndConnect(inetaddress, port, mc.gameSettings.isUsingNativeTransport(), randomIP, randomPort);
                     networkManager.sendPacket(new C00Handshake(47, ip, port, EnumConnectionState.LOGIN));
                     networkManager.sendPacket(new C00PacketLoginStart(session.getProfile()));
-                    LoggerUtil.addMessage("Connected to &a" + ip + ":" + port + "&7 proxy: &a" + randomIP + "&7:" + randomPort);
+                    LoggerUtil.addMessage("Connected to &a" + ip + ":" + port + "&7 proxy: &a" + botIP + "&7:" + randomPort);
                 } catch (UnknownHostException unknownhostexception) {
                     if (cancel) return;
 

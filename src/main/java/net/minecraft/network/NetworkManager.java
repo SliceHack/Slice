@@ -36,6 +36,7 @@ import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.net.SocketAddress;
 import java.util.Queue;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -453,8 +454,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
 
                         try {
                             p_initChannel_1_.config().setOption(ChannelOption.TCP_NODELAY, Boolean.valueOf(true));
-
-                        } catch (ChannelException var3) {}
+                        } catch (Exception ignored) {}
 
                         p_initChannel_1_.pipeline()
                                 .addLast((String) "timeout", (ChannelHandler) (new ReadTimeoutHandler(30)))
