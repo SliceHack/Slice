@@ -473,9 +473,6 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
                                     .addBefore("encoder", CommonTransformer.HANDLER_ENCODER_NAME, new MCPEncodeHandler(user))
                                     .addBefore("decoder", CommonTransformer.HANDLER_DECODER_NAME, new MCPDecodeHandler(user));
                         }
-                        if(p_initChannel_1_ instanceof SocketChannel) {
-                            p_initChannel_1_.pipeline().addLast("proxy", new HttpProxyHandler(new InetSocketAddress(userIP, userPort)));
-                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

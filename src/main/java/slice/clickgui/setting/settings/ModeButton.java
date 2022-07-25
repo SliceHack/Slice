@@ -35,7 +35,8 @@ public class ModeButton extends SettingComponent {
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
         if (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
-            modeValue.cycle();
+            if(mouseButton == 0) modeValue.cycle();
+            else if(mouseButton == 1) modeValue.cycleBackwards();
         }
     }
 }

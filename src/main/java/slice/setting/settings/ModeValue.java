@@ -34,4 +34,15 @@ public class ModeValue extends Setting {
         index = (index + 1) % values.length;
         value = values[index];
     }
+
+    public void cycleBackwards() {
+        if(values.length == 0)
+            return;
+
+        index = (index - 1) % values.length;
+        if(index < 0)
+            index = values.length - 1;
+        value = values[index];
+    }
+
 }
