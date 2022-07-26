@@ -16,15 +16,15 @@ public class Math {
     public double PI = java.lang.Math.PI;
     public double E = java.lang.Math.E;
 
-    public float sin(float input) {
-        return MathHelper.sin(input);
+    public double sin(double input) {
+        return java.lang.Math.sin(input);
     }
 
-    public float cos(float input) {
-        return MathHelper.cos(input);
+    public double cos(double input) {
+        return java.lang.Math.cos(input);
     }
 
-    public double tan(float input) {
+    public double tan(double input) {
         return java.lang.Math.tan(input);
     }
 
@@ -140,14 +140,14 @@ public class Math {
         return java.lang.Math.floor(input / mod) * mod;
     }
 
-    
 
-    public float toDegrees(float input) {
-        return (float) (input * (180 / this.PI));
+
+    public double toDegrees(double input) {
+        return java.lang.Math.toDegrees(input);
     }
 
-    public float toRadians(float input) {
-        return (float) (input * (this.PI / 180));
+    public double toRadians(double input) {
+        return java.lang.Math.toRadians(input);
     }
 
 }
