@@ -6,6 +6,7 @@ import slice.module.Module;
 import slice.module.data.Category;
 import slice.script.lang.Base;
 import slice.script.lang.logger.Chat;
+import slice.script.lang.util.ScriptKeyUtil;
 import slice.script.lang.util.ScriptMoveUtil;
 
 import javax.script.ScriptEngine;
@@ -22,6 +23,7 @@ public class ScriptModule extends Module {
         this.engine = engine;
         engine.put("chat", Chat.INSTANCE);
         engine.put("MoveUtil", ScriptMoveUtil.INSTANCE);
+        engine.put("KeyUtil", ScriptKeygUtil.INSTANCE);
         engine.put("timer", timer);
         init();
     }
