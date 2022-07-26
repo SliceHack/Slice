@@ -8,8 +8,7 @@ import net.minecraft.util.MathHelper;
  *
  * @author Dylan
 */
-
-@Data
+@Data @SuppressWarnings("unused")
 public class Math {
     public static Math INSTANCE = new Math();
 
