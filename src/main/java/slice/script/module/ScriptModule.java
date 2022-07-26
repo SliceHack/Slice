@@ -23,7 +23,7 @@ public class ScriptModule extends Module {
         this.engine = engine;
         engine.put("chat", Chat.INSTANCE);
         engine.put("MoveUtil", ScriptMoveUtil.INSTANCE);
-        engine.put("KeyUtil", ScriptKeygUtil.INSTANCE);
+        engine.put("KeyUtil", ScriptKeyUtil.INSTANCE);
         engine.put("timer", timer);
         init();
     }
