@@ -1,6 +1,5 @@
 package slice.script.module;
 
-import slice.event.Event;
 import slice.event.data.EventInfo;
 import slice.event.events.*;
 import slice.module.Module;
@@ -11,6 +10,7 @@ import slice.script.lang.util.ScriptMoveUtil;
 
 import javax.script.ScriptEngine;
 
+@SuppressWarnings("unused")
 public class ScriptModule extends Module {
 
     private final ScriptEngine engine;
