@@ -53,7 +53,7 @@ public class Script {
             addCategories(engine);
             engine.put("script", this);
 
-            engine.eval(Files.newBufferedReader(Paths.get("C:\\Users\\Nick\\VSCode\\test\\main.js"), StandardCharsets.UTF_8));
+            engine.eval(Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8));
 
             if(!Base.hasVariable(engine, "name") || !Base.hasVariable(engine, "category")) {
                 System.err.println("Missing required variables");

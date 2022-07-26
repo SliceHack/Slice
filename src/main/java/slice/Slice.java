@@ -5,7 +5,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 import net.minecraft.network.play.server.S02PacketChat;
 import org.lwjgl.input.Keyboard;
 import slice.api.API;
@@ -23,15 +22,14 @@ import slice.manager.CommandManager;
 import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
 import slice.module.Module;
-import slice.script.Script;
-import slice.util.LoggerUtil;
+import slice.script.manager.ScriptManager;
 
 /**
 * Main Class for the Client
 *
 * @author Nick & Dylan
 */
-@Getter
+@Getter @SuppressWarnings("unused")
 public enum Slice {
     INSTANCE;
 
@@ -43,6 +41,7 @@ public enum Slice {
     private final CommandManager commandManager;
     private final SettingsManager settingsManager;
     private final FontManager fontManager;
+    private final ScriptManager scriptManager;
 
     /* data */
     private final ClickGui clickGui;
@@ -80,7 +79,7 @@ public enum Slice {
         fontManager = new FontManager();
         clickGui = new ClickGui();
         saver = new Saver(moduleManager);
-        new Script("e", moduleManager, fontManager);
+        scriptManager = new ScriptManager(moduleManager, fontManager);
         discordRPC = new StartDiscordRPC();
         discordRPC.start();
         API.sendAuthRequest(irc);
