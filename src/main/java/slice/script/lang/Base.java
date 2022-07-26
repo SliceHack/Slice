@@ -27,6 +27,7 @@ public class Base {
     public static void setup(ScriptEngine engine) {
         engine.put("console", Console.INSTANCE);
         engine.put("mc", Minecraft.getMinecraft());
+        engine.put("Math", slice.script.lang.math.Math.INSTANCE);
         engine.put("sys_out", System.out);
     }
 
