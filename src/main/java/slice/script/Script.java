@@ -51,6 +51,10 @@ public class Script {
 
             Base.setup(engine);
             addCategories(engine);
+            engine.put("DOUBLE", NumberValue.Type.DOUBLE);
+            engine.put("FLOAT", NumberValue.Type.FLOAT);
+            engine.put("INTEGER", NumberValue.Type.INTEGER);
+            engine.put("LONG", NumberValue.Type.LONG);
             engine.put("script", this);
 
             engine.eval(Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8));

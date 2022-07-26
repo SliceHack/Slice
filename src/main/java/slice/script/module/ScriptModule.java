@@ -31,10 +31,6 @@ public class ScriptModule extends Module {
         engine.put("MODE_VALUE", MODE_VALUE);
         engine.put("BOOLEAN_VALUE", BOOLEAN_VALUE);
         engine.put("NUMBER_VALUE", NUMBER_VALUE);
-        engine.put("DOUBLE", NumberValue.Type.DOUBLE);
-        engine.put("FLOAT", NumberValue.Type.FLOAT);
-        engine.put("INTEGER", NumberValue.Type.INTEGER);
-        engine.put("LONG", NumberValue.Type.LONG);
         engine.put("chat", Chat.INSTANCE);
         engine.put("MoveUtil", ScriptMoveUtil.INSTANCE);
         engine.put("KeyUtil", ScriptKeyUtil.INSTANCE);
