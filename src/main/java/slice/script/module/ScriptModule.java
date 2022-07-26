@@ -1,5 +1,6 @@
 package slice.script.module;
 
+import slice.Slice;
 import slice.event.data.EventInfo;
 import slice.event.events.*;
 import slice.module.Module;
@@ -24,6 +25,7 @@ public class ScriptModule extends Module {
         engine.put("chat", Chat.INSTANCE);
         engine.put("MoveUtil", ScriptMoveUtil.INSTANCE);
         engine.put("KeyUtil", ScriptKeyUtil.INSTANCE);
+        engine.put("FontManager", Slice.INSTANCE.getFontManager());
         engine.put("timer", timer);
         init();
     }
