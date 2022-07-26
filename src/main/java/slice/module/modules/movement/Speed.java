@@ -52,9 +52,26 @@ public class Speed extends Module {
 
     @EventInfo
     public void onUpdate(EventUpdate e) {
+        if(!mode.getValue().equalsIgnoreCase("Matrix")) {
+            mc.thePlayer.speedInAir = 0.02F;
+            mc.thePlayer.jumpMovementFactor = 0.02F;
+        }
+
         switch (mode.getValue()) {
             case "Dev":
+                if(mc.thePlayer.fallDistance > 4)
+                    break;
 
+                if(!MoveUtil.isMoving()) break;
+
+                if(mc.thePlayer.onGround) {
+                    MoveUtil.jump();
+                    MoveUtil.strafe(0.48);
+                }
+
+                if(offGroundTicks >= 7) {
+                    mc.thePlayer.motionY = -2F;
+                }
                 break;
             case "Matrix":
                 if(mc.thePlayer.moveForward == 0) break;

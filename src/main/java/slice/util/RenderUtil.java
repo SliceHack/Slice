@@ -5,6 +5,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 /**
@@ -28,6 +30,19 @@ public class RenderUtil {
      */
     public static void drawRoundedRect(int x, int y, int width, int height, int color) {
         drawRoundedRect(x, y, x + width, y + width, 10, color);
+    }
+
+    /**
+     * Draws a rectangle rectangle
+     *
+     * @param x The x coordinate of the rectangle
+     * @param y The y coordinate of the rectangle
+     * @param width The width of the rectangle
+     * @param height The height of the rectangle
+     * @param color The color of the rectangle
+     * */
+    public static void drawRect(int x, int y, int width, int height, int color) {
+        Gui.drawRect(x, y, x + width, y + height, color);
     }
 
     /**

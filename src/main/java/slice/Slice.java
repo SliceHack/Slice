@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.Packet;
+import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 import net.minecraft.network.play.server.S02PacketChat;
 import org.lwjgl.input.Keyboard;
 import slice.api.API;
@@ -22,6 +23,7 @@ import slice.manager.CommandManager;
 import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
 import slice.module.Module;
+import slice.util.LoggerUtil;
 
 /**
 * Main Class for the Client
@@ -91,6 +93,7 @@ public enum Slice {
         saver.save();
     }
 
+
     @EventInfo
     public void onUpdate(EventUpdate e) {
 
@@ -138,6 +141,7 @@ public enum Slice {
         if(plugins.searching) {
             plugins.onPacketReceive(e);
         }
+
 
         if(packet instanceof S02PacketChat) {
             S02PacketChat s02 = (S02PacketChat) packet;

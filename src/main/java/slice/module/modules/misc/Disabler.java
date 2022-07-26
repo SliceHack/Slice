@@ -2,6 +2,7 @@ package slice.module.modules.misc;
 
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C00PacketKeepAlive;
+import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 import slice.event.Event;
 import slice.event.data.EventInfo;
 import slice.event.events.EventPacket;
@@ -39,7 +40,7 @@ public class Disabler extends Module {
         if(mc.isSingleplayer())
             return;
 
-        if(timer.hasReached(swap ? 150 : 0)) {
+        if(timer.hasReached(swap ? 5000 : 0)) {
             if(packets.isEmpty())
                 return;
 
@@ -65,8 +66,8 @@ public class Disabler extends Module {
 
                 if(p instanceof C00PacketKeepAlive) {
                     packets.add((C00PacketKeepAlive) p);
-                    e.setCancelled(true);
                     index++;
+                    e.setCancelled(true);
                     return;
                 }
                 break;

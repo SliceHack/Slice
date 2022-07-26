@@ -1133,6 +1133,30 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             this.runTick();
         }
 
+        for(int j = 0; j < this.timer.elapsedTicks+1; ++j)
+        {
+            if(this.currentScreen instanceof MainMenu) {
+                MainMenu mainMenu = (MainMenu) this.currentScreen;
+                mainMenu.onTick();
+            }
+            if(this.currentScreen instanceof GuiMultiplayer) {
+                GuiMultiplayer guiMultiplayer = (GuiMultiplayer) this.currentScreen;
+                guiMultiplayer.onTick();
+            }
+            if(this.currentScreen instanceof GuiSelectWorld) {
+                GuiSelectWorld guiSelectWorld = (GuiSelectWorld) this.currentScreen;
+                guiSelectWorld.onTick();
+            }
+            if(this.currentScreen instanceof AltManager) {
+                AltManager altManager = (AltManager) this.currentScreen;
+                altManager.onTick();
+            }
+            if(this.currentScreen instanceof GuiProtocolSelector) {
+                GuiProtocolSelector guiProtocolSelector = (GuiProtocolSelector) this.currentScreen;
+                guiProtocolSelector.onTick();
+            }
+        }
+
         this.mcProfiler.endStartSection("preRenderErrors");
         long i1 = System.nanoTime() - l;
         this.checkGLError("Pre render");
@@ -1766,26 +1790,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     {
         EventClientTick event = new EventClientTick();
         if(theWorld != null || thePlayer != null) event.call();
-        if(this.currentScreen instanceof MainMenu) {
-            MainMenu mainMenu = (MainMenu) this.currentScreen;
-            mainMenu.onTick();
-        }
-        if(this.currentScreen instanceof GuiMultiplayer) {
-            GuiMultiplayer guiMultiplayer = (GuiMultiplayer) this.currentScreen;
-            guiMultiplayer.onTick();
-        }
-        if(this.currentScreen instanceof GuiSelectWorld) {
-            GuiSelectWorld guiSelectWorld = (GuiSelectWorld) this.currentScreen;
-            guiSelectWorld.onTick();
-        }
-        if(this.currentScreen instanceof AltManager) {
-            AltManager altManager = (AltManager) this.currentScreen;
-            altManager.onTick();
-        }
-        if(this.currentScreen instanceof GuiProtocolSelector) {
-            GuiProtocolSelector guiProtocolSelector = (GuiProtocolSelector) this.currentScreen;
-            guiProtocolSelector.onTick();
-        }
         HUD.onTick();
         if (this.rightClickDelayTimer > 0)
         {

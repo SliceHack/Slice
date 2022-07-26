@@ -29,7 +29,6 @@ public class API {
      * **/
     public static void sendAuthRequest(IRC irc) {
         try {
-            System.out.println(HardwareUtil.getHardwareID());
             URL url = new URL(API_URL + "checkAuth/" + HardwareUtil.getHardwareID());
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");

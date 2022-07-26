@@ -106,21 +106,8 @@ public class Fly extends Module {
                 }
                 break;
             case "Vulcan":
-
-                if(stage == 0) {
-                    mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, mc.thePlayer.rotationYaw, -90, mc.thePlayer.onGround));
-                    useBow();
-
-                    if(mc.thePlayer.hurtResistantTime > 3) {
-                        stage = 1;
-                    }
-                    MoveUtil.stop();
-                }
-
-
-                if(stage == 1 && mc.thePlayer.hurtResistantTime > 12 && mc.thePlayer.onGround) {
-                    mc.thePlayer.motionY = 2F;
-                    stage = 2;
+                if(stage < 2) {
+                    stage = 3;
                 }
 
                 if(stage == 2 && mc.thePlayer.hurtResistantTime <= 0) {
@@ -129,11 +116,6 @@ public class Fly extends Module {
 
                 if(stage == 3) {
                     if (mc.thePlayer.ticksExisted % 5 == 0) mc.thePlayer.motionY = -0.1F;
-
-                    if(mc.thePlayer.onGround) {
-                        onDisable();
-                        setEnabled(false);
-                    }
                 }
                 break;
             case "Vanilla":

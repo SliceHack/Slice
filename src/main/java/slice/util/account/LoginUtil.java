@@ -82,7 +82,7 @@ public class LoginUtil {
             MicrosoftAuthResult result = authenticator.loginWithCredentials(email, password);
             MinecraftProfile profile = result.getProfile();
 
-            Session session = new Session(profile.getName(), profile.getId(), result.getAccessToken(), "mojang");
+            Session session = new Session(profile.getName(), profile.getId(), result.getAccessToken(), "thealtening");
             Minecraft.getMinecraft().session = session;
             return new MicrosoftAccount(profile, session, result.getRefreshToken());
         } catch (Exception e) {

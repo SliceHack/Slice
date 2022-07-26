@@ -1,5 +1,6 @@
 package slice.module.modules.misc;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
@@ -10,6 +11,9 @@ import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
 import slice.setting.settings.ModeValue;
+
+import java.io.ByteArrayOutputStream;
+import java.nio.Buffer;
 
 @SuppressWarnings("all") @ModuleInfo(name = "Spoofer", description = "Spoofs your client brand", category = Category.MISC)
 public class Spoofer extends Module {
@@ -22,6 +26,25 @@ public class Spoofer extends Module {
 
         if(p instanceof C17PacketCustomPayload) {
             C17PacketCustomPayload packet = (C17PacketCustomPayload) p;
+
+            if(packet.channel.equalsIgnoreCase("MC|Brand")) {
+                ByteArrayOutputStream b = new ByteArrayOutputStream();
+                ByteBuf message = Unpooled.buffer();
+
+                switch (mode.getValue()) {
+                    case "Lunar":
+                        message.writeBytes(("lunarclient:" + lunarSha()).getBytes());
+                        break;
+                    case "Forge":
+                        message.writeBytes("fml".getBytes());
+                        break;
+                    case "Geyser":
+                        message.writeBytes("GeyserMC".getBytes());
+                        break;
+
+                }
+                return;
+            }
 
             switch (mode.getValue()) {
                 case "Forge": {
@@ -38,6 +61,12 @@ public class Spoofer extends Module {
                 }
             }
         }
+    }
+
+    public String lunarSha() {
+        String sha = "";
+        for(int i = 0; i < 9; i++) sha += (int) (Math.random() * 10);
+        return sha;
     }
 
     public PacketBuffer packetBuffer(String data, boolean string) {

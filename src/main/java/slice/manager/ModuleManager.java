@@ -30,10 +30,6 @@ public class ModuleManager {
     /* Every Module */
     private List<Module> modules = new ArrayList<>();
 
-    /**
-     * TODO:
-        * Finish AutoClicker
-     * */
     public ModuleManager() {
         register(new Interface());
         register(new Fly());

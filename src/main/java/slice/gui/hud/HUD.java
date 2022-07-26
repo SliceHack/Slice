@@ -82,12 +82,7 @@ public class HUD {
 
         int fontHeight2 = sr.getScaledHeight() / 18;
 
-        GlStateManager.pushMatrix();
-        GlStateManager.disableLighting();
-        GlStateManager.enableAlpha();
         RenderUtil.drawImage("icons/Slice.png", 10, 10, widthHeight, widthHeight);
-        GlStateManager.disableLighting();
-        GlStateManager.popMatrix();
 
         ArrayListHUD arrayListHUD = new ArrayListHUD();
         arrayListHUD.draw(fontHeight2);
