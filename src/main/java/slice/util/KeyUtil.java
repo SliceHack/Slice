@@ -52,14 +52,12 @@ public class KeyUtil {
         return Minecraft.getMinecraft().gameSettings.keyBindJump;
     }
 
-
     /**
      * jump key
      * */
     public KeyBinding jump() {
         return Minecraft.getMinecraft().gameSettings.keyBindJump;
     }
-
 
 
 }
