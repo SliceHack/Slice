@@ -7,12 +7,18 @@ import slice.module.Module;
 import slice.module.data.Category;
 import slice.script.lang.Base;
 import slice.script.lang.logger.Chat;
+import slice.script.module.setting.SettingEnum;
 import slice.script.module.util.ScriptKeyUtil;
 import slice.script.module.util.ScriptMoveUtil;
 import slice.script.module.util.ScriptRenderUtil;
 import slice.script.module.util.ScriptRotationUtil;
+import slice.setting.settings.BooleanValue;
+import slice.setting.settings.ModeValue;
+import slice.setting.settings.NumberValue;
 
 import javax.script.ScriptEngine;
+
+import static slice.script.module.setting.SettingEnum.*;
 
 @SuppressWarnings("unused")
 public class ScriptModule extends Module {
@@ -20,6 +26,13 @@ public class ScriptModule extends Module {
     private final ScriptEngine engine;
 
     public ScriptModule(String name, String description, Category category, ScriptEngine engine) {
+        engine.put("MODE_VALUE", MODE_VALUE);
+        engine.put("BOOLEAN_VALUE", BOOLEAN_VALUE);
+        engine.put("NUMBER_VALUE", NUMBER_VALUE);
+        engine.put("DOUBLE", NumberValue.Type.DOUBLE);
+        engine.put("FLOAT", NumberValue.Type.FLOAT);
+        engine.put("INTEGER", NumberValue.Type.INTEGER);
+        engine.put("LONG", NumberValue.Type.LONG);
         this.name = name;
         this.description = description;
         this.category = category;
@@ -31,6 +44,7 @@ public class ScriptModule extends Module {
         engine.put("RotationUtil", ScriptRotationUtil.INSTANCE);
         engine.put("FontManager", Slice.INSTANCE.getFontManager());
         engine.put("timer", timer);
+
         init();
     }
 
@@ -132,4 +146,22 @@ public class ScriptModule extends Module {
         Base.callFunction(engine, "onEventSlowDown", e);
     }
 
+    public BooleanValue registerSettingBoolean(String name, boolean value) {
+        BooleanValue setting = new BooleanValue(name, value);
+        getSettings().add(setting);
+        return setting;
+    }
+
+    public ModeValue registerSettingMode(String name, String... modes) {
+        if(modes.length == 0) return null;
+        ModeValue mode = new ModeValue(name, modes);
+        getSettings().add(mode);
+        return mode;
+    }
+
+    public NumberValue registerSettingNumber(String name, double min, double max, double value, NumberValue.Type type) {
+        NumberValue setting = new NumberValue(name, min, max, value, type);
+        getSettings().add(setting);
+        return setting;
+    }
 }

@@ -19,6 +19,12 @@ public class ModeValue extends Setting {
         this.values = values;
     }
 
+    public ModeValue(String name, String... values) {
+        super(name);
+        this.value = values[0];
+        this.values = values;
+    }
+
     public void setValue(String value) {
         this.value = value;
         try {
