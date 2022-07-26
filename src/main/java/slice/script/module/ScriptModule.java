@@ -3,6 +3,7 @@ package slice.script.module;
 import slice.Slice;
 import slice.event.data.EventInfo;
 import slice.event.events.*;
+import slice.font.FontManager;
 import slice.module.Module;
 import slice.module.data.Category;
 import slice.script.lang.Base;
@@ -15,6 +16,7 @@ import slice.script.module.util.ScriptRotationUtil;
 import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
+import slice.util.LoggerUtil;
 
 import javax.script.ScriptEngine;
 
@@ -25,7 +27,7 @@ public class ScriptModule extends Module {
 
     private final ScriptEngine engine;
 
-    public ScriptModule(String name, String description, Category category, ScriptEngine engine) {
+    public ScriptModule(String name, String description, Category category, ScriptEngine engine, FontManager fontManager) {
         engine.put("MODE_VALUE", MODE_VALUE);
         engine.put("BOOLEAN_VALUE", BOOLEAN_VALUE);
         engine.put("NUMBER_VALUE", NUMBER_VALUE);
@@ -33,24 +35,26 @@ public class ScriptModule extends Module {
         engine.put("FLOAT", NumberValue.Type.FLOAT);
         engine.put("INTEGER", NumberValue.Type.INTEGER);
         engine.put("LONG", NumberValue.Type.LONG);
-        this.name = name;
-        this.description = description;
-        this.category = category;
-        this.engine = engine;
         engine.put("chat", Chat.INSTANCE);
         engine.put("MoveUtil", ScriptMoveUtil.INSTANCE);
         engine.put("KeyUtil", ScriptKeyUtil.INSTANCE);
         engine.put("RenderUtil", ScriptRenderUtil.INSTANCE);
         engine.put("RotationUtil", ScriptRotationUtil.INSTANCE);
-        engine.put("FontManager", Slice.INSTANCE.getFontManager());
         engine.put("timer", timer);
+        engine.put("script", this);
 
+        this.name = name;
+        this.description = description;
+        this.category = category;
+        this.engine = engine;
         init();
     }
 
     @Override
     public void onUpdateNoToggle(EventUpdate event) {
         engine.put("player", mc.thePlayer);
+        engine.put("FontManager", Slice.INSTANCE.getFontManager());
+        engine.put("timer", timer);
     }
 
     @Override
@@ -146,6 +150,11 @@ public class ScriptModule extends Module {
         Base.callFunction(engine, "onEventSlowDown", e);
     }
 
+    @EventInfo
+    public void onEvent2D(Event2D e) {
+        Base.callFunction(engine, "onEvent2D", e);
+    }
+
     public BooleanValue registerSettingBoolean(String name, boolean value) {
         BooleanValue setting = new BooleanValue(name, value);
         getSettings().add(setting);
@@ -154,7 +163,7 @@ public class ScriptModule extends Module {
 
     public ModeValue registerSettingMode(String name, String... modes) {
         if(modes.length == 0) return null;
-        ModeValue mode = new ModeValue(name, modes);
+        ModeValue mode = new ModeValue(name, modes[0], modes);
         getSettings().add(mode);
         return mode;
     }

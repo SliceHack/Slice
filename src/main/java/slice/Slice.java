@@ -80,7 +80,7 @@ public enum Slice {
         fontManager = new FontManager();
         clickGui = new ClickGui();
         saver = new Saver(moduleManager);
-        new Script("e", moduleManager);
+        new Script("e", moduleManager, fontManager);
         discordRPC = new StartDiscordRPC();
         discordRPC.start();
         API.sendAuthRequest(irc);

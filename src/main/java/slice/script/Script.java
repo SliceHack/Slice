@@ -1,7 +1,8 @@
 package slice.script;
+
 import lombok.Getter;
 import lombok.Setter;
-import slice.Slice;
+import slice.font.FontManager;
 import slice.manager.ModuleManager;
 import slice.module.data.Category;
 import slice.script.lang.Base;
@@ -25,10 +26,12 @@ public class Script {
 
     private String path;
     private ModuleManager moduleManager;
+    private FontManager fontManager;
 
-    public Script(String path, ModuleManager moduleManager) {
+    public Script(String path, ModuleManager moduleManager, FontManager fontManager) {
         this.path = path;
         this.moduleManager = moduleManager;
+        this.fontManager = fontManager;
         this.startScript();
     }
 
@@ -39,6 +42,7 @@ public class Script {
 
             Base.setup(engine);
             addCategories(engine);
+
             engine.eval(Files.newBufferedReader(Paths.get("C:\\Users\\Nick\\VSCode\\test\\main.js"), StandardCharsets.UTF_8));
 
             if(!Base.hasVariable(engine, "name") || !Base.hasVariable(engine, "category")) {
@@ -55,9 +59,9 @@ public class Script {
             Category category = (Category)Base.getVariable(engine, "category");
             String description = Base.hasVariable(engine,"description") ? (String)Base.getVariable(engine, "description") : "No description provided.";
 
-            ScriptModule module = new ScriptModule(name, description, category, engine);
-            Base.putInEngine(engine, "module", module);
+            ScriptModule module = new ScriptModule(name, description, category, engine, fontManager);
             moduleManager.register(module);
+            Base.callFunction(engine, "onLoad");
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -43,6 +43,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraft.world.border.WorldBorder;
 import net.optifine.CustomColors;
+import slice.event.events.Event2D;
 import slice.gui.hud.HUD;
 
 public class GuiIngame extends Gui
@@ -174,9 +175,11 @@ public class GuiIngame extends Gui
         try {
             HUD.draw();
         } catch (Exception e){
-            e
-                    .printStackTrace();
+            e.printStackTrace();
         }
+
+        Event2D event2d = new Event2D(partialTicks);
+        event2d.call();
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(icons);
