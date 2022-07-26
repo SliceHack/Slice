@@ -93,6 +93,29 @@ public class Base {
     }
 
     /**
+     * Checks if a script has a function.
+     *
+     * @param engine The script engine.
+     * @param name The name of the variable.
+     */
+    public boolean hasFunction(ScriptEngine engine, String name) {
+        try {
+            Bindings bind = engine.getBindings(ScriptContext.ENGINE_SCOPE);
+            Set<String> allAttributes = bind.keySet();
+            for (String attr : allAttributes) {
+                if ("function".equals(engine.eval("typeof " + attr))) {
+                    if (attr.equalsIgnoreCase(name)) {
+                        return true;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return false;
+    }
+
+    /**
      * Checks if a script has a variable.
      *
      * @param engine The script engine.
@@ -104,7 +127,7 @@ public class Base {
             Set<String> allAttributes = bind.keySet();
             for (String attr : allAttributes) {
                 if (!("function".equals(engine.eval("typeof " + attr)))) {
-                    if (attr.equals(name)) {
+                    if (attr.equalsIgnoreCase(name)) {
                         return true;
                     }
                 }
