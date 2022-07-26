@@ -104,7 +104,7 @@ public class Base {
             Set<String> allAttributes = bind.keySet();
             for (String attr : allAttributes) {
                 if ("function".equals(engine.eval("typeof " + attr))) {
-                    if (attr.equalsIgnoreCase(name)) {
+                    if (attr.equals(name)) {
                         return true;
                     }
                 }
@@ -127,7 +127,7 @@ public class Base {
             Set<String> allAttributes = bind.keySet();
             for (String attr : allAttributes) {
                 if (!("function".equals(engine.eval("typeof " + attr)))) {
-                    if (attr.equalsIgnoreCase(name)) {
+                    if (attr.equals(name)) {
                         return true;
                     }
                 }
