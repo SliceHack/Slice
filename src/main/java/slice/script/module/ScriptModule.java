@@ -9,6 +9,8 @@ import slice.script.lang.Base;
 import slice.script.lang.logger.Chat;
 import slice.script.lang.util.ScriptKeyUtil;
 import slice.script.lang.util.ScriptMoveUtil;
+import slice.script.lang.util.ScriptRenderUtil;
+import slice.script.lang.util.ScriptRotationUtil;
 
 import javax.script.ScriptEngine;
 
@@ -25,6 +27,8 @@ public class ScriptModule extends Module {
         engine.put("chat", Chat.INSTANCE);
         engine.put("MoveUtil", ScriptMoveUtil.INSTANCE);
         engine.put("KeyUtil", ScriptKeyUtil.INSTANCE);
+        engine.put("RenderUtil", ScriptRenderUtil.INSTANCE);
+        engine.put("RotationUtil", ScriptRotationUtil.INSTANCE);
         engine.put("FontManager", Slice.INSTANCE.getFontManager());
         engine.put("timer", timer);
         init();

@@ -39,7 +39,7 @@ public class Script {
 
             Base.setup(engine);
             addCategories(engine);
-            engine.eval(Files.newBufferedReader(Paths.get("C:\\Users\\djlev\\OneDrive\\Documents\\SliceScript\\index.js"), StandardCharsets.UTF_8));
+            engine.eval(Files.newBufferedReader(Paths.get("C:\\Users\\Nick\\VSCode\\test\\main.js"), StandardCharsets.UTF_8));
 
             if(!Base.hasVariable(engine, "name") || !Base.hasVariable(engine, "category")) {
                 System.err.println("Missing required variables");
