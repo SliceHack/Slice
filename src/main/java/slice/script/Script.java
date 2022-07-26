@@ -1,7 +1,12 @@
 package slice.script;
 import lombok.Getter;
 import lombok.Setter;
+import slice.Slice;
+import slice.manager.ModuleManager;
+import slice.module.data.Category;
 import slice.script.lang.Base;
+import slice.script.module.ScriptModule;
+
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import java.nio.charset.StandardCharsets;
@@ -19,9 +24,11 @@ import static slice.module.data.Category.*;
 public class Script {
 
     private String path;
+    private ModuleManager moduleManager;
 
-    public Script(String path) {
+    public Script(String path, ModuleManager moduleManager) {
         this.path = path;
+        this.moduleManager = moduleManager;
         this.startScript();
     }
 
@@ -32,8 +39,25 @@ public class Script {
 
             Base.setup(engine);
             addCategories(engine);
-            engine.eval(Files.newBufferedReader(Paths.get("C:\\Users\\djlev\\OneDrive\\Documents\\SliceScript\\index.js"), StandardCharsets.UTF_8));
+            engine.eval(Files.newBufferedReader(Paths.get("C:\\Users\\Nick\\VSCode\\test\\main.js"), StandardCharsets.UTF_8));
 
+            if(!Base.hasVariable(engine, "name") || !Base.hasVariable(engine, "category")) {
+                System.err.println("Missing required variables");
+                return;
+            }
+
+            if(!(Base.getVariable(engine, "category") instanceof Category)) {
+                System.out.println("Category is invalid type");
+                return;
+            }
+
+            String name = (String)Base.getVariable(engine, "name");
+            Category category = (Category)Base.getVariable(engine, "category");
+            String description = Base.hasVariable(engine,"description") ? (String)Base.getVariable(engine, "description") : "No description provided.";
+
+            ScriptModule module = new ScriptModule(name, description, category, engine);
+            Base.putInEngine(engine, "module", module);
+            moduleManager.register(module);
         } catch (Exception e) {
             e.printStackTrace();
         }

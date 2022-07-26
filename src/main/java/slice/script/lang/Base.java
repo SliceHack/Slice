@@ -6,9 +6,11 @@ import slice.script.lang.logger.Console;
 import slice.util.MathUtil;
 
 import javax.script.Bindings;
+import javax.script.Invocable;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -114,6 +116,24 @@ public class Base {
             return false;
         }
         return false;
+    }
+
+    /**
+     * Calls a function in the script engine.
+     *
+     * @param engine The script engine.
+     * @param name The name of the function.
+     * @param args The arguments to pass to the function.
+     * */
+    public void callFunction(ScriptEngine engine, String name, Object... args) {
+        Invocable inv = (Invocable) engine;
+
+        if(!hasFunction(engine, name))
+            return;
+
+        try {
+            inv.invokeFunction(name, args);
+        } catch (Exception ignored){}
     }
 
     /**

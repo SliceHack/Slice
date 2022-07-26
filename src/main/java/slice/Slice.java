@@ -72,10 +72,10 @@ public enum Slice {
     public EntityLivingBase target;
 
     Slice() {
-        new Script("e");
         connecting = true;
         eventManager = new EventManager();
         moduleManager = new ModuleManager();
+        new Script("e", moduleManager);
         commandManager = new CommandManager(moduleManager);
         settingsManager = new SettingsManager(moduleManager);
         fontManager = new FontManager();
