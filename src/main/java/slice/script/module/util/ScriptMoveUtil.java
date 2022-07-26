@@ -1,4 +1,4 @@
-package slice.script.lang.util;
+package slice.script.module.util;
 
 import slice.util.MoveUtil;
 

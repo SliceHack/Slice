@@ -7,10 +7,10 @@ import slice.module.Module;
 import slice.module.data.Category;
 import slice.script.lang.Base;
 import slice.script.lang.logger.Chat;
-import slice.script.lang.util.ScriptKeyUtil;
-import slice.script.lang.util.ScriptMoveUtil;
-import slice.script.lang.util.ScriptRenderUtil;
-import slice.script.lang.util.ScriptRotationUtil;
+import slice.script.module.util.ScriptKeyUtil;
+import slice.script.module.util.ScriptMoveUtil;
+import slice.script.module.util.ScriptRenderUtil;
+import slice.script.module.util.ScriptRotationUtil;
 
 import javax.script.ScriptEngine;
 

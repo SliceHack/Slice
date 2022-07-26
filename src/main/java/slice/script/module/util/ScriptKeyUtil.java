@@ -1,6 +1,5 @@
-package slice.script.lang.util;
+package slice.script.module.util;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import slice.util.KeyUtil;
 
