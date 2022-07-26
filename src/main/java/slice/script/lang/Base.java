@@ -3,6 +3,7 @@ package slice.script.lang;
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.Minecraft;
 import slice.script.lang.logger.Console;
+import slice.util.LoggerUtil;
 import slice.util.MathUtil;
 
 import javax.script.Bindings;
@@ -133,7 +134,9 @@ public class Base {
 
         try {
             inv.invokeFunction(name, args);
-        } catch (Exception ignored){}
+        } catch (Exception e) {
+            LoggerUtil.addMessage(e.getMessage());
+        }
     }
 
     /**

@@ -1,7 +1,6 @@
 package slice.script.lang.math;
 
 import lombok.Data;
-import net.minecraft.util.MathHelper;
 
 /**
  * Math class for the scripting language.

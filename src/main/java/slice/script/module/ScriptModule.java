@@ -1,6 +1,5 @@
 package slice.script.module;
 
-import slice.event.data.EventInfo;
 import slice.event.events.EventUpdate;
 import slice.module.Module;
 import slice.module.data.Category;
@@ -19,6 +18,18 @@ public class ScriptModule extends Module {
         this.category = category;
         this.engine = engine;
         engine.put("chat", Chat.INSTANCE);
+        init();
+    }
+
+    @Override
+    public void onUpdateNoToggle(EventUpdate event) {
+        engine.put("player", mc.thePlayer);
+    }
+
+    @Override
+    public void init() {
+        Base.callFunction(engine, "init");
+        super.init();
     }
 
     @Override
