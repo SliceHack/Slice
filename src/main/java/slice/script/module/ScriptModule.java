@@ -41,7 +41,6 @@ public class ScriptModule extends Module {
         engine.put("RenderUtil", ScriptRenderUtil.INSTANCE);
         engine.put("RotationUtil", ScriptRotationUtil.INSTANCE);
         engine.put("timer", timer);
-        engine.put("script", this);
 
         this.name = name;
         this.description = description;
