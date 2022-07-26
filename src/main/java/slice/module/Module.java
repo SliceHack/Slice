@@ -35,9 +35,9 @@ public class Module {
     private ModuleInfo info = getClass().getAnnotation(ModuleInfo.class);
 
     /* Module Data */
-    private String name, description;
-    private Category category;
-    private int key;
+    public String name, description;
+    public Category category;
+    public int key;
 
     private boolean enabled;
 
@@ -47,9 +47,8 @@ public class Module {
     private Animate animate;
 
     public Module() {
-        if(info == null) {
-            throw new IllegalStateException("ModuleInfo is not present on module " + getClass().getName());
-        }
+        if(info == null) return;
+
         this.name = info.name();
         this.category = info.category();
         this.description = info.description();

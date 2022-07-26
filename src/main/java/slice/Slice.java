@@ -23,6 +23,7 @@ import slice.manager.CommandManager;
 import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
 import slice.module.Module;
+import slice.script.Script;
 import slice.util.LoggerUtil;
 
 /**
@@ -71,6 +72,7 @@ public enum Slice {
     public EntityLivingBase target;
 
     Slice() {
+        new Script("e");
         connecting = true;
         eventManager = new EventManager();
         moduleManager = new ModuleManager();
