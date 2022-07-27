@@ -13,6 +13,7 @@ import slice.util.LoggerUtil;
 import slice.util.RenderUtil;
 
 import java.awt.*;
+import java.util.UUID;
 
 @Getter @Setter
 public class TargetHUD {
@@ -54,14 +55,19 @@ public class TargetHUD {
 
 
         if (target instanceof EntityPlayer) {
-            RenderUtil.drawHead(target.getUniqueID(), x + 10, y + 10, 20, 20);
+            try {
+                RenderUtil.drawHead(target.getUniqueID(), x + 10, y + 16, 65, 65);
+            } catch (Exception ignored) {
+                RenderUtil.drawHead(UUID.fromString("e107870e-5cd7-469d-b82e-cbdeabff3213"), x + 10, y + 16, 65, 65);
+            }
         } else {
             GuiInventory.drawEntityOnScreen(x + 40, y + 95, 40, targetYaw, 0, target, false);
         }
 
-        font.drawStringWithShadow("Distance: " + distance, x+80, y - (font.getHeight(distance) / 2) + 20, -1);
-        font.drawStringWithShadow("Health: " + health + "\u2764", x+80, y - (font.getHeight(distance) / 2) + 35, -1);
-        font.drawStringWithShadow("Hurt: " + hurtTime, x+80, y - (font.getHeight(distance) / 2) + 50, -1);
+        font.drawStringWithShadow("Name: " + target.getName(), x+80, y - (font.getHeight(distance) / 2) + 25, -1);
+        font.drawStringWithShadow("Distance: " + distance, x+80, y - (font.getHeight(distance) / 2) + 40, -1);
+        font.drawStringWithShadow("Health: " + health + "\u2764", x+80, y - (font.getHeight(distance) / 2) + 55, -1);
+        font.drawStringWithShadow("Hurt: " + hurtTime, x+80, y - (font.getHeight(distance) / 2) + 70, -1);
 
     }
 

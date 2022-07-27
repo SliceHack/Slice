@@ -36,7 +36,7 @@ public class RenderUtil {
 
     public static void drawHead(UUID uuid, int x, int y, int width, int height) {
         Minecraft.getMinecraft().getTextureManager().bindTexture(Minecraft.getMinecraft().getNetHandler().getPlayerInfo(uuid).getLocationSkin());
-        Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, width, height, width, height);
+        Gui.drawScaledCustomSizeModalRect(x, y, 8F, 8F, 8, 8, width, height,64F,64F);
     }
 
     /**
