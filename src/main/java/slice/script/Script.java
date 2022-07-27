@@ -105,7 +105,7 @@ public class Script {
     }
 
     public NumberValue registerSettingNumber(String name, double min, double max, double value, NumberValue.Type type) {
-        NumberValue setting = new NumberValue(name, min, max, value, type);
+        NumberValue setting = new NumberValue(name, value, min, max, type);
         settings.add(setting);
         return setting;
     }
