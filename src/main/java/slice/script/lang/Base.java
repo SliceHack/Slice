@@ -4,14 +4,11 @@ import lombok.experimental.UtilityClass;
 import net.minecraft.client.Minecraft;
 import slice.script.lang.logger.Console;
 import slice.util.LoggerUtil;
-import slice.util.MathUtil;
 
 import javax.script.Bindings;
 import javax.script.Invocable;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
