@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import slice.Slice;
 import slice.font.TTFFontRenderer;
 import slice.util.LoggerUtil;
@@ -51,10 +52,15 @@ public class TargetHUD {
         GlStateManager.popMatrix();
         RenderUtil.drawRoundedRect(x, y, width, height, radius, new Color(60, 60, 60).getRGB());
 
-        GuiInventory.drawEntityOnScreen(x + 40, y + 95, 40, targetYaw, 0, target, false);
+
+        if (target instanceof EntityPlayer) {
+            RenderUtil.drawHead(target.getUniqueID(), x + 10, y + 10, 20, 20);
+        } else {
+            GuiInventory.drawEntityOnScreen(x + 40, y + 95, 40, targetYaw, 0, target, false);
+        }
 
         font.drawStringWithShadow("Distance: " + distance, x+80, y - (font.getHeight(distance) / 2) + 20, -1);
-        font.drawStringWithShadow("Health: " + health, x+80, y - (font.getHeight(distance) / 2) + 35, -1);
+        font.drawStringWithShadow("Health: " + health + "\u2764", x+80, y - (font.getHeight(distance) / 2) + 35, -1);
         font.drawStringWithShadow("Hurt: " + hurtTime, x+80, y - (font.getHeight(distance) / 2) + 50, -1);
 
     }

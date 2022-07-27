@@ -9,6 +9,8 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
+import java.util.UUID;
+
 /**
  * Class for rendering stuff
  *
@@ -30,6 +32,11 @@ public class RenderUtil {
      */
     public static void drawRoundedRect(int x, int y, int width, int height, int color) {
         drawRoundedRect(x, y, x + width, y + width, 10, color);
+    }
+
+    public static void drawHead(UUID uuid, int x, int y, int width, int height) {
+        Minecraft.getMinecraft().getTextureManager().bindTexture(Minecraft.getMinecraft().getNetHandler().getPlayerInfo(uuid).getLocationSkin());
+        Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, width, height, width, height);
     }
 
     /**
