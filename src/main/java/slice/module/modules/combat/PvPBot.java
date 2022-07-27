@@ -12,6 +12,7 @@ import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
 import slice.setting.settings.NumberValue;
 import slice.util.KeyUtil;
+import slice.Slice;
 
 @ModuleInfo(name = "PvPBot", category = Category.COMBAT)
 @Getter
@@ -24,6 +25,12 @@ public class PvPBot extends Module {
 
     private float deltaYaw, deltaPitch;
     private boolean reachedYaw, reachedPitch, subCPS;
+
+    @Override
+    public void onDisable() {
+        Slice.INSTANCE.target = null;
+        target = null;
+    }
 
     @EventInfo
     public void onUpdate(EventUpdate e) {
@@ -39,6 +46,8 @@ public class PvPBot extends Module {
 
         mc.thePlayer.rotationYaw = getRotationsFixedSens(target)[0];
         mc.thePlayer.rotationPitch = getRotationsFixedSens(target)[1];
+
+        Slice.INSTANCE.target = target;
 
 
         if(mc.thePlayer.getDistanceToEntity(target) <= rangeToPlayer.getValue().doubleValue()) {
@@ -76,6 +85,7 @@ public class PvPBot extends Module {
                 }
             }
         }
+        Slice.INSTANCE.target = target;
         return target;
     }
 
