@@ -9,6 +9,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import slice.Slice;
 import slice.font.TTFFontRenderer;
+import slice.util.ColorUtil;
 import slice.util.LoggerUtil;
 import slice.util.RenderUtil;
 

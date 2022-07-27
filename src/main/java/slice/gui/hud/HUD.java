@@ -30,7 +30,10 @@ public class HUD {
     @Getter
     @Setter
     private static PlayerOnScreen playerOnScreen = new PlayerOnScreen();
+    @Getter
+    @Setter
     private static TargetHUD targetHUD = new TargetHUD();
+    private static SessionHUD sessionHUD = new SessionHUD();
 
     public static Class<? extends Module> hudClass = slice.module.modules.render.HUD.class;
     private static ModeValue mode;
