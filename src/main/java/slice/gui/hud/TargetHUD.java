@@ -49,15 +49,9 @@ public class TargetHUD {
 
         GlStateManager.pushMatrix();
         GlStateManager.enableAlpha();
-        GlStateManager.enableBlend();
-        GlStateManager.enableTexture2D();
-        GlStateManager.color(255, 255, 255, 155);
-        RenderUtil.drawRoundedRect(borderX, borderY, borderWidth, borderHeight, borderRadius, new Color(255,171,171, 155).getRGB());
+        GlStateManager.color(1, 1, 1, 1);
+        RenderUtil.drawRoundedRect(borderX, borderY, borderWidth, borderHeight, borderRadius, new Color(255,171,171).getRGB());
         GlStateManager.popMatrix();
-        GlStateManager.disableBlend();
-        GlStateManager.disableAlpha();
-        GlStateManager.disableTexture2D();
-
         RenderUtil.drawRoundedRect(x, y, width, height, radius, new Color(60, 60, 60).getRGB());
 
 
