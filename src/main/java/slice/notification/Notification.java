@@ -2,6 +2,7 @@ package slice.notification;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.lwjgl.opengl.GL11;
 import slice.util.LoggerUtil;
 import slice.util.Timer;
 
@@ -15,8 +16,6 @@ public class Notification {
         this.message = message;
     }
 
-    public void draw() {
-
-    }
+    public void draw() {}
 
 }

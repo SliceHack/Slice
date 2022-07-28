@@ -17,6 +17,7 @@ import slice.util.MoveUtil;
 import slice.util.RenderUtil;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.lang.annotation.Target;
 
 /**
