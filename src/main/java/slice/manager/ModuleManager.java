@@ -67,13 +67,26 @@ public class ModuleManager {
 
     /**
      * Registers a module.
+     *
+     * @param module The module to register.
      */
     public void register(Module module) {
         modules.add(module);
     }
 
     /**
+     * Unregisters a module.
+     *
+     * @param module The module to unregister.
+     */
+    public void unregister(Module module) {
+        modules.remove(module);
+    }
+
+    /**
      * Gets modules by category.
+     *
+     * @param category The category to get modules for.
      * */
     public List<Module> getModules(Category category) {
         return modules.stream().filter(module -> module.getCategory().equals(category)).collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
@@ -81,6 +94,8 @@ public class ModuleManager {
 
     /**
      * Gets Module By class.
+     *
+     * @param clazz The class to get module for.
      * */
     public Module getModule(Class<? extends Module> clazz) {
         return modules.stream().filter(module -> module.getClass().equals(clazz)).findFirst().orElse(null);
@@ -88,6 +103,8 @@ public class ModuleManager {
 
     /**
      * Gets Module By name.
+     *
+     * @param name The name to get module for.
      * */
     public Module getModule(String name) {
         return modules.stream().filter(module -> module.getName().equalsIgnoreCase(name)).findFirst().orElse(null);

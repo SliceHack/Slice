@@ -42,6 +42,19 @@ public class ScriptManager {
         this.load();
     }
 
+    public Script getScript(String path) {
+        for(Script script : scripts) {
+            String lastPath = script.getPath().substring(script.getPath().lastIndexOf("\\") + 1);
+
+            if(!path.endsWith(".js")) path += ".js";
+
+            if(lastPath.equalsIgnoreCase(path)) {
+                return script;
+            }
+        }
+        return null;
+    }
+
     public void load() {
         for(File file : Objects.requireNonNull(scriptDataDir.listFiles())) {
             if(file.getName().endsWith(".js")) {
