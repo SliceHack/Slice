@@ -25,6 +25,7 @@ public class Base {
      * @param engine The script engine to manage.
      * */
     public static void setup(ScriptEngine engine) {
+        engine.setBindings(engine.createBindings(), ScriptContext.ENGINE_SCOPE);
         engine.put("console", Console.INSTANCE);
         engine.put("mc", Minecraft.getMinecraft());
         engine.put("Math", slice.script.lang.math.Math.INSTANCE);

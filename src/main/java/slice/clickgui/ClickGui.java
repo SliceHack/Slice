@@ -3,6 +3,7 @@ package slice.clickgui;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.gui.GuiScreen;
+import slice.clickgui.module.ModuleButton;
 import slice.clickgui.pane.DropdownPane;
 import slice.clickgui.pane.SettingPane;
 import slice.clickgui.setting.settings.SliderButton;

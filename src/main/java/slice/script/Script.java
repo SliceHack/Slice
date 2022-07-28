@@ -1,5 +1,6 @@
 package slice.script;
 
+import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
 import lombok.Getter;
 import lombok.Setter;
 import slice.font.FontManager;
@@ -46,8 +47,8 @@ public class Script {
 
     private void startScript() {
         try {
-            ScriptEngineManager manager = new ScriptEngineManager();
-            ScriptEngine engine = manager.getEngineByName("JavaScript");
+            String[] args = new String[] { "--language=javascript", "--language=es6" };
+            ScriptEngine engine = new NashornScriptEngineFactory().getScriptEngine(args);
 
             Base.setup(engine);
             addCategories(engine);
