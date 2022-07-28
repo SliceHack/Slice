@@ -14,6 +14,7 @@ import slice.module.modules.render.Chams;
 import slice.module.modules.render.HUD;
 import slice.module.modules.render.Interface;
 import slice.module.modules.world.Phase;
+import slice.module.modules.world.SumoFences;
 import slice.module.modules.world.TimeChanger;
 
 import java.util.ArrayList;
@@ -61,6 +62,7 @@ public class ModuleManager {
         register(new Safewalk());
         register(new Botter());
         register(new Spoofer());
+        register(new SumoFences());
     }
 
     /**
