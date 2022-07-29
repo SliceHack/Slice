@@ -44,7 +44,7 @@ import net.minecraft.util.StringUtils;
 import net.minecraft.world.border.WorldBorder;
 import net.optifine.CustomColors;
 import slice.event.events.Event2D;
-import slice.gui.hud.HUD;
+import slice.gui.hud.legacy.HUD;
 
 public class GuiIngame extends Gui
 {
@@ -172,13 +172,13 @@ public class GuiIngame extends Gui
             this.renderTooltip(scaledresolution, partialTicks);
         }
 
-        try {
-            HUD.draw();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+//        try {
+//            HUD.draw();
+//        } catch (Exception e){
+//            e.printStackTrace();
+//        }
 
-        Event2D event2d = new Event2D(partialTicks);
+        Event2D event2d = new Event2D(partialTicks, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight(), scaledresolution);
         event2d.call();
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

@@ -18,6 +18,7 @@ import slice.event.manager.EventManager;
 import slice.file.Saver;
 import slice.font.FontManager;
 import slice.gui.alt.manager.AltManager;
+import slice.gui.hud.slice.HUD;
 import slice.manager.CommandManager;
 import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
@@ -36,7 +37,7 @@ import java.util.List;
 public enum Slice {
     INSTANCE;
 
-    public static String NAME = "Slice", VERSION = "1.0";
+    public static final String NAME = "Slice", VERSION = "1.0";
 
     /* managers */
     private final EventManager eventManager;
@@ -73,6 +74,8 @@ public enum Slice {
     /** KillAura target for target hud */
     public EntityLivingBase target;
 
+    private HUD hud;
+
     Slice() {
         connecting = true;
         eventManager = new EventManager();
@@ -87,6 +90,7 @@ public enum Slice {
         discordRPC.start();
         API.sendAuthRequest(irc);
         eventManager.register(this);
+        eventManager.register(hud = new HUD());
     }
 
     /**

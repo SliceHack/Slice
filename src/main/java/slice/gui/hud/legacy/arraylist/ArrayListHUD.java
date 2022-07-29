@@ -1,10 +1,10 @@
-package slice.gui.hud.arraylist;
+package slice.gui.hud.legacy.arraylist;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import slice.Slice;
 import slice.font.TTFFontRenderer;
-import slice.gui.hud.HUD;
+import slice.gui.hud.legacy.HUD;
 import slice.module.Module;
 
 import java.util.ArrayList;

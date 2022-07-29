@@ -1,18 +1,13 @@
-package slice.gui.hud.arraylist;
+package slice.gui.hud.legacy.arraylist;
 
-import fr.lavache.anime.Animate;
 import fr.lavache.anime.Easing;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
-import org.lwjgl.input.Mouse;
 import slice.Slice;
 import slice.font.TTFFontRenderer;
-import slice.gui.hud.HUD;
+import slice.gui.hud.legacy.HUD;
 import slice.module.Module;
-import slice.module.modules.movement.Fly;
-import slice.util.LoggerUtil;
 import slice.util.Timer;
 
 import java.util.ArrayList;

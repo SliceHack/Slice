@@ -102,6 +102,15 @@ public class ModuleManager {
     }
 
     /**
+     * Gets all enabled modules.
+     *
+     * @return A list of enabled modules.
+     * */
+    public List<Module> getEnabledModules() {
+        return modules.stream().filter(Module::isEnabled).collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+    }
+
+    /**
      * Gets Module By name.
      *
      * @param name The name to get module for.

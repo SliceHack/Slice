@@ -45,7 +45,7 @@ import slice.event.events.EventClientTick;
 import slice.event.events.EventMouse;
 import slice.event.events.EventSwitchAccount;
 import slice.gui.alt.manager.AltManager;
-import slice.gui.hud.HUD;
+import slice.gui.hud.legacy.HUD;
 import slice.gui.main.MainMenu;
 import net.minecraft.client.gui.achievement.GuiAchievement;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -180,7 +180,6 @@ import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
 import slice.Slice;
 import slice.event.events.EventKey;
-import slice.util.LoggerUtil;
 import viamcp.ViaMCP;
 import viamcp.gui.GuiProtocolSelector;
 
@@ -1133,25 +1132,24 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             this.runTick();
         }
 
-        for(int j = 0; j < this.timer.elapsedTicks+1; ++j)
-        {
-            if(this.currentScreen instanceof MainMenu) {
+        for (int j = 0; j < this.timer.elapsedTicks + 1; ++j) {
+            if (this.currentScreen instanceof MainMenu) {
                 MainMenu mainMenu = (MainMenu) this.currentScreen;
                 mainMenu.onTick();
             }
-            if(this.currentScreen instanceof GuiMultiplayer) {
+            if (this.currentScreen instanceof GuiMultiplayer) {
                 GuiMultiplayer guiMultiplayer = (GuiMultiplayer) this.currentScreen;
                 guiMultiplayer.onTick();
             }
-            if(this.currentScreen instanceof GuiSelectWorld) {
+            if (this.currentScreen instanceof GuiSelectWorld) {
                 GuiSelectWorld guiSelectWorld = (GuiSelectWorld) this.currentScreen;
                 guiSelectWorld.onTick();
             }
-            if(this.currentScreen instanceof AltManager) {
+            if (this.currentScreen instanceof AltManager) {
                 AltManager altManager = (AltManager) this.currentScreen;
                 altManager.onTick();
             }
-            if(this.currentScreen instanceof GuiProtocolSelector) {
+            if (this.currentScreen instanceof GuiProtocolSelector) {
                 GuiProtocolSelector guiProtocolSelector = (GuiProtocolSelector) this.currentScreen;
                 guiProtocolSelector.onTick();
             }

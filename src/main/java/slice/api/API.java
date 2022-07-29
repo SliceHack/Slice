@@ -27,6 +27,7 @@ public class API {
     /**
      * Checks if a user is authenticated with the server
      * **/
+    @SuppressWarnings("all")
     public static void sendAuthRequest(IRC irc) {
         try {
             URL url = new URL(API_URL + "checkAuth/" + HardwareUtil.getHardwareID());

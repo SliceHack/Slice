@@ -1,4 +1,4 @@
-package slice.gui.hud;
+package slice.gui.hud.legacy;
 
 import net.minecraft.client.Minecraft;
 

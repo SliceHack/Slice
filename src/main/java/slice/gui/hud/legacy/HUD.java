@@ -1,4 +1,4 @@
-package slice.gui.hud;
+package slice.gui.hud.legacy;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,17 +8,13 @@ import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.input.Mouse;
 import slice.Slice;
 import slice.font.TTFFontRenderer;
-import slice.gui.hud.arraylist.ArrayListHUD;
-import slice.gui.hud.arraylist.SmoothArrayListHUD;
+import slice.gui.hud.legacy.arraylist.ArrayListHUD;
+import slice.gui.hud.legacy.arraylist.SmoothArrayListHUD;
 import slice.module.Module;
 import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.util.MoveUtil;
 import slice.util.RenderUtil;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.lang.annotation.Target;
 
 /**
  * Renders the client's heads-up-display.
