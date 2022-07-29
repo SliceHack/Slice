@@ -67,6 +67,8 @@ public class Script {
 
     public void reloadScript() {
         this.stopScript();
+        Base.setup(engine);
+        this.addCategories(engine);
         this.startScript();
     }
 

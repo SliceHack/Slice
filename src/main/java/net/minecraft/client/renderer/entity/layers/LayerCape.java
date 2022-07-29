@@ -24,13 +24,15 @@ public class LayerCape implements LayerRenderer<AbstractClientPlayer>
         if(entitylivingbaseIn.hasPlayerInfo() && !entitylivingbaseIn.isInvisible() && entitylivingbaseIn.isWearing(EnumPlayerModelParts.CAPE)) {
 
             boolean found = false;
-            for(String username : Slice.INSTANCE.getIrc().getList()) {
-                String name = username.split(":")[0];
-                if(name.equalsIgnoreCase(entitylivingbaseIn.getName())) {
-                    found = true;
-                    break;
+            try {
+                for(String username : Slice.INSTANCE.getIrc().getList()) {
+                    String name = username.split(":")[0];
+                    if(name.equalsIgnoreCase(entitylivingbaseIn.getName())) {
+                        found = true;
+                        break;
+                    }
                 }
-            }
+            } catch (Exception ignored) {}
 
             if(!found) return;
 
