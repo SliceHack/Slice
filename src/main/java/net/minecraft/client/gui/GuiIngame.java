@@ -172,11 +172,11 @@ public class GuiIngame extends Gui
             this.renderTooltip(scaledresolution, partialTicks);
         }
 
-//        try {
-//            HUD.draw();
-//        } catch (Exception e){
-//            e.printStackTrace();
-//        }
+        try {
+            HUD.draw();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
         Event2D event2d = new Event2D(partialTicks, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight(), scaledresolution);
         event2d.call();

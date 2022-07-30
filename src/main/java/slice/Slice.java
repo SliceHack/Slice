@@ -25,9 +25,6 @@ import slice.manager.SettingsManager;
 import slice.module.Module;
 import slice.script.manager.ScriptManager;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
 * Main Class for the Client
 *
@@ -90,7 +87,6 @@ public enum Slice {
         discordRPC.start();
         API.sendAuthRequest(irc);
         eventManager.register(this);
-        eventManager.register(hud = new HUD());
     }
 
     /**

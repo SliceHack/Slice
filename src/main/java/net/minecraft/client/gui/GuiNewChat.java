@@ -11,10 +11,6 @@ import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import slice.Slice;
-import slice.event.events.EventChatMessage;
-import slice.font.TTFFontRenderer;
-import slice.util.LoggerUtil;
 
 public class GuiNewChat extends Gui
 {
@@ -25,8 +21,6 @@ public class GuiNewChat extends Gui
     private final List<ChatLine> drawnChatLines = Lists.<ChatLine>newArrayList();
     private int scrollPos;
     private boolean isScrolled;
-
-    public static IChatComponent translate;
 
     public GuiNewChat(Minecraft mcIn)
     {
@@ -85,31 +79,10 @@ public class GuiNewChat extends Gui
                             {
                                 int i2 = 0;
                                 int j2 = -i1 * 9;
-                                if(!Slice.INSTANCE.getModuleManager().getInterface().getClearChat().getValue()) {
-                                    drawRect(i2, j2 - 9, i2 + l + 4, j2, l1 / 2 << 24);
-                                }
+                                drawRect(i2, j2 - 9, i2 + l + 4, j2, l1 / 2 << 24);
                                 String s = chatline.getChatComponent().getFormattedText();
                                 GlStateManager.enableBlend();
-
-                                if(!Slice.INSTANCE.getModuleManager().getInterface().getFontChat().getValue()) {
-                                    this.mc.fontRendererObj.drawStringWithShadow(s, (float) i2, (float) (j2 - 8), 16777215 + (l1 << 24));
-                                } else {
-                                    TTFFontRenderer font = null;
-
-                                    switch (Slice.INSTANCE.getModuleManager().getInterface().getFontChatMode().getValue()) {
-                                        case "Poppins":
-                                            font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 19);
-                                            break;
-                                        case "Arial":
-                                            font = Slice.INSTANCE.getFontManager().getArialFont(19);
-                                            break;
-                                    }
-
-                                    if(font == null)
-                                        return;
-
-                                    font.drawStringWithShadow(s, (float) i2, (float) (j2 - 8), 16777215 + (l1 << 24));
-                                }
+                                this.mc.fontRendererObj.drawStringWithShadow(s, (float)i2, (float)(j2 - 8), 16777215 + (l1 << 24));
                                 GlStateManager.disableAlpha();
                                 GlStateManager.disableBlend();
                             }
@@ -119,18 +92,7 @@ public class GuiNewChat extends Gui
 
                 if (flag)
                 {
-                    TTFFontRenderer font = null;
-
-                    switch (Slice.INSTANCE.getModuleManager().getInterface().getFontChatMode().getValue()) {
-                        case "Poppins":
-                            font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 19);
-                            break;
-                        case "Arial":
-                            font = Slice.INSTANCE.getFontManager().getArialFont(19);
-                            break;
-                    }
-
-                    int k2 = font != null ? font.getFont().getSize() : mc.fontRendererObj.FONT_HEIGHT;
+                    int k2 = this.mc.fontRendererObj.FONT_HEIGHT;
                     GlStateManager.translate(-3.0F, 0.0F, 0.0F);
                     int l2 = k * k2 + k;
                     int i3 = j * k2 + j;
@@ -141,10 +103,8 @@ public class GuiNewChat extends Gui
                     {
                         int k3 = j3 > 0 ? 170 : 96;
                         int l3 = this.isScrolled ? 13382451 : 3355562;
-                        if(!Slice.INSTANCE.getModuleManager().getInterface().getClearChat().getValue()) {
-                            drawRect(0, -j3, 2, -j3 - k1, l3 + (k3 << 24));
-                            drawRect(2, -j3, 1, -j3 - k1, 13421772 + (k3 << 24));
-                        }
+                        drawRect(0, -j3, 2, -j3 - k1, l3 + (k3 << 24));
+                        drawRect(2, -j3, 1, -j3 - k1, 13421772 + (k3 << 24));
                     }
                 }
 
@@ -153,9 +113,6 @@ public class GuiNewChat extends Gui
         }
     }
 
-    /**
-     * Clears the chat.
-     */
     public void clearChatMessages()
     {
         this.drawnChatLines.clear();
@@ -165,35 +122,11 @@ public class GuiNewChat extends Gui
 
     public void printChatMessage(IChatComponent chatComponent)
     {
-        if(Slice.INSTANCE.getModuleManager().getTranslator().isEnabled()) {
-            new Thread(() -> {
-                GuiNewChat.translate = new ChatComponentText(Slice.INSTANCE.getModuleManager().getTranslator().translate(chatComponent.getUnformattedText()));
-                printChatMessageWithOptionalDeletion(new ChatComponentText(GuiNewChat.translate.getUnformattedText().replace("Â", "").replace("»", "").replace("§r", "")), 0);
-            }).start();
-        } else {
-            this.printChatMessageWithOptionalDeletion(chatComponent, 0);
-        }
+        this.printChatMessageWithOptionalDeletion(chatComponent, 0);
     }
 
-    /**
-     * prints the ChatComponent to Chat. If the ID is not 0, deletes an existing Chat Line of that ID from the GUI
-     */
     public void printChatMessageWithOptionalDeletion(IChatComponent chatComponent, int chatLineId)
     {
-        EventChatMessage event = new EventChatMessage(chatComponent, chatComponent.getFormattedText(), chatComponent.getUnformattedText());
-        event.call();
-
-        if(event.isCancelled())
-            return;
-
-
-        boolean cancel = false;
-        try {
-            if (Slice.INSTANCE.getModuleManager().getMinehut().isEnabled()) cancel = Slice.INSTANCE.getModuleManager().getMinehut().send(chatComponent.getUnformattedText());
-        } catch (Exception ignored){}
-
-        if (cancel) return;
-
         this.setChatLine(chatComponent, chatLineId, this.mc.ingameGUI.getUpdateCounter(), false);
         logger.info("[CHAT] " + chatComponent.getUnformattedText());
     }
@@ -253,11 +186,6 @@ public class GuiNewChat extends Gui
         return this.sentMessages;
     }
 
-    /**
-     * Adds this string to the list of sent messages, for recall using the up/down arrow keys
-     *  
-     * @param message The message to add in the sendMessage List
-     */
     public void addToSentMessages(String message)
     {
         if (this.sentMessages.isEmpty() || !((String)this.sentMessages.get(this.sentMessages.size() - 1)).equals(message))
@@ -266,20 +194,12 @@ public class GuiNewChat extends Gui
         }
     }
 
-    /**
-     * Resets the chat scroll (executed when the GUI is closed, among others)
-     */
     public void resetScroll()
     {
         this.scrollPos = 0;
         this.isScrolled = false;
     }
 
-    /**
-     * Scrolls the chat by the given number of lines.
-     *  
-     * @param amount The amount to scroll
-     */
     public void scroll(int amount)
     {
         this.scrollPos += amount;
@@ -297,12 +217,6 @@ public class GuiNewChat extends Gui
         }
     }
 
-    /**
-     * Gets the chat component under the mouse
-     *  
-     * @param mouseX The x position of the mouse
-     * @param mouseY The y position of the mouse
-     */
     public IChatComponent getChatComponent(int mouseX, int mouseY)
     {
         if (!this.getChatOpen())
@@ -360,19 +274,11 @@ public class GuiNewChat extends Gui
         }
     }
 
-    /**
-     * Returns true if the chat GUI is open
-     */
     public boolean getChatOpen()
     {
         return this.mc.currentScreen instanceof GuiChat;
     }
 
-    /**
-     * finds and deletes a Chat line by ID
-     *  
-     * @param id The ChatLine's id to delete
-     */
     public void deleteChatLine(int id)
     {
         Iterator<ChatLine> iterator = this.drawnChatLines.iterator();
@@ -411,9 +317,6 @@ public class GuiNewChat extends Gui
         return calculateChatboxHeight(this.getChatOpen() ? this.mc.gameSettings.chatHeightFocused : this.mc.gameSettings.chatHeightUnfocused);
     }
 
-    /**
-     * Returns the chatscale from mc.gameSettings.chatScale
-     */
     public float getChatScale()
     {
         return this.mc.gameSettings.chatScale;
