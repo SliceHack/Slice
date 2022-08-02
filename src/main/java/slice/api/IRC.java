@@ -99,7 +99,7 @@ public class IRC {
             return;
 
         try {
-            socket.emit("setUsername", event.getUsername(), event.getLastSession().getUsername());
+            socket.emit("setUsername", event.getUsername(), event.getLastSession().getUsername(), Slice.INSTANCE.discordName);
         } catch (Exception ignored) {}
     }
 }

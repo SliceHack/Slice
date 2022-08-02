@@ -45,12 +45,14 @@ public class SocketEvents {
                     list.add(name);
                 }
                 Slice.INSTANCE.getIrc().setList(list);
+                LoggerUtil.addMessage(list.toString());
             } catch (Exception e) {
                 assert args[0] instanceof String;
                 String s = (String) args[0];
                 s = s.replace("[", "").replace("]", "").replace("\"", "").replace(",", "\n");
                 String[] lines = s.split("\n");
                 List<String> list = new ArrayList<>(Arrays.asList(lines));
+                LoggerUtil.addMessage(list.toString());
                 Slice.INSTANCE.getIrc().setList(list);
             }
         });

@@ -24,6 +24,7 @@ import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
 import slice.module.Module;
 import slice.script.manager.ScriptManager;
+import slice.util.LoggerUtil;
 
 /**
 * Main Class for the Client
@@ -100,7 +101,6 @@ public enum Slice {
 
     @EventInfo
     public void onUpdate(EventUpdate e) {
-
         for(Module module : moduleManager.getModules()) {
 
             if(!module.isEnabled() && eventManager.isRegistered(module)) {
