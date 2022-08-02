@@ -25,6 +25,13 @@ public class KeyUtil {
     }
 
     /**
+     * sneak key
+     * */
+    public KeyBinding sneak() {
+        return Minecraft.getMinecraft().gameSettings.keyBindSprint;
+    }
+
+    /**
      * forward key
      * */
     public KeyBinding forward() {

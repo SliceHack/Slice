@@ -3,16 +3,23 @@ package slice.script;
 import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.BlockPos;
+import slice.Slice;
 import slice.font.FontManager;
 import slice.manager.ModuleManager;
 import slice.module.Module;
 import slice.module.data.Category;
+import slice.module.modules.combat.Aura;
 import slice.script.lang.Base;
 import slice.script.module.ScriptModule;
 import slice.setting.Setting;
 import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
+import slice.util.LoggerUtil;
 
 import javax.script.Bindings;
 import javax.script.ScriptContext;
@@ -119,6 +126,7 @@ public class Script {
             moduleManager.register(module);
             Base.callFunction(engine, "onLoad");
         } catch (Exception e) {
+            LoggerUtil.addTerminalMessage(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -170,5 +178,13 @@ public class Script {
         NumberValue setting = new NumberValue(name, value, min, max, type);
         settings.add(setting);
         return setting;
+    }
+
+    public BlockPos blockPos(int x, int y, int z) {
+        return new BlockPos(x, y, z);
+    }
+
+    public EntityLivingBase getTarget() {
+        return Slice.INSTANCE.target;
     }
 }

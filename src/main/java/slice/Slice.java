@@ -77,12 +77,12 @@ public enum Slice {
         connecting = true;
         eventManager = new EventManager();
         moduleManager = new ModuleManager();
+        fontManager = new FontManager();
+        scriptManager = new ScriptManager(moduleManager, fontManager);
         commandManager = new CommandManager(moduleManager);
         settingsManager = new SettingsManager(moduleManager);
-        fontManager = new FontManager();
         clickGui = new ClickGui();
         saver = new Saver(moduleManager);
-        scriptManager = new ScriptManager(moduleManager, fontManager);
         discordRPC = new StartDiscordRPC();
         discordRPC.start();
         API.sendAuthRequest(irc);

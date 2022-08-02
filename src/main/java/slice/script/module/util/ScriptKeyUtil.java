@@ -36,6 +36,13 @@ public class ScriptKeyUtil {
     }
 
     /**
+     * Sneak key
+     * */
+    public KeyBinding sneak() {
+        return KeyUtil.sneak();
+    }
+
+    /**
      * left key
      * */
     public KeyBinding left() {
