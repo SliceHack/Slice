@@ -8,8 +8,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S02PacketChat;
 import org.cef.ccbluex.CefRenderManager;
-import org.cef.ccbluex.DynamicGuiView;
-import org.cef.ccbluex.GuiView;
 import org.cef.ccbluex.Page;
 import org.lwjgl.input.Keyboard;
 import slice.api.API;
@@ -30,9 +28,7 @@ import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
 import slice.module.Module;
 import slice.script.manager.ScriptManager;
-import slice.util.LoggerUtil;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,7 +83,7 @@ public enum Slice {
     /** html */
     private final CefRenderManager cefRenderManager;
 
-    private final List<ViewNoGui> htmls = new ArrayList<>();
+    private final List<ViewNoGui> html = new ArrayList<>();
     
     Slice() {
         connecting = true;
@@ -110,9 +106,7 @@ public enum Slice {
     /**
      * Calls when minecraft is initialized and ready to be used.
      * */
-    public void init() {
-        htmls.add(new ViewNoGui(new Page("file:///C:\\Users\\Nick\\Slice\\index.html")));
-    }
+    public void init() {}
 
     /**
      * Called when the client is stopped
@@ -195,7 +189,7 @@ public enum Slice {
 
     @EventInfo
     public void onGuiRender(EventGuiRender e) {
-        htmls.forEach((html) -> {
+        html.forEach((html) -> {
             if(html.isInit()) html.draw(e);
             else html.init();
         });

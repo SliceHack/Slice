@@ -1765,7 +1765,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         }
 
         ScaledResolution scaledresolution = new ScaledResolution(this);
-        Slice.INSTANCE.getHtmls().forEach(html -> html.onResize(this, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight()));
+        Slice.INSTANCE.getHtml().forEach(html -> html.onResize(this, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight()));
 
 
         this.loadingScreen = new LoadingScreenRenderer(this);
