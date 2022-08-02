@@ -1,72 +1,86 @@
-package net.ccbluex.liquidbounce.ui.ultralight.view;
+package slice.ultralight;
 
 import com.labymedia.ultralight.UltralightView;
-import com.labymedia.ultralight.bitmap.UltralightBitmapSurface
-import com.labymedia.ultralight.config.UltralightViewConfig
-import com.labymedia.ultralight.input.UltralightKeyEvent
-import com.labymedia.ultralight.input.UltralightMouseEvent
-import com.labymedia.ultralight.input.UltralightScrollEvent
-import net.ccbluex.liquidbounce.ui.ultralight.UltralightEngine
-import net.ccbluex.liquidbounce.ui.ultralight.listener.TheLoadListener
-import net.minecraft.client.gui.Gui
-import net.minecraft.client.renderer.GlStateManager
-import net.minecraft.client.renderer.OpenGlHelper
-import org.lwjgl.opengl.GL11.*
-import org.lwjgl.opengl.GL12.*
-import java.nio.ByteBuffer
+import com.labymedia.ultralight.bitmap.UltralightBitmapSurface;
+import com.labymedia.ultralight.config.UltralightViewConfig;
+import com.labymedia.ultralight.input.UltralightKeyEvent;
+import com.labymedia.ultralight.input.UltralightMouseEvent;
+import com.labymedia.ultralight.input.UltralightScrollEvent;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.val;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
 
-class View {
+import java.nio.ByteBuffer;
+
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL12.*;
+
+/***
+ * for html rendering we need ultralight
+ * this code is not written by us, we converted it from kotlin to java
+ *
+ * @author CCBlueX || @UnlegitMC
+ * */
+@Getter @Setter
+@SuppressWarnings("all")
+public class View {
     private UltralightView view;
-    private val loadListener:TheLoadListener
+    private TheLoadListener loadListener;
 
-    private var glTexture = -1
+    private int glTexture = -1;
 
-    init {
-        view = UltralightEngine.renderer.createView(
-                UltralightEngine.width.toLong(), UltralightEngine.height.toLong(),
-                UltralightViewConfig()
+    private UltraLightEngine engine;
+
+    public View(UltraLightEngine engine) {
+        this.engine = engine;
+        view = engine.getRenderer().createView(
+                engine.getWidth(), engine.getHeight(),
+                new UltralightViewConfig()
                         .initialDeviceScale(1.0)
                         .isTransparent(true)
-        )
-        loadListener = TheLoadListener(view)
-        view.setLoadListener(loadListener)
+        );
+        loadListener = new TheLoadListener(view);
+        view.setLoadListener(loadListener);
     }
 
-    fun loadURL(url:String) {
-        view.loadURL(url)
+    public void loadURL(String url) {
+        view.loadURL(url);
     }
 
-    fun resize(width:Int, height:Int) {
-        view.resize(width.toLong(), height.toLong())
+    public void resize(long width, long height) {
+        view.resize(width, height);
     }
 
     /**
      * @author CCBlueX
      */
-    fun render() {
+    public void render() {
         if (glTexture == -1) {
-            createTexture()
+            createTexture();
         }
 
         // As we are using the CPU renderer, draw with a bitmap (we did not set a custom surface)
-        val surface = view.surface() as UltralightBitmapSurface
-        val bitmap = surface.bitmap()
-        val width = view.width().toInt()
-        val height = view.height().toInt()
+        val surface = (UltralightBitmapSurface) view.surface();
+        val bitmap = surface.bitmap();
+        val width = (int)view.width();
+        val height = (int)view.height();
 
         // Prepare OpenGL for 2D textures and bind our texture
-        GlStateManager.enableTexture2D()
-        GlStateManager.bindTexture(glTexture)
+        GlStateManager.enableTexture2D();
+        GlStateManager.bindTexture(glTexture);
 
-        val dirtyBounds = surface.dirtyBounds()
+        val dirtyBounds = surface.dirtyBounds();
 
-        if (dirtyBounds.isValid) {
-            val imageData = bitmap.lockPixels()
+        if (dirtyBounds.isValid()) {
+            val imageData = bitmap.lockPixels();
 
-            glPixelStorei(GL_UNPACK_SKIP_ROWS, 0)
-            glPixelStorei(GL_UNPACK_SKIP_PIXELS, 0)
-            glPixelStorei(GL_UNPACK_SKIP_IMAGES, 0)
-            glPixelStorei(GL_UNPACK_ROW_LENGTH, bitmap.rowBytes().toInt() / 4)
+            glPixelStorei(GL_UNPACK_SKIP_ROWS, 0);
+            glPixelStorei(GL_UNPACK_SKIP_PIXELS, 0);
+            glPixelStorei(GL_UNPACK_SKIP_IMAGES, 0);
+            glPixelStorei(GL_UNPACK_ROW_LENGTH, ((int)bitmap.rowBytes()) / 4);
 
             if (dirtyBounds.width() == width && dirtyBounds.height() == height) {
                 // Update full image
@@ -80,80 +94,78 @@ class View {
                         GL_BGRA,
                         GL_UNSIGNED_INT_8_8_8_8_REV,
                         imageData
-                )
+                );
             } else {
                 // Update partial image
-                val x = dirtyBounds.x()
-                val y = dirtyBounds.y()
-                val dirtyWidth = dirtyBounds.width()
-                val dirtyHeight = dirtyBounds.height()
-                val startOffset = (y * bitmap.rowBytes() + x * 4).toInt()
+                val x = dirtyBounds.x();
+                val y = dirtyBounds.y();
+                val dirtyWidth = dirtyBounds.width();
+                val dirtyHeight = dirtyBounds.height();
+                val startOffset = (int)((y * bitmap.rowBytes() + x * 4));
 
                 glTexSubImage2D(
                         GL_TEXTURE_2D,
                         0,
                         x, y, dirtyWidth, dirtyHeight,
                         GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV,
-                        imageData.position(startOffset)as ByteBuffer
-                )
+                        (ByteBuffer) imageData.position(startOffset)
+                );
             }
-            glPixelStorei(GL_UNPACK_ROW_LENGTH, 0)
+            glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
 
-            bitmap.unlockPixels()
-            surface.clearDirtyBounds()
+            bitmap.unlockPixels();
+            surface.clearDirtyBounds();
         }
 
-        glDisable(GL_DEPTH_TEST)
-        glEnable(GL_BLEND)
-        glDepthMask(false)
-        OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO)
-        glColor4f(1.0f, 1.0f, 1.0f, 1.0f)
+        glDisable(GL_DEPTH_TEST);
+        glEnable(GL_BLEND);
+        glDepthMask(false);
+        OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
+        glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
-        Gui.drawModalRectWithCustomSizedTexture(0, 0, 0f, 0f, UltralightEngine.scaledWidth, UltralightEngine.scaledHeight, UltralightEngine.scaledWidth.toFloat(), UltralightEngine.scaledHeight.toFloat())
-        glDepthMask(true)
-        glDisable(GL_BLEND)
-        glEnable(GL_DEPTH_TEST)
+        Gui.drawModalRectWithCustomSizedTexture(0, 0, 0f, 0f, engine.getScaledWidth(), engine.getScaledHeight(), (float)engine.getScaledWidth(), (float)engine.getScaledHeight());
+        glDepthMask(true);
+        glDisable(GL_BLEND);
+        glEnable(GL_DEPTH_TEST);
     }
 
-    fun deleteTexture() {
-        glDeleteTextures(glTexture)
-        glTexture = -1
+    public void deleteTexture() {
+        glDeleteTextures(glTexture);
+        glTexture = -1;
     }
 
-    fun createTexture() {
-        glTexture = glGenTextures()
-        glBindTexture(GL_TEXTURE_2D, glTexture)
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE)
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE)
-        glBindTexture(GL_TEXTURE_2D, 0)
+    public void createTexture() {
+        glTexture = glGenTextures();
+        glBindTexture(GL_TEXTURE_2D, glTexture);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glBindTexture(GL_TEXTURE_2D, 0);
     }
 
-    func gc() {
-        val lock = view.lockJavascriptContext() // idk why use{} not working
+    public void gc() {
+        val lock = view.lockJavascriptContext(); // idk why use{} not working
         try {
-            lock.context.garbageCollect()
-        } catch (t:Throwable){
-            // ignored
-        }
+            lock.getContext().garbageCollect();
+        } catch (Exception ignored){}
     }
 
-    fun close() {
-        view.unfocus()
-        view.stop()
-        deleteTexture()
+    public void close() {
+        view.unfocus();
+        view.stop();
+        deleteTexture();
     }
 
-    fun fireScrollEvent(event:UltralightScrollEvent) {
-        view.fireScrollEvent(event)
+    public void fireScrollEvent(UltralightScrollEvent event) {
+        view.fireScrollEvent(event);
     }
 
-    fun fireMouseEvent(event:UltralightMouseEvent) {
-        view.fireMouseEvent(event)
+    public void fireMouseEvent(UltralightMouseEvent event) {
+        view.fireMouseEvent(event);
     }
 
-    fun fireKeyEvent(event:UltralightKeyEvent) {
-        view.fireKeyEvent(event)
+    public void fireKeyEvent(UltralightKeyEvent event) {
+        view.fireKeyEvent(event);
     }
 }

@@ -33,6 +33,7 @@ import com.labymedia.ultralight.plugin.loading.UltralightLoadListener;
  * <p>
  * A load listener is registered using {@link UltralightView#setLoadListener(UltralightLoadListener)}.
  */
+@SuppressWarnings("all")
 public class TheLoadListener implements UltralightLoadListener {
     private final UltralightView view;
     private final Databind databind;
