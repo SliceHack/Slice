@@ -63,6 +63,7 @@ public class ModuleManager {
         register(new Botter());
         register(new Spoofer());
         register(new SumoFences());
+        register(new TargetStrafe());
     }
 
     /**
