@@ -24,6 +24,8 @@ import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
 import slice.module.Module;
 import slice.script.manager.ScriptManager;
+import slice.ultralight.GuiView;
+import slice.ultralight.UltraLightEngine;
 import slice.util.LoggerUtil;
 
 /**
@@ -74,6 +76,9 @@ public enum Slice {
 
     private HUD hud;
 
+    /** html ui */
+    public UltraLightEngine engine;
+
     Slice() {
         connecting = true;
         eventManager = new EventManager();
@@ -86,6 +91,7 @@ public enum Slice {
         saver = new Saver(moduleManager);
         discordRPC = new StartDiscordRPC();
         discordRPC.start();
+        engine = Minecraft.getMinecraft().getEngine();
         API.sendAuthRequest(irc);
         eventManager.register(this);
     }
@@ -179,7 +185,7 @@ public enum Slice {
 
     @EventInfo
     public void onKey(EventKey e) {
-        if(e.getKey() == Keyboard.KEY_RSHIFT) Minecraft.getMinecraft().displayGuiScreen(clickGui);
+        if(e.getKey() == Keyboard.KEY_RSHIFT) Minecraft.getMinecraft().displayGuiScreen(new GuiView(engine, "https://youtube.com"));
         if (e.getKey() == Keyboard.KEY_PERIOD) Minecraft.getMinecraft().displayGuiScreen(new GuiChat("."));
         moduleManager.getModules().stream().filter(module -> module.getKey() == e.getKey()).forEach(Module::toggle); // key event
     }

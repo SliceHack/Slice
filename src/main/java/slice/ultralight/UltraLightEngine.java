@@ -8,7 +8,6 @@ import com.labymedia.ultralight.config.UltralightConfig;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.opengl.Display;
 import slice.event.data.EventInfo;
 import slice.event.events.Event2D;
@@ -16,8 +15,6 @@ import slice.event.manager.EventManager;
 import slice.util.Timer;
 
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +25,7 @@ import java.util.List;
  * @author CCBlueX || @UnlegitMC
  * */
 @Getter @Setter
+@SuppressWarnings("all")
 public class UltraLightEngine {
 
     private UltralightPlatform platform;
@@ -35,7 +33,7 @@ public class UltraLightEngine {
 
     private int width = 0, height = 0, scaledWidth = 0, scaledHeight = 0, factor = 1;
 
-    private Timer gcTimer= new Timer();
+    private Timer gcTimer = new Timer();
 
     private List<View> views = new ArrayList<>();
 
@@ -45,7 +43,8 @@ public class UltraLightEngine {
     private File cachePath = new File(ultralightPath, "cache");
 
     @SuppressWarnings("all")
-    public UltraLightEngine(EventManager eventManager) {
+    public UltraLightEngine() {
+        exactResources();
         platform = UltralightPlatform.instance();
 
         if(!ultralightPath.exists()) ultralightPath.mkdirs();
@@ -53,14 +52,15 @@ public class UltraLightEngine {
         if(!pagesPath.exists()) pagesPath.mkdirs();
         if(!cachePath.exists()) cachePath.mkdirs();
 
-        exactResources();
-
         platform.setConfig(new UltralightConfig()
                         .forceRepaint(false)
                         .resourcePath(resourcePath.getAbsolutePath())
                         .cachePath(cachePath.getAbsolutePath())
                         .fontHinting(FontHinting.SMOOTH)
         );
+    }
+
+    public void initSlice(EventManager eventManager) {
         eventManager.register(this);
     }
 
@@ -97,8 +97,9 @@ public class UltraLightEngine {
     public void exactResources() {
         try {
             UltralightJava.extractNativeLibrary(resourcePath.toPath());
+            UltralightJava.load(resourcePath.toPath());
         } catch (Exception e) {
-            System.err.println("Failed to extract native library: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 

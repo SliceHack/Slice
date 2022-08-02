@@ -1,5 +1,6 @@
 package net.minecraft.client;
 
+import slice.Slice;
 import slice.event.events.EventClientBrand;
 
 public class ClientBrandRetriever

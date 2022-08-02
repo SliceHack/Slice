@@ -35,6 +35,9 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 import javax.imageio.ImageIO;
+
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.audio.MusicTicker;
@@ -180,10 +183,12 @@ import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
 import slice.Slice;
 import slice.event.events.EventKey;
+import slice.ultralight.UltraLightEngine;
 import viamcp.ViaMCP;
 import viamcp.gui.GuiProtocolSelector;
 
 @SuppressWarnings("all")
+@Getter @Setter
 public class Minecraft implements IThreadListener, IPlayerUsage
 {
     private static final Logger logger = LogManager.getLogger();
@@ -361,6 +366,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
     /** Profiler currently displayed in the debug screen pie chart */
     private String debugProfilerName = "root";
+
+    public UltraLightEngine engine;
 
     public Minecraft(GameConfiguration gameConfig)
     {
@@ -660,6 +667,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             }
 
             Display.create();
+            if(engine != null)
+                engine.initSlice(Slice.INSTANCE.getEventManager());
         }
     }
 
