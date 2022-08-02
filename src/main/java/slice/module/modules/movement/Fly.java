@@ -168,7 +168,9 @@ public class Fly extends Module {
                 mc.timer.timerSpeed = 10.0F;
                 break;
             case "Dev":
-                mc.thePlayer.motionY = 0F;
+                if(stage == 0) {  damage(3.4F); stage = 1; }
+                if(stage == 1 && mc.thePlayer.hurtResistantTime > 2) {  stage = 3; }
+                if(stage == 3) { mc.thePlayer.motionY = 0; /*MoveUtil.strafe(0.5D);*/ }
                 break;
         }
     }

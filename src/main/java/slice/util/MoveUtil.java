@@ -54,7 +54,7 @@ public class MoveUtil {
     }
 
     /**
-     * Get's the player's bps
+     * Gets the player's bps
      * */
     public double getBPS() {
         EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
