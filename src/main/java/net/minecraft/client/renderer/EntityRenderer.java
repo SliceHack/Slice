@@ -97,6 +97,7 @@ import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
 import slice.event.events.Event3D;
+import slice.event.events.EventGuiRender;
 import slice.event.events.EventPlayerReach;
 
 @SuppressWarnings("all")
@@ -1391,10 +1392,13 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 TileEntityRendererDispatcher.instance.fontRenderer = this.mc.fontRendererObj;
             }
 
+            GlStateManager.clear(256);
+            EventGuiRender event = new EventGuiRender(scaledresolution, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight(), partialTicks);
+            event.call();
+
             if (this.mc.currentScreen != null)
             {
                 GlStateManager.clear(256);
-
                 try
                 {
                     if (Reflector.ForgeHooksClient_drawScreen.exists())

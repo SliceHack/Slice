@@ -1,14 +1,20 @@
 package slice;
 
 import lombok.Getter;
+import me.friwi.jcefmaven.impl.progress.ConsoleProgressHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S02PacketChat;
+import org.cef.ccbluex.CefRenderManager;
+import org.cef.ccbluex.DynamicGuiView;
+import org.cef.ccbluex.GuiView;
+import org.cef.ccbluex.Page;
 import org.lwjgl.input.Keyboard;
 import slice.api.API;
 import slice.api.IRC;
+import slice.cef.ViewNoGui;
 import slice.clickgui.ClickGui;
 import slice.command.commands.CommandPlugins;
 import slice.discord.StartDiscordRPC;
@@ -24,9 +30,11 @@ import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
 import slice.module.Module;
 import slice.script.manager.ScriptManager;
-import slice.ultralight.GuiView;
-import slice.ultralight.UltraLightEngine;
 import slice.util.LoggerUtil;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
 * Main Class for the Client
@@ -76,12 +84,16 @@ public enum Slice {
 
     private HUD hud;
 
-    /** html ui */
-    public UltraLightEngine engine;
+    /** html */
+    private final CefRenderManager cefRenderManager;
 
+    private final List<ViewNoGui> htmls = new ArrayList<>();
+    
     Slice() {
         connecting = true;
         eventManager = new EventManager();
+        cefRenderManager = new CefRenderManager(eventManager);
+        cefRenderManager.initialize(new ConsoleProgressHandler());
         moduleManager = new ModuleManager();
         fontManager = new FontManager();
         scriptManager = new ScriptManager(moduleManager, fontManager);
@@ -91,9 +103,15 @@ public enum Slice {
         saver = new Saver(moduleManager);
         discordRPC = new StartDiscordRPC();
         discordRPC.start();
-        engine = Minecraft.getMinecraft().getEngine();
         API.sendAuthRequest(irc);
         eventManager.register(this);
+    }
+
+    /**
+     * Calls when minecraft is initialized and ready to be used.
+     * */
+    public void init() {
+        htmls.add(new ViewNoGui(new Page("file:///C:\\Users\\Nick\\Slice\\index.html")));
     }
 
     /**
@@ -176,6 +194,14 @@ public enum Slice {
     }
 
     @EventInfo
+    public void onGuiRender(EventGuiRender e) {
+        htmls.forEach((html) -> {
+            if(html.isInit()) html.draw(e);
+            else html.init();
+        });
+    }
+
+    @EventInfo
     public void switchAccount(EventSwitchAccount e) {
         if(irc == null)
             return;
@@ -185,7 +211,7 @@ public enum Slice {
 
     @EventInfo
     public void onKey(EventKey e) {
-        if(e.getKey() == Keyboard.KEY_RSHIFT) Minecraft.getMinecraft().displayGuiScreen(new GuiView(engine, "https://youtube.com"));
+        if(e.getKey() == Keyboard.KEY_RSHIFT) Minecraft.getMinecraft().displayGuiScreen(clickGui);
         if (e.getKey() == Keyboard.KEY_PERIOD) Minecraft.getMinecraft().displayGuiScreen(new GuiChat("."));
         moduleManager.getModules().stream().filter(module -> module.getKey() == e.getKey()).forEach(Module::toggle); // key event
     }

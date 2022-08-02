@@ -6,6 +6,7 @@ import com.ibm.icu.text.Bidi;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -1128,5 +1129,13 @@ public class FontRenderer implements IResourceManagerReloadListener
     protected InputStream getResourceInputStream(ResourceLocation p_getResourceInputStream_1_) throws IOException
     {
         return Minecraft.getMinecraft().getResourceManager().getResource(p_getResourceInputStream_1_).getInputStream();
+    }
+
+    public void drawCenteredString(String s, int v, int v1, int color) {
+        Gui.drawCenteredStringStatic(this, s, v, v1, color);
+    }
+
+    public void drawCenteredString(String s, float v, float v1, int color) {
+        Gui.drawCenteredStringStatic(this, s, v, v1, color);
     }
 }

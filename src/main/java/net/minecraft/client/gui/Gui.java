@@ -200,6 +200,17 @@ public class Gui
         fontRendererIn.drawStringWithShadow(text, (float)(x - fontRendererIn.getStringWidth(text) / 2), (float)y, color);
     }
 
+    public static void drawCenteredStringStatic(FontRenderer fontRendererIn, String text, int x, int y, int color)
+    {
+        fontRendererIn.drawStringWithShadow(text, (float)(x - fontRendererIn.getStringWidth(text) / 2), (float)y, color);
+    }
+
+    public static void drawCenteredStringStatic(FontRenderer fontRendererIn, String text, float x, float y, int color)
+    {
+        fontRendererIn.drawStringWithShadow(text, (float)(x - fontRendererIn.getStringWidth(text) / 2), (float)y, color);
+    }
+
+
     public static void drawCenteredString(TTFFontRenderer fontRendererIn, String text, float x, float y, int color)
     {
         fontRendererIn.drawStringWithShadow(text, (float)(x - fontRendererIn.getWidth(text) / 2), (float)y, color);

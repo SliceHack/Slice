@@ -183,7 +183,6 @@ import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
 import slice.Slice;
 import slice.event.events.EventKey;
-import slice.ultralight.UltraLightEngine;
 import viamcp.ViaMCP;
 import viamcp.gui.GuiProtocolSelector;
 
@@ -366,8 +365,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
     /** Profiler currently displayed in the debug screen pie chart */
     private String debugProfilerName = "root";
-
-    public UltraLightEngine engine;
 
     public Minecraft(GameConfiguration gameConfig)
     {
@@ -615,6 +612,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         }
 
         this.renderGlobal.makeEntityOutlineShader();
+        Slice.INSTANCE.init();
     }
 
     private void registerMetadataSerializers()
@@ -667,8 +665,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             }
 
             Display.create();
-            if(engine != null)
-                engine.initSlice(Slice.INSTANCE.getEventManager());
         }
     }
 
@@ -1767,6 +1763,10 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             ScaledResolution scaledresolution = new ScaledResolution(this);
             this.currentScreen.onResize(this, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight());
         }
+
+        ScaledResolution scaledresolution = new ScaledResolution(this);
+        Slice.INSTANCE.getHtmls().forEach(html -> html.onResize(this, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight()));
+
 
         this.loadingScreen = new LoadingScreenRenderer(this);
         this.updateFramebufferSize();
