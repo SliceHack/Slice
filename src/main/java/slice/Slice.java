@@ -30,6 +30,7 @@ import slice.manager.SettingsManager;
 import slice.module.Module;
 import slice.script.manager.ScriptManager;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,7 +108,9 @@ public enum Slice {
     /**
      * Calls when minecraft is initialized and ready to be used.
      * */
-    public void init() {}
+    public void init() {
+        html.add(new ViewNoGui(new Page(new File("C:\\Users\\djlev\\minecraft-dir\\Slice\\testhtml\\index.html"))));
+    }
 
     /**
      * Called when the client is stopped
@@ -190,6 +193,7 @@ public enum Slice {
 
     @EventInfo
     public void onGuiRender(EventGuiRender e) {
+        if(Minecraft.getMinecraft().gameSettings.thirdPersonView) return;
         html.forEach((html) -> {
             if(html.isInit()) html.draw(e);
             else html.init();

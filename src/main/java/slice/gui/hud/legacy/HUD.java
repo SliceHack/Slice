@@ -78,11 +78,11 @@ public class HUD {
     }
 
     public static void drawStandard(ScaledResolution sr, int widthHeight) {
-        RenderUtil.drawRoundedRect(5, 5, 10 + (widthHeight + 5), 10 + (widthHeight + 5), 10, Integer.MIN_VALUE);
+//        RenderUtil.drawRoundedRect(5, 5, 10 + (widthHeight + 5), 10 + (widthHeight + 5), 10, Integer.MIN_VALUE);
 
         int fontHeight2 = sr.getScaledHeight() / 18;
 
-        RenderUtil.drawImage("icons/Slice.png", 10, 10, widthHeight, widthHeight);
+//        RenderUtil.drawImage("icons/Slice.png", 10, 10, widthHeight, widthHeight);
 
         ArrayListHUD arrayListHUD = new ArrayListHUD();
         arrayListHUD.draw(fontHeight2);
@@ -90,16 +90,16 @@ public class HUD {
 
     public static void drawSmooth(ScaledResolution sr, int widthHeight) {
         try {
-            RenderUtil.drawRoundedRect(5, 5, 10 + (widthHeight + 5), 10 + (widthHeight + 5), 10, Integer.MIN_VALUE);
+//            RenderUtil.drawRoundedRect(5, 5, 10 + (widthHeight + 5), 10 + (widthHeight + 5), 10, Integer.MIN_VALUE);
 
-            GlStateManager.pushMatrix();
-            GlStateManager.enableTexture2D();
-            GlStateManager.enableBlend();
-            GlStateManager.enableAlpha();
-            RenderUtil.drawImage("icons/Slice.png", 10, 10, widthHeight, widthHeight);
-            GlStateManager.popMatrix();
-            GlStateManager.disableBlend();
-            GlStateManager.disableAlpha();
+//            GlStateManager.pushMatrix();
+//            GlStateManager.enableTexture2D();
+//            GlStateManager.enableBlend();
+//            GlStateManager.enableAlpha();
+//            RenderUtil.drawImage("icons/Slice.png", 10, 10, widthHeight, widthHeight);
+//            GlStateManager.popMatrix();
+//            GlStateManager.disableBlend();
+//            GlStateManager.disableAlpha();
 
             int fontHeight2 = sr.getScaledHeight() / 18;
 
