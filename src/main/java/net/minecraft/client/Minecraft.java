@@ -1732,6 +1732,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
             if (this.currentScreen != null)
             {
+                Slice.INSTANCE.getHtml().forEach(html -> html.onResize(this, this.displayWidth, this.displayHeight));
                 this.resize(this.displayWidth, this.displayHeight);
             }
             else
@@ -1764,7 +1765,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         }
 
         ScaledResolution scaledresolution = new ScaledResolution(this);
-        Slice.INSTANCE.getHtml().forEach(html -> html.onResize(this, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight()));
 
 
         this.loadingScreen = new LoadingScreenRenderer(this);

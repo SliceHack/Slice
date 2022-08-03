@@ -72,7 +72,7 @@ public class ViewNoGui {
     }
 
     public void onResize(Minecraft p_onResize_1_, int p_onResize_2_, int p_onResize_3_) {
-        cefBrowser.wasResized_(Display.getWidth(), Display.getHeight());
+        cefBrowser.wasResized_(p_onResize_2_, p_onResize_3_);
     }
 
     public int keyModifiers(int mod) {
