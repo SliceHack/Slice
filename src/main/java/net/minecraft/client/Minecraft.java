@@ -44,9 +44,7 @@ import net.minecraft.client.audio.MusicTicker;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.*;
-import slice.event.events.EventClientTick;
-import slice.event.events.EventMouse;
-import slice.event.events.EventSwitchAccount;
+import slice.event.events.*;
 import slice.gui.alt.manager.AltManager;
 import slice.gui.hud.legacy.HUD;
 import slice.gui.main.MainMenu;
@@ -182,7 +180,6 @@ import org.lwjgl.opengl.OpenGLException;
 import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
 import slice.Slice;
-import slice.event.events.EventKey;
 import viamcp.ViaMCP;
 import viamcp.gui.GuiProtocolSelector;
 
@@ -1258,6 +1255,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
     public void updateDisplay()
     {
+        EventUpdateLWJGL event = new EventUpdateLWJGL();
+        event.call();
         this.mcProfiler.startSection("display_update");
         Display.update();
         this.mcProfiler.endSection();

@@ -8,6 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ChatAllowedCharacters;
+import net.optifine.Log;
 import org.cef.browser.CefBrowserCustom;
 import org.cef.browser.ICefRenderer;
 import org.cef.browser.lwjgl.CefRendererLwjgl;
@@ -15,6 +16,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import slice.Slice;
+import slice.util.LoggerUtil;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -55,6 +57,11 @@ public class GuiView extends GuiScreen {
         Keyboard.enableRepeatEvents(false);
         cefBrowser = null;
         cefRenderer = null;
+    }
+
+    @Override
+    public void onGuiClosed() {
+        destroy();
     }
 
     @Override
@@ -110,15 +117,22 @@ public class GuiView extends GuiScreen {
             val mod = keyModifiers(0);
             cefBrowser.keyEventByKeyCode(key, charr, mod, true);
             pressedKeyMap.put(key, charr);
-            if (ChatAllowedCharacters.isAllowedCharacter(charr) || (key == 28 || key == 14)) {
-                cefBrowser.keyTyped(charr, mod);
+
+            if (ChatAllowedCharacters.isAllowedCharacter(charr) || key == Keyboard.KEY_RETURN || (int)key == Keyboard.KEY_BACK) {
+                switch (key) {
+                    case Keyboard.KEY_BACK:
+                        cefBrowser.keyTyped((char) 8, mod);
+                        break;
+                    default:
+                        cefBrowser.keyTyped(charr, mod);
+                        break;
+                }
             }
             keyTyped(charr, key);
         }
 
         mc.dispatchKeypresses();
     }
-
     @Override
     public boolean doesGuiPauseGame() {
         return false;

@@ -138,11 +138,17 @@ public class CefBrowserCustom extends CefBrowser_N implements CefRenderHandler {
     }
 
     public void mcefUpdate() {
-        synchronized(paintData) {
-            if(paintData.hasFrame) {
-                renderer_.onPaint(false, paintData.dirtyRects, paintData.buffer, paintData.width, paintData.height, paintData.fullReRender);
-                paintData.hasFrame = false;
-                paintData.fullReRender = false;
+        (new UpdateMCEF()).update();
+    }
+
+    public class UpdateMCEF {
+        public void update() {
+            synchronized(paintData) {
+                if(paintData.hasFrame) {
+                    renderer_.onPaint(false, paintData.dirtyRects, paintData.buffer, paintData.width, paintData.height, paintData.fullReRender);
+                    paintData.hasFrame = false;
+                    paintData.fullReRender = false;
+                }
             }
         }
     }

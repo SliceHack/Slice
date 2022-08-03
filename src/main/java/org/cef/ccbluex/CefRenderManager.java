@@ -11,6 +11,7 @@ import net.minecraft.client.settings.GameSettings;
 import org.cef.CefApp;
 import org.cef.CefClient;
 import org.cef.browser.CefBrowser;
+import org.cef.browser.CefBrowserCustom;
 import org.cef.browser.CefFrame;
 import org.cef.browser.CefMessageRouter;
 import org.cef.browser.scheme.SchemeResourceHandler;
@@ -18,6 +19,8 @@ import org.cef.callback.CefQueryCallback;
 import org.cef.handler.CefMessageRouterHandlerAdapter;
 import slice.event.data.EventInfo;
 import slice.event.events.Event2D;
+import slice.event.events.EventUpdate;
+import slice.event.events.EventUpdateLWJGL;
 import slice.event.manager.EventManager;
 import slice.util.LoggerUtil;
 
@@ -108,9 +111,25 @@ public class CefRenderManager {
     }
 
     @EventInfo
-    public void on2D(Event2D event) {
-        cefApp.doMessageLoopWork(0L);
-//        browsers.forEach(CefBrowserCustom::mcefUpdate);
-        browsers .forEach((browser) -> browser.mcefUpdate());
+    public void onUpdate(EventUpdate e) {
+        (new Update()).update();
     }
+
+    @EventInfo
+    public void on2D(Event2D e) {
+        (new Update()).update();
+    }
+
+    @EventInfo
+    public void onUpdateDisplay(EventUpdateLWJGL e) {
+        (new Update()).update();
+    }
+
+    public class Update {
+        public void update() {
+            cefApp.doMessageLoopWork(0L);
+            browsers.forEach(CefBrowserCustom::mcefUpdate);
+        }
+    }
+
 }
