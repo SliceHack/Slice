@@ -1391,7 +1391,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 TileEntityRendererDispatcher.instance.renderEngine = this.mc.getTextureManager();
                 TileEntityRendererDispatcher.instance.fontRenderer = this.mc.fontRendererObj;
             }
-            GlStateManager.clear(256);
 
             EventGuiRender event = new EventGuiRender(scaledresolution, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight(), partialTicks);
             event.call();
