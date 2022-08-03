@@ -1392,8 +1392,23 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 TileEntityRendererDispatcher.instance.fontRenderer = this.mc.fontRendererObj;
             }
 
+            // fix other parts of the screen interfering with the GUI
+            GlStateManager.enableBlend();
+            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+            GlStateManager.blendFunc(770, 771);
+            GlStateManager.disableAlpha();
+            GlStateManager.depthMask(false);
+            GlStateManager.enableDepth();
+            GlStateManager.depthFunc(515);
+            GlStateManager.depthMask(true);
+            GlStateManager.disableDepth();
+            GlStateManager.disableBlend();
+            GlStateManager.colorMask(true, true, true, true);
             EventGuiRender event = new EventGuiRender(scaledresolution, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight(), partialTicks);
             event.call();
+            GlStateManager.matrixMode(5889);
+            GlStateManager.popMatrix();
+            GlStateManager.disableDepth();
 
             if (this.mc.currentScreen != null)
             {
