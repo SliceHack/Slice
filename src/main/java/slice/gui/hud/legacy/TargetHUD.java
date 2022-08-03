@@ -48,6 +48,7 @@ public class TargetHUD {
 
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 20);
 
+        GlStateManager.clear(256);
         RenderUtil.drawRoundedRect(borderX, borderY, borderWidth, borderHeight, borderRadius, new Color(255,171,171).getRGB());
         RenderUtil.drawRoundedRect(x, y, width, height, radius, new Color(60, 60, 60).getRGB());
 
