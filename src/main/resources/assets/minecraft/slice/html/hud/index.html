@@ -10,27 +10,33 @@
 </head>
 
 <body>
-    <div class="box">
-        <div class="text">
-            Slice | Version 1.0 | God_Mode
-        </div>
+<div class="box">
+    <div class="text">
+        Slice | Version 1.0 | God_Mode
     </div>
-    <script>
+</div>
+<script>
 
-        //make a function which gets the paramters from the url
-        document.querySelector(".text").innerHTML = getUrlVars()["name"] + " | " + getUrlVars()["version"] + " | " + getUrlVars()["discord"].replace(/%20/g, " ");
+    //make a function which gets the paramters from the url
+    document.querySelector(".text").innerHTML = getUrlVars()["name"] + " | " + getUrlVars()["version"] + " | " + getUrlVars()["discord"].replace(/%20/g, " ");
 
-        document.querySelector(".box").style.width = document.querySelector(".text").offsetWidth - 15 + "px";
+    // subract font width from the box width
+    const fontWidth = document.querySelector(".text").offsetWidth;
+    const boxWidth = document.querySelector(".box").offsetWidth;
+    const difference = boxWidth - fontWidth;
+    document.querySelector(".box").style.width = (fontWidth) + "px";
 
-        function getUrlVars() {
-            var vars = {};
-            var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
-                vars[key] = value;
-            });
-            return vars;
-        }
+    document.querySelector(".text").style.left = ((fontWidth/13)) + "px";
 
-    </script>
+    function getUrlVars() {
+        var vars = {};
+        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+            vars[key] = value;
+        });
+        return vars;
+    }
+
+</script>
 </body>
 
 </html>

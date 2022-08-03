@@ -3,10 +3,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 .box {
+    /* badd blur background on box */
     display: inline-block;
     position: absolute;
     height: 40px;
-    width: 100%;
+    width: 30%;
     top: 10px;
     left: 10px;
     border-radius: 5px;
