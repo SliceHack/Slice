@@ -1392,9 +1392,14 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 TileEntityRendererDispatcher.instance.fontRenderer = this.mc.fontRendererObj;
             }
 
+            GlStateManager.pushMatrix();
+            GlStateManager.enableAlpha();
+            GlStateManager.matrixMode(5888);
+            GlStateManager.loadIdentity();
             GlStateManager.clear(256);
             EventGuiRender event = new EventGuiRender(scaledresolution, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight(), partialTicks);
             event.call();
+            GlStateManager.popMatrix();
 
             if (this.mc.currentScreen != null)
             {
