@@ -1,5 +1,6 @@
 package slice;
 
+import com.labymedia.ultralight.UltralightJava;
 import lombok.Getter;
 import me.friwi.jcefmaven.impl.progress.ConsoleProgressHandler;
 import net.minecraft.client.Minecraft;
@@ -30,6 +31,7 @@ import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
 import slice.module.Module;
 import slice.script.manager.ScriptManager;
+import slice.util.ResourceUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -110,8 +112,23 @@ public enum Slice {
     /**
      * Calls when minecraft is initialized and ready to be used.
      * */
+    @SuppressWarnings("all")
     public void init() {
-        html.add(new ViewNoGui(new Page("file:///C:\\Users\\djlev\\minecraft-dir\\Slice\\testhtml\\index.html?name=" + NAME + "&version=" + VERSION + "&discord=" + discordName)));
+        File sliceDir = new File(Minecraft.getMinecraft().mcDataDir, "Slice"),
+                sliceHTML = new File(sliceDir, "html"),
+                sliceHUD = new File(sliceHTML, "hud");
+
+        if(!sliceHTML.exists()) sliceHTML.mkdirs();
+
+        File html = new File(sliceHUD, "index.html");
+        File css = new File(sliceHUD, "styles.css");
+        if(!html.exists() || !css.exists()) {
+            ResourceUtil.extractResource("/slice/html/hud/index.html", html.toPath());
+            ResourceUtil.extractResource("/slice/html/hud/styles.css", css.toPath());
+            sliceHUD.mkdirs();
+        }
+
+        this.html.add(new ViewNoGui(new Page("file:///" + html.getAbsolutePath() + "?name=" + NAME + "&version=" + VERSION + "&discord=" + discordName)));
     }
 
     /**

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Test</title>
+</head>
+
+<body>
+    <div class="box">
+        <div class="text">
+            Slice | Version 1.0 | God_Mode
+        </div>
+    </div>
+    <script>
+
+        //make a function which gets the paramters from the url
+        document.querySelector(".text").innerHTML = getUrlVars()["name"] + " | " + getUrlVars()["version"] + " | " + getUrlVars()["discord"].replace(/%20/g, " ");
+
+        document.querySelector(".box").style.width = document.querySelector(".text").offsetWidth - 15 + "px";
+
+        function getUrlVars() {
+            var vars = {};
+            var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+                vars[key] = value;
+            });
+            return vars;
+        }
+
+    </script>
+</body>
+
+</html>

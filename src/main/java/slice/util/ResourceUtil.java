@@ -2,8 +2,10 @@ package slice.util;
 
 import com.labymedia.ultralight.UltralightJava;
 import lombok.experimental.UtilityClass;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.*;
@@ -26,34 +28,46 @@ public class ResourceUtil {
     /**
      * Extracts a Resource from a String.
      * */
-    private static boolean extractResource(String resourcePath, Path targetFile) throws IOException {
-        InputStream stream = UltralightJava.class.getResourceAsStream(resourcePath);
-        Throwable throwable = null;
+    @SuppressWarnings("all")
+    public static boolean extractResource(String resourcePath, Path targetFile)  {
         try {
-            if (stream == null) return false;
+            InputStream stream = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(resourcePath)).getInputStream();
+            Throwable var3 = null;
 
-            Path targetDir = targetFile.getParent();
-            if (!Files.isDirectory(targetDir)) Files.createDirectories(targetDir);
-
-            Files.copy(stream, targetFile, StandardCopyOption.REPLACE_EXISTING);
-        } catch (Throwable e) {
-            throwable = e;
-            throw e;
-        } finally {
-            if (stream != null) {
-                if (throwable != null) {
-                    try {
-                        stream.close();
-                    } catch (Throwable var13) {
-                        throwable.addSuppressed(var13);
-                    }
-                } else {
-                    stream.close();
+            try {
+                if (stream == null) {
+                    boolean var16 = false;
+                    return var16;
                 }
+
+                Path targetDir = targetFile.getParent();
+                if (!Files.isDirectory(targetDir, new LinkOption[0])) {
+                    Files.createDirectories(targetDir);
+                }
+
+                Files.copy(stream, targetFile, new CopyOption[]{StandardCopyOption.REPLACE_EXISTING});
+            } catch (Throwable var14) {
+                var3 = var14;
+                throw var14;
+            } finally {
+                if (stream != null) {
+                    if (var3 != null) {
+                        try {
+                            stream.close();
+                        } catch (Throwable var13) {
+                            var3.addSuppressed(var13);
+                        }
+                    } else {
+                        stream.close();
+                    }
+                }
+
             }
 
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        return true;
+        return false;
     }
 }
