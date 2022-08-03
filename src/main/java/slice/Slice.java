@@ -118,6 +118,7 @@ public enum Slice {
      * Called when the client is stopped
      * */
     public void stop() {
+        irc.getSocket().disconnect();
         connecting = false;
         saver.save();
         html.forEach(ViewNoGui::destroy);
