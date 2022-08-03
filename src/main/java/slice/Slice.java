@@ -7,10 +7,10 @@ import net.minecraft.client.gui.GuiChat;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S02PacketChat;
+import org.cef.browser.CefBrowserCustom;
 import org.cef.ccbluex.CefRenderManager;
-import org.cef.ccbluex.GuiView;
-import org.cef.ccbluex.Page;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.Display;
 import slice.api.API;
 import slice.api.IRC;
 import slice.cef.ViewNoGui;
@@ -157,6 +157,17 @@ public enum Slice {
         plugins.onUpdate();
 
         moduleManager.getModules().forEach(module -> module.onUpdateNoToggle(e));
+    }
+
+    @EventInfo
+    public void updateHTML(EventUpdate e) {
+        for (ViewNoGui view : html) {
+            view.cefBrowser = new CefBrowserCustom(Slice.INSTANCE.getCefRenderManager().getCefClient(), view.getPage().getUrl(), true, null, view.getCefRenderer());
+            view.cefBrowser.setCloseAllowed();
+            view.cefBrowser.createImmediately();
+            view.cefBrowser.setFocus(true);
+            view.cefBrowser.wasResized_(Display.getWidth(), Display.getHeight());
+        }
     }
 
     @EventInfo
