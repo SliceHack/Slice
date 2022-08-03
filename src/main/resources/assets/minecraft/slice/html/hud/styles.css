@@ -15,6 +15,7 @@
     text-align: center;
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(100px);
+    mask: linear-gradient(transparent, black 60%);
     box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
     text-align: center;
 }
