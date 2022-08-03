@@ -1395,7 +1395,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
             // fix other parts of the screen interfering with the GUI
             EventGuiRender event = new EventGuiRender(scaledresolution, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight(), partialTicks);
             GlStateManager.pushMatrix();
-            GlStateManager.enableBlend();git
+            GlStateManager.enableBlend();
             event.call();
             GlStateManager.disableBlend();
             GlStateManager.popMatrix();
