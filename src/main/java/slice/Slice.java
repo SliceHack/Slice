@@ -115,6 +115,7 @@ public enum Slice {
     public void stop() {
         connecting = false;
         saver.save();
+        for(ViewNoGui view : html) view.destroy();
     }
 
 
