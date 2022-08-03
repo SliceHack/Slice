@@ -111,7 +111,7 @@ public enum Slice {
      * Calls when minecraft is initialized and ready to be used.
      * */
     public void init() {
-        html.add(new ViewNoGui(new Page(new File("C:\\Users\\djlev\\minecraft-dir\\Slice\\testhtml\\index.html"))));
+        html.add(new ViewNoGui(new Page("file:///C:\\Users\\djlev\\minecraft-dir\\Slice\\testhtml\\index.html?name=Slice&version=1.0&discord=" + this.discordName)));
     }
 
     /**
