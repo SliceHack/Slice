@@ -83,10 +83,12 @@ public class CefBrowserCustom extends CefBrowser_N implements CefRenderHandler {
 
     @Override
     public void onPopupShow(CefBrowser browser, boolean show) {
-        if (!show) {
-            this.renderer_.onPopupClosed();
-            this.invalidate();
-        }
+        new Thread(() -> {
+            if (!show) {
+                this.renderer_.onPopupClosed();
+                this.invalidate();
+            }
+        }).start();
     }
 
     @Override

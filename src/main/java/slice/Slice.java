@@ -10,6 +10,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S02PacketChat;
 import org.cef.browser.CefBrowserCustom;
 import org.cef.ccbluex.CefRenderManager;
+import org.cef.ccbluex.GuiView;
 import org.cef.ccbluex.Page;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -231,6 +232,7 @@ public enum Slice {
 
     @EventInfo
     public void onKey(EventKey e) {
+        if(e.getKey() == Keyboard.KEY_V) Minecraft.getMinecraft().displayGuiScreen(new GuiView(new Page("https://www.youtube.com/watch?v=dQw4w9WgXcQ")));
         if(e.getKey() == Keyboard.KEY_RSHIFT) Minecraft.getMinecraft().displayGuiScreen(clickGui);
         if (e.getKey() == Keyboard.KEY_PERIOD) Minecraft.getMinecraft().displayGuiScreen(new GuiChat("."));
         moduleManager.getModules().stream().filter(module -> module.getKey() == e.getKey()).forEach(Module::toggle); // key event
