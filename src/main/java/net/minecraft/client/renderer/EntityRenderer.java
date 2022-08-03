@@ -1391,22 +1391,13 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 TileEntityRendererDispatcher.instance.renderEngine = this.mc.getTextureManager();
                 TileEntityRendererDispatcher.instance.fontRenderer = this.mc.fontRendererObj;
             }
-
-            GlStateManager.pushMatrix();
-            GlStateManager.disableAlpha();
-            GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-            GlStateManager.disableBlend();
-            GlStateManager.enableAlpha();
             GlStateManager.clear(256);
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+
             EventGuiRender event = new EventGuiRender(scaledresolution, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight(), partialTicks);
             event.call();
-            GlStateManager.popMatrix();
 
             if (this.mc.currentScreen != null)
             {
-                GlStateManager.clear(256);
                 try
                 {
                     if (Reflector.ForgeHooksClient_drawScreen.exists())
