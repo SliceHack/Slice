@@ -9,6 +9,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S02PacketChat;
 import org.cef.browser.CefBrowserCustom;
 import org.cef.ccbluex.CefRenderManager;
+import org.cef.ccbluex.Page;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import slice.api.API;
