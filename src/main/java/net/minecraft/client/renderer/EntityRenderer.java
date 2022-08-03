@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
+
+import com.jogamp.opengl.GL;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.material.Material;
@@ -1396,8 +1398,10 @@ public class EntityRenderer implements IResourceManagerReloadListener
             EventGuiRender event = new EventGuiRender(scaledresolution, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight(), partialTicks);
             GlStateManager.pushMatrix();
             GlStateManager.enableBlend();
+            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
             event.call();
             GlStateManager.disableBlend();
+            GlStateManager.enableAlpha();
             GlStateManager.popMatrix();
 
             if (this.mc.currentScreen != null)
