@@ -157,17 +157,6 @@ public enum Slice {
     }
 
     @EventInfo
-    public void updateHTML(EventUpdate e) {
-        for (ViewNoGui view : html) {
-            view.cefBrowser = new CefBrowserCustom(Slice.INSTANCE.getCefRenderManager().getCefClient(), view.getPage().getUrl(), true, null, view.getCefRenderer());
-            view.cefBrowser.setCloseAllowed();
-            view.cefBrowser.createImmediately();
-            view.cefBrowser.setFocus(true);
-            view.cefBrowser.wasResized_(Display.getWidth(), Display.getHeight());
-        }
-    }
-
-    @EventInfo
     public void onPacket(EventPacket e) {
         Packet<?> packet = e.getPacket();
 
