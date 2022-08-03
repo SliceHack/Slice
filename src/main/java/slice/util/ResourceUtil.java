@@ -29,7 +29,6 @@ public class ResourceUtil {
     private static boolean extractResource(String resourcePath, Path targetFile) throws IOException {
         InputStream stream = UltralightJava.class.getResourceAsStream(resourcePath);
         Throwable throwable = null;
-
         try {
             if (stream == null) return false;
 

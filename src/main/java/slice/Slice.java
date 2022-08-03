@@ -104,6 +104,7 @@ public enum Slice {
         discordRPC.start();
         API.sendAuthRequest(irc);
         eventManager.register(this);
+        Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
     }
 
     /**
@@ -119,6 +120,7 @@ public enum Slice {
     public void stop() {
         connecting = false;
         saver.save();
+        for(ViewNoGui view : html) view.destroy();
     }
 
 
