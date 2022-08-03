@@ -15,7 +15,6 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import slice.Slice;
-import slice.util.LoggerUtil;
 
 import java.io.IOException;
 import java.util.HashMap;
