@@ -30,8 +30,8 @@ import static org.lwjgl.opengl.GL11.*;
 @SuppressWarnings("all")
 public class ViewNoGui {
 
-    private CefBrowserCustom cefBrowser = null;
-    private ICefRenderer cefRenderer = null;
+    public CefBrowserCustom cefBrowser = null;
+    public ICefRenderer cefRenderer = null;
 
     private Map<Integer, Character> pressedKeyMap = new HashMap<>();
 

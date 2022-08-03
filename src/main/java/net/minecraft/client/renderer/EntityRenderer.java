@@ -1393,10 +1393,13 @@ public class EntityRenderer implements IResourceManagerReloadListener
             }
 
             GlStateManager.pushMatrix();
+            GlStateManager.disableAlpha();
+            GlStateManager.enableBlend();
+            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+            GlStateManager.disableBlend();
             GlStateManager.enableAlpha();
-            GlStateManager.matrixMode(5888);
-            GlStateManager.loadIdentity();
             GlStateManager.clear(256);
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             EventGuiRender event = new EventGuiRender(scaledresolution, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight(), partialTicks);
             event.call();
             GlStateManager.popMatrix();
