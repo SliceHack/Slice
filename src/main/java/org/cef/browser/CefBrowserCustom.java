@@ -237,6 +237,7 @@ public class CefBrowserCustom extends CefBrowser_N implements CefRenderHandler {
 
     public void keyTyped(char c, int mods) {
         KeyEvent ev = new KeyEvent(dc_, KeyEvent.KEY_TYPED, 0, mods, 0, c);
+
         sendKeyEvent(ev);
     }
 

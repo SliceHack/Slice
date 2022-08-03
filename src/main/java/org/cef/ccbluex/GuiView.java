@@ -15,6 +15,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import slice.Slice;
+import slice.util.LoggerUtil;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -110,14 +111,13 @@ public class GuiView extends GuiScreen {
             val mod = keyModifiers(0);
             cefBrowser.keyEventByKeyCode(key, charr, mod, true);
             pressedKeyMap.put(key, charr);
-            if (ChatAllowedCharacters.isAllowedCharacter(charr)) {
+            if (ChatAllowedCharacters.isAllowedCharacter(charr) || (key == 28 || key == 14)) {
                 cefBrowser.keyTyped(charr, mod);
             }
             keyTyped(charr, key);
         }
 
         mc.dispatchKeypresses();
-        super.handleKeyboardInput();
     }
 
     @Override
