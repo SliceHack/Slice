@@ -1,5 +1,6 @@
 package slice.gui.hud.legacy;
 
+import com.labymedia.ultralight.UltralightJava;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
@@ -47,13 +48,8 @@ public class TargetHUD {
 
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 20);
 
-        GlStateManager.pushMatrix();
-        GlStateManager.enableAlpha();
-        GlStateManager.color(1, 1, 1, 1);
         RenderUtil.drawRoundedRect(borderX, borderY, borderWidth, borderHeight, borderRadius, new Color(255,171,171).getRGB());
-        GlStateManager.popMatrix();
         RenderUtil.drawRoundedRect(x, y, width, height, radius, new Color(60, 60, 60).getRGB());
-
 
         if (target instanceof EntityPlayer) {
             try {
