@@ -55,10 +55,12 @@ public class ViewNoGui {
     }
 
     public void destroy() {
-        cefBrowser.close(true);
-        Keyboard.enableRepeatEvents(false);
-        cefBrowser = null;
-        cefRenderer = null;
+        try {
+            cefBrowser.close(true);
+            Keyboard.enableRepeatEvents(false);
+            cefBrowser = null;
+            cefRenderer = null;
+        } catch (Exception ignored){}
     }
 
     public void draw(EventGuiRender e2d) {
