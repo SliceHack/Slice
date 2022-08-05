@@ -7,6 +7,10 @@ import com.mojang.authlib.GameProfile;
 import io.netty.buffer.Unpooled;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -212,6 +216,7 @@ import net.minecraft.world.storage.MapData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import slice.gui.main.MainMenu;
+import slice.util.LoggerUtil;
 
 public class NetHandlerPlayClient implements INetHandlerPlayClient
 {
@@ -1710,6 +1715,8 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
 
         if (s.startsWith("level://"))
         {
+            if (!validateResourcePackUrl(s, s1)) return;
+
             String s2 = s.substring("level://".length());
             File file1 = new File(this.gameController.mcDataDir, "saves");
             File file2 = new File(file1, s2);
@@ -1806,6 +1813,45 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
             }
         }
     }
+
+    /**
+     * Found on GitHub
+     * */
+    public boolean validateResourcePackUrl(String url, final String hash) {
+        try {
+            final URI uri = new URI(url);
+            final String scheme = uri.getScheme();
+            final boolean isLevelProtocol = "level".equals(scheme);
+
+            if (!"http".equals(scheme) && !"https".equals(scheme) && !isLevelProtocol) {
+                this.getNetworkManager().sendPacket(new C19PacketResourcePackStatus(hash, C19PacketResourcePackStatus.Action.FAILED_DOWNLOAD));
+                throw new URISyntaxException(url, "Wrong protocol");
+            }
+
+            url = URLDecoder.decode(url.substring("level://".length()), StandardCharsets.UTF_8.toString());
+
+            if (isLevelProtocol && (url.contains("..") || !url.endsWith("/resources.zip"))) {
+                System.out.println("Malicious server tried to access " + url);
+
+                final EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+
+                if (player != null) {
+                    LoggerUtil.addMessage("Server attempted to check if a file directory exists but was blocked by Slice.");
+                    LoggerUtil.addMessage("Directory: " + url.substring(3));
+                }
+
+                throw new URISyntaxException(url, "Invalid levelstorage resourcepack path");
+            }
+
+            return true;
+        } catch (final Exception e) {
+            // Send this packet to make the client not flaggable on join.
+            this.getNetworkManager().sendPacket(new C19PacketResourcePackStatus(hash, C19PacketResourcePackStatus.Action.FAILED_DOWNLOAD));
+
+            return false;
+        }
+    }
+
 
     public void handleEntityNBT(S49PacketUpdateEntityNBT packetIn)
     {
