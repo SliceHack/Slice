@@ -130,6 +130,7 @@ public enum Slice {
         }
 
         this.html.add(new ViewNoGui(new Page("file:///" + html.getAbsolutePath() + "?name=" + NAME + "&version=" + VERSION + "&discord=" + discordName)));
+        // send arraylist to html
     }
 
     /**
@@ -145,6 +146,7 @@ public enum Slice {
 
     @EventInfo
     public void onUpdate(EventUpdate e) {
+        html.forEach((html) -> html.onResize(Minecraft.getMinecraft(), Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight));
         for(Module module : moduleManager.getModules()) {
 
             if(!module.isEnabled() && eventManager.isRegistered(module)) {

@@ -1768,7 +1768,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
         this.loadingScreen = new LoadingScreenRenderer(this);
         this.updateFramebufferSize();
-        Slice.INSTANCE.getHtml().forEach(html -> html.onResize(this, this.displayWidth, this.displayHeight));
+        Slice.INSTANCE.getHtml().forEach(html -> html.onResize(this, displayWidth, displayHeight));
     }
 
     private void updateFramebufferSize()

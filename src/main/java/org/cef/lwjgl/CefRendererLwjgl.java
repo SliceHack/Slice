@@ -104,8 +104,10 @@ public class CefRendererLwjgl implements ICefRenderer {
 
     @Override
     public void onPopupClosed() {
-        popup_rect_.setBounds(0, 0, 0, 0);
-        original_popup_rect_.setBounds(0, 0, 0, 0);
+        new Thread(() -> {
+            popup_rect_.setBounds(0, 0, 0, 0);
+            original_popup_rect_.setBounds(0, 0, 0, 0);
+        }).start();
     }
 
     @Override

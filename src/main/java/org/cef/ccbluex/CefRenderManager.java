@@ -90,7 +90,6 @@ public class CefRenderManager {
                  */
                 @Override
                 public boolean onQuery(CefBrowser browser, CefFrame frame, long queryId, String request, boolean persistent, CefQueryCallback callback) {
-                    System.out.println("onQuery: $queryId $request");
                     callback.success("OK");
                     return super.onQuery(browser, frame, queryId, request, persistent, callback);
                 }
