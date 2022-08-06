@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="styles.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+
+<body>
+    <section class="section">
+        <img src="http://cravatar.eu/helmavatar/God_Mode/128" class="image" />
+        <div class="content">
+
+            <h2 class="title">
+                God_Mode
+            </h2>
+
+            <progress value="20" max="20"></progress>
+
+        </div>
+    </section>
+
+    <script>
+        window.onmessage = function(e) {
+            let data = e.data;
+            let progress = document.querySelector("progress");
+            progress.value = data.health.toFixed(0);
+            progress.max = data.max;
+            let img = document.querySelector("img");
+            img.src = "http://cravatar.eu/helmavatar/" + data.name.replace(/ /g, '') + "/128";
+            let h2 = document.querySelector("h2");
+            h2.innerHTML = data.name;
+        };
+    </script>
+</body>
+
+</html>

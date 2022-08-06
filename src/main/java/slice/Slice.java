@@ -129,6 +129,14 @@ public enum Slice {
             sliceHUD.mkdirs();
         }
 
+        File targetHudHTML = new File(sliceHUD, "TargetHUD\\index.html");
+        File targetHUDcss = new File(sliceHUD, "TargetHUD\\styles.css");
+
+        if(!targetHudHTML.exists() || !targetHUDcss.exists()) {
+            ResourceUtil.extractResource("/slice/html/hud/targethud/index.html", targetHudHTML.toPath());
+            ResourceUtil.extractResource("/slice/html/hud/targethud/styles.css", targetHUDcss.toPath());
+        }
+
         this.html.add(new ViewNoGui(new Page("file:///" + html.getAbsolutePath() + "?name=" + NAME + "&version=" + VERSION + "&discord=" + discordName)));
         // send arraylist to html
     }

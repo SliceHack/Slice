@@ -10,33 +10,50 @@
 </head>
 
 <body>
-<div class="box">
-    <div class="text">
-        Slice | Version 1.0 | God_Mode
+    <div class="box">
+        <div class="text">
+            Slice | Version 1.0 | God_Mode
+        </div>
     </div>
-</div>
-<script>
 
-    //make a function which gets the paramters from the url
-    document.querySelector(".text").innerHTML = getUrlVars()["name"] + " | " + getUrlVars()["version"] + " | " + getUrlVars()["discord"].replace(/%20/g, " ");
+    <script>
 
-    // subract font width from the box width
-    const fontWidth = document.querySelector(".text").offsetWidth;
-    const boxWidth = document.querySelector(".box").offsetWidth;
-    const difference = boxWidth - fontWidth;
-    document.querySelector(".box").style.width = (fontWidth) + "px";
+        // //make a function which gets the paramters from the url
+        // document.querySelector(".text").innerHTML = getUrlVars()["name"] + " | " + getUrlVars()["version"] + " | " + getUrlVars()["discord"].replace(/%20/g, " ");
 
-    document.querySelector(".text").style.left = ((fontWidth/13)) + "px";
+        // // subract font width from the box width
+        // const fontWidth = document.querySelector(".text").offsetWidth;
+        // const boxWidth = document.querySelector(".box").offsetWidth;
+        // const difference = boxWidth - fontWidth;
+        // document.querySelector(".box").style.width = (fontWidth) + "px";
 
-    function getUrlVars() {
-        var vars = {};
-        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
-            vars[key] = value;
+        // document.querySelector(".text").style.left = ((fontWidth / 13)) + "px";
+
+        // function getUrlVars() {
+        //     var vars = {};
+        //     var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+        //         vars[key] = value;
+        //     });
+        //     return vars;
+        // }
+
+        window.cefQuery({
+            request: 'READY',
+            persistent: false,
+            onSuccess: function (response) {},
+            onFailure: function (error_code, error_message) { }
         });
-        return vars;
-    }
 
-</script>
+        function updateTargetHUD(health, max, name) {
+            let iframe = document.querySelector("iframe");
+            iframe.contentWindow.postMessage({
+                health: health,
+                max: max,
+                name: name
+            }, "*");
+        }
+
+    </script>
 </body>
 
 </html>

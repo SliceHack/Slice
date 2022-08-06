@@ -17,6 +17,8 @@ import org.cef.browser.CefMessageRouter;
 import org.cef.browser.scheme.SchemeResourceHandler;
 import org.cef.callback.CefQueryCallback;
 import org.cef.handler.CefMessageRouterHandlerAdapter;
+import ru.vidtu.ias.utils.Request;
+import slice.cef.RequestHandler;
 import slice.event.data.EventInfo;
 import slice.event.events.Event2D;
 import slice.event.events.EventUpdate;
@@ -91,9 +93,12 @@ public class CefRenderManager {
                 @Override
                 public boolean onQuery(CefBrowser browser, CefFrame frame, long queryId, String request, boolean persistent, CefQueryCallback callback) {
                     callback.success("OK");
+                    LoggerUtil.addTerminalMessage("Browser Ready!");
+                    RequestHandler requeststuff = new RequestHandler(browser);
                     return super.onQuery(browser, frame, queryId, request, persistent, callback);
                 }
             }, true);
+
             cefClient.addMessageRouter(cefMessageRouter);
 
             cefApp.registerSchemeHandlerFactory("resource", "", SchemeResourceHandler.build(new ResourceScheme()));
