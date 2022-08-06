@@ -15,7 +15,7 @@ public class ChatSpammer extends Module {
     @EventInfo
     public void onUpdate(EventUpdate e) {
         if (timer.hasReached(delay.getValue().longValue())) {
-            mc.thePlayer.sendChatMessage("Slice Client | gg/ | " +  (int) Math.floor(Math.random() * 10000));
+            mc.thePlayer.sendChatMessage("Slice Client | gg/7T7yU2AWQK | " +  (int) Math.floor(Math.random() * 10000));
             timer.reset();
         }
     }
