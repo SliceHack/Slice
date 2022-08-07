@@ -7,6 +7,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.input.Mouse;
 import slice.Slice;
+import slice.cef.RequestHandler;
 import slice.font.TTFFontRenderer;
 import slice.gui.hud.legacy.arraylist.ArrayListHUD;
 import slice.gui.hud.legacy.arraylist.SmoothArrayListHUD;
@@ -46,6 +47,7 @@ public class HUD {
         mode = Slice.INSTANCE.getModuleManager().getModule(hudClass).getMode();
         BooleanValue playerOnScreenBoolean = (BooleanValue) Slice.INSTANCE.getModuleManager().getModule(hudClass).getSetting("PlayerOnScreen");
         BooleanValue targetHUDBoolean = (BooleanValue) Slice.INSTANCE.getModuleManager().getModule(hudClass).getSetting("TargetHUD");
+        BooleanValue sessionHUDBoolean = (BooleanValue) Slice.INSTANCE.getModuleManager().getModule(hudClass).getSetting("SessionHUD");
 
         if (playerOnScreenBoolean.getValue()) {
             playerOnScreen.draw(Mouse.getX(), Mouse.getY());
@@ -53,7 +55,16 @@ public class HUD {
 
         if (targetHUDBoolean.getValue()) {
             targetHUD.draw(Mouse.getX(), Mouse.getY());
+        } else {
+            RequestHandler.hideTargetHUD();
         }
+
+        if (sessionHUDBoolean.getValue()) {
+            sessionHUD.draw(Mouse.getX(), Mouse.getY());
+        } else {
+            RequestHandler.hideSessionHUD();
+        }
+
 
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
 
