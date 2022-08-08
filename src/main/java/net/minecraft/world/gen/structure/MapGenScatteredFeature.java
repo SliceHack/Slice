@@ -16,11 +16,7 @@ public class MapGenScatteredFeature extends MapGenStructure
 {
     private static final List<BiomeGenBase> biomelist = Arrays.<BiomeGenBase>asList(new BiomeGenBase[] {BiomeGenBase.desert, BiomeGenBase.desertHills, BiomeGenBase.jungle, BiomeGenBase.jungleHills, BiomeGenBase.swampland});
     private List<BiomeGenBase.SpawnListEntry> scatteredFeatureSpawnList;
-
-    /** the maximum distance between scattered features */
     private int maxDistanceBetweenScatteredFeatures;
-
-    /** the minimum distance between scattered features */
     private int minDistanceBetweenScatteredFeatures;
 
     public MapGenScatteredFeature()
@@ -95,14 +91,14 @@ public class MapGenScatteredFeature extends MapGenStructure
 
     protected StructureStart getStructureStart(int chunkX, int chunkZ)
     {
-        return new MapGenScatteredFeature.Start(this.worldObj, this.rand, chunkX, chunkZ);
+        return new Start(this.worldObj, this.rand, chunkX, chunkZ);
     }
 
     public boolean func_175798_a(BlockPos p_175798_1_)
     {
         StructureStart structurestart = this.func_175797_c(p_175798_1_);
 
-        if (structurestart != null && structurestart instanceof MapGenScatteredFeature.Start && !structurestart.components.isEmpty())
+        if (structurestart != null && structurestart instanceof Start && !structurestart.components.isEmpty())
         {
             StructureComponent structurecomponent = (StructureComponent)structurestart.components.getFirst();
             return structurecomponent instanceof ComponentScatteredFeaturePieces.SwampHut;

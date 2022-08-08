@@ -15,14 +15,11 @@ public class MovingSoundMinecartRiding extends MovingSound
         super(new ResourceLocation("minecraft:minecart.inside"));
         this.player = playerRiding;
         this.minecart = minecart;
-        this.attenuationType = ISound.AttenuationType.NONE;
+        this.attenuationType = AttenuationType.NONE;
         this.repeat = true;
         this.repeatDelay = 0;
     }
 
-    /**
-     * Like the old updateEntity(), except more generic.
-     */
     public void update()
     {
         if (!this.minecart.isDead && this.player.isRiding() && this.player.ridingEntity == this.minecart)

@@ -22,9 +22,6 @@ public class GuiLockIconButton extends GuiButton
         this.field_175231_o = p_175229_1_;
     }
 
-    /**
-     * Draws this button to the screen.
-     */
     public void drawButton(Minecraft mc, int mouseX, int mouseY)
     {
         if (this.visible)
@@ -32,34 +29,34 @@ public class GuiLockIconButton extends GuiButton
             mc.getTextureManager().bindTexture(GuiButton.buttonTextures);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             boolean flag = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
-            GuiLockIconButton.Icon guilockiconbutton$icon;
+            Icon guilockiconbutton$icon;
 
             if (this.field_175231_o)
             {
                 if (!this.enabled)
                 {
-                    guilockiconbutton$icon = GuiLockIconButton.Icon.LOCKED_DISABLED;
+                    guilockiconbutton$icon = Icon.LOCKED_DISABLED;
                 }
                 else if (flag)
                 {
-                    guilockiconbutton$icon = GuiLockIconButton.Icon.LOCKED_HOVER;
+                    guilockiconbutton$icon = Icon.LOCKED_HOVER;
                 }
                 else
                 {
-                    guilockiconbutton$icon = GuiLockIconButton.Icon.LOCKED;
+                    guilockiconbutton$icon = Icon.LOCKED;
                 }
             }
             else if (!this.enabled)
             {
-                guilockiconbutton$icon = GuiLockIconButton.Icon.UNLOCKED_DISABLED;
+                guilockiconbutton$icon = Icon.UNLOCKED_DISABLED;
             }
             else if (flag)
             {
-                guilockiconbutton$icon = GuiLockIconButton.Icon.UNLOCKED_HOVER;
+                guilockiconbutton$icon = Icon.UNLOCKED_HOVER;
             }
             else
             {
-                guilockiconbutton$icon = GuiLockIconButton.Icon.UNLOCKED;
+                guilockiconbutton$icon = Icon.UNLOCKED;
             }
 
             this.drawTexturedModalRect(this.xPosition, this.yPosition, guilockiconbutton$icon.func_178910_a(), guilockiconbutton$icon.func_178912_b(), this.width, this.height);

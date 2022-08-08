@@ -14,8 +14,6 @@ import net.minecraft.util.ResourceLocation;
 public class GuiScreenOptionsSounds extends GuiScreen
 {
     private final GuiScreen field_146505_f;
-
-    /** Reference to the GameSettings object. */
     private final GameSettings game_settings_4;
     protected String field_146507_a = "Options";
     private String field_146508_h;
@@ -26,23 +24,19 @@ public class GuiScreenOptionsSounds extends GuiScreen
         this.game_settings_4 = p_i45025_2_;
     }
 
-    /**
-     * Adds the buttons (and other controls) to the screen in question. Called when the GUI is displayed and when the
-     * window resizes, the buttonList is cleared beforehand.
-     */
     public void initGui()
     {
         int i = 0;
         this.field_146507_a = I18n.format("options.sounds.title", new Object[0]);
         this.field_146508_h = I18n.format("options.off", new Object[0]);
-        this.buttonList.add(new GuiScreenOptionsSounds.Button(SoundCategory.MASTER.getCategoryId(), this.width / 2 - 155 + i % 2 * 160, this.height / 6 - 12 + 24 * (i >> 1), SoundCategory.MASTER, true));
+        this.buttonList.add(new Button(SoundCategory.MASTER.getCategoryId(), this.width / 2 - 155 + i % 2 * 160, this.height / 6 - 12 + 24 * (i >> 1), SoundCategory.MASTER, true));
         i = i + 2;
 
         for (SoundCategory soundcategory : SoundCategory.values())
         {
             if (soundcategory != SoundCategory.MASTER)
             {
-                this.buttonList.add(new GuiScreenOptionsSounds.Button(soundcategory.getCategoryId(), this.width / 2 - 155 + i % 2 * 160, this.height / 6 - 12 + 24 * (i >> 1), soundcategory, false));
+                this.buttonList.add(new Button(soundcategory.getCategoryId(), this.width / 2 - 155 + i % 2 * 160, this.height / 6 - 12 + 24 * (i >> 1), soundcategory, false));
                 ++i;
             }
         }
@@ -50,9 +44,6 @@ public class GuiScreenOptionsSounds extends GuiScreen
         this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168, I18n.format("gui.done", new Object[0])));
     }
 
-    /**
-     * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
-     */
     protected void actionPerformed(GuiButton button) throws IOException
     {
         if (button.enabled)
@@ -65,9 +56,6 @@ public class GuiScreenOptionsSounds extends GuiScreen
         }
     }
 
-    /**
-     * Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
-     */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();

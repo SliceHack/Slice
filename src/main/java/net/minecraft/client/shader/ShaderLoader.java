@@ -16,12 +16,12 @@ import org.lwjgl.BufferUtils;
 
 public class ShaderLoader
 {
-    private final ShaderLoader.ShaderType shaderType;
+    private final ShaderType shaderType;
     private final String shaderFilename;
     private int shader;
     private int shaderAttachCount = 0;
 
-    private ShaderLoader(ShaderLoader.ShaderType type, int shaderId, String filename)
+    private ShaderLoader(ShaderType type, int shaderId, String filename)
     {
         this.shaderType = type;
         this.shader = shaderId;
@@ -50,7 +50,7 @@ public class ShaderLoader
         return this.shaderFilename;
     }
 
-    public static ShaderLoader loadShader(IResourceManager resourceManager, ShaderLoader.ShaderType type, String filename) throws IOException
+    public static ShaderLoader loadShader(IResourceManager resourceManager, ShaderType type, String filename) throws IOException
     {
         ShaderLoader shaderloader = (ShaderLoader)type.getLoadedShaders().get(filename);
 

@@ -13,53 +13,40 @@ import net.minecraft.util.IStringSerializable;
 
 public class BlockStoneBrick extends Block
 {
-    public static final PropertyEnum<BlockStoneBrick.EnumType> VARIANT = PropertyEnum.<BlockStoneBrick.EnumType>create("variant", BlockStoneBrick.EnumType.class);
-    public static final int DEFAULT_META = BlockStoneBrick.EnumType.DEFAULT.getMetadata();
-    public static final int MOSSY_META = BlockStoneBrick.EnumType.MOSSY.getMetadata();
-    public static final int CRACKED_META = BlockStoneBrick.EnumType.CRACKED.getMetadata();
-    public static final int CHISELED_META = BlockStoneBrick.EnumType.CHISELED.getMetadata();
+    public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
+    public static final int DEFAULT_META = EnumType.DEFAULT.getMetadata();
+    public static final int MOSSY_META = EnumType.MOSSY.getMetadata();
+    public static final int CRACKED_META = EnumType.CRACKED.getMetadata();
+    public static final int CHISELED_META = EnumType.CHISELED.getMetadata();
 
     public BlockStoneBrick()
     {
         super(Material.rock);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, BlockStoneBrick.EnumType.DEFAULT));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, EnumType.DEFAULT));
         this.setCreativeTab(CreativeTabs.tabBlock);
     }
 
-    /**
-     * Gets the metadata of the item this Block can drop. This method is called when the block gets destroyed. It
-     * returns the metadata of the dropped item based on the old metadata of the block.
-     */
     public int damageDropped(IBlockState state)
     {
-        return ((BlockStoneBrick.EnumType)state.getValue(VARIANT)).getMetadata();
+        return ((EnumType)state.getValue(VARIANT)).getMetadata();
     }
 
-    /**
-     * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
-     */
     public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list)
     {
-        for (BlockStoneBrick.EnumType blockstonebrick$enumtype : BlockStoneBrick.EnumType.values())
+        for (EnumType blockstonebrick$enumtype : EnumType.values())
         {
             list.add(new ItemStack(itemIn, 1, blockstonebrick$enumtype.getMetadata()));
         }
     }
 
-    /**
-     * Convert the given metadata into a BlockState for this Block
-     */
     public IBlockState getStateFromMeta(int meta)
     {
-        return this.getDefaultState().withProperty(VARIANT, BlockStoneBrick.EnumType.byMetadata(meta));
+        return this.getDefaultState().withProperty(VARIANT, EnumType.byMetadata(meta));
     }
 
-    /**
-     * Convert the BlockState into the correct metadata value
-     */
     public int getMetaFromState(IBlockState state)
     {
-        return ((BlockStoneBrick.EnumType)state.getValue(VARIANT)).getMetadata();
+        return ((EnumType)state.getValue(VARIANT)).getMetadata();
     }
 
     protected BlockState createBlockState()
@@ -74,7 +61,7 @@ public class BlockStoneBrick extends Block
         CRACKED(2, "cracked_stonebrick", "cracked"),
         CHISELED(3, "chiseled_stonebrick", "chiseled");
 
-        private static final BlockStoneBrick.EnumType[] META_LOOKUP = new BlockStoneBrick.EnumType[values().length];
+        private static final EnumType[] META_LOOKUP = new EnumType[values().length];
         private final int meta;
         private final String name;
         private final String unlocalizedName;
@@ -96,7 +83,7 @@ public class BlockStoneBrick extends Block
             return this.name;
         }
 
-        public static BlockStoneBrick.EnumType byMetadata(int meta)
+        public static EnumType byMetadata(int meta)
         {
             if (meta < 0 || meta >= META_LOOKUP.length)
             {
@@ -117,7 +104,7 @@ public class BlockStoneBrick extends Block
         }
 
         static {
-            for (BlockStoneBrick.EnumType blockstonebrick$enumtype : values())
+            for (EnumType blockstonebrick$enumtype : values())
             {
                 META_LOOKUP[blockstonebrick$enumtype.getMetadata()] = blockstonebrick$enumtype;
             }

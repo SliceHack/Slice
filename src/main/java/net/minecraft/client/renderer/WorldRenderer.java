@@ -33,8 +33,6 @@ public class WorldRenderer
     public int vertexCount;
     private VertexFormatElement vertexFormatElement;
     private int vertexFormatIndex;
-
-    /** None */
     private boolean noColor;
     public int drawMode;
     private double xOffset;
@@ -171,7 +169,7 @@ public class WorldRenderer
         }
     }
 
-    public WorldRenderer.State getVertexState()
+    public State getVertexState()
     {
         this.rawIntBuffer.rewind();
         int i = this.getBufferSize();
@@ -189,7 +187,7 @@ public class WorldRenderer
             System.arraycopy(this.quadSprites, 0, atextureatlassprite, 0, j);
         }
 
-        return new WorldRenderer.State(aint, new VertexFormat(this.vertexFormat), atextureatlassprite);
+        return new State(aint, new VertexFormat(this.vertexFormat), atextureatlassprite);
     }
 
     public int getBufferSize()
@@ -217,7 +215,7 @@ public class WorldRenderer
         return f12 * f12 + f13 * f13 + f14 * f14;
     }
 
-    public void setVertexState(WorldRenderer.State state)
+    public void setVertexState(State state)
     {
         this.rawIntBuffer.clear();
         this.growBuffer(state.getRawBuffer().length);
@@ -422,9 +420,6 @@ public class WorldRenderer
         }
     }
 
-    /**
-     * Takes in the pass the call list is being requested for. Args: renderPass
-     */
     public int getColorIndex(int p_78909_1_)
     {
         return ((this.vertexCount - p_78909_1_) * this.vertexFormat.getNextOffset() + this.vertexFormat.getColorOffset()) / 4;
@@ -491,9 +486,6 @@ public class WorldRenderer
         }
     }
 
-    /**
-     * Disabels color processing.
-     */
     public void noColor()
     {
         this.noColor = true;

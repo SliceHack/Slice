@@ -24,7 +24,7 @@ public class TileEntityMobSpawner extends TileEntity implements ITickable
         {
             return TileEntityMobSpawner.this.pos;
         }
-        public void setRandomEntity(MobSpawnerBaseLogic.WeightedRandomMinecart p_98277_1_)
+        public void setRandomEntity(WeightedRandomMinecart p_98277_1_)
         {
             super.setRandomEntity(p_98277_1_);
 
@@ -47,18 +47,11 @@ public class TileEntityMobSpawner extends TileEntity implements ITickable
         this.spawnerLogic.writeToNBT(compound);
     }
 
-    /**
-     * Like the old updateEntity(), except more generic.
-     */
     public void update()
     {
         this.spawnerLogic.updateSpawner();
     }
 
-    /**
-     * Allows for a specialized description packet to be created. This is often used to sync tile entity data from the
-     * server to the client easily. For example this is used by signs to synchronise the text to be displayed.
-     */
     public Packet getDescriptionPacket()
     {
         NBTTagCompound nbttagcompound = new NBTTagCompound();

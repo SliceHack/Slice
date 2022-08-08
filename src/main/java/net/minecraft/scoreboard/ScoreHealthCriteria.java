@@ -33,8 +33,8 @@ public class ScoreHealthCriteria extends ScoreDummyCriteria
         return true;
     }
 
-    public IScoreObjectiveCriteria.EnumRenderType getRenderType()
+    public EnumRenderType getRenderType()
     {
-        return IScoreObjectiveCriteria.EnumRenderType.HEARTS;
+        return EnumRenderType.HEARTS;
     }
 }

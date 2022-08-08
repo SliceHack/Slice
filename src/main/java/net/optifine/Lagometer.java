@@ -19,13 +19,13 @@ public class Lagometer
     private static GameSettings gameSettings;
     private static Profiler profiler;
     public static boolean active = false;
-    public static Lagometer.TimerNano timerTick = new Lagometer.TimerNano();
-    public static Lagometer.TimerNano timerScheduledExecutables = new Lagometer.TimerNano();
-    public static Lagometer.TimerNano timerChunkUpload = new Lagometer.TimerNano();
-    public static Lagometer.TimerNano timerChunkUpdate = new Lagometer.TimerNano();
-    public static Lagometer.TimerNano timerVisibility = new Lagometer.TimerNano();
-    public static Lagometer.TimerNano timerTerrain = new Lagometer.TimerNano();
-    public static Lagometer.TimerNano timerServer = new Lagometer.TimerNano();
+    public static TimerNano timerTick = new TimerNano();
+    public static TimerNano timerScheduledExecutables = new TimerNano();
+    public static TimerNano timerChunkUpload = new TimerNano();
+    public static TimerNano timerChunkUpdate = new TimerNano();
+    public static TimerNano timerVisibility = new TimerNano();
+    public static TimerNano timerTerrain = new TimerNano();
+    public static TimerNano timerServer = new TimerNano();
     private static long[] timesFrame = new long[512];
     private static long[] timesTick = new long[512];
     private static long[] timesScheduledExecutables = new long[512];
@@ -48,7 +48,7 @@ public class Lagometer
             profiler = mc.mcProfiler;
         }
 
-        if (gameSettings.showDebugProfilerChart && (gameSettings.ofLagometer || gameSettings.lastServer))
+        if (gameSettings.showDebugInfo && (gameSettings.ofLagometer || gameSettings.showLagometer))
         {
             active = true;
             long timeNowNano = System.nanoTime();
@@ -92,7 +92,7 @@ public class Lagometer
     {
         if (gameSettings != null)
         {
-            if (gameSettings.ofLagometer || gameSettings.lastServer)
+            if (gameSettings.ofLagometer || gameSettings.showLagometer)
             {
                 long i = System.nanoTime();
                 GlStateManager.clear(256);

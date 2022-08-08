@@ -42,47 +42,33 @@ public class BroadcastController
     protected final int field_152865_a = 30;
     protected final int field_152866_b = 3;
     private static final ThreadSafeBoundList<String> field_152862_C = new ThreadSafeBoundList(String.class, 50);
-
-    /** The last error that ocurred */
     private String lastError = null;
-    protected BroadcastController.BroadcastListener broadcastListener = null;
+    protected BroadcastListener broadcastListener = null;
     protected String field_152868_d = "";
     protected String field_152869_e = "";
     protected String field_152870_f = "";
     protected boolean field_152871_g = true;
-
-    /** The stream's core */
     protected Core streamCore = null;
-
-    /** The Stream's instance */
     protected Stream theStream = null;
     protected List<FrameBuffer> field_152874_j = Lists.<FrameBuffer>newArrayList();
     protected List<FrameBuffer> field_152875_k = Lists.<FrameBuffer>newArrayList();
     protected boolean field_152876_l = false;
     protected boolean field_152877_m = false;
     protected boolean field_152878_n = false;
-    protected BroadcastController.BroadcastState broadcastState = BroadcastController.BroadcastState.Uninitialized;
+    protected BroadcastState broadcastState = BroadcastState.Uninitialized;
     protected String field_152880_p = null;
     protected VideoParams videoParamaters = null;
     protected AudioParams audioParamaters = null;
     protected IngestList ingestList = new IngestList(new IngestServer[0]);
-
-    /** The IngestServer's instance */
     protected IngestServer ingestServ = null;
     protected AuthToken authenticationToken = new AuthToken();
     protected ChannelInfo channelInfo = new ChannelInfo();
     protected UserInfo userInfo = new UserInfo();
     protected StreamInfo streamInfo = new StreamInfo();
-
-    /** The current archiving state */
     protected ArchivingState archivingState = new ArchivingState();
     protected long field_152890_z = 0L;
-
-    /** Instance of the IngestServerTester */
     protected IngestServerTester ingestServTester = null;
     private ErrorCode errorCode;
-
-    /** The stream callback instance */
     protected IStreamCallbacks streamCallback = new IStreamCallbacks()
     {
         public void requestAuthTokenCallback(ErrorCode p_requestAuthTokenCallback_1_, AuthToken p_requestAuthTokenCallback_2_)
@@ -90,12 +76,12 @@ public class BroadcastController
             if (ErrorCode.succeeded(p_requestAuthTokenCallback_1_))
             {
                 BroadcastController.this.authenticationToken = p_requestAuthTokenCallback_2_;
-                BroadcastController.this.func_152827_a(BroadcastController.BroadcastState.Authenticated);
+                BroadcastController.this.func_152827_a(BroadcastState.Authenticated);
             }
             else
             {
                 BroadcastController.this.authenticationToken.data = "";
-                BroadcastController.this.func_152827_a(BroadcastController.BroadcastState.Initialized);
+                BroadcastController.this.func_152827_a(BroadcastState.Initialized);
                 String s = ErrorCode.getString(p_requestAuthTokenCallback_1_);
                 BroadcastController.this.logError(String.format("RequestAuthTokenDoneCallback got failure: %s", new Object[] {s}));
             }
@@ -117,12 +103,12 @@ public class BroadcastController
             if (ErrorCode.succeeded(p_loginCallback_1_))
             {
                 BroadcastController.this.channelInfo = p_loginCallback_2_;
-                BroadcastController.this.func_152827_a(BroadcastController.BroadcastState.LoggedIn);
+                BroadcastController.this.func_152827_a(BroadcastState.LoggedIn);
                 BroadcastController.this.field_152877_m = true;
             }
             else
             {
-                BroadcastController.this.func_152827_a(BroadcastController.BroadcastState.Initialized);
+                BroadcastController.this.func_152827_a(BroadcastState.Initialized);
                 BroadcastController.this.field_152877_m = false;
                 String s = ErrorCode.getString(p_loginCallback_1_);
                 BroadcastController.this.logError(String.format("LoginCallback got failure: %s", new Object[] {s}));
@@ -146,7 +132,7 @@ public class BroadcastController
             {
                 BroadcastController.this.ingestList = p_getIngestServersCallback_2_;
                 BroadcastController.this.ingestServ = BroadcastController.this.ingestList.getDefaultServer();
-                BroadcastController.this.func_152827_a(BroadcastController.BroadcastState.ReceivedIngestServers);
+                BroadcastController.this.func_152827_a(BroadcastState.ReceivedIngestServers);
 
                 try
                 {
@@ -164,7 +150,7 @@ public class BroadcastController
             {
                 String s = ErrorCode.getString(p_getIngestServersCallback_1_);
                 BroadcastController.this.logError(String.format("IngestListCallback got failure: %s", new Object[] {s}));
-                BroadcastController.this.func_152827_a(BroadcastController.BroadcastState.LoggingIn);
+                BroadcastController.this.func_152827_a(BroadcastState.LoggingIn);
             }
         }
         public void getUserInfoCallback(ErrorCode p_getUserInfoCallback_1_, UserInfo p_getUserInfoCallback_2_)
@@ -267,13 +253,13 @@ public class BroadcastController
                     BroadcastController.this.logError(exception1.toString());
                 }
 
-                BroadcastController.this.func_152827_a(BroadcastController.BroadcastState.Broadcasting);
+                BroadcastController.this.func_152827_a(BroadcastState.Broadcasting);
             }
             else
             {
                 BroadcastController.this.videoParamaters = null;
                 BroadcastController.this.audioParamaters = null;
-                BroadcastController.this.func_152827_a(BroadcastController.BroadcastState.ReadyToBroadcast);
+                BroadcastController.this.func_152827_a(BroadcastState.ReadyToBroadcast);
 
                 try
                 {
@@ -313,16 +299,16 @@ public class BroadcastController
 
                 if (BroadcastController.this.field_152877_m)
                 {
-                    BroadcastController.this.func_152827_a(BroadcastController.BroadcastState.ReadyToBroadcast);
+                    BroadcastController.this.func_152827_a(BroadcastState.ReadyToBroadcast);
                 }
                 else
                 {
-                    BroadcastController.this.func_152827_a(BroadcastController.BroadcastState.Initialized);
+                    BroadcastController.this.func_152827_a(BroadcastState.Initialized);
                 }
             }
             else
             {
-                BroadcastController.this.func_152827_a(BroadcastController.BroadcastState.ReadyToBroadcast);
+                BroadcastController.this.func_152827_a(BroadcastState.ReadyToBroadcast);
                 String s = ErrorCode.getString(p_stopCallback_1_);
                 BroadcastController.this.logError(String.format("stopCallback got failure: %s", new Object[] {s}));
             }
@@ -359,12 +345,7 @@ public class BroadcastController
         }
     };
 
-    /**
-     * Set a new BroadcastListener
-     *  
-     * @param broadcastListenerIn The BroadcastListener to set
-     */
-    public void setBroadcastListener(BroadcastController.BroadcastListener broadcastListenerIn)
+    public void setBroadcastListener(BroadcastListener broadcastListenerIn)
     {
         this.broadcastListener = broadcastListenerIn;
     }
@@ -391,22 +372,22 @@ public class BroadcastController
 
     public boolean isBroadcasting()
     {
-        return this.broadcastState == BroadcastController.BroadcastState.Broadcasting || this.broadcastState == BroadcastController.BroadcastState.Paused;
+        return this.broadcastState == BroadcastState.Broadcasting || this.broadcastState == BroadcastState.Paused;
     }
 
     public boolean isReadyToBroadcast()
     {
-        return this.broadcastState == BroadcastController.BroadcastState.ReadyToBroadcast;
+        return this.broadcastState == BroadcastState.ReadyToBroadcast;
     }
 
     public boolean isIngestTesting()
     {
-        return this.broadcastState == BroadcastController.BroadcastState.IngestTesting;
+        return this.broadcastState == BroadcastState.IngestTesting;
     }
 
     public boolean isBroadcastPaused()
     {
-        return this.broadcastState == BroadcastController.BroadcastState.Paused;
+        return this.broadcastState == BroadcastState.Paused;
     }
 
     public boolean func_152849_q()
@@ -414,27 +395,16 @@ public class BroadcastController
         return this.field_152877_m;
     }
 
-    /**
-     * Return the IngestServer's instance
-     */
     public IngestServer getIngestServer()
     {
         return this.ingestServ;
     }
 
-    /**
-     * Set a new IngestServer
-     *  
-     * @param ingestServerSet The new IngestServer
-     */
     public void setIngestServer(IngestServer ingestServerSet)
     {
         this.ingestServ = ingestServerSet;
     }
 
-    /**
-     * Return the IngestList
-     */
     public IngestList getIngestList()
     {
         return this.ingestList;
@@ -455,9 +425,6 @@ public class BroadcastController
         return this.ingestServTester;
     }
 
-    /**
-     * Return the stream time
-     */
     public long getStreamTime()
     {
         return this.theStream.getStreamTime();
@@ -485,9 +452,6 @@ public class BroadcastController
         this.theStream = new Stream(new DesktopStreamAPI());
     }
 
-    /**
-     * Return the PixelFormat
-     */
     protected PixelFormat getPixelFormat()
     {
         return PixelFormat.TTV_PF_RGBA;
@@ -524,7 +488,7 @@ public class BroadcastController
                 else if (ErrorCode.succeeded(errorcode))
                 {
                     this.field_152876_l = true;
-                    this.func_152827_a(BroadcastController.BroadcastState.Initialized);
+                    this.func_152827_a(BroadcastState.Initialized);
                     return true;
                 }
                 else
@@ -557,14 +521,14 @@ public class BroadcastController
             this.func_152853_a(errorcode);
             this.field_152876_l = false;
             this.field_152878_n = false;
-            this.func_152827_a(BroadcastController.BroadcastState.Uninitialized);
+            this.func_152827_a(BroadcastState.Uninitialized);
             return true;
         }
     }
 
     public void statCallback()
     {
-        if (this.broadcastState != BroadcastController.BroadcastState.Uninitialized)
+        if (this.broadcastState != BroadcastState.Uninitialized)
         {
             if (this.ingestServTester != null)
             {
@@ -606,7 +570,7 @@ public class BroadcastController
 
                     if (this.func_152858_b())
                     {
-                        this.func_152827_a(BroadcastController.BroadcastState.Authenticated);
+                        this.func_152827_a(BroadcastState.Authenticated);
                     }
 
                     return true;
@@ -664,7 +628,7 @@ public class BroadcastController
                     }
                 }
 
-                this.func_152827_a(BroadcastController.BroadcastState.Initialized);
+                this.func_152827_a(BroadcastState.Initialized);
                 return true;
             }
         }
@@ -763,7 +727,7 @@ public class BroadcastController
                 }
                 else
                 {
-                    this.func_152827_a(BroadcastController.BroadcastState.Starting);
+                    this.func_152827_a(BroadcastState.Starting);
                     return true;
                 }
             }
@@ -792,7 +756,7 @@ public class BroadcastController
             }
             else
             {
-                this.func_152827_a(BroadcastController.BroadcastState.Stopping);
+                this.func_152827_a(BroadcastState.Stopping);
                 return ErrorCode.succeeded(errorcode);
             }
         }
@@ -816,7 +780,7 @@ public class BroadcastController
             }
             else
             {
-                this.func_152827_a(BroadcastController.BroadcastState.Paused);
+                this.func_152827_a(BroadcastState.Paused);
             }
 
             return ErrorCode.succeeded(errorcode);
@@ -831,7 +795,7 @@ public class BroadcastController
         }
         else
         {
-            this.func_152827_a(BroadcastController.BroadcastState.Broadcasting);
+            this.func_152827_a(BroadcastState.Broadcasting);
             return true;
         }
     }
@@ -888,7 +852,7 @@ public class BroadcastController
         }
     }
 
-    protected void func_152827_a(BroadcastController.BroadcastState p_152827_1_)
+    protected void func_152827_a(BroadcastState p_152827_1_)
     {
         if (p_152827_1_ != this.broadcastState)
         {
@@ -922,14 +886,14 @@ public class BroadcastController
                 if (this.ingestServTester.func_153032_e())
                 {
                     this.ingestServTester = null;
-                    this.func_152827_a(BroadcastController.BroadcastState.ReadyToBroadcast);
+                    this.func_152827_a(BroadcastState.ReadyToBroadcast);
                 }
             }
 
             switch (this.broadcastState)
             {
                 case Authenticated:
-                    this.func_152827_a(BroadcastController.BroadcastState.LoggingIn);
+                    this.func_152827_a(BroadcastState.LoggingIn);
                     errorcode = this.theStream.login(this.authenticationToken);
 
                     if (ErrorCode.failed(errorcode))
@@ -941,12 +905,12 @@ public class BroadcastController
                     break;
 
                 case LoggedIn:
-                    this.func_152827_a(BroadcastController.BroadcastState.FindingIngestServer);
+                    this.func_152827_a(BroadcastState.FindingIngestServer);
                     errorcode = this.theStream.getIngestServers(this.authenticationToken);
 
                     if (ErrorCode.failed(errorcode))
                     {
-                        this.func_152827_a(BroadcastController.BroadcastState.LoggedIn);
+                        this.func_152827_a(BroadcastState.LoggedIn);
                         String s2 = ErrorCode.getString(errorcode);
                         this.logError(String.format("Error in TTV_GetIngestServers: %s\n", new Object[] {s2}));
                     }
@@ -954,7 +918,7 @@ public class BroadcastController
                     break;
 
                 case ReceivedIngestServers:
-                    this.func_152827_a(BroadcastController.BroadcastState.ReadyToBroadcast);
+                    this.func_152827_a(BroadcastState.ReadyToBroadcast);
                     errorcode = this.theStream.getUserInfo(this.authenticationToken);
 
                     if (ErrorCode.failed(errorcode))
@@ -1019,7 +983,7 @@ public class BroadcastController
             {
                 this.ingestServTester = new IngestServerTester(this.theStream, this.ingestList);
                 this.ingestServTester.func_176004_j();
-                this.func_152827_a(BroadcastController.BroadcastState.IngestTesting);
+                this.func_152827_a(BroadcastState.IngestTesting);
                 return this.ingestServTester;
             }
         }
@@ -1075,9 +1039,6 @@ public class BroadcastController
         }
     }
 
-    /**
-     * caputres the current framebuffer
-     */
     public void captureFramebuffer(FrameBuffer p_152846_1_)
     {
         try
@@ -1096,11 +1057,6 @@ public class BroadcastController
         }
     }
 
-    /**
-     * passes the framebuffer on to the video stream
-     *  
-     * @param frame The FrameBuffer tu submit
-     */
     public ErrorCode submitStreamFrame(FrameBuffer frame)
     {
         if (this.isBroadcastPaused())
@@ -1150,11 +1106,6 @@ public class BroadcastController
         }
     }
 
-    /**
-     * Log an error
-     *  
-     * @param error The error to log
-     */
     protected void logError(String error)
     {
         this.lastError = error;
@@ -1162,11 +1113,6 @@ public class BroadcastController
         logger.error(TwitchStream.STREAM_MARKER, "[Broadcast controller] {}", new Object[] {error});
     }
 
-    /**
-     * Log an warning
-     *  
-     * @param warning The warning to log
-     */
     protected void logWarning(String warning)
     {
         field_152862_C.func_152757_a("<Warning> " + warning);
@@ -1181,7 +1127,7 @@ public class BroadcastController
 
         void func_152898_a(ErrorCode p_152898_1_, GameInfo[] p_152898_2_);
 
-        void func_152891_a(BroadcastController.BroadcastState p_152891_1_);
+        void func_152891_a(BroadcastState p_152891_1_);
 
         void func_152895_a();
 

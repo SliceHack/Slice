@@ -7,7 +7,7 @@ import net.minecraft.client.settings.GameSettings;
 
 public class GuiOptionsRowList extends GuiListExtended
 {
-    private final List<GuiOptionsRowList.Row> field_148184_k = Lists.<GuiOptionsRowList.Row>newArrayList();
+    private final List<Row> field_148184_k = Lists.<Row>newArrayList();
 
     public GuiOptionsRowList(Minecraft mcIn, int p_i45015_2_, int p_i45015_3_, int p_i45015_4_, int p_i45015_5_, int p_i45015_6_, GameSettings.Options... p_i45015_7_)
     {
@@ -20,7 +20,7 @@ public class GuiOptionsRowList extends GuiListExtended
             GameSettings.Options gamesettings$options1 = i < p_i45015_7_.length - 1 ? p_i45015_7_[i + 1] : null;
             GuiButton guibutton = this.func_148182_a(mcIn, p_i45015_2_ / 2 - 155, 0, gamesettings$options);
             GuiButton guibutton1 = this.func_148182_a(mcIn, p_i45015_2_ / 2 - 155 + 160, 0, gamesettings$options1);
-            this.field_148184_k.add(new GuiOptionsRowList.Row(guibutton, guibutton1));
+            this.field_148184_k.add(new Row(guibutton, guibutton1));
         }
     }
 
@@ -37,12 +37,9 @@ public class GuiOptionsRowList extends GuiListExtended
         }
     }
 
-    /**
-     * Gets the IGuiListEntry object for the given index
-     */
-    public GuiOptionsRowList.Row getListEntry(int index)
+    public Row getListEntry(int index)
     {
-        return (GuiOptionsRowList.Row)this.field_148184_k.get(index);
+        return (Row)this.field_148184_k.get(index);
     }
 
     protected int getSize()
@@ -50,9 +47,6 @@ public class GuiOptionsRowList extends GuiListExtended
         return this.field_148184_k.size();
     }
 
-    /**
-     * Gets the width of the list
-     */
     public int getListWidth()
     {
         return 400;
@@ -63,7 +57,7 @@ public class GuiOptionsRowList extends GuiListExtended
         return super.getScrollBarX() + 32;
     }
 
-    public static class Row implements GuiListExtended.IGuiListEntry
+    public static class Row implements IGuiListEntry
     {
         private final Minecraft field_148325_a = Minecraft.getMinecraft();
         private final GuiButton field_148323_b;

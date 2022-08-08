@@ -7,17 +7,17 @@ import java.util.List;
 
 public class IteratorCache
 {
-    private static Deque<IteratorCache.IteratorReusable<Object>> dequeIterators = new ArrayDeque();
+    private static Deque<IteratorReusable<Object>> dequeIterators = new ArrayDeque();
 
     public static Iterator<Object> getReadOnly(List list)
     {
         synchronized (dequeIterators)
         {
-            IteratorCache.IteratorReusable<Object> iteratorreusable = (IteratorCache.IteratorReusable)dequeIterators.pollFirst();
+            IteratorReusable<Object> iteratorreusable = (IteratorReusable)dequeIterators.pollFirst();
 
             if (iteratorreusable == null)
             {
-                iteratorreusable = new IteratorCache.IteratorReadOnly();
+                iteratorreusable = new IteratorReadOnly();
             }
 
             iteratorreusable.setList(list);
@@ -25,7 +25,7 @@ public class IteratorCache
         }
     }
 
-    private static void finished(IteratorCache.IteratorReusable<Object> iterator)
+    private static void finished(IteratorReusable<Object> iterator)
     {
         synchronized (dequeIterators)
         {
@@ -41,12 +41,12 @@ public class IteratorCache
     {
         for (int i = 0; i < 1000; ++i)
         {
-            IteratorCache.IteratorReadOnly iteratorcache$iteratorreadonly = new IteratorCache.IteratorReadOnly();
+            IteratorReadOnly iteratorcache$iteratorreadonly = new IteratorReadOnly();
             dequeIterators.add(iteratorcache$iteratorreadonly);
         }
     }
 
-    public static class IteratorReadOnly implements IteratorCache.IteratorReusable<Object>
+    public static class IteratorReadOnly implements IteratorReusable<Object>
     {
         private List<Object> list;
         private int index;

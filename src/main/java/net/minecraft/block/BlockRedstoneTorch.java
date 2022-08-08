@@ -17,28 +17,28 @@ import net.minecraft.world.World;
 
 public class BlockRedstoneTorch extends BlockTorch
 {
-    private static Map<World, List<BlockRedstoneTorch.Toggle>> toggles = Maps.<World, List<BlockRedstoneTorch.Toggle>>newHashMap();
+    private static Map<World, List<Toggle>> toggles = Maps.<World, List<Toggle>>newHashMap();
     private final boolean isOn;
 
     private boolean isBurnedOut(World worldIn, BlockPos pos, boolean turnOff)
     {
         if (!toggles.containsKey(worldIn))
         {
-            toggles.put(worldIn, Lists.<BlockRedstoneTorch.Toggle>newArrayList());
+            toggles.put(worldIn, Lists.<Toggle>newArrayList());
         }
 
-        List<BlockRedstoneTorch.Toggle> list = (List)toggles.get(worldIn);
+        List<Toggle> list = (List)toggles.get(worldIn);
 
         if (turnOff)
         {
-            list.add(new BlockRedstoneTorch.Toggle(pos, worldIn.getTotalWorldTime()));
+            list.add(new Toggle(pos, worldIn.getTotalWorldTime()));
         }
 
         int i = 0;
 
         for (int j = 0; j < list.size(); ++j)
         {
-            BlockRedstoneTorch.Toggle blockredstonetorch$toggle = (BlockRedstoneTorch.Toggle)list.get(j);
+            Toggle blockredstonetorch$toggle = (Toggle)list.get(j);
 
             if (blockredstonetorch$toggle.pos.equals(pos))
             {
@@ -61,9 +61,6 @@ public class BlockRedstoneTorch extends BlockTorch
         this.setCreativeTab((CreativeTabs)null);
     }
 
-    /**
-     * How many world ticks before ticking
-     */
     public int tickRate(World worldIn)
     {
         return 2;
@@ -102,9 +99,6 @@ public class BlockRedstoneTorch extends BlockTorch
         return worldIn.isSidePowered(pos.offset(enumfacing), enumfacing);
     }
 
-    /**
-     * Called randomly when setTickRandomly is set to true (used by e.g. crops to grow, etc.)
-     */
     public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random)
     {
     }
@@ -112,9 +106,9 @@ public class BlockRedstoneTorch extends BlockTorch
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
     {
         boolean flag = this.shouldBeOff(worldIn, pos, state);
-        List<BlockRedstoneTorch.Toggle> list = (List)toggles.get(worldIn);
+        List<Toggle> list = (List)toggles.get(worldIn);
 
-        while (list != null && !list.isEmpty() && worldIn.getTotalWorldTime() - ((BlockRedstoneTorch.Toggle)list.get(0)).time > 60L)
+        while (list != null && !list.isEmpty() && worldIn.getTotalWorldTime() - ((Toggle)list.get(0)).time > 60L)
         {
             list.remove(0);
         }
@@ -147,9 +141,6 @@ public class BlockRedstoneTorch extends BlockTorch
         }
     }
 
-    /**
-     * Called when a neighboring block changes.
-     */
     public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
     {
         if (!this.onNeighborChangeInternal(worldIn, pos, state))
@@ -166,17 +157,11 @@ public class BlockRedstoneTorch extends BlockTorch
         return side == EnumFacing.DOWN ? this.getWeakPower(worldIn, pos, state, side) : 0;
     }
 
-    /**
-     * Get the Item that this Block should drop when harvested.
-     */
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
         return Item.getItemFromBlock(Blocks.redstone_torch);
     }
 
-    /**
-     * Can this block provide power. Only wire currently seems to have this change based on its state.
-     */
     public boolean canProvidePower()
     {
         return true;

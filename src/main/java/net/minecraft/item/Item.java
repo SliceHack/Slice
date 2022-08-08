@@ -50,31 +50,13 @@ public class Item
     private static final Map<Block, Item> BLOCK_TO_ITEM = Maps.<Block, Item>newHashMap();
     protected static final UUID itemModifierUUID = UUID.fromString("CB3F55D3-645C-4F38-A497-9C13A33DB5CF");
     private CreativeTabs tabToDisplayOn;
-
-    /** The RNG used by the Item subclasses. */
     protected static Random itemRand = new Random();
-
-    /** Maximum size of the stack. */
     protected int maxStackSize = 64;
-
-    /** Maximum damage an item can handle. */
     private int maxDamage;
-
-    /** If true, render the object in full 3D, like weapons and tools. */
     protected boolean bFull3D;
-
-    /**
-     * Some items (like dyes) have multiple subtypes on same item, this is field define this behavior
-     */
     protected boolean hasSubtypes;
     private Item containerItem;
-
-    /**
-     * The string representing this item's effect on a potion when used as an ingredient.
-     */
     private String potionEffect;
-
-    /** The unlocalized name of this item. */
     private String unlocalizedName;
 
     public static int getIdFromItem(Item itemIn)
@@ -92,10 +74,6 @@ public class Item
         return (Item)BLOCK_TO_ITEM.get(blockIn);
     }
 
-    /**
-     * Tries to get an Item by it's name (e.g. minecraft:apple) or a String representation of a numerical ID. If both
-     * fail, null is returned.
-     */
     public static Item getByNameOrId(String id)
     {
         Item item = (Item)itemRegistry.getObject(new ResourceLocation(id));
@@ -115,9 +93,6 @@ public class Item
         return item;
     }
 
-    /**
-     * Called when an ItemStack with NBT data is read to potentially that ItemStack's NBT data
-     */
     public boolean updateItemStackNBT(NBTTagCompound nbt)
     {
         return false;
@@ -129,9 +104,6 @@ public class Item
         return this;
     }
 
-    /**
-     * Called when a Block is right-clicked with this Item
-     */
     public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         return false;
@@ -142,35 +114,21 @@ public class Item
         return 1.0F;
     }
 
-    /**
-     * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
-     */
     public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn)
     {
         return itemStackIn;
     }
 
-    /**
-     * Called when the player finishes using this Item (E.g. finishes eating.). Not called when the player stops using
-     * the Item before the action is complete.
-     */
     public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityPlayer playerIn)
     {
         return stack;
     }
 
-    /**
-     * Returns the maximum size of the stack for a specific item. *Isn't this more a Set than a Get?*
-     */
     public int getItemStackLimit()
     {
         return this.maxStackSize;
     }
 
-    /**
-     * Converts the given ItemStack damage value into a metadata value to be placed in the world when this Item is
-     * placed as a Block (mostly used with ItemBlocks).
-     */
     public int getMetadata(int damage)
     {
         return 0;
@@ -187,17 +145,11 @@ public class Item
         return this;
     }
 
-    /**
-     * Returns the maximum damage an item can take.
-     */
     public int getMaxDamage()
     {
         return this.maxDamage;
     }
 
-    /**
-     * set max damage of an Item
-     */
     protected Item setMaxDamage(int maxDamageIn)
     {
         this.maxDamage = maxDamageIn;
@@ -209,96 +161,59 @@ public class Item
         return this.maxDamage > 0 && !this.hasSubtypes;
     }
 
-    /**
-     * Current implementations of this method in child classes do not use the entry argument beside ev. They just raise
-     * the damage on the stack.
-     */
     public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
     {
         return false;
     }
 
-    /**
-     * Called when a Block is destroyed using this Item. Return true to trigger the "Use Item" statistic.
-     */
     public boolean onBlockDestroyed(ItemStack stack, World worldIn, Block blockIn, BlockPos pos, EntityLivingBase playerIn)
     {
         return false;
     }
 
-    /**
-     * Check whether this Item can harvest the given Block
-     */
     public boolean canHarvestBlock(Block blockIn)
     {
         return false;
     }
 
-    /**
-     * Returns true if the item can be used on the given entity, e.g. shears on sheep.
-     */
     public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer playerIn, EntityLivingBase target)
     {
         return false;
     }
 
-    /**
-     * Sets bFull3D to True and return the object.
-     */
     public Item setFull3D()
     {
         this.bFull3D = true;
         return this;
     }
 
-    /**
-     * Returns True is the item is renderer in full 3D when hold.
-     */
     public boolean isFull3D()
     {
         return this.bFull3D;
     }
 
-    /**
-     * Returns true if this item should be rotated by 180 degrees around the Y axis when being held in an entities
-     * hands.
-     */
     public boolean shouldRotateAroundWhenRendering()
     {
         return false;
     }
 
-    /**
-     * Sets the unlocalized name of this item to the string passed as the parameter, prefixed by "item."
-     */
     public Item setUnlocalizedName(String unlocalizedName)
     {
         this.unlocalizedName = unlocalizedName;
         return this;
     }
 
-    /**
-     * Translates the unlocalized name of this item, but without the .name suffix, so the translation fails and the
-     * unlocalized name itself is returned.
-     */
     public String getUnlocalizedNameInefficiently(ItemStack stack)
     {
         String s = this.getUnlocalizedName(stack);
         return s == null ? "" : StatCollector.translateToLocal(s);
     }
 
-    /**
-     * Returns the unlocalized name of this item.
-     */
     public String getUnlocalizedName()
     {
         return "item." + this.unlocalizedName;
     }
 
-    /**
-     * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have
-     * different names based on their damage or NBT.
-     */
     public String getUnlocalizedName(ItemStack stack)
     {
         return "item." + this.unlocalizedName;
@@ -310,9 +225,6 @@ public class Item
         return this;
     }
 
-    /**
-     * If this function returns true (or the item is damageable), the ItemStack's NBT tag will be sent to the client.
-     */
     public boolean getShareTag()
     {
         return true;
@@ -323,9 +235,6 @@ public class Item
         return this.containerItem;
     }
 
-    /**
-     * True if this Item has a container item (a.k.a. crafting result)
-     */
     public boolean hasContainerItem()
     {
         return this.containerItem != null;
@@ -336,55 +245,33 @@ public class Item
         return 16777215;
     }
 
-    /**
-     * Called each tick as long the item is on a player inventory. Uses by maps to check if is on a player hand and
-     * update it's contents.
-     */
     public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected)
     {
     }
 
-    /**
-     * Called when item is crafted/smelted. Used only by maps so far.
-     */
     public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn)
     {
     }
 
-    /**
-     * false for all Items except sub-classes of ItemMapBase
-     */
     public boolean isMap()
     {
         return false;
     }
 
-    /**
-     * returns the action that specifies what animation to play when the items is being used
-     */
     public EnumAction getItemUseAction(ItemStack stack)
     {
         return EnumAction.NONE;
     }
 
-    /**
-     * How long it takes to use or consume an item
-     */
     public int getMaxItemUseDuration(ItemStack stack)
     {
         return 0;
     }
 
-    /**
-     * Called when the player stops using an Item (stops holding the right mouse button).
-     */
     public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityPlayer playerIn, int timeLeft)
     {
     }
 
-    /**
-     * Sets the string representing this item's effect on a potion when used as an ingredient.
-     */
     protected Item setPotionEffect(String potionEffect)
     {
         this.potionEffect = potionEffect;
@@ -401,9 +288,6 @@ public class Item
         return this.getPotionEffect(stack) != null;
     }
 
-    /**
-     * allows items to add custom lines of information to the mouseover description
-     */
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
     {
     }
@@ -418,17 +302,11 @@ public class Item
         return stack.isItemEnchanted();
     }
 
-    /**
-     * Return an item rarity from EnumRarity
-     */
     public EnumRarity getRarity(ItemStack stack)
     {
         return stack.isItemEnchanted() ? EnumRarity.RARE : EnumRarity.COMMON;
     }
 
-    /**
-     * Checks isDamagable and if it cannot be stacked
-     */
     public boolean isItemTool(ItemStack stack)
     {
         return this.getItemStackLimit() == 1 && this.isDamageable();
@@ -453,51 +331,32 @@ public class Item
         return worldIn.rayTraceBlocks(vec3, vec31, useLiquids, !useLiquids, false);
     }
 
-    /**
-     * Return the enchantability factor of the item, most of the time is based on material.
-     */
     public int getItemEnchantability()
     {
         return 0;
     }
 
-    /**
-     * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
-     */
     public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems)
     {
         subItems.add(new ItemStack(itemIn, 1, 0));
     }
 
-    /**
-     * gets the CreativeTab this item is displayed on
-     */
     public CreativeTabs getCreativeTab()
     {
         return this.tabToDisplayOn;
     }
 
-    /**
-     * returns this;
-     */
     public Item setCreativeTab(CreativeTabs tab)
     {
         this.tabToDisplayOn = tab;
         return this;
     }
 
-    /**
-     * Returns true if players can use this item to affect the world (e.g. placing blocks, placing ender eyes in portal)
-     * when not in creative
-     */
     public boolean canItemEditBlocks()
     {
         return false;
     }
 
-    /**
-     * Return whether this item is repairable in an anvil.
-     */
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
     {
         return false;
@@ -762,9 +621,9 @@ public class Item
         })).setUnlocalizedName("redSandStone"));
         registerItemBlock(Blocks.red_sandstone_stairs);
         registerItemBlock(Blocks.stone_slab2, (new ItemSlab(Blocks.stone_slab2, Blocks.stone_slab2, Blocks.double_stone_slab2)).setUnlocalizedName("stoneSlab2"));
-        registerItem(256, "iron_shovel", (new ItemSpade(Item.ToolMaterial.IRON)).setUnlocalizedName("shovelIron"));
-        registerItem(257, "iron_pickaxe", (new ItemPickaxe(Item.ToolMaterial.IRON)).setUnlocalizedName("pickaxeIron"));
-        registerItem(258, "iron_axe", (new ItemAxe(Item.ToolMaterial.IRON)).setUnlocalizedName("hatchetIron"));
+        registerItem(256, "iron_shovel", (new ItemSpade(ToolMaterial.IRON)).setUnlocalizedName("shovelIron"));
+        registerItem(257, "iron_pickaxe", (new ItemPickaxe(ToolMaterial.IRON)).setUnlocalizedName("pickaxeIron"));
+        registerItem(258, "iron_axe", (new ItemAxe(ToolMaterial.IRON)).setUnlocalizedName("hatchetIron"));
         registerItem(259, "flint_and_steel", (new ItemFlintAndSteel()).setUnlocalizedName("flintAndSteel"));
         registerItem(260, "apple", (new ItemFood(4, 0.3F, false)).setUnlocalizedName("apple"));
         registerItem(261, "bow", (new ItemBow()).setUnlocalizedName("bow"));
@@ -773,34 +632,34 @@ public class Item
         registerItem(264, "diamond", (new Item()).setUnlocalizedName("diamond").setCreativeTab(CreativeTabs.tabMaterials));
         registerItem(265, "iron_ingot", (new Item()).setUnlocalizedName("ingotIron").setCreativeTab(CreativeTabs.tabMaterials));
         registerItem(266, "gold_ingot", (new Item()).setUnlocalizedName("ingotGold").setCreativeTab(CreativeTabs.tabMaterials));
-        registerItem(267, "iron_sword", (new ItemSword(Item.ToolMaterial.IRON)).setUnlocalizedName("swordIron"));
-        registerItem(268, "wooden_sword", (new ItemSword(Item.ToolMaterial.WOOD)).setUnlocalizedName("swordWood"));
-        registerItem(269, "wooden_shovel", (new ItemSpade(Item.ToolMaterial.WOOD)).setUnlocalizedName("shovelWood"));
-        registerItem(270, "wooden_pickaxe", (new ItemPickaxe(Item.ToolMaterial.WOOD)).setUnlocalizedName("pickaxeWood"));
-        registerItem(271, "wooden_axe", (new ItemAxe(Item.ToolMaterial.WOOD)).setUnlocalizedName("hatchetWood"));
-        registerItem(272, "stone_sword", (new ItemSword(Item.ToolMaterial.STONE)).setUnlocalizedName("swordStone"));
-        registerItem(273, "stone_shovel", (new ItemSpade(Item.ToolMaterial.STONE)).setUnlocalizedName("shovelStone"));
-        registerItem(274, "stone_pickaxe", (new ItemPickaxe(Item.ToolMaterial.STONE)).setUnlocalizedName("pickaxeStone"));
-        registerItem(275, "stone_axe", (new ItemAxe(Item.ToolMaterial.STONE)).setUnlocalizedName("hatchetStone"));
-        registerItem(276, "diamond_sword", (new ItemSword(Item.ToolMaterial.EMERALD)).setUnlocalizedName("swordDiamond"));
-        registerItem(277, "diamond_shovel", (new ItemSpade(Item.ToolMaterial.EMERALD)).setUnlocalizedName("shovelDiamond"));
-        registerItem(278, "diamond_pickaxe", (new ItemPickaxe(Item.ToolMaterial.EMERALD)).setUnlocalizedName("pickaxeDiamond"));
-        registerItem(279, "diamond_axe", (new ItemAxe(Item.ToolMaterial.EMERALD)).setUnlocalizedName("hatchetDiamond"));
+        registerItem(267, "iron_sword", (new ItemSword(ToolMaterial.IRON)).setUnlocalizedName("swordIron"));
+        registerItem(268, "wooden_sword", (new ItemSword(ToolMaterial.WOOD)).setUnlocalizedName("swordWood"));
+        registerItem(269, "wooden_shovel", (new ItemSpade(ToolMaterial.WOOD)).setUnlocalizedName("shovelWood"));
+        registerItem(270, "wooden_pickaxe", (new ItemPickaxe(ToolMaterial.WOOD)).setUnlocalizedName("pickaxeWood"));
+        registerItem(271, "wooden_axe", (new ItemAxe(ToolMaterial.WOOD)).setUnlocalizedName("hatchetWood"));
+        registerItem(272, "stone_sword", (new ItemSword(ToolMaterial.STONE)).setUnlocalizedName("swordStone"));
+        registerItem(273, "stone_shovel", (new ItemSpade(ToolMaterial.STONE)).setUnlocalizedName("shovelStone"));
+        registerItem(274, "stone_pickaxe", (new ItemPickaxe(ToolMaterial.STONE)).setUnlocalizedName("pickaxeStone"));
+        registerItem(275, "stone_axe", (new ItemAxe(ToolMaterial.STONE)).setUnlocalizedName("hatchetStone"));
+        registerItem(276, "diamond_sword", (new ItemSword(ToolMaterial.EMERALD)).setUnlocalizedName("swordDiamond"));
+        registerItem(277, "diamond_shovel", (new ItemSpade(ToolMaterial.EMERALD)).setUnlocalizedName("shovelDiamond"));
+        registerItem(278, "diamond_pickaxe", (new ItemPickaxe(ToolMaterial.EMERALD)).setUnlocalizedName("pickaxeDiamond"));
+        registerItem(279, "diamond_axe", (new ItemAxe(ToolMaterial.EMERALD)).setUnlocalizedName("hatchetDiamond"));
         registerItem(280, "stick", (new Item()).setFull3D().setUnlocalizedName("stick").setCreativeTab(CreativeTabs.tabMaterials));
         registerItem(281, "bowl", (new Item()).setUnlocalizedName("bowl").setCreativeTab(CreativeTabs.tabMaterials));
         registerItem(282, "mushroom_stew", (new ItemSoup(6)).setUnlocalizedName("mushroomStew"));
-        registerItem(283, "golden_sword", (new ItemSword(Item.ToolMaterial.GOLD)).setUnlocalizedName("swordGold"));
-        registerItem(284, "golden_shovel", (new ItemSpade(Item.ToolMaterial.GOLD)).setUnlocalizedName("shovelGold"));
-        registerItem(285, "golden_pickaxe", (new ItemPickaxe(Item.ToolMaterial.GOLD)).setUnlocalizedName("pickaxeGold"));
-        registerItem(286, "golden_axe", (new ItemAxe(Item.ToolMaterial.GOLD)).setUnlocalizedName("hatchetGold"));
+        registerItem(283, "golden_sword", (new ItemSword(ToolMaterial.GOLD)).setUnlocalizedName("swordGold"));
+        registerItem(284, "golden_shovel", (new ItemSpade(ToolMaterial.GOLD)).setUnlocalizedName("shovelGold"));
+        registerItem(285, "golden_pickaxe", (new ItemPickaxe(ToolMaterial.GOLD)).setUnlocalizedName("pickaxeGold"));
+        registerItem(286, "golden_axe", (new ItemAxe(ToolMaterial.GOLD)).setUnlocalizedName("hatchetGold"));
         registerItem(287, "string", (new ItemReed(Blocks.tripwire)).setUnlocalizedName("string").setCreativeTab(CreativeTabs.tabMaterials));
         registerItem(288, "feather", (new Item()).setUnlocalizedName("feather").setCreativeTab(CreativeTabs.tabMaterials));
         registerItem(289, "gunpowder", (new Item()).setUnlocalizedName("sulphur").setPotionEffect(PotionHelper.gunpowderEffect).setCreativeTab(CreativeTabs.tabMaterials));
-        registerItem(290, "wooden_hoe", (new ItemHoe(Item.ToolMaterial.WOOD)).setUnlocalizedName("hoeWood"));
-        registerItem(291, "stone_hoe", (new ItemHoe(Item.ToolMaterial.STONE)).setUnlocalizedName("hoeStone"));
-        registerItem(292, "iron_hoe", (new ItemHoe(Item.ToolMaterial.IRON)).setUnlocalizedName("hoeIron"));
-        registerItem(293, "diamond_hoe", (new ItemHoe(Item.ToolMaterial.EMERALD)).setUnlocalizedName("hoeDiamond"));
-        registerItem(294, "golden_hoe", (new ItemHoe(Item.ToolMaterial.GOLD)).setUnlocalizedName("hoeGold"));
+        registerItem(290, "wooden_hoe", (new ItemHoe(ToolMaterial.WOOD)).setUnlocalizedName("hoeWood"));
+        registerItem(291, "stone_hoe", (new ItemHoe(ToolMaterial.STONE)).setUnlocalizedName("hoeStone"));
+        registerItem(292, "iron_hoe", (new ItemHoe(ToolMaterial.IRON)).setUnlocalizedName("hoeIron"));
+        registerItem(293, "diamond_hoe", (new ItemHoe(ToolMaterial.EMERALD)).setUnlocalizedName("hoeDiamond"));
+        registerItem(294, "golden_hoe", (new ItemHoe(ToolMaterial.GOLD)).setUnlocalizedName("hoeGold"));
         registerItem(295, "wheat_seeds", (new ItemSeeds(Blocks.wheat, Blocks.farmland)).setUnlocalizedName("seeds"));
         registerItem(296, "wheat", (new Item()).setUnlocalizedName("wheat").setCreativeTab(CreativeTabs.tabMaterials));
         registerItem(297, "bread", (new ItemFood(5, 0.6F, false)).setUnlocalizedName("bread"));
@@ -952,17 +811,11 @@ public class Item
         registerItem(2267, "record_wait", (new ItemRecord("wait")).setUnlocalizedName("record"));
     }
 
-    /**
-     * Register a default ItemBlock for the given Block.
-     */
     private static void registerItemBlock(Block blockIn)
     {
         registerItemBlock(blockIn, new ItemBlock(blockIn));
     }
 
-    /**
-     * Register the given Item as the ItemBlock for the given Block.
-     */
     protected static void registerItemBlock(Block blockIn, Item itemIn)
     {
         registerItem(Block.getIdFromBlock(blockIn), (ResourceLocation)Block.blockRegistry.getNameForObject(blockIn), itemIn);

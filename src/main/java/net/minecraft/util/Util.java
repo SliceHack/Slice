@@ -6,10 +6,10 @@ import org.apache.logging.log4j.Logger;
 
 public class Util
 {
-    public static Util.EnumOS getOSType()
+    public static EnumOS getOSType()
     {
         String s = System.getProperty("os.name").toLowerCase();
-        return s.contains("win") ? Util.EnumOS.WINDOWS : (s.contains("mac") ? Util.EnumOS.OSX : (s.contains("solaris") ? Util.EnumOS.SOLARIS : (s.contains("sunos") ? Util.EnumOS.SOLARIS : (s.contains("linux") ? Util.EnumOS.LINUX : (s.contains("unix") ? Util.EnumOS.LINUX : Util.EnumOS.UNKNOWN)))));
+        return s.contains("win") ? EnumOS.WINDOWS : (s.contains("mac") ? EnumOS.OSX : (s.contains("solaris") ? EnumOS.SOLARIS : (s.contains("sunos") ? EnumOS.SOLARIS : (s.contains("linux") ? EnumOS.LINUX : (s.contains("unix") ? EnumOS.LINUX : EnumOS.UNKNOWN)))));
     }
 
     public static <V> V runTask(FutureTask<V> task, Logger logger)
@@ -29,7 +29,10 @@ public class Util
                 throw outofmemoryerror;
             }
         }
-        catch (InterruptedException ignored) {}
+        catch (InterruptedException interruptedexception)
+        {
+            logger.fatal((String)"Error executing task", (Throwable)interruptedexception);
+        }
 
         return (V)((Object)null);
     }

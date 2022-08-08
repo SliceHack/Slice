@@ -6,9 +6,6 @@ import tv.twitch.chat.ChatUserInfo;
 
 public interface IStream
 {
-    /**
-     * Shuts down a steam
-     */
     void shutdownStream();
 
     void func_152935_j();
@@ -29,14 +26,8 @@ public interface IStream
 
     void requestCommercial();
 
-    /**
-     * pauses a stream
-     */
     void pause();
 
-    /**
-     * unpauses a stream
-     */
     void unpause();
 
     void updateStreamVolume();
@@ -69,14 +60,11 @@ public interface IStream
 
     boolean func_152913_F();
 
-    /**
-     * mutes or unmutes the microphone based on the boolean parameter passed into the method
-     */
     void muteMicrophone(boolean p_152910_1_);
 
     boolean func_152929_G();
 
-    IStream.AuthFailureReason func_152918_H();
+    AuthFailureReason func_152918_H();
 
     public static enum AuthFailureReason
     {

@@ -99,7 +99,7 @@ public class CustomColors
     private static final IBlockState BLOCK_STATE_DIRT = Blocks.dirt.getDefaultState();
     private static final IBlockState BLOCK_STATE_WATER = Blocks.water.getDefaultState();
     public static Random random = new Random();
-    private static final CustomColors.IColorizer COLORIZER_GRASS = new CustomColors.IColorizer()
+    private static final IColorizer COLORIZER_GRASS = new IColorizer()
     {
         public int getColor(IBlockState blockState, IBlockAccess blockAccess, BlockPos blockPos)
         {
@@ -111,7 +111,7 @@ public class CustomColors
             return false;
         }
     };
-    private static final CustomColors.IColorizer COLORIZER_FOLIAGE = new CustomColors.IColorizer()
+    private static final IColorizer COLORIZER_FOLIAGE = new IColorizer()
     {
         public int getColor(IBlockState blockState, IBlockAccess blockAccess, BlockPos blockPos)
         {
@@ -123,7 +123,7 @@ public class CustomColors
             return false;
         }
     };
-    private static final CustomColors.IColorizer COLORIZER_FOLIAGE_PINE = new CustomColors.IColorizer()
+    private static final IColorizer COLORIZER_FOLIAGE_PINE = new IColorizer()
     {
         public int getColor(IBlockState blockState, IBlockAccess blockAccess, BlockPos blockPos)
         {
@@ -134,7 +134,7 @@ public class CustomColors
             return CustomColors.foliagePineColors == null;
         }
     };
-    private static final CustomColors.IColorizer COLORIZER_FOLIAGE_BIRCH = new CustomColors.IColorizer()
+    private static final IColorizer COLORIZER_FOLIAGE_BIRCH = new IColorizer()
     {
         public int getColor(IBlockState blockState, IBlockAccess blockAccess, BlockPos blockPos)
         {
@@ -145,7 +145,7 @@ public class CustomColors
             return CustomColors.foliageBirchColors == null;
         }
     };
-    private static final CustomColors.IColorizer COLORIZER_WATER = new CustomColors.IColorizer()
+    private static final IColorizer COLORIZER_WATER = new IColorizer()
     {
         public int getColor(IBlockState blockState, IBlockAccess blockAccess, BlockPos blockPos)
         {
@@ -457,9 +457,9 @@ public class CustomColors
         String s = "palette.block.";
         Map map = new HashMap();
 
-        for (Object e : props.keySet())
+        for (Object o: props.keySet())
         {
-            String s1 = (String) e;
+            String s1 = (String) o;
             String s2 = props.getProperty(s1);
 
             if (s1.startsWith(s))
@@ -606,35 +606,35 @@ public class CustomColors
         }
     }
 
-    private static void addToList(CustomColormap cm, List list, int id)
+    private static void addToList(CustomColormap cm, List lists, int id)
     {
-        while (id >= list.size())
+        while (id >= lists.size())
         {
-            list.add(null);
+            lists.add(null);
         }
 
-        List list1 = (List)list.get(id);
+        List list = (List)lists.get(id);
 
-        if (list1 == null)
+        if (list == null)
         {
-            list1 = new ArrayList();
-            list.set(id, list1);
+            list = new ArrayList();
+            list.set(id, list);
         }
 
-        list1.add(cm);
+        list.add(cm);
     }
 
-    private static CustomColormap[][] blockListToArray(List list)
+    private static CustomColormap[][] blockListToArray(List lists)
     {
-        CustomColormap[][] acustomcolormap = new CustomColormap[list.size()][];
+        CustomColormap[][] acustomcolormap = new CustomColormap[lists.size()][];
 
-        for (int i = 0; i < list.size(); ++i)
+        for (int i = 0; i < lists.size(); ++i)
         {
-            List list1 = (List)list.get(i);
+            List list = (List)lists.get(i);
 
-            if (list1 != null)
+            if (list != null)
             {
-                CustomColormap[] acustomcolormap1 = (CustomColormap[])((CustomColormap[])list1.toArray(new CustomColormap[list1.size()]));
+                CustomColormap[] acustomcolormap1 = (CustomColormap[])((CustomColormap[])list.toArray(new CustomColormap[list.size()]));
                 acustomcolormap[i] = acustomcolormap1;
             }
         }
@@ -852,7 +852,7 @@ public class CustomColors
         else
         {
             int i = renderEnv.getMetadata();
-            CustomColors.IColorizer customcolors$icolorizer;
+            IColorizer customcolors$icolorizer;
 
             if (block != Blocks.grass && block != Blocks.tallgrass && block != Blocks.double_plant)
             {
@@ -965,7 +965,7 @@ public class CustomColors
         }
     }
 
-    private static int getSmoothColorMultiplier(IBlockState blockState, IBlockAccess blockAccess, BlockPos blockPos, CustomColors.IColorizer colorizer, BlockPosM blockPosM)
+    private static int getSmoothColorMultiplier(IBlockState blockState, IBlockAccess blockAccess, BlockPos blockPos, IColorizer colorizer, BlockPosM blockPosM)
     {
         int i = 0;
         int j = 0;
@@ -996,7 +996,7 @@ public class CustomColors
     public static int getFluidColor(IBlockAccess blockAccess, IBlockState blockState, BlockPos blockPos, RenderEnv renderEnv)
     {
         Block block = blockState.getBlock();
-        CustomColors.IColorizer customcolors$icolorizer = getBlockColormap(blockState);
+        IColorizer customcolors$icolorizer = getBlockColormap(blockState);
 
         if (customcolors$icolorizer == null && blockState.getBlock().getMaterial() == Material.water)
         {
@@ -1360,9 +1360,9 @@ public class CustomColors
         Set set = props.keySet();
         int i = 0;
 
-        for (Object e : set)
+        for (Object o : set)
         {
-            String s = (String) e;
+            String s = (String) o;
             String s1 = props.getProperty(s);
 
             if (s.startsWith(prefix))
@@ -1461,9 +1461,9 @@ public class CustomColors
         float[][] afloat1 = new float[aenumdyecolor.length][];
         int k = 0;
 
-        for (Object e : props.keySet())
+        for (Object o : props.keySet())
         {
-            String s = (String) e;
+            String s = (String) o;
             String s1 = props.getProperty(s);
 
             if (s.startsWith(prefix))
@@ -1535,9 +1535,9 @@ public class CustomColors
         Arrays.fill((int[])aint, (int) - 1);
         int i = 0;
 
-        for (Object e: props.keySet())
+        for (Object o: props.keySet())
         {
-            String s = (String) e;
+            String s = (String) o;
             String s1 = props.getProperty(s);
 
             if (s.startsWith(prefix))
@@ -1594,7 +1594,7 @@ public class CustomColors
 
         for (Object o : props.keySet())
         {
-        	String s = (String)o;
+            String s = (String)o;
             String s1 = props.getProperty(s);
 
             if (s.startsWith(prefix))
@@ -1632,9 +1632,9 @@ public class CustomColors
         Arrays.fill((int[])aint, (int) - 1);
         int i = 0;
 
-        for (Object e : props.keySet())
+        for (Object o : props.keySet())
         {
-            String s = (String) e;
+            String s = (String) o;
             String s1 = props.getProperty(s);
 
             if (s.startsWith(prefix))

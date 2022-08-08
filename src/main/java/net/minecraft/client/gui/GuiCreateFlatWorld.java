@@ -20,12 +20,10 @@ public class GuiCreateFlatWorld extends GuiScreen
 {
     private final GuiCreateWorld createWorldGui;
     private FlatGeneratorInfo theFlatGeneratorInfo = FlatGeneratorInfo.getDefaultFlatGenerator();
-
-    /** The title given to the flat world currently in creation */
     private String flatWorldTitle;
     private String field_146394_i;
     private String field_146391_r;
-    private GuiCreateFlatWorld.Details createFlatWorldListSlotGui;
+    private Details createFlatWorldListSlotGui;
     private GuiButton field_146389_t;
     private GuiButton field_146388_u;
     private GuiButton field_146386_v;
@@ -46,17 +44,13 @@ public class GuiCreateFlatWorld extends GuiScreen
         this.theFlatGeneratorInfo = FlatGeneratorInfo.createFlatGeneratorFromString(p_146383_1_);
     }
 
-    /**
-     * Adds the buttons (and other controls) to the screen in question. Called when the GUI is displayed and when the
-     * window resizes, the buttonList is cleared beforehand.
-     */
     public void initGui()
     {
         this.buttonList.clear();
         this.flatWorldTitle = I18n.format("createWorld.customize.flat.title", new Object[0]);
         this.field_146394_i = I18n.format("createWorld.customize.flat.tile", new Object[0]);
         this.field_146391_r = I18n.format("createWorld.customize.flat.height", new Object[0]);
-        this.createFlatWorldListSlotGui = new GuiCreateFlatWorld.Details();
+        this.createFlatWorldListSlotGui = new Details();
         this.buttonList.add(this.field_146389_t = new GuiButton(2, this.width / 2 - 154, this.height - 52, 100, 20, I18n.format("createWorld.customize.flat.addLayer", new Object[0]) + " (NYI)"));
         this.buttonList.add(this.field_146388_u = new GuiButton(3, this.width / 2 - 50, this.height - 52, 100, 20, I18n.format("createWorld.customize.flat.editLayer", new Object[0]) + " (NYI)"));
         this.buttonList.add(this.field_146386_v = new GuiButton(4, this.width / 2 - 155, this.height - 52, 150, 20, I18n.format("createWorld.customize.flat.removeLayer", new Object[0])));
@@ -68,18 +62,12 @@ public class GuiCreateFlatWorld extends GuiScreen
         this.func_146375_g();
     }
 
-    /**
-     * Handles mouse input.
-     */
     public void handleMouseInput() throws IOException
     {
         super.handleMouseInput();
         this.createFlatWorldListSlotGui.handleMouseInput();
     }
 
-    /**
-     * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
-     */
     protected void actionPerformed(GuiButton button) throws IOException
     {
         int i = this.theFlatGeneratorInfo.getFlatLayers().size() - this.createFlatWorldListSlotGui.field_148228_k - 1;
@@ -121,9 +109,6 @@ public class GuiCreateFlatWorld extends GuiScreen
         return this.createFlatWorldListSlotGui.field_148228_k > -1 && this.createFlatWorldListSlotGui.field_148228_k < this.theFlatGeneratorInfo.getFlatLayers().size();
     }
 
-    /**
-     * Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
-     */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();

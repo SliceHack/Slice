@@ -12,14 +12,14 @@ import slice.event.events.EventAttack;
 public class C02PacketUseEntity implements Packet<INetHandlerPlayServer>
 {
     private int entityId;
-    private C02PacketUseEntity.Action action;
+    private Action action;
     private Vec3 hitVec;
 
     public C02PacketUseEntity()
     {
     }
 
-    public C02PacketUseEntity(Entity entity, C02PacketUseEntity.Action action)
+    public C02PacketUseEntity(Entity entity, Action action)
     {
         this.entityId = entity.getEntityId();
         this.action = action;
@@ -31,33 +31,27 @@ public class C02PacketUseEntity implements Packet<INetHandlerPlayServer>
 
     public C02PacketUseEntity(Entity entity, Vec3 hitVec)
     {
-        this(entity, C02PacketUseEntity.Action.INTERACT_AT);
+        this(entity, Action.INTERACT_AT);
         this.hitVec = hitVec;
     }
 
-    /**
-     * Reads the raw packet data from the data stream.
-     */
     public void readPacketData(PacketBuffer buf) throws IOException
     {
         this.entityId = buf.readVarIntFromBuffer();
-        this.action = (C02PacketUseEntity.Action)buf.readEnumValue(C02PacketUseEntity.Action.class);
+        this.action = (Action)buf.readEnumValue(Action.class);
 
-        if (this.action == C02PacketUseEntity.Action.INTERACT_AT)
+        if (this.action == Action.INTERACT_AT)
         {
             this.hitVec = new Vec3((double)buf.readFloat(), (double)buf.readFloat(), (double)buf.readFloat());
         }
     }
 
-    /**
-     * Writes the raw packet data to the data stream.
-     */
     public void writePacketData(PacketBuffer buf) throws IOException
     {
         buf.writeVarIntToBuffer(this.entityId);
         buf.writeEnumValue(this.action);
 
-        if (this.action == C02PacketUseEntity.Action.INTERACT_AT)
+        if (this.action == Action.INTERACT_AT)
         {
             buf.writeFloat((float)this.hitVec.xCoord);
             buf.writeFloat((float)this.hitVec.yCoord);
@@ -65,9 +59,6 @@ public class C02PacketUseEntity implements Packet<INetHandlerPlayServer>
         }
     }
 
-    /**
-     * Passes this Packet on to the NetHandler for processing.
-     */
     public void processPacket(INetHandlerPlayServer handler)
     {
         handler.processUseEntity(this);
@@ -78,7 +69,7 @@ public class C02PacketUseEntity implements Packet<INetHandlerPlayServer>
         return worldIn.getEntityByID(this.entityId);
     }
 
-    public C02PacketUseEntity.Action getAction()
+    public Action getAction()
     {
         return this.action;
     }

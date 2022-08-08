@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 public abstract class BlockStoneSlab extends BlockSlab
 {
     public static final PropertyBool SEAMLESS = PropertyBool.create("seamless");
-    public static final PropertyEnum<BlockStoneSlab.EnumType> VARIANT = PropertyEnum.<BlockStoneSlab.EnumType>create("variant", BlockStoneSlab.EnumType.class);
+    public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
 
     public BlockStoneSlab()
     {
@@ -33,16 +33,13 @@ public abstract class BlockStoneSlab extends BlockSlab
         }
         else
         {
-            iblockstate = iblockstate.withProperty(HALF, BlockSlab.EnumBlockHalf.BOTTOM);
+            iblockstate = iblockstate.withProperty(HALF, EnumBlockHalf.BOTTOM);
         }
 
-        this.setDefaultState(iblockstate.withProperty(VARIANT, BlockStoneSlab.EnumType.STONE));
+        this.setDefaultState(iblockstate.withProperty(VARIANT, EnumType.STONE));
         this.setCreativeTab(CreativeTabs.tabBlock);
     }
 
-    /**
-     * Get the Item that this Block should drop when harvested.
-     */
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
         return Item.getItemFromBlock(Blocks.stone_slab);
@@ -53,12 +50,9 @@ public abstract class BlockStoneSlab extends BlockSlab
         return Item.getItemFromBlock(Blocks.stone_slab);
     }
 
-    /**
-     * Returns the slab block name with the type associated with it
-     */
     public String getUnlocalizedName(int meta)
     {
-        return super.getUnlocalizedName() + "." + BlockStoneSlab.EnumType.byMetadata(meta).getUnlocalizedName();
+        return super.getUnlocalizedName() + "." + EnumType.byMetadata(meta).getUnlocalizedName();
     }
 
     public IProperty<?> getVariantProperty()
@@ -68,19 +62,16 @@ public abstract class BlockStoneSlab extends BlockSlab
 
     public Object getVariant(ItemStack stack)
     {
-        return BlockStoneSlab.EnumType.byMetadata(stack.getMetadata() & 7);
+        return EnumType.byMetadata(stack.getMetadata() & 7);
     }
 
-    /**
-     * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
-     */
     public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list)
     {
         if (itemIn != Item.getItemFromBlock(Blocks.double_stone_slab))
         {
-            for (BlockStoneSlab.EnumType blockstoneslab$enumtype : BlockStoneSlab.EnumType.values())
+            for (EnumType blockstoneslab$enumtype : EnumType.values())
             {
-                if (blockstoneslab$enumtype != BlockStoneSlab.EnumType.WOOD)
+                if (blockstoneslab$enumtype != EnumType.WOOD)
                 {
                     list.add(new ItemStack(itemIn, 1, blockstoneslab$enumtype.getMetadata()));
                 }
@@ -88,12 +79,9 @@ public abstract class BlockStoneSlab extends BlockSlab
         }
     }
 
-    /**
-     * Convert the given metadata into a BlockState for this Block
-     */
     public IBlockState getStateFromMeta(int meta)
     {
-        IBlockState iblockstate = this.getDefaultState().withProperty(VARIANT, BlockStoneSlab.EnumType.byMetadata(meta & 7));
+        IBlockState iblockstate = this.getDefaultState().withProperty(VARIANT, EnumType.byMetadata(meta & 7));
 
         if (this.isDouble())
         {
@@ -101,19 +89,16 @@ public abstract class BlockStoneSlab extends BlockSlab
         }
         else
         {
-            iblockstate = iblockstate.withProperty(HALF, (meta & 8) == 0 ? BlockSlab.EnumBlockHalf.BOTTOM : BlockSlab.EnumBlockHalf.TOP);
+            iblockstate = iblockstate.withProperty(HALF, (meta & 8) == 0 ? EnumBlockHalf.BOTTOM : EnumBlockHalf.TOP);
         }
 
         return iblockstate;
     }
 
-    /**
-     * Convert the BlockState into the correct metadata value
-     */
     public int getMetaFromState(IBlockState state)
     {
         int i = 0;
-        i = i | ((BlockStoneSlab.EnumType)state.getValue(VARIANT)).getMetadata();
+        i = i | ((EnumType)state.getValue(VARIANT)).getMetadata();
 
         if (this.isDouble())
         {
@@ -122,7 +107,7 @@ public abstract class BlockStoneSlab extends BlockSlab
                 i |= 8;
             }
         }
-        else if (state.getValue(HALF) == BlockSlab.EnumBlockHalf.TOP)
+        else if (state.getValue(HALF) == EnumBlockHalf.TOP)
         {
             i |= 8;
         }
@@ -135,21 +120,14 @@ public abstract class BlockStoneSlab extends BlockSlab
         return this.isDouble() ? new BlockState(this, new IProperty[] {SEAMLESS, VARIANT}): new BlockState(this, new IProperty[] {HALF, VARIANT});
     }
 
-    /**
-     * Gets the metadata of the item this Block can drop. This method is called when the block gets destroyed. It
-     * returns the metadata of the dropped item based on the old metadata of the block.
-     */
     public int damageDropped(IBlockState state)
     {
-        return ((BlockStoneSlab.EnumType)state.getValue(VARIANT)).getMetadata();
+        return ((EnumType)state.getValue(VARIANT)).getMetadata();
     }
 
-    /**
-     * Get the MapColor for this Block and the given BlockState
-     */
     public MapColor getMapColor(IBlockState state)
     {
-        return ((BlockStoneSlab.EnumType)state.getValue(VARIANT)).func_181074_c();
+        return ((EnumType)state.getValue(VARIANT)).func_181074_c();
     }
 
     public static enum EnumType implements IStringSerializable
@@ -163,7 +141,7 @@ public abstract class BlockStoneSlab extends BlockSlab
         NETHERBRICK(6, MapColor.netherrackColor, "nether_brick", "netherBrick"),
         QUARTZ(7, MapColor.quartzColor, "quartz");
 
-        private static final BlockStoneSlab.EnumType[] META_LOOKUP = new BlockStoneSlab.EnumType[values().length];
+        private static final EnumType[] META_LOOKUP = new EnumType[values().length];
         private final int meta;
         private final MapColor field_181075_k;
         private final String name;
@@ -197,7 +175,7 @@ public abstract class BlockStoneSlab extends BlockSlab
             return this.name;
         }
 
-        public static BlockStoneSlab.EnumType byMetadata(int meta)
+        public static EnumType byMetadata(int meta)
         {
             if (meta < 0 || meta >= META_LOOKUP.length)
             {
@@ -218,7 +196,7 @@ public abstract class BlockStoneSlab extends BlockSlab
         }
 
         static {
-            for (BlockStoneSlab.EnumType blockstoneslab$enumtype : values())
+            for (EnumType blockstoneslab$enumtype : values())
             {
                 META_LOOKUP[blockstoneslab$enumtype.getMetadata()] = blockstoneslab$enumtype;
             }

@@ -16,11 +16,7 @@ public class Profiler
     private static final Logger logger = LogManager.getLogger();
     private final List<String> sectionList = Lists.<String>newArrayList();
     private final List<Long> timestampList = Lists.<Long>newArrayList();
-
-    /** Flag profiling enabled */
     public boolean profilingEnabled;
-
-    /** Current profiling section */
     private String profilingSection = "";
     private final Map<String, Long> profilingMap = Maps.<String, Long>newHashMap();
     public boolean profilerGlobalEnabled = true;
@@ -41,9 +37,6 @@ public class Profiler
         this.profilerLocalEnabled = this.profilerGlobalEnabled;
     }
 
-    /**
-     * Clear profiling.
-     */
     public void clearProfiling()
     {
         this.profilingMap.clear();
@@ -52,9 +45,6 @@ public class Profiler
         this.profilerLocalEnabled = this.profilerGlobalEnabled;
     }
 
-    /**
-     * Start section
-     */
     public void startSection(String name)
     {
         if (Lagometer.isActive())
@@ -106,9 +96,6 @@ public class Profiler
         }
     }
 
-    /**
-     * End section
-     */
     public void endSection()
     {
         if (this.profilerLocalEnabled)
@@ -139,7 +126,7 @@ public class Profiler
         }
     }
 
-    public List<Profiler.Result> getProfilingData(String profilerName)
+    public List<Result> getProfilingData(String profilerName)
     {
         if (!this.profilingEnabled)
         {
@@ -149,7 +136,7 @@ public class Profiler
         {
             long i = this.profilingMap.containsKey("root") ? ((Long)this.profilingMap.get("root")).longValue() : 0L;
             long j = this.profilingMap.containsKey(profilerName) ? ((Long)this.profilingMap.get(profilerName)).longValue() : -1L;
-            List<Profiler.Result> list = Lists.<Profiler.Result>newArrayList();
+            List<Result> list = Lists.<Result>newArrayList();
 
             if (profilerName.length() > 0)
             {
@@ -186,7 +173,7 @@ public class Profiler
                     double d0 = (double)l * 100.0D / (double)k;
                     double d1 = (double)l * 100.0D / (double)i;
                     String s2 = s1.substring(profilerName.length());
-                    list.add(new Profiler.Result(s2, d0, d1));
+                    list.add(new Result(s2, d0, d1));
                 }
             }
 
@@ -197,18 +184,15 @@ public class Profiler
 
             if ((float)k > f)
             {
-                list.add(new Profiler.Result("unspecified", (double)((float)k - f) * 100.0D / (double)k, (double)((float)k - f) * 100.0D / (double)i));
+                list.add(new Result("unspecified", (double)((float)k - f) * 100.0D / (double)k, (double)((float)k - f) * 100.0D / (double)i));
             }
 
             Collections.sort(list);
-            list.add(0, new Profiler.Result(profilerName, 100.0D, (double)k * 100.0D / (double)i));
+            list.add(0, new Result(profilerName, 100.0D, (double)k * 100.0D / (double)i));
             return list;
         }
     }
 
-    /**
-     * End current section and start a new section
-     */
     public void endStartSection(String name)
     {
         if (this.profilerLocalEnabled)
@@ -231,7 +215,7 @@ public class Profiler
         }
     }
 
-    public static final class Result implements Comparable<Profiler.Result>
+    public static final class Result implements Comparable<Result>
     {
         public double field_76332_a;
         public double field_76330_b;
@@ -244,7 +228,7 @@ public class Profiler
             this.field_76330_b = totalUsePercentage;
         }
 
-        public int compareTo(Profiler.Result p_compareTo_1_)
+        public int compareTo(Result p_compareTo_1_)
         {
             return p_compareTo_1_.field_76332_a < this.field_76332_a ? -1 : (p_compareTo_1_.field_76332_a > this.field_76332_a ? 1 : p_compareTo_1_.field_76331_c.compareTo(this.field_76331_c));
         }

@@ -43,7 +43,7 @@ public class MapGenNetherBridge extends MapGenStructure
 
     protected StructureStart getStructureStart(int chunkX, int chunkZ)
     {
-        return new MapGenNetherBridge.Start(this.worldObj, this.rand, chunkX, chunkZ);
+        return new Start(this.worldObj, this.rand, chunkX, chunkZ);
     }
 
     public static class Start extends StructureStart

@@ -17,16 +17,13 @@ public class MapItemRenderer
 {
     private static final ResourceLocation mapIcons = new ResourceLocation("textures/map/map_icons.png");
     private final TextureManager textureManager;
-    private final Map<String, MapItemRenderer.Instance> loadedMaps = Maps.<String, MapItemRenderer.Instance>newHashMap();
+    private final Map<String, Instance> loadedMaps = Maps.<String, Instance>newHashMap();
 
     public MapItemRenderer(TextureManager textureManagerIn)
     {
         this.textureManager = textureManagerIn;
     }
 
-    /**
-     * Updates a map texture
-     */
     public void updateMapTexture(MapData mapdataIn)
     {
         this.getMapRendererInstance(mapdataIn).updateMapTexture();
@@ -37,28 +34,22 @@ public class MapItemRenderer
         this.getMapRendererInstance(mapdataIn).render(p_148250_2_);
     }
 
-    /**
-     * Returns {@link net.minecraft.client.gui.MapItemRenderer.Instance MapItemRenderer.Instance} with given map data
-     */
-    private MapItemRenderer.Instance getMapRendererInstance(MapData mapdataIn)
+    private Instance getMapRendererInstance(MapData mapdataIn)
     {
-        MapItemRenderer.Instance mapitemrenderer$instance = (MapItemRenderer.Instance)this.loadedMaps.get(mapdataIn.mapName);
+        Instance mapitemrenderer$instance = (Instance)this.loadedMaps.get(mapdataIn.mapName);
 
         if (mapitemrenderer$instance == null)
         {
-            mapitemrenderer$instance = new MapItemRenderer.Instance(mapdataIn);
+            mapitemrenderer$instance = new Instance(mapdataIn);
             this.loadedMaps.put(mapdataIn.mapName, mapitemrenderer$instance);
         }
 
         return mapitemrenderer$instance;
     }
 
-    /**
-     * Clears the currently loaded maps and removes their corresponding textures
-     */
     public void clearLoadedMaps()
     {
-        for (MapItemRenderer.Instance mapitemrenderer$instance : this.loadedMaps.values())
+        for (Instance mapitemrenderer$instance : this.loadedMaps.values())
         {
             this.textureManager.deleteTexture(mapitemrenderer$instance.location);
         }

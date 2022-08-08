@@ -8,7 +8,7 @@ import net.minecraft.world.border.WorldBorder;
 
 public class S44PacketWorldBorder implements Packet<INetHandlerPlayClient>
 {
-    private S44PacketWorldBorder.Action action;
+    private Action action;
     private int size;
     private double centerX;
     private double centerZ;
@@ -22,7 +22,7 @@ public class S44PacketWorldBorder implements Packet<INetHandlerPlayClient>
     {
     }
 
-    public S44PacketWorldBorder(WorldBorder border, S44PacketWorldBorder.Action actionIn)
+    public S44PacketWorldBorder(WorldBorder border, Action actionIn)
     {
         this.action = actionIn;
         this.centerX = border.getCenterX();
@@ -35,12 +35,9 @@ public class S44PacketWorldBorder implements Packet<INetHandlerPlayClient>
         this.warningTime = border.getWarningTime();
     }
 
-    /**
-     * Reads the raw packet data from the data stream.
-     */
     public void readPacketData(PacketBuffer buf) throws IOException
     {
-        this.action = (S44PacketWorldBorder.Action)buf.readEnumValue(S44PacketWorldBorder.Action.class);
+        this.action = (Action)buf.readEnumValue(Action.class);
 
         switch (this.action)
         {
@@ -79,9 +76,6 @@ public class S44PacketWorldBorder implements Packet<INetHandlerPlayClient>
         }
     }
 
-    /**
-     * Writes the raw packet data to the data stream.
-     */
     public void writePacketData(PacketBuffer buf) throws IOException
     {
         buf.writeEnumValue(this.action);
@@ -123,9 +117,6 @@ public class S44PacketWorldBorder implements Packet<INetHandlerPlayClient>
         }
     }
 
-    /**
-     * Passes this Packet on to the NetHandler for processing.
-     */
     public void processPacket(INetHandlerPlayClient handler)
     {
         handler.handleWorldBorder(this);

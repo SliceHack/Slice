@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 
 public abstract class BlockLog extends BlockRotatedPillar
 {
-    public static final PropertyEnum<BlockLog.EnumAxis> LOG_AXIS = PropertyEnum.<BlockLog.EnumAxis>create("axis", BlockLog.EnumAxis.class);
+    public static final PropertyEnum<EnumAxis> LOG_AXIS = PropertyEnum.<EnumAxis>create("axis", EnumAxis.class);
 
     public BlockLog()
     {
@@ -41,13 +41,9 @@ public abstract class BlockLog extends BlockRotatedPillar
         }
     }
 
-    /**
-     * Called by ItemBlocks just before a block is actually set in the world, to allow for adjustments to the
-     * IBlockstate
-     */
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
-        return super.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(LOG_AXIS, BlockLog.EnumAxis.fromFacingAxis(facing.getAxis()));
+        return super.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(LOG_AXIS, EnumAxis.fromFacingAxis(facing.getAxis()));
     }
 
     public static enum EnumAxis implements IStringSerializable
@@ -69,7 +65,7 @@ public abstract class BlockLog extends BlockRotatedPillar
             return this.name;
         }
 
-        public static BlockLog.EnumAxis fromFacingAxis(EnumFacing.Axis axis)
+        public static EnumAxis fromFacingAxis(EnumFacing.Axis axis)
         {
             switch (axis)
             {

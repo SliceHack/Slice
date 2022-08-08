@@ -10,14 +10,12 @@ import net.minecraft.client.settings.GameSettings;
 public class GuiSnooper extends GuiScreen
 {
     private final GuiScreen field_146608_a;
-
-    /** Reference to the GameSettings object. */
     private final GameSettings game_settings_2;
     private final java.util.List<String> field_146604_g = Lists.<String>newArrayList();
     private final java.util.List<String> field_146609_h = Lists.<String>newArrayList();
     private String field_146610_i;
     private String[] field_146607_r;
-    private GuiSnooper.List field_146606_s;
+    private List field_146606_s;
     private GuiButton field_146605_t;
 
     public GuiSnooper(GuiScreen p_i1061_1_, GameSettings p_i1061_2_)
@@ -26,10 +24,6 @@ public class GuiSnooper extends GuiScreen
         this.game_settings_2 = p_i1061_2_;
     }
 
-    /**
-     * Adds the buttons (and other controls) to the screen in question. Called when the GUI is displayed and when the
-     * window resizes, the buttonList is cleared beforehand.
-     */
     public void initGui()
     {
         this.field_146610_i = I18n.format("options.snooper.title", new Object[0]);
@@ -63,21 +57,15 @@ public class GuiSnooper extends GuiScreen
             }
         }
 
-        this.field_146606_s = new GuiSnooper.List();
+        this.field_146606_s = new List();
     }
 
-    /**
-     * Handles mouse input.
-     */
     public void handleMouseInput() throws IOException
     {
         super.handleMouseInput();
         this.field_146606_s.handleMouseInput();
     }
 
-    /**
-     * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
-     */
     protected void actionPerformed(GuiButton button) throws IOException
     {
         if (button.enabled)
@@ -97,9 +85,6 @@ public class GuiSnooper extends GuiScreen
         }
     }
 
-    /**
-     * Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
-     */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();

@@ -56,8 +56,8 @@ public class ResourcePackRepository
     private IResourcePack resourcePackInstance;
     private final ReentrantLock lock = new ReentrantLock();
     private ListenableFuture<Object> downloadingPacks;
-    private List<ResourcePackRepository.Entry> repositoryEntriesAll = Lists.<ResourcePackRepository.Entry>newArrayList();
-    public List<ResourcePackRepository.Entry> repositoryEntries = Lists.<ResourcePackRepository.Entry>newArrayList();
+    private List<Entry> repositoryEntriesAll = Lists.<Entry>newArrayList();
+    public List<Entry> repositoryEntries = Lists.<Entry>newArrayList();
 
     public ResourcePackRepository(File dirResourcepacksIn, File dirServerResourcepacksIn, IResourcePack rprDefaultResourcePackIn, IMetadataSerializer rprMetadataSerializerIn, GameSettings settings)
     {
@@ -73,7 +73,7 @@ public class ResourcePackRepository
         {
             String s = (String)iterator.next();
 
-            for (ResourcePackRepository.Entry resourcepackrepository$entry : this.repositoryEntriesAll)
+            for (Entry resourcepackrepository$entry : this.repositoryEntriesAll)
             {
                 if (resourcepackrepository$entry.getResourcePackName().equals(s))
                 {
@@ -112,11 +112,11 @@ public class ResourcePackRepository
 
     public void updateRepositoryEntriesAll()
     {
-        List<ResourcePackRepository.Entry> list = Lists.<ResourcePackRepository.Entry>newArrayList();
+        List<Entry> list = Lists.<Entry>newArrayList();
 
         for (File file1 : this.getResourcePackFiles())
         {
-            ResourcePackRepository.Entry resourcepackrepository$entry = new ResourcePackRepository.Entry(file1);
+            Entry resourcepackrepository$entry = new Entry(file1);
 
             if (!this.repositoryEntriesAll.contains(resourcepackrepository$entry))
             {
@@ -143,7 +143,7 @@ public class ResourcePackRepository
 
         this.repositoryEntriesAll.removeAll(list);
 
-        for (ResourcePackRepository.Entry resourcepackrepository$entry1 : this.repositoryEntriesAll)
+        for (Entry resourcepackrepository$entry1 : this.repositoryEntriesAll)
         {
             resourcepackrepository$entry1.closeResourcePack();
         }
@@ -151,17 +151,17 @@ public class ResourcePackRepository
         this.repositoryEntriesAll = list;
     }
 
-    public List<ResourcePackRepository.Entry> getRepositoryEntriesAll()
+    public List<Entry> getRepositoryEntriesAll()
     {
         return ImmutableList.copyOf(this.repositoryEntriesAll);
     }
 
-    public List<ResourcePackRepository.Entry> getRepositoryEntries()
+    public List<Entry> getRepositoryEntries()
     {
         return ImmutableList.copyOf(this.repositoryEntries);
     }
 
-    public void setRepositories(List<ResourcePackRepository.Entry> repositories)
+    public void setRepositories(List<Entry> repositories)
     {
         this.repositoryEntries.clear();
         this.repositoryEntries.addAll(repositories);
@@ -250,9 +250,6 @@ public class ResourcePackRepository
         }
     }
 
-    /**
-     * Keep only the 10 most recent resources packs, delete the others
-     */
     private void deleteOldServerResourcesPacks()
     {
         List<File> list = Lists.newArrayList(FileUtils.listFiles(this.dirServerResourcepacks, TrueFileFilter.TRUE, (IOFileFilter)null));
@@ -275,9 +272,6 @@ public class ResourcePackRepository
         return Minecraft.getMinecraft().scheduleResourcesRefresh();
     }
 
-    /**
-     * Getter for the IResourcePack instance associated with this ResourcePackRepository
-     */
     public IResourcePack getResourcePackInstance()
     {
         return this.resourcePackInstance;
@@ -383,7 +377,7 @@ public class ResourcePackRepository
 
         public boolean equals(Object p_equals_1_)
         {
-            return this == p_equals_1_ ? true : (p_equals_1_ instanceof ResourcePackRepository.Entry ? this.toString().equals(p_equals_1_.toString()) : false);
+            return this == p_equals_1_ ? true : (p_equals_1_ instanceof Entry ? this.toString().equals(p_equals_1_.toString()) : false);
         }
 
         public int hashCode()

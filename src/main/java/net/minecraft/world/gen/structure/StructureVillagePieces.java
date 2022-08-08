@@ -30,38 +30,38 @@ public class StructureVillagePieces
 {
     public static void registerVillagePieces()
     {
-        MapGenStructureIO.registerStructureComponent(StructureVillagePieces.House1.class, "ViBH");
-        MapGenStructureIO.registerStructureComponent(StructureVillagePieces.Field1.class, "ViDF");
-        MapGenStructureIO.registerStructureComponent(StructureVillagePieces.Field2.class, "ViF");
-        MapGenStructureIO.registerStructureComponent(StructureVillagePieces.Torch.class, "ViL");
-        MapGenStructureIO.registerStructureComponent(StructureVillagePieces.Hall.class, "ViPH");
-        MapGenStructureIO.registerStructureComponent(StructureVillagePieces.House4Garden.class, "ViSH");
-        MapGenStructureIO.registerStructureComponent(StructureVillagePieces.WoodHut.class, "ViSmH");
-        MapGenStructureIO.registerStructureComponent(StructureVillagePieces.Church.class, "ViST");
-        MapGenStructureIO.registerStructureComponent(StructureVillagePieces.House2.class, "ViS");
-        MapGenStructureIO.registerStructureComponent(StructureVillagePieces.Start.class, "ViStart");
-        MapGenStructureIO.registerStructureComponent(StructureVillagePieces.Path.class, "ViSR");
-        MapGenStructureIO.registerStructureComponent(StructureVillagePieces.House3.class, "ViTRH");
-        MapGenStructureIO.registerStructureComponent(StructureVillagePieces.Well.class, "ViW");
+        MapGenStructureIO.registerStructureComponent(House1.class, "ViBH");
+        MapGenStructureIO.registerStructureComponent(Field1.class, "ViDF");
+        MapGenStructureIO.registerStructureComponent(Field2.class, "ViF");
+        MapGenStructureIO.registerStructureComponent(Torch.class, "ViL");
+        MapGenStructureIO.registerStructureComponent(Hall.class, "ViPH");
+        MapGenStructureIO.registerStructureComponent(House4Garden.class, "ViSH");
+        MapGenStructureIO.registerStructureComponent(WoodHut.class, "ViSmH");
+        MapGenStructureIO.registerStructureComponent(Church.class, "ViST");
+        MapGenStructureIO.registerStructureComponent(House2.class, "ViS");
+        MapGenStructureIO.registerStructureComponent(Start.class, "ViStart");
+        MapGenStructureIO.registerStructureComponent(Path.class, "ViSR");
+        MapGenStructureIO.registerStructureComponent(House3.class, "ViTRH");
+        MapGenStructureIO.registerStructureComponent(Well.class, "ViW");
     }
 
-    public static List<StructureVillagePieces.PieceWeight> getStructureVillageWeightedPieceList(Random random, int size)
+    public static List<PieceWeight> getStructureVillageWeightedPieceList(Random random, int size)
     {
-        List<StructureVillagePieces.PieceWeight> list = Lists.<StructureVillagePieces.PieceWeight>newArrayList();
-        list.add(new StructureVillagePieces.PieceWeight(StructureVillagePieces.House4Garden.class, 4, MathHelper.getRandomIntegerInRange(random, 2 + size, 4 + size * 2)));
-        list.add(new StructureVillagePieces.PieceWeight(StructureVillagePieces.Church.class, 20, MathHelper.getRandomIntegerInRange(random, 0 + size, 1 + size)));
-        list.add(new StructureVillagePieces.PieceWeight(StructureVillagePieces.House1.class, 20, MathHelper.getRandomIntegerInRange(random, 0 + size, 2 + size)));
-        list.add(new StructureVillagePieces.PieceWeight(StructureVillagePieces.WoodHut.class, 3, MathHelper.getRandomIntegerInRange(random, 2 + size, 5 + size * 3)));
-        list.add(new StructureVillagePieces.PieceWeight(StructureVillagePieces.Hall.class, 15, MathHelper.getRandomIntegerInRange(random, 0 + size, 2 + size)));
-        list.add(new StructureVillagePieces.PieceWeight(StructureVillagePieces.Field1.class, 3, MathHelper.getRandomIntegerInRange(random, 1 + size, 4 + size)));
-        list.add(new StructureVillagePieces.PieceWeight(StructureVillagePieces.Field2.class, 3, MathHelper.getRandomIntegerInRange(random, 2 + size, 4 + size * 2)));
-        list.add(new StructureVillagePieces.PieceWeight(StructureVillagePieces.House2.class, 15, MathHelper.getRandomIntegerInRange(random, 0, 1 + size)));
-        list.add(new StructureVillagePieces.PieceWeight(StructureVillagePieces.House3.class, 8, MathHelper.getRandomIntegerInRange(random, 0 + size, 3 + size * 2)));
-        Iterator<StructureVillagePieces.PieceWeight> iterator = list.iterator();
+        List<PieceWeight> list = Lists.<PieceWeight>newArrayList();
+        list.add(new PieceWeight(House4Garden.class, 4, MathHelper.getRandomIntegerInRange(random, 2 + size, 4 + size * 2)));
+        list.add(new PieceWeight(Church.class, 20, MathHelper.getRandomIntegerInRange(random, 0 + size, 1 + size)));
+        list.add(new PieceWeight(House1.class, 20, MathHelper.getRandomIntegerInRange(random, 0 + size, 2 + size)));
+        list.add(new PieceWeight(WoodHut.class, 3, MathHelper.getRandomIntegerInRange(random, 2 + size, 5 + size * 3)));
+        list.add(new PieceWeight(Hall.class, 15, MathHelper.getRandomIntegerInRange(random, 0 + size, 2 + size)));
+        list.add(new PieceWeight(Field1.class, 3, MathHelper.getRandomIntegerInRange(random, 1 + size, 4 + size)));
+        list.add(new PieceWeight(Field2.class, 3, MathHelper.getRandomIntegerInRange(random, 2 + size, 4 + size * 2)));
+        list.add(new PieceWeight(House2.class, 15, MathHelper.getRandomIntegerInRange(random, 0, 1 + size)));
+        list.add(new PieceWeight(House3.class, 8, MathHelper.getRandomIntegerInRange(random, 0 + size, 3 + size * 2)));
+        Iterator<PieceWeight> iterator = list.iterator();
 
         while (iterator.hasNext())
         {
-            if (((StructureVillagePieces.PieceWeight)iterator.next()).villagePiecesLimit == 0)
+            if (((PieceWeight)iterator.next()).villagePiecesLimit == 0)
             {
                 iterator.remove();
             }
@@ -70,12 +70,12 @@ public class StructureVillagePieces
         return list;
     }
 
-    private static int func_75079_a(List<StructureVillagePieces.PieceWeight> p_75079_0_)
+    private static int func_75079_a(List<PieceWeight> p_75079_0_)
     {
         boolean flag = false;
         int i = 0;
 
-        for (StructureVillagePieces.PieceWeight structurevillagepieces$pieceweight : p_75079_0_)
+        for (PieceWeight structurevillagepieces$pieceweight : p_75079_0_)
         {
             if (structurevillagepieces$pieceweight.villagePiecesLimit > 0 && structurevillagepieces$pieceweight.villagePiecesSpawned < structurevillagepieces$pieceweight.villagePiecesLimit)
             {
@@ -88,52 +88,52 @@ public class StructureVillagePieces
         return flag ? i : -1;
     }
 
-    private static StructureVillagePieces.Village func_176065_a(StructureVillagePieces.Start start, StructureVillagePieces.PieceWeight weight, List<StructureComponent> p_176065_2_, Random rand, int p_176065_4_, int p_176065_5_, int p_176065_6_, EnumFacing facing, int p_176065_8_)
+    private static Village func_176065_a(Start start, PieceWeight weight, List<StructureComponent> p_176065_2_, Random rand, int p_176065_4_, int p_176065_5_, int p_176065_6_, EnumFacing facing, int p_176065_8_)
     {
-        Class <? extends StructureVillagePieces.Village > oclass = weight.villagePieceClass;
-        StructureVillagePieces.Village structurevillagepieces$village = null;
+        Class <? extends Village > oclass = weight.villagePieceClass;
+        Village structurevillagepieces$village = null;
 
-        if (oclass == StructureVillagePieces.House4Garden.class)
+        if (oclass == House4Garden.class)
         {
-            structurevillagepieces$village = StructureVillagePieces.House4Garden.func_175858_a(start, p_176065_2_, rand, p_176065_4_, p_176065_5_, p_176065_6_, facing, p_176065_8_);
+            structurevillagepieces$village = House4Garden.func_175858_a(start, p_176065_2_, rand, p_176065_4_, p_176065_5_, p_176065_6_, facing, p_176065_8_);
         }
-        else if (oclass == StructureVillagePieces.Church.class)
+        else if (oclass == Church.class)
         {
-            structurevillagepieces$village = StructureVillagePieces.Church.func_175854_a(start, p_176065_2_, rand, p_176065_4_, p_176065_5_, p_176065_6_, facing, p_176065_8_);
+            structurevillagepieces$village = Church.func_175854_a(start, p_176065_2_, rand, p_176065_4_, p_176065_5_, p_176065_6_, facing, p_176065_8_);
         }
-        else if (oclass == StructureVillagePieces.House1.class)
+        else if (oclass == House1.class)
         {
-            structurevillagepieces$village = StructureVillagePieces.House1.func_175850_a(start, p_176065_2_, rand, p_176065_4_, p_176065_5_, p_176065_6_, facing, p_176065_8_);
+            structurevillagepieces$village = House1.func_175850_a(start, p_176065_2_, rand, p_176065_4_, p_176065_5_, p_176065_6_, facing, p_176065_8_);
         }
-        else if (oclass == StructureVillagePieces.WoodHut.class)
+        else if (oclass == WoodHut.class)
         {
-            structurevillagepieces$village = StructureVillagePieces.WoodHut.func_175853_a(start, p_176065_2_, rand, p_176065_4_, p_176065_5_, p_176065_6_, facing, p_176065_8_);
+            structurevillagepieces$village = WoodHut.func_175853_a(start, p_176065_2_, rand, p_176065_4_, p_176065_5_, p_176065_6_, facing, p_176065_8_);
         }
-        else if (oclass == StructureVillagePieces.Hall.class)
+        else if (oclass == Hall.class)
         {
-            structurevillagepieces$village = StructureVillagePieces.Hall.func_175857_a(start, p_176065_2_, rand, p_176065_4_, p_176065_5_, p_176065_6_, facing, p_176065_8_);
+            structurevillagepieces$village = Hall.func_175857_a(start, p_176065_2_, rand, p_176065_4_, p_176065_5_, p_176065_6_, facing, p_176065_8_);
         }
-        else if (oclass == StructureVillagePieces.Field1.class)
+        else if (oclass == Field1.class)
         {
-            structurevillagepieces$village = StructureVillagePieces.Field1.func_175851_a(start, p_176065_2_, rand, p_176065_4_, p_176065_5_, p_176065_6_, facing, p_176065_8_);
+            structurevillagepieces$village = Field1.func_175851_a(start, p_176065_2_, rand, p_176065_4_, p_176065_5_, p_176065_6_, facing, p_176065_8_);
         }
-        else if (oclass == StructureVillagePieces.Field2.class)
+        else if (oclass == Field2.class)
         {
-            structurevillagepieces$village = StructureVillagePieces.Field2.func_175852_a(start, p_176065_2_, rand, p_176065_4_, p_176065_5_, p_176065_6_, facing, p_176065_8_);
+            structurevillagepieces$village = Field2.func_175852_a(start, p_176065_2_, rand, p_176065_4_, p_176065_5_, p_176065_6_, facing, p_176065_8_);
         }
-        else if (oclass == StructureVillagePieces.House2.class)
+        else if (oclass == House2.class)
         {
-            structurevillagepieces$village = StructureVillagePieces.House2.func_175855_a(start, p_176065_2_, rand, p_176065_4_, p_176065_5_, p_176065_6_, facing, p_176065_8_);
+            structurevillagepieces$village = House2.func_175855_a(start, p_176065_2_, rand, p_176065_4_, p_176065_5_, p_176065_6_, facing, p_176065_8_);
         }
-        else if (oclass == StructureVillagePieces.House3.class)
+        else if (oclass == House3.class)
         {
-            structurevillagepieces$village = StructureVillagePieces.House3.func_175849_a(start, p_176065_2_, rand, p_176065_4_, p_176065_5_, p_176065_6_, facing, p_176065_8_);
+            structurevillagepieces$village = House3.func_175849_a(start, p_176065_2_, rand, p_176065_4_, p_176065_5_, p_176065_6_, facing, p_176065_8_);
         }
 
         return structurevillagepieces$village;
     }
 
-    private static StructureVillagePieces.Village func_176067_c(StructureVillagePieces.Start start, List<StructureComponent> p_176067_1_, Random rand, int p_176067_3_, int p_176067_4_, int p_176067_5_, EnumFacing facing, int p_176067_7_)
+    private static Village func_176067_c(Start start, List<StructureComponent> p_176067_1_, Random rand, int p_176067_3_, int p_176067_4_, int p_176067_5_, EnumFacing facing, int p_176067_7_)
     {
         int i = func_75079_a(start.structureVillageWeightedPieceList);
 
@@ -150,7 +150,7 @@ public class StructureVillagePieces
                 ++j;
                 int k = rand.nextInt(i);
 
-                for (StructureVillagePieces.PieceWeight structurevillagepieces$pieceweight : start.structureVillageWeightedPieceList)
+                for (PieceWeight structurevillagepieces$pieceweight : start.structureVillageWeightedPieceList)
                 {
                     k -= structurevillagepieces$pieceweight.villagePieceWeight;
 
@@ -161,7 +161,7 @@ public class StructureVillagePieces
                             break;
                         }
 
-                        StructureVillagePieces.Village structurevillagepieces$village = func_176065_a(start, structurevillagepieces$pieceweight, p_176067_1_, rand, p_176067_3_, p_176067_4_, p_176067_5_, facing, p_176067_7_);
+                        Village structurevillagepieces$village = func_176065_a(start, structurevillagepieces$pieceweight, p_176067_1_, rand, p_176067_3_, p_176067_4_, p_176067_5_, facing, p_176067_7_);
 
                         if (structurevillagepieces$village != null)
                         {
@@ -179,11 +179,11 @@ public class StructureVillagePieces
                 }
             }
 
-            StructureBoundingBox structureboundingbox = StructureVillagePieces.Torch.func_175856_a(start, p_176067_1_, rand, p_176067_3_, p_176067_4_, p_176067_5_, facing);
+            StructureBoundingBox structureboundingbox = Torch.func_175856_a(start, p_176067_1_, rand, p_176067_3_, p_176067_4_, p_176067_5_, facing);
 
             if (structureboundingbox != null)
             {
-                return new StructureVillagePieces.Torch(start, p_176067_7_, rand, structureboundingbox, facing);
+                return new Torch(start, p_176067_7_, rand, structureboundingbox, facing);
             }
             else
             {
@@ -192,7 +192,7 @@ public class StructureVillagePieces
         }
     }
 
-    private static StructureComponent func_176066_d(StructureVillagePieces.Start start, List<StructureComponent> p_176066_1_, Random rand, int p_176066_3_, int p_176066_4_, int p_176066_5_, EnumFacing facing, int p_176066_7_)
+    private static StructureComponent func_176066_d(Start start, List<StructureComponent> p_176066_1_, Random rand, int p_176066_3_, int p_176066_4_, int p_176066_5_, EnumFacing facing, int p_176066_7_)
     {
         if (p_176066_7_ > 50)
         {
@@ -226,7 +226,7 @@ public class StructureVillagePieces
         }
     }
 
-    private static StructureComponent func_176069_e(StructureVillagePieces.Start start, List<StructureComponent> p_176069_1_, Random rand, int p_176069_3_, int p_176069_4_, int p_176069_5_, EnumFacing facing, int p_176069_7_)
+    private static StructureComponent func_176069_e(Start start, List<StructureComponent> p_176069_1_, Random rand, int p_176069_3_, int p_176069_4_, int p_176069_5_, EnumFacing facing, int p_176069_7_)
     {
         if (p_176069_7_ > 3 + start.terrainType)
         {
@@ -234,11 +234,11 @@ public class StructureVillagePieces
         }
         else if (Math.abs(p_176069_3_ - start.getBoundingBox().minX) <= 112 && Math.abs(p_176069_5_ - start.getBoundingBox().minZ) <= 112)
         {
-            StructureBoundingBox structureboundingbox = StructureVillagePieces.Path.func_175848_a(start, p_176069_1_, rand, p_176069_3_, p_176069_4_, p_176069_5_, facing);
+            StructureBoundingBox structureboundingbox = Path.func_175848_a(start, p_176069_1_, rand, p_176069_3_, p_176069_4_, p_176069_5_, facing);
 
             if (structureboundingbox != null && structureboundingbox.minY > 10)
             {
-                StructureComponent structurecomponent = new StructureVillagePieces.Path(start, p_176069_7_, rand, structureboundingbox, facing);
+                StructureComponent structurecomponent = new Path(start, p_176069_7_, rand, structureboundingbox, facing);
                 int i = (structurecomponent.boundingBox.minX + structurecomponent.boundingBox.maxX) / 2;
                 int j = (structurecomponent.boundingBox.minZ + structurecomponent.boundingBox.maxZ) / 2;
                 int k = structurecomponent.boundingBox.maxX - structurecomponent.boundingBox.minX;
@@ -261,23 +261,23 @@ public class StructureVillagePieces
         }
     }
 
-    public static class Church extends StructureVillagePieces.Village
+    public static class Church extends Village
     {
         public Church()
         {
         }
 
-        public Church(StructureVillagePieces.Start start, int p_i45564_2_, Random rand, StructureBoundingBox p_i45564_4_, EnumFacing facing)
+        public Church(Start start, int p_i45564_2_, Random rand, StructureBoundingBox p_i45564_4_, EnumFacing facing)
         {
             super(start, p_i45564_2_);
             this.coordBaseMode = facing;
             this.boundingBox = p_i45564_4_;
         }
 
-        public static StructureVillagePieces.Church func_175854_a(StructureVillagePieces.Start start, List<StructureComponent> p_175854_1_, Random rand, int p_175854_3_, int p_175854_4_, int p_175854_5_, EnumFacing facing, int p_175854_7_)
+        public static Church func_175854_a(Start start, List<StructureComponent> p_175854_1_, Random rand, int p_175854_3_, int p_175854_4_, int p_175854_5_, EnumFacing facing, int p_175854_7_)
         {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175854_3_, p_175854_4_, p_175854_5_, 0, 0, 0, 5, 12, 9, facing);
-            return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(p_175854_1_, structureboundingbox) == null ? new StructureVillagePieces.Church(start, p_175854_7_, rand, structureboundingbox, facing) : null;
+            return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(p_175854_1_, structureboundingbox) == null ? new Church(start, p_175854_7_, rand, structureboundingbox, facing) : null;
         }
 
         public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
@@ -375,7 +375,7 @@ public class StructureVillagePieces
         }
     }
 
-    public static class Field1 extends StructureVillagePieces.Village
+    public static class Field1 extends Village
     {
         private Block cropTypeA;
         private Block cropTypeB;
@@ -386,7 +386,7 @@ public class StructureVillagePieces
         {
         }
 
-        public Field1(StructureVillagePieces.Start start, int p_i45570_2_, Random rand, StructureBoundingBox p_i45570_4_, EnumFacing facing)
+        public Field1(Start start, int p_i45570_2_, Random rand, StructureBoundingBox p_i45570_4_, EnumFacing facing)
         {
             super(start, p_i45570_2_);
             this.coordBaseMode = facing;
@@ -430,10 +430,10 @@ public class StructureVillagePieces
             }
         }
 
-        public static StructureVillagePieces.Field1 func_175851_a(StructureVillagePieces.Start start, List<StructureComponent> p_175851_1_, Random rand, int p_175851_3_, int p_175851_4_, int p_175851_5_, EnumFacing facing, int p_175851_7_)
+        public static Field1 func_175851_a(Start start, List<StructureComponent> p_175851_1_, Random rand, int p_175851_3_, int p_175851_4_, int p_175851_5_, EnumFacing facing, int p_175851_7_)
         {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175851_3_, p_175851_4_, p_175851_5_, 0, 0, 0, 13, 4, 9, facing);
-            return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(p_175851_1_, structureboundingbox) == null ? new StructureVillagePieces.Field1(start, p_175851_7_, rand, structureboundingbox, facing) : null;
+            return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(p_175851_1_, structureboundingbox) == null ? new Field1(start, p_175851_7_, rand, structureboundingbox, facing) : null;
         }
 
         public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
@@ -488,7 +488,7 @@ public class StructureVillagePieces
         }
     }
 
-    public static class Field2 extends StructureVillagePieces.Village
+    public static class Field2 extends Village
     {
         private Block cropTypeA;
         private Block cropTypeB;
@@ -497,7 +497,7 @@ public class StructureVillagePieces
         {
         }
 
-        public Field2(StructureVillagePieces.Start start, int p_i45569_2_, Random rand, StructureBoundingBox p_i45569_4_, EnumFacing facing)
+        public Field2(Start start, int p_i45569_2_, Random rand, StructureBoundingBox p_i45569_4_, EnumFacing facing)
         {
             super(start, p_i45569_2_);
             this.coordBaseMode = facing;
@@ -535,10 +535,10 @@ public class StructureVillagePieces
             }
         }
 
-        public static StructureVillagePieces.Field2 func_175852_a(StructureVillagePieces.Start start, List<StructureComponent> p_175852_1_, Random rand, int p_175852_3_, int p_175852_4_, int p_175852_5_, EnumFacing facing, int p_175852_7_)
+        public static Field2 func_175852_a(Start start, List<StructureComponent> p_175852_1_, Random rand, int p_175852_3_, int p_175852_4_, int p_175852_5_, EnumFacing facing, int p_175852_7_)
         {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175852_3_, p_175852_4_, p_175852_5_, 0, 0, 0, 7, 4, 9, facing);
-            return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(p_175852_1_, structureboundingbox) == null ? new StructureVillagePieces.Field2(start, p_175852_7_, rand, structureboundingbox, facing) : null;
+            return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(p_175852_1_, structureboundingbox) == null ? new Field2(start, p_175852_7_, rand, structureboundingbox, facing) : null;
         }
 
         public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
@@ -585,23 +585,23 @@ public class StructureVillagePieces
         }
     }
 
-    public static class Hall extends StructureVillagePieces.Village
+    public static class Hall extends Village
     {
         public Hall()
         {
         }
 
-        public Hall(StructureVillagePieces.Start start, int p_i45567_2_, Random rand, StructureBoundingBox p_i45567_4_, EnumFacing facing)
+        public Hall(Start start, int p_i45567_2_, Random rand, StructureBoundingBox p_i45567_4_, EnumFacing facing)
         {
             super(start, p_i45567_2_);
             this.coordBaseMode = facing;
             this.boundingBox = p_i45567_4_;
         }
 
-        public static StructureVillagePieces.Hall func_175857_a(StructureVillagePieces.Start start, List<StructureComponent> p_175857_1_, Random rand, int p_175857_3_, int p_175857_4_, int p_175857_5_, EnumFacing facing, int p_175857_7_)
+        public static Hall func_175857_a(Start start, List<StructureComponent> p_175857_1_, Random rand, int p_175857_3_, int p_175857_4_, int p_175857_5_, EnumFacing facing, int p_175857_7_)
         {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175857_3_, p_175857_4_, p_175857_5_, 0, 0, 0, 9, 7, 11, facing);
-            return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(p_175857_1_, structureboundingbox) == null ? new StructureVillagePieces.Hall(start, p_175857_7_, rand, structureboundingbox, facing) : null;
+            return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(p_175857_1_, structureboundingbox) == null ? new Hall(start, p_175857_7_, rand, structureboundingbox, facing) : null;
         }
 
         public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
@@ -705,23 +705,23 @@ public class StructureVillagePieces
         }
     }
 
-    public static class House1 extends StructureVillagePieces.Village
+    public static class House1 extends Village
     {
         public House1()
         {
         }
 
-        public House1(StructureVillagePieces.Start start, int p_i45571_2_, Random rand, StructureBoundingBox p_i45571_4_, EnumFacing facing)
+        public House1(Start start, int p_i45571_2_, Random rand, StructureBoundingBox p_i45571_4_, EnumFacing facing)
         {
             super(start, p_i45571_2_);
             this.coordBaseMode = facing;
             this.boundingBox = p_i45571_4_;
         }
 
-        public static StructureVillagePieces.House1 func_175850_a(StructureVillagePieces.Start start, List<StructureComponent> p_175850_1_, Random rand, int p_175850_3_, int p_175850_4_, int p_175850_5_, EnumFacing facing, int p_175850_7_)
+        public static House1 func_175850_a(Start start, List<StructureComponent> p_175850_1_, Random rand, int p_175850_3_, int p_175850_4_, int p_175850_5_, EnumFacing facing, int p_175850_7_)
         {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175850_3_, p_175850_4_, p_175850_5_, 0, 0, 0, 9, 9, 6, facing);
-            return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(p_175850_1_, structureboundingbox) == null ? new StructureVillagePieces.House1(start, p_175850_7_, rand, structureboundingbox, facing) : null;
+            return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(p_175850_1_, structureboundingbox) == null ? new House1(start, p_175850_7_, rand, structureboundingbox, facing) : null;
         }
 
         public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
@@ -828,7 +828,7 @@ public class StructureVillagePieces
         }
     }
 
-    public static class House2 extends StructureVillagePieces.Village
+    public static class House2 extends Village
     {
         private static final List<WeightedRandomChestContent> villageBlacksmithChestContents = Lists.newArrayList(new WeightedRandomChestContent[] {new WeightedRandomChestContent(Items.diamond, 0, 1, 3, 3), new WeightedRandomChestContent(Items.iron_ingot, 0, 1, 5, 10), new WeightedRandomChestContent(Items.gold_ingot, 0, 1, 3, 5), new WeightedRandomChestContent(Items.bread, 0, 1, 3, 15), new WeightedRandomChestContent(Items.apple, 0, 1, 3, 15), new WeightedRandomChestContent(Items.iron_pickaxe, 0, 1, 1, 5), new WeightedRandomChestContent(Items.iron_sword, 0, 1, 1, 5), new WeightedRandomChestContent(Items.iron_chestplate, 0, 1, 1, 5), new WeightedRandomChestContent(Items.iron_helmet, 0, 1, 1, 5), new WeightedRandomChestContent(Items.iron_leggings, 0, 1, 1, 5), new WeightedRandomChestContent(Items.iron_boots, 0, 1, 1, 5), new WeightedRandomChestContent(Item.getItemFromBlock(Blocks.obsidian), 0, 3, 7, 5), new WeightedRandomChestContent(Item.getItemFromBlock(Blocks.sapling), 0, 3, 7, 5), new WeightedRandomChestContent(Items.saddle, 0, 1, 1, 3), new WeightedRandomChestContent(Items.iron_horse_armor, 0, 1, 1, 1), new WeightedRandomChestContent(Items.golden_horse_armor, 0, 1, 1, 1), new WeightedRandomChestContent(Items.diamond_horse_armor, 0, 1, 1, 1)});
         private boolean hasMadeChest;
@@ -837,17 +837,17 @@ public class StructureVillagePieces
         {
         }
 
-        public House2(StructureVillagePieces.Start start, int p_i45563_2_, Random rand, StructureBoundingBox p_i45563_4_, EnumFacing facing)
+        public House2(Start start, int p_i45563_2_, Random rand, StructureBoundingBox p_i45563_4_, EnumFacing facing)
         {
             super(start, p_i45563_2_);
             this.coordBaseMode = facing;
             this.boundingBox = p_i45563_4_;
         }
 
-        public static StructureVillagePieces.House2 func_175855_a(StructureVillagePieces.Start start, List<StructureComponent> p_175855_1_, Random rand, int p_175855_3_, int p_175855_4_, int p_175855_5_, EnumFacing facing, int p_175855_7_)
+        public static House2 func_175855_a(Start start, List<StructureComponent> p_175855_1_, Random rand, int p_175855_3_, int p_175855_4_, int p_175855_5_, EnumFacing facing, int p_175855_7_)
         {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175855_3_, p_175855_4_, p_175855_5_, 0, 0, 0, 10, 6, 7, facing);
-            return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(p_175855_1_, structureboundingbox) == null ? new StructureVillagePieces.House2(start, p_175855_7_, rand, structureboundingbox, facing) : null;
+            return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(p_175855_1_, structureboundingbox) == null ? new House2(start, p_175855_7_, rand, structureboundingbox, facing) : null;
         }
 
         protected void writeStructureToNBT(NBTTagCompound tagCompound)
@@ -945,23 +945,23 @@ public class StructureVillagePieces
         }
     }
 
-    public static class House3 extends StructureVillagePieces.Village
+    public static class House3 extends Village
     {
         public House3()
         {
         }
 
-        public House3(StructureVillagePieces.Start start, int p_i45561_2_, Random rand, StructureBoundingBox p_i45561_4_, EnumFacing facing)
+        public House3(Start start, int p_i45561_2_, Random rand, StructureBoundingBox p_i45561_4_, EnumFacing facing)
         {
             super(start, p_i45561_2_);
             this.coordBaseMode = facing;
             this.boundingBox = p_i45561_4_;
         }
 
-        public static StructureVillagePieces.House3 func_175849_a(StructureVillagePieces.Start start, List<StructureComponent> p_175849_1_, Random rand, int p_175849_3_, int p_175849_4_, int p_175849_5_, EnumFacing facing, int p_175849_7_)
+        public static House3 func_175849_a(Start start, List<StructureComponent> p_175849_1_, Random rand, int p_175849_3_, int p_175849_4_, int p_175849_5_, EnumFacing facing, int p_175849_7_)
         {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175849_3_, p_175849_4_, p_175849_5_, 0, 0, 0, 9, 7, 12, facing);
-            return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(p_175849_1_, structureboundingbox) == null ? new StructureVillagePieces.House3(start, p_175849_7_, rand, structureboundingbox, facing) : null;
+            return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(p_175849_1_, structureboundingbox) == null ? new House3(start, p_175849_7_, rand, structureboundingbox, facing) : null;
         }
 
         public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
@@ -1102,7 +1102,7 @@ public class StructureVillagePieces
         }
     }
 
-    public static class House4Garden extends StructureVillagePieces.Village
+    public static class House4Garden extends Village
     {
         private boolean isRoofAccessible;
 
@@ -1110,7 +1110,7 @@ public class StructureVillagePieces
         {
         }
 
-        public House4Garden(StructureVillagePieces.Start start, int p_i45566_2_, Random rand, StructureBoundingBox p_i45566_4_, EnumFacing facing)
+        public House4Garden(Start start, int p_i45566_2_, Random rand, StructureBoundingBox p_i45566_4_, EnumFacing facing)
         {
             super(start, p_i45566_2_);
             this.coordBaseMode = facing;
@@ -1130,10 +1130,10 @@ public class StructureVillagePieces
             this.isRoofAccessible = tagCompound.getBoolean("Terrace");
         }
 
-        public static StructureVillagePieces.House4Garden func_175858_a(StructureVillagePieces.Start start, List<StructureComponent> p_175858_1_, Random rand, int p_175858_3_, int p_175858_4_, int p_175858_5_, EnumFacing facing, int p_175858_7_)
+        public static House4Garden func_175858_a(Start start, List<StructureComponent> p_175858_1_, Random rand, int p_175858_3_, int p_175858_4_, int p_175858_5_, EnumFacing facing, int p_175858_7_)
         {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175858_3_, p_175858_4_, p_175858_5_, 0, 0, 0, 5, 6, 5, facing);
-            return StructureComponent.findIntersecting(p_175858_1_, structureboundingbox) != null ? null : new StructureVillagePieces.House4Garden(start, p_175858_7_, rand, structureboundingbox, facing);
+            return StructureComponent.findIntersecting(p_175858_1_, structureboundingbox) != null ? null : new House4Garden(start, p_175858_7_, rand, structureboundingbox, facing);
         }
 
         public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
@@ -1231,7 +1231,7 @@ public class StructureVillagePieces
         }
     }
 
-    public static class Path extends StructureVillagePieces.Road
+    public static class Path extends Road
     {
         private int length;
 
@@ -1239,7 +1239,7 @@ public class StructureVillagePieces
         {
         }
 
-        public Path(StructureVillagePieces.Start start, int p_i45562_2_, Random rand, StructureBoundingBox p_i45562_4_, EnumFacing facing)
+        public Path(Start start, int p_i45562_2_, Random rand, StructureBoundingBox p_i45562_4_, EnumFacing facing)
         {
             super(start, p_i45562_2_);
             this.coordBaseMode = facing;
@@ -1265,7 +1265,7 @@ public class StructureVillagePieces
 
             for (int i = rand.nextInt(5); i < this.length - 8; i += 2 + rand.nextInt(5))
             {
-                StructureComponent structurecomponent = this.getNextComponentNN((StructureVillagePieces.Start)componentIn, listIn, rand, 0, i);
+                StructureComponent structurecomponent = this.getNextComponentNN((Start)componentIn, listIn, rand, 0, i);
 
                 if (structurecomponent != null)
                 {
@@ -1276,7 +1276,7 @@ public class StructureVillagePieces
 
             for (int j = rand.nextInt(5); j < this.length - 8; j += 2 + rand.nextInt(5))
             {
-                StructureComponent structurecomponent1 = this.getNextComponentPP((StructureVillagePieces.Start)componentIn, listIn, rand, 0, j);
+                StructureComponent structurecomponent1 = this.getNextComponentPP((Start)componentIn, listIn, rand, 0, j);
 
                 if (structurecomponent1 != null)
                 {
@@ -1290,19 +1290,19 @@ public class StructureVillagePieces
                 switch (this.coordBaseMode)
                 {
                     case NORTH:
-                        StructureVillagePieces.func_176069_e((StructureVillagePieces.Start)componentIn, listIn, rand, this.boundingBox.minX - 1, this.boundingBox.minY, this.boundingBox.minZ, EnumFacing.WEST, this.getComponentType());
+                        StructureVillagePieces.func_176069_e((Start)componentIn, listIn, rand, this.boundingBox.minX - 1, this.boundingBox.minY, this.boundingBox.minZ, EnumFacing.WEST, this.getComponentType());
                         break;
 
                     case SOUTH:
-                        StructureVillagePieces.func_176069_e((StructureVillagePieces.Start)componentIn, listIn, rand, this.boundingBox.minX - 1, this.boundingBox.minY, this.boundingBox.maxZ - 2, EnumFacing.WEST, this.getComponentType());
+                        StructureVillagePieces.func_176069_e((Start)componentIn, listIn, rand, this.boundingBox.minX - 1, this.boundingBox.minY, this.boundingBox.maxZ - 2, EnumFacing.WEST, this.getComponentType());
                         break;
 
                     case WEST:
-                        StructureVillagePieces.func_176069_e((StructureVillagePieces.Start)componentIn, listIn, rand, this.boundingBox.minX, this.boundingBox.minY, this.boundingBox.minZ - 1, EnumFacing.NORTH, this.getComponentType());
+                        StructureVillagePieces.func_176069_e((Start)componentIn, listIn, rand, this.boundingBox.minX, this.boundingBox.minY, this.boundingBox.minZ - 1, EnumFacing.NORTH, this.getComponentType());
                         break;
 
                     case EAST:
-                        StructureVillagePieces.func_176069_e((StructureVillagePieces.Start)componentIn, listIn, rand, this.boundingBox.maxX - 2, this.boundingBox.minY, this.boundingBox.minZ - 1, EnumFacing.NORTH, this.getComponentType());
+                        StructureVillagePieces.func_176069_e((Start)componentIn, listIn, rand, this.boundingBox.maxX - 2, this.boundingBox.minY, this.boundingBox.minZ - 1, EnumFacing.NORTH, this.getComponentType());
                 }
             }
 
@@ -1311,24 +1311,24 @@ public class StructureVillagePieces
                 switch (this.coordBaseMode)
                 {
                     case NORTH:
-                        StructureVillagePieces.func_176069_e((StructureVillagePieces.Start)componentIn, listIn, rand, this.boundingBox.maxX + 1, this.boundingBox.minY, this.boundingBox.minZ, EnumFacing.EAST, this.getComponentType());
+                        StructureVillagePieces.func_176069_e((Start)componentIn, listIn, rand, this.boundingBox.maxX + 1, this.boundingBox.minY, this.boundingBox.minZ, EnumFacing.EAST, this.getComponentType());
                         break;
 
                     case SOUTH:
-                        StructureVillagePieces.func_176069_e((StructureVillagePieces.Start)componentIn, listIn, rand, this.boundingBox.maxX + 1, this.boundingBox.minY, this.boundingBox.maxZ - 2, EnumFacing.EAST, this.getComponentType());
+                        StructureVillagePieces.func_176069_e((Start)componentIn, listIn, rand, this.boundingBox.maxX + 1, this.boundingBox.minY, this.boundingBox.maxZ - 2, EnumFacing.EAST, this.getComponentType());
                         break;
 
                     case WEST:
-                        StructureVillagePieces.func_176069_e((StructureVillagePieces.Start)componentIn, listIn, rand, this.boundingBox.minX, this.boundingBox.minY, this.boundingBox.maxZ + 1, EnumFacing.SOUTH, this.getComponentType());
+                        StructureVillagePieces.func_176069_e((Start)componentIn, listIn, rand, this.boundingBox.minX, this.boundingBox.minY, this.boundingBox.maxZ + 1, EnumFacing.SOUTH, this.getComponentType());
                         break;
 
                     case EAST:
-                        StructureVillagePieces.func_176069_e((StructureVillagePieces.Start)componentIn, listIn, rand, this.boundingBox.maxX - 2, this.boundingBox.minY, this.boundingBox.maxZ + 1, EnumFacing.SOUTH, this.getComponentType());
+                        StructureVillagePieces.func_176069_e((Start)componentIn, listIn, rand, this.boundingBox.maxX - 2, this.boundingBox.minY, this.boundingBox.maxZ + 1, EnumFacing.SOUTH, this.getComponentType());
                 }
             }
         }
 
-        public static StructureBoundingBox func_175848_a(StructureVillagePieces.Start start, List<StructureComponent> p_175848_1_, Random rand, int p_175848_3_, int p_175848_4_, int p_175848_5_, EnumFacing facing)
+        public static StructureBoundingBox func_175848_a(Start start, List<StructureComponent> p_175848_1_, Random rand, int p_175848_3_, int p_175848_4_, int p_175848_5_, EnumFacing facing)
         {
             for (int i = 7 * MathHelper.getRandomIntegerInRange(rand, 3, 5); i >= 7; i -= 7)
             {
@@ -1369,12 +1369,12 @@ public class StructureVillagePieces
 
     public static class PieceWeight
     {
-        public Class <? extends StructureVillagePieces.Village > villagePieceClass;
+        public Class <? extends Village > villagePieceClass;
         public final int villagePieceWeight;
         public int villagePiecesSpawned;
         public int villagePiecesLimit;
 
-        public PieceWeight(Class <? extends StructureVillagePieces.Village > p_i2098_1_, int p_i2098_2_, int p_i2098_3_)
+        public PieceWeight(Class <? extends Village > p_i2098_1_, int p_i2098_2_, int p_i2098_3_)
         {
             this.villagePieceClass = p_i2098_1_;
             this.villagePieceWeight = p_i2098_2_;
@@ -1392,25 +1392,25 @@ public class StructureVillagePieces
         }
     }
 
-    public abstract static class Road extends StructureVillagePieces.Village
+    public abstract static class Road extends Village
     {
         public Road()
         {
         }
 
-        protected Road(StructureVillagePieces.Start start, int type)
+        protected Road(Start start, int type)
         {
             super(start, type);
         }
     }
 
-    public static class Start extends StructureVillagePieces.Well
+    public static class Start extends Well
     {
         public WorldChunkManager worldChunkMngr;
         public boolean inDesert;
         public int terrainType;
-        public StructureVillagePieces.PieceWeight structVillagePieceWeight;
-        public List<StructureVillagePieces.PieceWeight> structureVillageWeightedPieceList;
+        public PieceWeight structVillagePieceWeight;
+        public List<PieceWeight> structureVillageWeightedPieceList;
         public List<StructureComponent> field_74932_i = Lists.<StructureComponent>newArrayList();
         public List<StructureComponent> field_74930_j = Lists.<StructureComponent>newArrayList();
 
@@ -1418,9 +1418,9 @@ public class StructureVillagePieces
         {
         }
 
-        public Start(WorldChunkManager chunkManagerIn, int p_i2104_2_, Random rand, int p_i2104_4_, int p_i2104_5_, List<StructureVillagePieces.PieceWeight> p_i2104_6_, int p_i2104_7_)
+        public Start(WorldChunkManager chunkManagerIn, int p_i2104_2_, Random rand, int p_i2104_4_, int p_i2104_5_, List<PieceWeight> p_i2104_6_, int p_i2104_7_)
         {
-            super((StructureVillagePieces.Start)null, 0, rand, p_i2104_4_, p_i2104_5_);
+            super((Start)null, 0, rand, p_i2104_4_, p_i2104_5_);
             this.worldChunkMngr = chunkManagerIn;
             this.structureVillageWeightedPieceList = p_i2104_6_;
             this.terrainType = p_i2104_7_;
@@ -1435,20 +1435,20 @@ public class StructureVillagePieces
         }
     }
 
-    public static class Torch extends StructureVillagePieces.Village
+    public static class Torch extends Village
     {
         public Torch()
         {
         }
 
-        public Torch(StructureVillagePieces.Start start, int p_i45568_2_, Random rand, StructureBoundingBox p_i45568_4_, EnumFacing facing)
+        public Torch(Start start, int p_i45568_2_, Random rand, StructureBoundingBox p_i45568_4_, EnumFacing facing)
         {
             super(start, p_i45568_2_);
             this.coordBaseMode = facing;
             this.boundingBox = p_i45568_4_;
         }
 
-        public static StructureBoundingBox func_175856_a(StructureVillagePieces.Start start, List<StructureComponent> p_175856_1_, Random rand, int p_175856_3_, int p_175856_4_, int p_175856_5_, EnumFacing facing)
+        public static StructureBoundingBox func_175856_a(Start start, List<StructureComponent> p_175856_1_, Random rand, int p_175856_3_, int p_175856_4_, int p_175856_5_, EnumFacing facing)
         {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175856_3_, p_175856_4_, p_175856_5_, 0, 0, 0, 3, 4, 2, facing);
             return StructureComponent.findIntersecting(p_175856_1_, structureboundingbox) != null ? null : structureboundingbox;
@@ -1492,7 +1492,7 @@ public class StructureVillagePieces
         {
         }
 
-        protected Village(StructureVillagePieces.Start start, int type)
+        protected Village(Start start, int type)
         {
             super(type);
 
@@ -1516,7 +1516,7 @@ public class StructureVillagePieces
             this.isDesertVillage = tagCompound.getBoolean("Desert");
         }
 
-        protected StructureComponent getNextComponentNN(StructureVillagePieces.Start start, List<StructureComponent> p_74891_2_, Random rand, int p_74891_4_, int p_74891_5_)
+        protected StructureComponent getNextComponentNN(Start start, List<StructureComponent> p_74891_2_, Random rand, int p_74891_4_, int p_74891_5_)
         {
             if (this.coordBaseMode != null)
             {
@@ -1539,7 +1539,7 @@ public class StructureVillagePieces
             return null;
         }
 
-        protected StructureComponent getNextComponentPP(StructureVillagePieces.Start start, List<StructureComponent> p_74894_2_, Random rand, int p_74894_4_, int p_74894_5_)
+        protected StructureComponent getNextComponentPP(Start start, List<StructureComponent> p_74894_2_, Random rand, int p_74894_4_, int p_74894_5_)
         {
             if (this.coordBaseMode != null)
             {
@@ -1690,13 +1690,13 @@ public class StructureVillagePieces
         }
     }
 
-    public static class Well extends StructureVillagePieces.Village
+    public static class Well extends Village
     {
         public Well()
         {
         }
 
-        public Well(StructureVillagePieces.Start start, int p_i2109_2_, Random rand, int p_i2109_4_, int p_i2109_5_)
+        public Well(Start start, int p_i2109_2_, Random rand, int p_i2109_4_, int p_i2109_5_)
         {
             super(start, p_i2109_2_);
             this.coordBaseMode = EnumFacing.Plane.HORIZONTAL.random(rand);
@@ -1715,10 +1715,10 @@ public class StructureVillagePieces
 
         public void buildComponent(StructureComponent componentIn, List<StructureComponent> listIn, Random rand)
         {
-            StructureVillagePieces.func_176069_e((StructureVillagePieces.Start)componentIn, listIn, rand, this.boundingBox.minX - 1, this.boundingBox.maxY - 4, this.boundingBox.minZ + 1, EnumFacing.WEST, this.getComponentType());
-            StructureVillagePieces.func_176069_e((StructureVillagePieces.Start)componentIn, listIn, rand, this.boundingBox.maxX + 1, this.boundingBox.maxY - 4, this.boundingBox.minZ + 1, EnumFacing.EAST, this.getComponentType());
-            StructureVillagePieces.func_176069_e((StructureVillagePieces.Start)componentIn, listIn, rand, this.boundingBox.minX + 1, this.boundingBox.maxY - 4, this.boundingBox.minZ - 1, EnumFacing.NORTH, this.getComponentType());
-            StructureVillagePieces.func_176069_e((StructureVillagePieces.Start)componentIn, listIn, rand, this.boundingBox.minX + 1, this.boundingBox.maxY - 4, this.boundingBox.maxZ + 1, EnumFacing.SOUTH, this.getComponentType());
+            StructureVillagePieces.func_176069_e((Start)componentIn, listIn, rand, this.boundingBox.minX - 1, this.boundingBox.maxY - 4, this.boundingBox.minZ + 1, EnumFacing.WEST, this.getComponentType());
+            StructureVillagePieces.func_176069_e((Start)componentIn, listIn, rand, this.boundingBox.maxX + 1, this.boundingBox.maxY - 4, this.boundingBox.minZ + 1, EnumFacing.EAST, this.getComponentType());
+            StructureVillagePieces.func_176069_e((Start)componentIn, listIn, rand, this.boundingBox.minX + 1, this.boundingBox.maxY - 4, this.boundingBox.minZ - 1, EnumFacing.NORTH, this.getComponentType());
+            StructureVillagePieces.func_176069_e((Start)componentIn, listIn, rand, this.boundingBox.minX + 1, this.boundingBox.maxY - 4, this.boundingBox.maxZ + 1, EnumFacing.SOUTH, this.getComponentType());
         }
 
         public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)
@@ -1766,7 +1766,7 @@ public class StructureVillagePieces
         }
     }
 
-    public static class WoodHut extends StructureVillagePieces.Village
+    public static class WoodHut extends Village
     {
         private boolean isTallHouse;
         private int tablePosition;
@@ -1775,7 +1775,7 @@ public class StructureVillagePieces
         {
         }
 
-        public WoodHut(StructureVillagePieces.Start start, int p_i45565_2_, Random rand, StructureBoundingBox p_i45565_4_, EnumFacing facing)
+        public WoodHut(Start start, int p_i45565_2_, Random rand, StructureBoundingBox p_i45565_4_, EnumFacing facing)
         {
             super(start, p_i45565_2_);
             this.coordBaseMode = facing;
@@ -1798,10 +1798,10 @@ public class StructureVillagePieces
             this.isTallHouse = tagCompound.getBoolean("C");
         }
 
-        public static StructureVillagePieces.WoodHut func_175853_a(StructureVillagePieces.Start start, List<StructureComponent> p_175853_1_, Random rand, int p_175853_3_, int p_175853_4_, int p_175853_5_, EnumFacing facing, int p_175853_7_)
+        public static WoodHut func_175853_a(Start start, List<StructureComponent> p_175853_1_, Random rand, int p_175853_3_, int p_175853_4_, int p_175853_5_, EnumFacing facing, int p_175853_7_)
         {
             StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(p_175853_3_, p_175853_4_, p_175853_5_, 0, 0, 0, 4, 6, 5, facing);
-            return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(p_175853_1_, structureboundingbox) == null ? new StructureVillagePieces.WoodHut(start, p_175853_7_, rand, structureboundingbox, facing) : null;
+            return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(p_175853_1_, structureboundingbox) == null ? new WoodHut(start, p_175853_7_, rand, structureboundingbox, facing) : null;
         }
 
         public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn)

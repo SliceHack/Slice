@@ -13,8 +13,6 @@ import net.minecraft.world.biome.BiomeGenBase;
 public class MapGenVillage extends MapGenStructure
 {
     public static final List<BiomeGenBase> villageSpawnBiomes = Arrays.<BiomeGenBase>asList(new BiomeGenBase[] {BiomeGenBase.plains, BiomeGenBase.desert, BiomeGenBase.savanna});
-
-    /** World terrain type, 0 for normal, 1 for flat map */
     private int terrainType;
     private int field_82665_g;
     private int field_82666_h;
@@ -85,7 +83,7 @@ public class MapGenVillage extends MapGenStructure
 
     protected StructureStart getStructureStart(int chunkX, int chunkZ)
     {
-        return new MapGenVillage.Start(this.worldObj, this.rand, chunkX, chunkZ, this.terrainType);
+        return new Start(this.worldObj, this.rand, chunkX, chunkZ, this.terrainType);
     }
 
     public static class Start extends StructureStart

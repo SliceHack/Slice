@@ -5,27 +5,20 @@ import java.util.Map;
 
 public class ClickEvent
 {
-    private final ClickEvent.Action action;
+    private final Action action;
     private final String value;
 
-    public ClickEvent(ClickEvent.Action theAction, String theValue)
+    public ClickEvent(Action theAction, String theValue)
     {
         this.action = theAction;
         this.value = theValue;
     }
 
-    /**
-     * Gets the action to perform when this event is raised.
-     */
-    public ClickEvent.Action getAction()
+    public Action getAction()
     {
         return this.action;
     }
 
-    /**
-     * Gets the value to perform the action on when this event is raised.  For example, if the action is "open URL",
-     * this would be the URL to open.
-     */
     public String getValue()
     {
         return this.value;
@@ -89,7 +82,7 @@ public class ClickEvent
         SUGGEST_COMMAND("suggest_command", true),
         CHANGE_PAGE("change_page", true);
 
-        private static final Map<String, ClickEvent.Action> nameMapping = Maps.<String, ClickEvent.Action>newHashMap();
+        private static final Map<String, Action> nameMapping = Maps.<String, Action>newHashMap();
         private final boolean allowedInChat;
         private final String canonicalName;
 
@@ -109,13 +102,13 @@ public class ClickEvent
             return this.canonicalName;
         }
 
-        public static ClickEvent.Action getValueByCanonicalName(String canonicalNameIn)
+        public static Action getValueByCanonicalName(String canonicalNameIn)
         {
-            return (ClickEvent.Action)nameMapping.get(canonicalNameIn);
+            return (Action)nameMapping.get(canonicalNameIn);
         }
 
         static {
-            for (ClickEvent.Action clickevent$action : values())
+            for (Action clickevent$action : values())
             {
                 nameMapping.put(clickevent$action.getCanonicalName(), clickevent$action);
             }

@@ -29,9 +29,7 @@ import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
 import slice.module.Module;
 import slice.script.manager.ScriptManager;
-import slice.util.LoggerUtil;
 import slice.util.ResourceUtil;
-import slice.util.Timer;
 
 import java.io.File;
 import java.text.SimpleDateFormat;

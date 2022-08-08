@@ -26,10 +26,10 @@ public class StructureMineshaftPieces
 
     public static void registerStructurePieces()
     {
-        MapGenStructureIO.registerStructureComponent(StructureMineshaftPieces.Corridor.class, "MSCorridor");
-        MapGenStructureIO.registerStructureComponent(StructureMineshaftPieces.Cross.class, "MSCrossing");
-        MapGenStructureIO.registerStructureComponent(StructureMineshaftPieces.Room.class, "MSRoom");
-        MapGenStructureIO.registerStructureComponent(StructureMineshaftPieces.Stairs.class, "MSStairs");
+        MapGenStructureIO.registerStructureComponent(Corridor.class, "MSCorridor");
+        MapGenStructureIO.registerStructureComponent(Cross.class, "MSCrossing");
+        MapGenStructureIO.registerStructureComponent(Room.class, "MSRoom");
+        MapGenStructureIO.registerStructureComponent(Stairs.class, "MSStairs");
     }
 
     private static StructureComponent func_175892_a(List<StructureComponent> listIn, Random rand, int x, int y, int z, EnumFacing facing, int type)
@@ -38,29 +38,29 @@ public class StructureMineshaftPieces
 
         if (i >= 80)
         {
-            StructureBoundingBox structureboundingbox = StructureMineshaftPieces.Cross.func_175813_a(listIn, rand, x, y, z, facing);
+            StructureBoundingBox structureboundingbox = Cross.func_175813_a(listIn, rand, x, y, z, facing);
 
             if (structureboundingbox != null)
             {
-                return new StructureMineshaftPieces.Cross(type, rand, structureboundingbox, facing);
+                return new Cross(type, rand, structureboundingbox, facing);
             }
         }
         else if (i >= 70)
         {
-            StructureBoundingBox structureboundingbox1 = StructureMineshaftPieces.Stairs.func_175812_a(listIn, rand, x, y, z, facing);
+            StructureBoundingBox structureboundingbox1 = Stairs.func_175812_a(listIn, rand, x, y, z, facing);
 
             if (structureboundingbox1 != null)
             {
-                return new StructureMineshaftPieces.Stairs(type, rand, structureboundingbox1, facing);
+                return new Stairs(type, rand, structureboundingbox1, facing);
             }
         }
         else
         {
-            StructureBoundingBox structureboundingbox2 = StructureMineshaftPieces.Corridor.func_175814_a(listIn, rand, x, y, z, facing);
+            StructureBoundingBox structureboundingbox2 = Corridor.func_175814_a(listIn, rand, x, y, z, facing);
 
             if (structureboundingbox2 != null)
             {
-                return new StructureMineshaftPieces.Corridor(type, rand, structureboundingbox2, facing);
+                return new Corridor(type, rand, structureboundingbox2, facing);
             }
         }
 
@@ -606,7 +606,9 @@ public class StructureMineshaftPieces
                 j = 1;
             }
 
-            for (int k = 0; k < this.boundingBox.getXSize(); k = k + 4)
+            int k = 0;
+
+            for (int lvt_5_1_ = 0; k < this.boundingBox.getXSize(); k = k + 4)
             {
                 k = k + rand.nextInt(this.boundingBox.getXSize());
 
@@ -624,7 +626,7 @@ public class StructureMineshaftPieces
                 }
             }
 
-            for (int k = 0; k < this.boundingBox.getXSize(); k = k + 4)
+            for (k = 0; k < this.boundingBox.getXSize(); k = k + 4)
             {
                 k = k + rand.nextInt(this.boundingBox.getXSize());
 
@@ -642,7 +644,7 @@ public class StructureMineshaftPieces
                 }
             }
 
-            for (int k = 0; k < this.boundingBox.getZSize(); k = k + 4)
+            for (k = 0; k < this.boundingBox.getZSize(); k = k + 4)
             {
                 k = k + rand.nextInt(this.boundingBox.getZSize());
 
@@ -660,7 +662,7 @@ public class StructureMineshaftPieces
                 }
             }
 
-            for (int k = 0; k < this.boundingBox.getZSize(); k = k + 4)
+            for (k = 0; k < this.boundingBox.getZSize(); k = k + 4)
             {
                 k = k + rand.nextInt(this.boundingBox.getZSize());
 

@@ -16,7 +16,7 @@ public class BiomeGenPlains extends BiomeGenBase
         super(id);
         this.setTemperatureRainfall(0.8F, 0.4F);
         this.setHeight(height_LowPlains);
-        this.spawnableCreatureList.add(new BiomeGenBase.SpawnListEntry(EntityHorse.class, 5, 2, 6));
+        this.spawnableCreatureList.add(new SpawnListEntry(EntityHorse.class, 5, 2, 6));
         this.theBiomeDecorator.treesPerChunk = -999;
         this.theBiomeDecorator.flowersPerChunk = 4;
         this.theBiomeDecorator.grassPerChunk = 10;
