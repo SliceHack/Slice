@@ -22,6 +22,9 @@ public class Insults extends Module {
 
     @EventInfo
     public void onUpdate(EventUpdate e) {
+
+        if(mc.thePlayer.getHealth() <= 0 || mc.thePlayer.isDead) { target = null; return; }
+
         if(target == null)
             return;
 
