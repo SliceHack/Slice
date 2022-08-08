@@ -137,8 +137,15 @@ public enum Slice {
             ResourceUtil.extractResource("/slice/html/hud/targethud/styles.css", targetHUDcss.toPath());
         }
 
-        this.html.add(new ViewNoGui(new Page("file:///" + html.getAbsolutePath() + "?name=" + NAME + "&version=" + VERSION + "&discord=" + discordName)));
-        // send arraylist to html
+        File sessionHudHTML = new File(sliceHUD, "SessionHUD\\index.html");
+        File sessionHUDcss = new File(sliceHUD, "SessionHUD\\styles.css");
+
+        if(!sessionHudHTML.exists() || !sessionHUDcss.exists()) {
+            ResourceUtil.extractResource("/slice/html/hud/sessionhud/index.html", sessionHudHTML.toPath());
+            ResourceUtil.extractResource("/slice/html/hud/sessionhud/styles.css", sessionHUDcss.toPath());
+        }
+
+        this.html.add(new ViewNoGui(new Page("file:///" + html.getAbsolutePath() + "?name=" + NAME + "&version=" + VERSION + "&discord=" + discordName))
     }
 
     /**
