@@ -18,6 +18,7 @@ public class RequestHandler {
         this.setupInfo();
         sendJavascript("let iframe;");
         this.setupTargetHUD();
+        this.setupSessionHUD();
     }
 
     public void sendJavascript(String js) {
@@ -52,5 +53,19 @@ public class RequestHandler {
     public static void showTargetHUD() {
         INSTANCE.sendJavascript("document.querySelector(\"iframe[src='TargetHUD/index.html']\").style.visibility = \"visible\";");
     }
+
+    public void setupSessionHUD() {
+        createIframe("SessionHUD/index.html");
+    }
+
+    public static void hideSessionHUD() {
+        INSTANCE.sendJavascript("document.querySelector(\"iframe[src='SessionHUD/index.html']\").style.visibility = \"hidden\";");
+    }
+
+    public static void showSessionHUD() {
+        INSTANCE.sendJavascript("document.querySelector(\"iframe[src='SessionHUD/index.html']\").style.visibility = \"visible\";");
+    }
+
+
 
 }
