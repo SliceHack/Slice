@@ -1,6 +1,5 @@
 package slice;
 
-import com.labymedia.ultralight.UltralightJava;
 import lombok.Getter;
 import me.friwi.jcefmaven.impl.progress.ConsoleProgressHandler;
 import net.minecraft.client.Minecraft;
@@ -8,12 +7,10 @@ import net.minecraft.client.gui.GuiChat;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S02PacketChat;
-import org.cef.browser.CefBrowserCustom;
 import org.cef.ccbluex.CefRenderManager;
 import org.cef.ccbluex.GuiView;
 import org.cef.ccbluex.Page;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.Display;
 import slice.api.API;
 import slice.api.IRC;
 import slice.cef.ViewNoGui;
@@ -32,10 +29,14 @@ import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
 import slice.module.Module;
 import slice.script.manager.ScriptManager;
+import slice.util.LoggerUtil;
 import slice.util.ResourceUtil;
+import slice.util.Timer;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -88,9 +89,12 @@ public enum Slice {
 
     /** html */
     private final CefRenderManager cefRenderManager;
-
     private final List<ViewNoGui> html = new ArrayList<>();
-    
+
+    /** other things */
+    private final int ping = 0;
+    private final String date;
+
     Slice() {
         connecting = true;
         eventManager = new EventManager();
@@ -107,6 +111,9 @@ public enum Slice {
         discordRPC.start();
         API.sendAuthRequest(irc);
         eventManager.register(this);
+
+        date = (new SimpleDateFormat("dd/MM/yyyy")).format(new Date());
+
         Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
     }
 
@@ -145,7 +152,7 @@ public enum Slice {
             ResourceUtil.extractResource("/slice/html/hud/sessionhud/styles.css", sessionHUDcss.toPath());
         }
 
-        this.html.add(new ViewNoGui(new Page("file:///" + html.getAbsolutePath() + "?name=" + NAME + "&version=" + VERSION + "&discord=" + discordName))
+        this.html.add(new ViewNoGui(new Page("file:///" + html.getAbsolutePath() + "?name=" + NAME + "&version=" + VERSION + "&discord=" + discordName)));
     }
 
     /**
@@ -157,7 +164,6 @@ public enum Slice {
         saver.save();
         html.forEach(ViewNoGui::destroy);
     }
-
 
     @EventInfo
     public void onUpdate(EventUpdate e) {
