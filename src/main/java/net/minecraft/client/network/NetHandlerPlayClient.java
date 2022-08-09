@@ -216,10 +216,7 @@ import net.minecraft.world.storage.MapData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import slice.gui.main.MainMenu;
-<<<<<<< HEAD
-=======
 import slice.util.LoggerUtil;
->>>>>>> parent of c3f4cf0c (Update optifine)
 
 public class NetHandlerPlayClient implements INetHandlerPlayClient
 {
