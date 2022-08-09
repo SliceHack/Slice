@@ -119,9 +119,9 @@ public class Fly extends Module {
                 }
                 break;
             case "Vanilla":
-                if(mc.gameSettings.keyBindSneak.isKeyDown()) {
+                if(mc.gameSettings.keyBindJump.isKeyDown()) {
                     mc.thePlayer.motionY = speed.getValue().doubleValue();
-                } else if(mc.gameSettings.keyBindSprint.isKeyDown()) {
+                } else if(mc.gameSettings.keyBindSneak.isKeyDown()) {
                     mc.thePlayer.motionY = -speed.getValue().doubleValue();
                 } else {
                     mc.thePlayer.motionY = up ? 0 : 0.001;
