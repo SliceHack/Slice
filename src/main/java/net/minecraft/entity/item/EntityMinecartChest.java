@@ -34,14 +34,17 @@ public class EntityMinecartChest extends EntityMinecartContainer
         }
     }
 
+    /**
+     * Returns the number of slots in the inventory.
+     */
     public int getSizeInventory()
     {
         return 27;
     }
 
-    public EnumMinecartType getMinecartType()
+    public EntityMinecart.EnumMinecartType getMinecartType()
     {
-        return EnumMinecartType.CHEST;
+        return EntityMinecart.EnumMinecartType.CHEST;
     }
 
     public IBlockState getDefaultDisplayTile()

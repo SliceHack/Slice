@@ -15,6 +15,9 @@ public class GuiChatOF extends GuiChat
         super(GuiVideoSettings.getGuiChatText(guiChat));
     }
 
+    /**
+     * Used to add chat messages to the client's GuiChat.
+     */
     public void sendChatMessage(String msg)
     {
         if (this.checkCustomCommand(msg))

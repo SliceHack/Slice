@@ -20,20 +20,34 @@ import net.minecraft.world.World;
 
 public abstract class MobSpawnerBaseLogic
 {
+    /** The delay to spawn. */
     private int spawnDelay = 20;
     private String mobID = "Pig";
-    private final List<WeightedRandomMinecart> minecartToSpawn = Lists.<WeightedRandomMinecart>newArrayList();
-    private WeightedRandomMinecart randomEntity;
+    private final List<MobSpawnerBaseLogic.WeightedRandomMinecart> minecartToSpawn = Lists.<MobSpawnerBaseLogic.WeightedRandomMinecart>newArrayList();
+    private MobSpawnerBaseLogic.WeightedRandomMinecart randomEntity;
+
+    /** The rotation of the mob inside the mob spawner */
     private double mobRotation;
+
+    /** the previous rotation of the mob inside the mob spawner */
     private double prevMobRotation;
     private int minSpawnDelay = 200;
     private int maxSpawnDelay = 800;
     private int spawnCount = 4;
+
+    /** Cached instance of the entity to render inside the spawner. */
     private Entity cachedEntity;
     private int maxNearbyEntities = 6;
+
+    /** The distance from which a player activates the spawner. */
     private int activatingRangeFromPlayer = 16;
+
+    /** The range coefficient for spawning entities around. */
     private int spawnRange = 4;
 
+    /**
+     * Gets the entity name that should be spawned.
+     */
     private String getEntityNameToSpawn()
     {
         if (this.getRandomEntity() == null)
@@ -56,6 +70,9 @@ public abstract class MobSpawnerBaseLogic
         this.mobID = name;
     }
 
+    /**
+     * Returns true if there's a player close enough to this mob spawner to activate it.
+     */
     private boolean isActivated()
     {
         BlockPos blockpos = this.getSpawnerPosition();
@@ -223,7 +240,7 @@ public abstract class MobSpawnerBaseLogic
 
         if (this.minecartToSpawn.size() > 0)
         {
-            this.setRandomEntity((WeightedRandomMinecart)WeightedRandom.getRandomItem(this.getSpawnerWorld().rand, this.minecartToSpawn));
+            this.setRandomEntity((MobSpawnerBaseLogic.WeightedRandomMinecart)WeightedRandom.getRandomItem(this.getSpawnerWorld().rand, this.minecartToSpawn));
         }
 
         this.func_98267_a(1);
@@ -241,17 +258,17 @@ public abstract class MobSpawnerBaseLogic
 
             for (int i = 0; i < nbttaglist.tagCount(); ++i)
             {
-                this.minecartToSpawn.add(new WeightedRandomMinecart(nbttaglist.getCompoundTagAt(i)));
+                this.minecartToSpawn.add(new MobSpawnerBaseLogic.WeightedRandomMinecart(nbttaglist.getCompoundTagAt(i)));
             }
         }
 
         if (nbt.hasKey("SpawnData", 10))
         {
-            this.setRandomEntity(new WeightedRandomMinecart(nbt.getCompoundTag("SpawnData"), this.mobID));
+            this.setRandomEntity(new MobSpawnerBaseLogic.WeightedRandomMinecart(nbt.getCompoundTag("SpawnData"), this.mobID));
         }
         else
         {
-            this.setRandomEntity((WeightedRandomMinecart)null);
+            this.setRandomEntity((MobSpawnerBaseLogic.WeightedRandomMinecart)null);
         }
 
         if (nbt.hasKey("MinSpawnDelay", 99))
@@ -304,7 +321,7 @@ public abstract class MobSpawnerBaseLogic
 
                 if (this.minecartToSpawn.size() > 0)
                 {
-                    for (WeightedRandomMinecart mobspawnerbaselogic$weightedrandomminecart : this.minecartToSpawn)
+                    for (MobSpawnerBaseLogic.WeightedRandomMinecart mobspawnerbaselogic$weightedrandomminecart : this.minecartToSpawn)
                     {
                         nbttaglist.appendTag(mobspawnerbaselogic$weightedrandomminecart.toNBT());
                     }
@@ -335,6 +352,9 @@ public abstract class MobSpawnerBaseLogic
         return this.cachedEntity;
     }
 
+    /**
+     * Sets the delay to minDelay if parameter given is 1, else return false.
+     */
     public boolean setDelayToMin(int delay)
     {
         if (delay == 1 && this.getSpawnerWorld().isRemote)
@@ -348,12 +368,12 @@ public abstract class MobSpawnerBaseLogic
         }
     }
 
-    private WeightedRandomMinecart getRandomEntity()
+    private MobSpawnerBaseLogic.WeightedRandomMinecart getRandomEntity()
     {
         return this.randomEntity;
     }
 
-    public void setRandomEntity(WeightedRandomMinecart p_98277_1_)
+    public void setRandomEntity(MobSpawnerBaseLogic.WeightedRandomMinecart p_98277_1_)
     {
         this.randomEntity = p_98277_1_;
     }

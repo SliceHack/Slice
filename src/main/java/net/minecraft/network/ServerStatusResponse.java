@@ -17,8 +17,8 @@ import net.minecraft.util.JsonUtils;
 public class ServerStatusResponse
 {
     private IChatComponent serverMotd;
-    private PlayerCountData playerCount;
-    private MinecraftProtocolVersionIdentifier protocolVersion;
+    private ServerStatusResponse.PlayerCountData playerCount;
+    private ServerStatusResponse.MinecraftProtocolVersionIdentifier protocolVersion;
     private String favicon;
 
     public IChatComponent getServerDescription()
@@ -31,22 +31,22 @@ public class ServerStatusResponse
         this.serverMotd = motd;
     }
 
-    public PlayerCountData getPlayerCountData()
+    public ServerStatusResponse.PlayerCountData getPlayerCountData()
     {
         return this.playerCount;
     }
 
-    public void setPlayerCountData(PlayerCountData countData)
+    public void setPlayerCountData(ServerStatusResponse.PlayerCountData countData)
     {
         this.playerCount = countData;
     }
 
-    public MinecraftProtocolVersionIdentifier getProtocolVersionInfo()
+    public ServerStatusResponse.MinecraftProtocolVersionIdentifier getProtocolVersionInfo()
     {
         return this.protocolVersion;
     }
 
-    public void setProtocolVersionInfo(MinecraftProtocolVersionIdentifier protocolVersionData)
+    public void setProtocolVersionInfo(ServerStatusResponse.MinecraftProtocolVersionIdentifier protocolVersionData)
     {
         this.protocolVersion = protocolVersionData;
     }
@@ -82,15 +82,15 @@ public class ServerStatusResponse
             return this.protocol;
         }
 
-        public static class Serializer implements JsonDeserializer<MinecraftProtocolVersionIdentifier>, JsonSerializer<MinecraftProtocolVersionIdentifier>
+        public static class Serializer implements JsonDeserializer<ServerStatusResponse.MinecraftProtocolVersionIdentifier>, JsonSerializer<ServerStatusResponse.MinecraftProtocolVersionIdentifier>
         {
-            public MinecraftProtocolVersionIdentifier deserialize(JsonElement p_deserialize_1_, Type p_deserialize_2_, JsonDeserializationContext p_deserialize_3_) throws JsonParseException
+            public ServerStatusResponse.MinecraftProtocolVersionIdentifier deserialize(JsonElement p_deserialize_1_, Type p_deserialize_2_, JsonDeserializationContext p_deserialize_3_) throws JsonParseException
             {
                 JsonObject jsonobject = JsonUtils.getJsonObject(p_deserialize_1_, "version");
-                return new MinecraftProtocolVersionIdentifier(JsonUtils.getString(jsonobject, "name"), JsonUtils.getInt(jsonobject, "protocol"));
+                return new ServerStatusResponse.MinecraftProtocolVersionIdentifier(JsonUtils.getString(jsonobject, "name"), JsonUtils.getInt(jsonobject, "protocol"));
             }
 
-            public JsonElement serialize(MinecraftProtocolVersionIdentifier p_serialize_1_, Type p_serialize_2_, JsonSerializationContext p_serialize_3_)
+            public JsonElement serialize(ServerStatusResponse.MinecraftProtocolVersionIdentifier p_serialize_1_, Type p_serialize_2_, JsonSerializationContext p_serialize_3_)
             {
                 JsonObject jsonobject = new JsonObject();
                 jsonobject.addProperty("name", p_serialize_1_.getName());
@@ -132,12 +132,12 @@ public class ServerStatusResponse
             this.players = playersIn;
         }
 
-        public static class Serializer implements JsonDeserializer<PlayerCountData>, JsonSerializer<PlayerCountData>
+        public static class Serializer implements JsonDeserializer<ServerStatusResponse.PlayerCountData>, JsonSerializer<ServerStatusResponse.PlayerCountData>
         {
-            public PlayerCountData deserialize(JsonElement p_deserialize_1_, Type p_deserialize_2_, JsonDeserializationContext p_deserialize_3_) throws JsonParseException
+            public ServerStatusResponse.PlayerCountData deserialize(JsonElement p_deserialize_1_, Type p_deserialize_2_, JsonDeserializationContext p_deserialize_3_) throws JsonParseException
             {
                 JsonObject jsonobject = JsonUtils.getJsonObject(p_deserialize_1_, "players");
-                PlayerCountData serverstatusresponse$playercountdata = new PlayerCountData(JsonUtils.getInt(jsonobject, "max"), JsonUtils.getInt(jsonobject, "online"));
+                ServerStatusResponse.PlayerCountData serverstatusresponse$playercountdata = new ServerStatusResponse.PlayerCountData(JsonUtils.getInt(jsonobject, "max"), JsonUtils.getInt(jsonobject, "online"));
 
                 if (JsonUtils.isJsonArray(jsonobject, "sample"))
                 {
@@ -161,7 +161,7 @@ public class ServerStatusResponse
                 return serverstatusresponse$playercountdata;
             }
 
-            public JsonElement serialize(PlayerCountData p_serialize_1_, Type p_serialize_2_, JsonSerializationContext p_serialize_3_)
+            public JsonElement serialize(ServerStatusResponse.PlayerCountData p_serialize_1_, Type p_serialize_2_, JsonSerializationContext p_serialize_3_)
             {
                 JsonObject jsonobject = new JsonObject();
                 jsonobject.addProperty("max", (Number)Integer.valueOf(p_serialize_1_.getMaxPlayers()));
@@ -202,12 +202,12 @@ public class ServerStatusResponse
 
             if (jsonobject.has("players"))
             {
-                serverstatusresponse.setPlayerCountData((PlayerCountData)p_deserialize_3_.deserialize(jsonobject.get("players"), PlayerCountData.class));
+                serverstatusresponse.setPlayerCountData((ServerStatusResponse.PlayerCountData)p_deserialize_3_.deserialize(jsonobject.get("players"), ServerStatusResponse.PlayerCountData.class));
             }
 
             if (jsonobject.has("version"))
             {
-                serverstatusresponse.setProtocolVersionInfo((MinecraftProtocolVersionIdentifier)p_deserialize_3_.deserialize(jsonobject.get("version"), MinecraftProtocolVersionIdentifier.class));
+                serverstatusresponse.setProtocolVersionInfo((ServerStatusResponse.MinecraftProtocolVersionIdentifier)p_deserialize_3_.deserialize(jsonobject.get("version"), ServerStatusResponse.MinecraftProtocolVersionIdentifier.class));
             }
 
             if (jsonobject.has("favicon"))

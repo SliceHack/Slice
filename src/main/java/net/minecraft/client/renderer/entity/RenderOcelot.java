@@ -17,6 +17,9 @@ public class RenderOcelot extends RenderLiving<EntityOcelot>
         super(renderManagerIn, modelBaseIn, shadowSizeIn);
     }
 
+    /**
+     * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
+     */
     protected ResourceLocation getEntityTexture(EntityOcelot entity)
     {
         switch (entity.getTameSkin())
@@ -36,6 +39,10 @@ public class RenderOcelot extends RenderLiving<EntityOcelot>
         }
     }
 
+    /**
+     * Allows the render to do any OpenGL state modifications necessary before the model is rendered. Args:
+     * entityLiving, partialTickTime
+     */
     protected void preRenderCallback(EntityOcelot entitylivingbaseIn, float partialTickTime)
     {
         super.preRenderCallback(entitylivingbaseIn, partialTickTime);

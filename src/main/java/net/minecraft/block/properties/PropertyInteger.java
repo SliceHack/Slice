@@ -75,6 +75,9 @@ public class PropertyInteger extends PropertyHelper<Integer>
         return new PropertyInteger(name, min, max);
     }
 
+    /**
+     * Get the name for the given value.
+     */
     public String getName(Integer value)
     {
         return value.toString();

@@ -9,7 +9,11 @@ import net.minecraft.util.ResourceLocation;
 public class GuiDispenser extends GuiContainer
 {
     private static final ResourceLocation dispenserGuiTextures = new ResourceLocation("textures/gui/container/dispenser.png");
+
+    /** The player inventory bound to this GUI. */
     private final InventoryPlayer playerInventory;
+
+    /** The inventory contained within the corresponding Dispenser. */
     public IInventory dispenserInventory;
 
     public GuiDispenser(InventoryPlayer playerInv, IInventory dispenserInv)
@@ -19,6 +23,9 @@ public class GuiDispenser extends GuiContainer
         this.dispenserInventory = dispenserInv;
     }
 
+    /**
+     * Draw the foreground layer for the GuiContainer (everything in front of the items). Args : mouseX, mouseY
+     */
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
         String s = this.dispenserInventory.getDisplayName().getUnformattedText();
@@ -26,6 +33,9 @@ public class GuiDispenser extends GuiContainer
         this.fontRendererObj.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
     }
 
+    /**
+     * Args : renderPartialTicks, mouseX, mouseY
+     */
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

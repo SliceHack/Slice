@@ -23,12 +23,14 @@ import org.lwjgl.input.Keyboard;
 
 public class GuiFlatPresets extends GuiScreen
 {
-    private static final List<LayerItem> FLAT_WORLD_PRESETS = Lists.<LayerItem>newArrayList();
+    private static final List<GuiFlatPresets.LayerItem> FLAT_WORLD_PRESETS = Lists.<GuiFlatPresets.LayerItem>newArrayList();
+
+    /** The parent GUI */
     private final GuiCreateFlatWorld parentScreen;
     private String presetsTitle;
     private String presetsShare;
     private String field_146436_r;
-    private ListSlot field_146435_s;
+    private GuiFlatPresets.ListSlot field_146435_s;
     private GuiButton field_146434_t;
     private GuiTextField field_146433_u;
 
@@ -37,6 +39,10 @@ public class GuiFlatPresets extends GuiScreen
         this.parentScreen = p_i46318_1_;
     }
 
+    /**
+     * Adds the buttons (and other controls) to the screen in question. Called when the GUI is displayed and when the
+     * window resizes, the buttonList is cleared beforehand.
+     */
     public void initGui()
     {
         this.buttonList.clear();
@@ -45,7 +51,7 @@ public class GuiFlatPresets extends GuiScreen
         this.presetsShare = I18n.format("createWorld.customize.presets.share", new Object[0]);
         this.field_146436_r = I18n.format("createWorld.customize.presets.list", new Object[0]);
         this.field_146433_u = new GuiTextField(2, this.fontRendererObj, 50, 40, this.width - 100, 20);
-        this.field_146435_s = new ListSlot();
+        this.field_146435_s = new GuiFlatPresets.ListSlot();
         this.field_146433_u.setMaxStringLength(1230);
         this.field_146433_u.setText(this.parentScreen.func_146384_e());
         this.buttonList.add(this.field_146434_t = new GuiButton(0, this.width / 2 - 155, this.height - 28, 150, 20, I18n.format("createWorld.customize.presets.select", new Object[0])));
@@ -53,23 +59,36 @@ public class GuiFlatPresets extends GuiScreen
         this.func_146426_g();
     }
 
+    /**
+     * Handles mouse input.
+     */
     public void handleMouseInput() throws IOException
     {
         super.handleMouseInput();
         this.field_146435_s.handleMouseInput();
     }
 
+    /**
+     * Called when the screen is unloaded. Used to disable keyboard repeat events
+     */
     public void onGuiClosed()
     {
         Keyboard.enableRepeatEvents(false);
     }
 
+    /**
+     * Called when the mouse is clicked. Args : mouseX, mouseY, clickedButton
+     */
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
     {
         this.field_146433_u.mouseClicked(mouseX, mouseY, mouseButton);
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
+    /**
+     * Fired when a key is typed (except F11 which toggles full screen). This is the equivalent of
+     * KeyListener.keyTyped(KeyEvent e). Args : character (character on the key), keyCode (lwjgl Keyboard key code)
+     */
     protected void keyTyped(char typedChar, int keyCode) throws IOException
     {
         if (!this.field_146433_u.textboxKeyTyped(typedChar, keyCode))
@@ -78,6 +97,9 @@ public class GuiFlatPresets extends GuiScreen
         }
     }
 
+    /**
+     * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
+     */
     protected void actionPerformed(GuiButton button) throws IOException
     {
         if (button.id == 0 && this.func_146430_p())
@@ -91,6 +113,9 @@ public class GuiFlatPresets extends GuiScreen
         }
     }
 
+    /**
+     * Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
+     */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
@@ -102,6 +127,9 @@ public class GuiFlatPresets extends GuiScreen
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
+    /**
+     * Called from the main game loop to update the screen.
+     */
     public void updateScreen()
     {
         this.field_146433_u.updateCursorCounter();
@@ -149,7 +177,7 @@ public class GuiFlatPresets extends GuiScreen
             }
         }
 
-        FLAT_WORLD_PRESETS.add(new LayerItem(p_175354_1_, p_175354_2_, p_175354_0_, flatgeneratorinfo.toString()));
+        FLAT_WORLD_PRESETS.add(new GuiFlatPresets.LayerItem(p_175354_1_, p_175354_2_, p_175354_0_, flatgeneratorinfo.toString()));
     }
 
     static
@@ -231,7 +259,7 @@ public class GuiFlatPresets extends GuiScreen
         {
             this.field_148175_k = slotIndex;
             GuiFlatPresets.this.func_146426_g();
-            GuiFlatPresets.this.field_146433_u.setText(((LayerItem)GuiFlatPresets.FLAT_WORLD_PRESETS.get(GuiFlatPresets.this.field_146435_s.field_148175_k)).field_148233_c);
+            GuiFlatPresets.this.field_146433_u.setText(((GuiFlatPresets.LayerItem)GuiFlatPresets.FLAT_WORLD_PRESETS.get(GuiFlatPresets.this.field_146435_s.field_148175_k)).field_148233_c);
         }
 
         protected boolean isSelected(int slotIndex)
@@ -245,7 +273,7 @@ public class GuiFlatPresets extends GuiScreen
 
         protected void drawSlot(int entryID, int p_180791_2_, int p_180791_3_, int p_180791_4_, int mouseXIn, int mouseYIn)
         {
-            LayerItem guiflatpresets$layeritem = (LayerItem)GuiFlatPresets.FLAT_WORLD_PRESETS.get(entryID);
+            GuiFlatPresets.LayerItem guiflatpresets$layeritem = (GuiFlatPresets.LayerItem)GuiFlatPresets.FLAT_WORLD_PRESETS.get(entryID);
             this.func_178054_a(p_180791_2_, p_180791_3_, guiflatpresets$layeritem.field_148234_a, guiflatpresets$layeritem.field_179037_b);
             GuiFlatPresets.this.fontRendererObj.drawString(guiflatpresets$layeritem.field_148232_b, p_180791_2_ + 18 + 5, p_180791_3_ + 6, 16777215);
         }

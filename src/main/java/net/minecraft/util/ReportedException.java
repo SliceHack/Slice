@@ -4,6 +4,7 @@ import net.minecraft.crash.CrashReport;
 
 public class ReportedException extends RuntimeException
 {
+    /** Instance of CrashReport. */
     private final CrashReport theReportedExceptionCrashReport;
 
     public ReportedException(CrashReport report)
@@ -11,6 +12,9 @@ public class ReportedException extends RuntimeException
         this.theReportedExceptionCrashReport = report;
     }
 
+    /**
+     * Gets the CrashReport wrapped by this exception.
+     */
     public CrashReport getCrashReport()
     {
         return this.theReportedExceptionCrashReport;

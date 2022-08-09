@@ -13,6 +13,10 @@ public class GuiIngameMenu extends GuiScreen
     private int field_146445_a;
     private int field_146444_f;
 
+    /**
+     * Adds the buttons (and other controls) to the screen in question. Called when the GUI is displayed and when the
+     * window resizes, the buttonList is cleared beforehand.
+     */
     public void initGui()
     {
         this.field_146445_a = 0;
@@ -35,6 +39,9 @@ public class GuiIngameMenu extends GuiScreen
         guibutton.enabled = this.mc.isSingleplayer() && !this.mc.getIntegratedServer().getPublic();
     }
 
+    /**
+     * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
+     */
     protected void actionPerformed(GuiButton button) throws IOException
     {
         switch (button.id)
@@ -87,12 +94,18 @@ public class GuiIngameMenu extends GuiScreen
         }
     }
 
+    /**
+     * Called from the main game loop to update the screen.
+     */
     public void updateScreen()
     {
         super.updateScreen();
         ++this.field_146444_f;
     }
 
+    /**
+     * Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
+     */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();

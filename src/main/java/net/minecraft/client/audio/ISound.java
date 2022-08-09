@@ -20,7 +20,7 @@ public interface ISound
 
     float getZPosF();
 
-    AttenuationType getAttenuationType();
+    ISound.AttenuationType getAttenuationType();
 
     public static enum AttenuationType
     {

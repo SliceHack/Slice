@@ -103,8 +103,12 @@ public abstract class CreativeTabs
     }).setBackgroundImageName("inventory.png").setNoScrollbar().setNoTitle();
     private final int tabIndex;
     private final String tabLabel;
+
+    /** Texture to use. */
     private String theTexture = "items.png";
     private boolean hasScrollbar = true;
+
+    /** Whether to draw the title in the foreground of the creative GUI */
     private boolean drawTitle = true;
     private EnumEnchantmentType[] enchantmentTypes;
     private ItemStack iconItemStack;
@@ -126,6 +130,9 @@ public abstract class CreativeTabs
         return this.tabLabel;
     }
 
+    /**
+     * Gets the translated Label.
+     */
     public String getTranslatedTabLabel()
     {
         return "itemGroup." + this.getTabLabel();
@@ -181,21 +188,33 @@ public abstract class CreativeTabs
         return this;
     }
 
+    /**
+     * returns index % 6
+     */
     public int getTabColumn()
     {
         return this.tabIndex % 6;
     }
 
+    /**
+     * returns tabIndex < 6
+     */
     public boolean isTabInFirstRow()
     {
         return this.tabIndex < 6;
     }
 
+    /**
+     * Returns the enchantment types relevant to this tab
+     */
     public EnumEnchantmentType[] getRelevantEnchantmentTypes()
     {
         return this.enchantmentTypes;
     }
 
+    /**
+     * Sets the enchantment types for populating this tab with enchanting books
+     */
     public CreativeTabs setRelevantEnchantmentTypes(EnumEnchantmentType... types)
     {
         this.enchantmentTypes = types;
@@ -222,6 +241,9 @@ public abstract class CreativeTabs
         }
     }
 
+    /**
+     * only shows items which have tabToDisplayOn == this
+     */
     public void displayAllReleventItems(List<ItemStack> p_78018_1_)
     {
         for (Item item : Item.itemRegistry)
@@ -238,6 +260,9 @@ public abstract class CreativeTabs
         }
     }
 
+    /**
+     * Adds the enchantment books from the supplied EnumEnchantmentType to the given list.
+     */
     public void addEnchantmentBooksToList(List<ItemStack> itemList, EnumEnchantmentType... enchantmentType)
     {
         for (Enchantment enchantment : Enchantment.enchantmentsBookList)

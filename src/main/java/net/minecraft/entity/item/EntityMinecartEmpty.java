@@ -16,6 +16,9 @@ public class EntityMinecartEmpty extends EntityMinecart
         super(worldIn, x, y, z);
     }
 
+    /**
+     * First layer of player interaction
+     */
     public boolean interactFirst(EntityPlayer playerIn)
     {
         if (this.riddenByEntity != null && this.riddenByEntity instanceof EntityPlayer && this.riddenByEntity != playerIn)
@@ -37,6 +40,9 @@ public class EntityMinecartEmpty extends EntityMinecart
         }
     }
 
+    /**
+     * Called every tick the minecart is on an activator rail. Args: x, y, z, is the rail receiving power
+     */
     public void onActivatorRailPass(int x, int y, int z, boolean receivingPower)
     {
         if (receivingPower)
@@ -56,8 +62,8 @@ public class EntityMinecartEmpty extends EntityMinecart
         }
     }
 
-    public EnumMinecartType getMinecartType()
+    public EntityMinecart.EnumMinecartType getMinecartType()
     {
-        return EnumMinecartType.RIDEABLE;
+        return EntityMinecart.EnumMinecartType.RIDEABLE;
     }
 }

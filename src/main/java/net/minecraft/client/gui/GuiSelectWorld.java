@@ -22,7 +22,6 @@ import org.apache.logging.log4j.Logger;
 import slice.Slice;
 import slice.util.RenderUtil;
 
-@SuppressWarnings("all")
 public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
 {
     private static final Logger logger = LogManager.getLogger();
@@ -247,9 +246,9 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
 
     /**
      * Generate a GuiYesNo asking for confirmation to delete a world
-     *
+     *  
      * Called when user selects the "Delete" button.
-     *
+     *  
      * @param selectWorld A reference back to the GuiSelectWorld spawning the GuiYesNo
      * @param name The name of the world selected for deletion
      * @param id An arbitrary integer passed back to selectWorld's confirmClicked method

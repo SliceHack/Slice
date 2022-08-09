@@ -42,6 +42,9 @@ public class ContainerChest extends Container
         return this.lowerChestInventory.isUseableByPlayer(playerIn);
     }
 
+    /**
+     * Take a stack from the specified inventory slot.
+     */
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
     {
         ItemStack itemstack = null;
@@ -77,12 +80,18 @@ public class ContainerChest extends Container
         return itemstack;
     }
 
+    /**
+     * Called when the container is closed.
+     */
     public void onContainerClosed(EntityPlayer playerIn)
     {
         super.onContainerClosed(playerIn);
         this.lowerChestInventory.closeInventory(playerIn);
     }
 
+    /**
+     * Return this chest container's lower chest inventory.
+     */
     public IInventory getLowerChestInventory()
     {
         return this.lowerChestInventory;

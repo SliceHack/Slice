@@ -155,6 +155,9 @@ public class ChunkCacheOF implements IBlockAccess
         this.blockStates = null;
     }
 
+    /**
+     * set by !chunk.getAreLevelsEmpty
+     */
     public boolean extendedLevelsInChunkCache()
     {
         return this.chunkCache.extendedLevelsInChunkCache();
@@ -180,6 +183,10 @@ public class ChunkCacheOF implements IBlockAccess
         return this.chunkCache.getWorldType();
     }
 
+    /**
+     * Checks to see if an air block exists at the provided location. Note that this only checks to see if the blocks
+     * material is set to air, meaning it is possible for non-vanilla blocks to still pass this check.
+     */
     public boolean isAirBlock(BlockPos pos)
     {
         return this.chunkCache.isAirBlock(pos);

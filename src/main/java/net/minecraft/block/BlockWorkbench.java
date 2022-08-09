@@ -32,7 +32,7 @@ public class BlockWorkbench extends Block
         }
         else
         {
-            playerIn.displayGui(new InterfaceCraftingTable(worldIn, pos));
+            playerIn.displayGui(new BlockWorkbench.InterfaceCraftingTable(worldIn, pos));
             playerIn.triggerAchievement(StatList.field_181742_Z);
             return true;
         }

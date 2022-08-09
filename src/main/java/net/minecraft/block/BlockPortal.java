@@ -94,7 +94,7 @@ public class BlockPortal extends BlockBreakable
 
     public boolean func_176548_d(World worldIn, BlockPos p_176548_2_)
     {
-        Size blockportal$size = new Size(worldIn, p_176548_2_, EnumFacing.Axis.X);
+        BlockPortal.Size blockportal$size = new BlockPortal.Size(worldIn, p_176548_2_, EnumFacing.Axis.X);
 
         if (blockportal$size.func_150860_b() && blockportal$size.field_150864_e == 0)
         {
@@ -103,7 +103,7 @@ public class BlockPortal extends BlockBreakable
         }
         else
         {
-            Size blockportal$size1 = new Size(worldIn, p_176548_2_, EnumFacing.Axis.Z);
+            BlockPortal.Size blockportal$size1 = new BlockPortal.Size(worldIn, p_176548_2_, EnumFacing.Axis.Z);
 
             if (blockportal$size1.func_150860_b() && blockportal$size1.field_150864_e == 0)
             {
@@ -117,13 +117,16 @@ public class BlockPortal extends BlockBreakable
         }
     }
 
+    /**
+     * Called when a neighboring block changes.
+     */
     public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
     {
         EnumFacing.Axis enumfacing$axis = (EnumFacing.Axis)state.getValue(AXIS);
 
         if (enumfacing$axis == EnumFacing.Axis.X)
         {
-            Size blockportal$size = new Size(worldIn, pos, EnumFacing.Axis.X);
+            BlockPortal.Size blockportal$size = new BlockPortal.Size(worldIn, pos, EnumFacing.Axis.X);
 
             if (!blockportal$size.func_150860_b() || blockportal$size.field_150864_e < blockportal$size.field_150868_h * blockportal$size.field_150862_g)
             {
@@ -132,7 +135,7 @@ public class BlockPortal extends BlockBreakable
         }
         else if (enumfacing$axis == EnumFacing.Axis.Z)
         {
-            Size blockportal$size1 = new Size(worldIn, pos, EnumFacing.Axis.Z);
+            BlockPortal.Size blockportal$size1 = new BlockPortal.Size(worldIn, pos, EnumFacing.Axis.Z);
 
             if (!blockportal$size1.func_150860_b() || blockportal$size1.field_150864_e < blockportal$size1.field_150868_h * blockportal$size1.field_150862_g)
             {
@@ -175,6 +178,9 @@ public class BlockPortal extends BlockBreakable
         return flag4 && side == EnumFacing.WEST ? true : (flag4 && side == EnumFacing.EAST ? true : (flag5 && side == EnumFacing.NORTH ? true : flag5 && side == EnumFacing.SOUTH));
     }
 
+    /**
+     * Returns the quantity of items to drop on block destruction.
+     */
     public int quantityDropped(Random random)
     {
         return 0;
@@ -185,6 +191,9 @@ public class BlockPortal extends BlockBreakable
         return EnumWorldBlockLayer.TRANSLUCENT;
     }
 
+    /**
+     * Called When an Entity Collided with the Block
+     */
     public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn)
     {
         if (entityIn.ridingEntity == null && entityIn.riddenByEntity == null)
@@ -230,11 +239,17 @@ public class BlockPortal extends BlockBreakable
         return null;
     }
 
+    /**
+     * Convert the given metadata into a BlockState for this Block
+     */
     public IBlockState getStateFromMeta(int meta)
     {
         return this.getDefaultState().withProperty(AXIS, (meta & 3) == 2 ? EnumFacing.Axis.Z : EnumFacing.Axis.X);
     }
 
+    /**
+     * Convert the BlockState into the correct metadata value
+     */
     public int getMetaFromState(IBlockState state)
     {
         return getMetaForAxis((EnumFacing.Axis)state.getValue(AXIS));
@@ -248,13 +263,13 @@ public class BlockPortal extends BlockBreakable
     public BlockPattern.PatternHelper func_181089_f(World p_181089_1_, BlockPos p_181089_2_)
     {
         EnumFacing.Axis enumfacing$axis = EnumFacing.Axis.Z;
-        Size blockportal$size = new Size(p_181089_1_, p_181089_2_, EnumFacing.Axis.X);
+        BlockPortal.Size blockportal$size = new BlockPortal.Size(p_181089_1_, p_181089_2_, EnumFacing.Axis.X);
         LoadingCache<BlockPos, BlockWorldState> loadingcache = BlockPattern.func_181627_a(p_181089_1_, true);
 
         if (!blockportal$size.func_150860_b())
         {
             enumfacing$axis = EnumFacing.Axis.X;
-            blockportal$size = new Size(p_181089_1_, p_181089_2_, EnumFacing.Axis.Z);
+            blockportal$size = new BlockPortal.Size(p_181089_1_, p_181089_2_, EnumFacing.Axis.Z);
         }
 
         if (!blockportal$size.func_150860_b())

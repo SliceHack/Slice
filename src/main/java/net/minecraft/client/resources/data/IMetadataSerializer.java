@@ -12,8 +12,12 @@ import net.minecraft.util.RegistrySimple;
 
 public class IMetadataSerializer
 {
-    private final IRegistry < String, Registration <? extends IMetadataSection >> metadataSectionSerializerRegistry = new RegistrySimple();
+    private final IRegistry < String, IMetadataSerializer.Registration <? extends IMetadataSection >> metadataSectionSerializerRegistry = new RegistrySimple();
     private final GsonBuilder gsonBuilder = new GsonBuilder();
+
+    /**
+     * Cached Gson instance. Set to null when more sections are registered, and then re-created from the builder.
+     */
     private Gson gson;
 
     public IMetadataSerializer()
@@ -25,7 +29,7 @@ public class IMetadataSerializer
 
     public <T extends IMetadataSection> void registerMetadataSectionType(IMetadataSectionSerializer<T> metadataSectionSerializer, Class<T> clazz)
     {
-        this.metadataSectionSerializerRegistry.putObject(metadataSectionSerializer.getSectionName(), new Registration(metadataSectionSerializer, clazz));
+        this.metadataSectionSerializerRegistry.putObject(metadataSectionSerializer.getSectionName(), new IMetadataSerializer.Registration(metadataSectionSerializer, clazz));
         this.gsonBuilder.registerTypeAdapter(clazz, metadataSectionSerializer);
         this.gson = null;
     }
@@ -46,7 +50,7 @@ public class IMetadataSerializer
         }
         else
         {
-            Registration<?> registration = (Registration)this.metadataSectionSerializerRegistry.getObject(sectionName);
+            IMetadataSerializer.Registration<?> registration = (IMetadataSerializer.Registration)this.metadataSectionSerializerRegistry.getObject(sectionName);
 
             if (registration == null)
             {
@@ -59,6 +63,9 @@ public class IMetadataSerializer
         }
     }
 
+    /**
+     * Returns a Gson instance with type adapters registered for metadata sections.
+     */
     private Gson getGson()
     {
         if (this.gson == null)

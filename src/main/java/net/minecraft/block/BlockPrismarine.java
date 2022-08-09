@@ -15,36 +15,49 @@ import net.minecraft.util.StatCollector;
 
 public class BlockPrismarine extends Block
 {
-    public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
-    public static final int ROUGH_META = EnumType.ROUGH.getMetadata();
-    public static final int BRICKS_META = EnumType.BRICKS.getMetadata();
-    public static final int DARK_META = EnumType.DARK.getMetadata();
+    public static final PropertyEnum<BlockPrismarine.EnumType> VARIANT = PropertyEnum.<BlockPrismarine.EnumType>create("variant", BlockPrismarine.EnumType.class);
+    public static final int ROUGH_META = BlockPrismarine.EnumType.ROUGH.getMetadata();
+    public static final int BRICKS_META = BlockPrismarine.EnumType.BRICKS.getMetadata();
+    public static final int DARK_META = BlockPrismarine.EnumType.DARK.getMetadata();
 
     public BlockPrismarine()
     {
         super(Material.rock);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, EnumType.ROUGH));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, BlockPrismarine.EnumType.ROUGH));
         this.setCreativeTab(CreativeTabs.tabBlock);
     }
 
+    /**
+     * Gets the localized name of this block. Used for the statistics page.
+     */
     public String getLocalizedName()
     {
-        return StatCollector.translateToLocal(this.getUnlocalizedName() + "." + EnumType.ROUGH.getUnlocalizedName() + ".name");
+        return StatCollector.translateToLocal(this.getUnlocalizedName() + "." + BlockPrismarine.EnumType.ROUGH.getUnlocalizedName() + ".name");
     }
 
+    /**
+     * Get the MapColor for this Block and the given BlockState
+     */
     public MapColor getMapColor(IBlockState state)
     {
-        return state.getValue(VARIANT) == EnumType.ROUGH ? MapColor.cyanColor : MapColor.diamondColor;
+        return state.getValue(VARIANT) == BlockPrismarine.EnumType.ROUGH ? MapColor.cyanColor : MapColor.diamondColor;
     }
 
+    /**
+     * Gets the metadata of the item this Block can drop. This method is called when the block gets destroyed. It
+     * returns the metadata of the dropped item based on the old metadata of the block.
+     */
     public int damageDropped(IBlockState state)
     {
-        return ((EnumType)state.getValue(VARIANT)).getMetadata();
+        return ((BlockPrismarine.EnumType)state.getValue(VARIANT)).getMetadata();
     }
 
+    /**
+     * Convert the BlockState into the correct metadata value
+     */
     public int getMetaFromState(IBlockState state)
     {
-        return ((EnumType)state.getValue(VARIANT)).getMetadata();
+        return ((BlockPrismarine.EnumType)state.getValue(VARIANT)).getMetadata();
     }
 
     protected BlockState createBlockState()
@@ -52,11 +65,17 @@ public class BlockPrismarine extends Block
         return new BlockState(this, new IProperty[] {VARIANT});
     }
 
+    /**
+     * Convert the given metadata into a BlockState for this Block
+     */
     public IBlockState getStateFromMeta(int meta)
     {
-        return this.getDefaultState().withProperty(VARIANT, EnumType.byMetadata(meta));
+        return this.getDefaultState().withProperty(VARIANT, BlockPrismarine.EnumType.byMetadata(meta));
     }
 
+    /**
+     * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
+     */
     public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list)
     {
         list.add(new ItemStack(itemIn, 1, ROUGH_META));
@@ -70,7 +89,7 @@ public class BlockPrismarine extends Block
         BRICKS(1, "prismarine_bricks", "bricks"),
         DARK(2, "dark_prismarine", "dark");
 
-        private static final EnumType[] META_LOOKUP = new EnumType[values().length];
+        private static final BlockPrismarine.EnumType[] META_LOOKUP = new BlockPrismarine.EnumType[values().length];
         private final int meta;
         private final String name;
         private final String unlocalizedName;
@@ -92,7 +111,7 @@ public class BlockPrismarine extends Block
             return this.name;
         }
 
-        public static EnumType byMetadata(int meta)
+        public static BlockPrismarine.EnumType byMetadata(int meta)
         {
             if (meta < 0 || meta >= META_LOOKUP.length)
             {
@@ -113,7 +132,7 @@ public class BlockPrismarine extends Block
         }
 
         static {
-            for (EnumType blockprismarine$enumtype : values())
+            for (BlockPrismarine.EnumType blockprismarine$enumtype : values())
             {
                 META_LOOKUP[blockprismarine$enumtype.getMetadata()] = blockprismarine$enumtype;
             }

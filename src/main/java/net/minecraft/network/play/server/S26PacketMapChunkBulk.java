@@ -36,6 +36,9 @@ public class S26PacketMapChunkBulk implements Packet<INetHandlerPlayClient>
         }
     }
 
+    /**
+     * Reads the raw packet data from the data stream.
+     */
     public void readPacketData(PacketBuffer buf) throws IOException
     {
         this.isOverworld = buf.readBoolean();
@@ -59,6 +62,9 @@ public class S26PacketMapChunkBulk implements Packet<INetHandlerPlayClient>
         }
     }
 
+    /**
+     * Writes the raw packet data to the data stream.
+     */
     public void writePacketData(PacketBuffer buf) throws IOException
     {
         buf.writeBoolean(this.isOverworld);
@@ -77,6 +83,9 @@ public class S26PacketMapChunkBulk implements Packet<INetHandlerPlayClient>
         }
     }
 
+    /**
+     * Passes this Packet on to the NetHandler for processing.
+     */
     public void processPacket(INetHandlerPlayClient handler)
     {
         handler.handleMapChunkBulk(this);

@@ -83,12 +83,15 @@ public class BiomeGenHills extends BiomeGenBase
         this.generateBiomeTerrain(worldIn, rand, chunkPrimerIn, x, z, noiseVal);
     }
 
+    /**
+     * this creates a mutation specific to Hills biomes
+     */
     private BiomeGenHills mutateHills(BiomeGenBase p_150633_1_)
     {
         this.field_150638_aH = this.field_150637_aG;
         this.func_150557_a(p_150633_1_.color, true);
         this.setBiomeName(p_150633_1_.biomeName + " M");
-        this.setHeight(new Height(p_150633_1_.minHeight, p_150633_1_.maxHeight));
+        this.setHeight(new BiomeGenBase.Height(p_150633_1_.minHeight, p_150633_1_.maxHeight));
         this.setTemperatureRainfall(p_150633_1_.temperature, p_150633_1_.rainfall);
         return this;
     }

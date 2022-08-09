@@ -22,11 +22,17 @@ public class LocalBlockIntercommunication implements IInteractionObject
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Get the name of this object. For players this returns their username
+     */
     public String getName()
     {
         return this.displayName.getUnformattedText();
     }
 
+    /**
+     * Returns true if this thing is named
+     */
     public boolean hasCustomName()
     {
         return true;
@@ -37,6 +43,9 @@ public class LocalBlockIntercommunication implements IInteractionObject
         return this.guiID;
     }
 
+    /**
+     * Get the formatted ChatComponent that will be used for the sender's username in chat
+     */
     public IChatComponent getDisplayName()
     {
         return this.displayName;

@@ -21,6 +21,9 @@ public class CombatEntry
         this.fallDistance = fallDistanceIn;
     }
 
+    /**
+     * Get the DamageSource of the CombatEntry instance.
+     */
     public DamageSource getDamageSrc()
     {
         return this.damageSrc;
@@ -31,6 +34,9 @@ public class CombatEntry
         return this.damage;
     }
 
+    /**
+     * Returns true if {@link net.minecraft.util.DamageSource#getEntity() damage source} is a living entity
+     */
     public boolean isLivingDamageSrc()
     {
         return this.damageSrc.getEntity() instanceof EntityLivingBase;

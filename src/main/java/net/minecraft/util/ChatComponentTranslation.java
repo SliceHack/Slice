@@ -32,6 +32,9 @@ public class ChatComponentTranslation extends ChatComponentStyle
         }
     }
 
+    /**
+     * ensures that our children are initialized from the most recent string translation mapping.
+     */
     synchronized void ensureInitialized()
     {
         synchronized (this.syncLock)
@@ -66,6 +69,9 @@ public class ChatComponentTranslation extends ChatComponentStyle
         }
     }
 
+    /**
+     * initializes our children from a format string, using the format args to fill in the placeholder variables.
+     */
     protected void initializeFromFormat(String format)
     {
         boolean flag = false;
@@ -182,6 +188,10 @@ public class ChatComponentTranslation extends ChatComponentStyle
         return Iterators.<IChatComponent>concat(createDeepCopyIterator(this.children), createDeepCopyIterator(this.siblings));
     }
 
+    /**
+     * Gets the text of this component, without any special formatting codes added, for chat.  TODO: why is this two
+     * different methods?
+     */
     public String getUnformattedTextForChat()
     {
         this.ensureInitialized();
@@ -195,6 +205,9 @@ public class ChatComponentTranslation extends ChatComponentStyle
         return stringbuilder.toString();
     }
 
+    /**
+     * Creates a copy of this component.  Almost a deep copy, except the style is shallow-copied.
+     */
     public ChatComponentTranslation createCopy()
     {
         Object[] aobject = new Object[this.formatArgs.length];

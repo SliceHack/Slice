@@ -850,14 +850,13 @@ public class ShadersTex
         int k = 0;
         int[] aint = null;
 
-        for (Object o : list)
+        for (Object s : list)
         {
-            String s = (String) o;
             if (s != null)
             {
                 try
                 {
-                    ResourceLocation resourcelocation = new ResourceLocation(s);
+                    ResourceLocation resourcelocation = new ResourceLocation((String) s);
                     InputStream inputstream = manager.getResource(resourcelocation).getInputStream();
                     BufferedImage bufferedimage = ImageIO.read(inputstream);
 

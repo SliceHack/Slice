@@ -52,7 +52,7 @@ public class ItemCameraTransforms
         this.fixed = fixedIn;
     }
 
-    public void applyTransform(TransformType type)
+    public void applyTransform(ItemCameraTransforms.TransformType type)
     {
         ItemTransformVec3f itemtransformvec3f = this.getTransform(type);
 
@@ -66,7 +66,7 @@ public class ItemCameraTransforms
         }
     }
 
-    public ItemTransformVec3f getTransform(TransformType type)
+    public ItemTransformVec3f getTransform(ItemCameraTransforms.TransformType type)
     {
         switch (type)
         {
@@ -93,7 +93,7 @@ public class ItemCameraTransforms
         }
     }
 
-    public boolean func_181687_c(TransformType type)
+    public boolean func_181687_c(ItemCameraTransforms.TransformType type)
     {
         return !this.getTransform(type).equals(ItemTransformVec3f.DEFAULT);
     }

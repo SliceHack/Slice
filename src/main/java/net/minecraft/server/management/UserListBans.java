@@ -34,6 +34,9 @@ public class UserListBans extends UserList<GameProfile, UserListBansEntry>
         return astring;
     }
 
+    /**
+     * Gets the key value for the given object
+     */
     protected String getObjectKey(GameProfile obj)
     {
         return obj.getId().toString();

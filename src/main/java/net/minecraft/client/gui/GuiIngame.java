@@ -46,7 +46,6 @@ import net.optifine.CustomColors;
 import slice.event.events.Event2D;
 import slice.gui.hud.legacy.HUD;
 
-@SuppressWarnings("all")
 public class GuiIngame extends Gui
 {
     private static final ResourceLocation vignetteTexPath = new ResourceLocation("textures/misc/vignette.png");
@@ -55,27 +54,57 @@ public class GuiIngame extends Gui
     private final Random rand = new Random();
     private final Minecraft mc;
     private final RenderItem itemRenderer;
+
+    /** ChatGUI instance that retains all previous chat data */
     private final GuiNewChat persistantChatGUI;
     private final GuiStreamIndicator streamIndicator;
     private int updateCounter;
+
+    /** The string specifying which record music is playing */
     private String recordPlaying = "";
+
+    /** How many ticks the record playing message will be displayed */
     private int recordPlayingUpFor;
     private boolean recordIsPlaying;
+
+    /** Previous frame vignette brightness (slowly changes by 1% each frame) */
     public float prevVignetteBrightness = 1.0F;
+
+    /** Remaining ticks the item highlight should be visible */
     private int remainingHighlightTicks;
+
+    /** The ItemStack that is currently being highlighted */
     private ItemStack highlightingItemStack;
     private final GuiOverlayDebug overlayDebug;
+
+    /** The spectator GUI for this in-game GUI instance */
     private final GuiSpectator spectatorGui;
     private final GuiPlayerTabOverlay overlayPlayerList;
+
+    /** A timer for the current title and subtitle displayed */
     private int titlesTimer;
+
+    /** The current title displayed */
     private String displayedTitle = "";
+
+    /** The current sub-title displayed */
     private String displayedSubTitle = "";
+
+    /** The time that the title take to fade in */
     private int titleFadeIn;
+
+    /** The time that the title is display */
     private int titleDisplayTime;
+
+    /** The time that the title take to fade out */
     private int titleFadeOut;
     private int playerHealth = 0;
     private int lastPlayerHealth = 0;
+
+    /** The last recorded system time */
     private long lastSystemTime = 0L;
+
+    /** Used with updateCounter to make the heart bar flash */
     private long healthUpdateCounter = 0L;
 
     public GuiIngame(Minecraft mcIn)
@@ -90,6 +119,9 @@ public class GuiIngame extends Gui
         this.setDefaultTitlesTimes();
     }
 
+    /**
+     * Set the differents times for the titles to their default values
+     */
     public void setDefaultTitlesTimes()
     {
         this.titleFadeIn = 10;
@@ -116,7 +148,7 @@ public class GuiIngame extends Gui
 
         ItemStack itemstack = this.mc.thePlayer.inventory.armorItemInSlot(3);
 
-        if (this.mc.gameSettings.thirdPersonView == 0 && itemstack != null && itemstack.getItem() == Item.getItemFromBlock(Blocks.pumpkin))
+        if (this.mc.gameSettings.showDebugInfo == 0 && itemstack != null && itemstack.getItem() == Item.getItemFromBlock(Blocks.pumpkin))
         {
             this.renderPumpkinOverlay(scaledresolution);
         }
@@ -219,7 +251,7 @@ public class GuiIngame extends Gui
             this.renderDemo(scaledresolution);
         }
 
-        if (this.mc.gameSettings.showDebugInfo)
+        if (this.mc.gameSettings.showDebugProfilerChart)
         {
             this.overlayDebug.renderDebugInfo(scaledresolution);
         }
@@ -329,7 +361,7 @@ public class GuiIngame extends Gui
         GlStateManager.popMatrix();
         scoreobjective1 = scoreboard.getObjectiveInDisplaySlot(0);
 
-        if (this.mc.gameSettings.keyBindPlayerList.isKeyDown() && (!this.mc.isIntegratedServerRunning() || this.mc.thePlayer.sendQueue.getPlayerInfoMap().size() > 1 || scoreobjective1 != null))
+        if (this.mc.gameSettings.keyBindCommand.isKeyDown() && (!this.mc.isIntegratedServerRunning() || this.mc.thePlayer.sendQueue.getPlayerInfoMap().size() > 1 || scoreobjective1 != null))
         {
             this.overlayPlayerList.updatePlayerList(true);
             this.overlayPlayerList.renderPlayerlist(i, scoreboard, scoreobjective1);
@@ -500,7 +532,7 @@ public class GuiIngame extends Gui
 
     protected boolean showCrosshair()
     {
-        if (this.mc.gameSettings.showDebugInfo && !this.mc.thePlayer.hasReducedDebug() && !this.mc.gameSettings.reducedDebugInfo)
+        if (this.mc.gameSettings.showDebugProfilerChart && !this.mc.thePlayer.hasReducedDebug() && !this.mc.gameSettings.reducedDebugInfo)
         {
             return false;
         }
@@ -883,6 +915,9 @@ public class GuiIngame extends Gui
         }
     }
 
+    /**
+     * Renders dragon's (boss) health on the HUD
+     */
     private void renderBossHealth()
     {
         if (BossStatus.bossName != null && BossStatus.statusBarTime > 0)
@@ -932,6 +967,12 @@ public class GuiIngame extends Gui
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
+    /**
+     * Renders a Vignette arount the entire screen that changes with light level.
+     *  
+     * @param lightLevel The current brightness
+     * @param scaledRes The current resolution of the game
+     */
     private void renderVignette(float lightLevel, ScaledResolution scaledRes)
     {
         if (!Config.isVignetteEnabled())
@@ -1049,6 +1090,9 @@ public class GuiIngame extends Gui
         }
     }
 
+    /**
+     * The update tick for the ingame UI
+     */
     public void updateTick()
     {
         if (this.recordPlayingUpFor > 0)
@@ -1152,6 +1196,9 @@ public class GuiIngame extends Gui
         this.setRecordPlaying(component.getUnformattedText(), isPlaying);
     }
 
+    /**
+     * returns a pointer to the persistant Chat GUI, containing all previous chat messages and such
+     */
     public GuiNewChat getChatGUI()
     {
         return this.persistantChatGUI;
@@ -1177,6 +1224,9 @@ public class GuiIngame extends Gui
         return this.overlayPlayerList;
     }
 
+    /**
+     * Reset the GuiPlayerTabOverlay's message header and footer
+     */
     public void resetPlayersOverlayFooterHeader()
     {
         this.overlayPlayerList.resetFooterHeader();

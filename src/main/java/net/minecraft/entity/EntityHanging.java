@@ -15,6 +15,8 @@ public abstract class EntityHanging extends Entity
 {
     private int tickCounter1;
     protected BlockPos hangingPosition;
+
+    /** The direction the entity is facing */
     public EnumFacing facingDirection;
 
     public EntityHanging(World worldIn)
@@ -33,6 +35,9 @@ public abstract class EntityHanging extends Entity
     {
     }
 
+    /**
+     * Updates facing and bounding box based on it
+     */
     protected void updateFacingWithBoundingBox(EnumFacing facingDirectionIn)
     {
         Validate.notNull(facingDirectionIn);
@@ -42,6 +47,9 @@ public abstract class EntityHanging extends Entity
         this.updateBoundingBox();
     }
 
+    /**
+     * Updates the entity bounding box based on current facing
+     */
     private void updateBoundingBox()
     {
         if (this.facingDirection != null)
@@ -86,6 +94,9 @@ public abstract class EntityHanging extends Entity
         return p_174858_1_ % 32 == 0 ? 0.5D : 0.0D;
     }
 
+    /**
+     * Called to update the entity's position/logic.
+     */
     public void onUpdate()
     {
         this.prevPosX = this.posX;
@@ -104,6 +115,9 @@ public abstract class EntityHanging extends Entity
         }
     }
 
+    /**
+     * checks to make sure painting can be placed there
+     */
     public boolean onValidSurface()
     {
         if (!this.worldObj.getCollidingBoundingBoxes(this, this.getEntityBoundingBox()).isEmpty())
@@ -143,11 +157,17 @@ public abstract class EntityHanging extends Entity
         }
     }
 
+    /**
+     * Returns true if other Entities should be prevented from moving through this Entity.
+     */
     public boolean canBeCollidedWith()
     {
         return true;
     }
 
+    /**
+     * Called when a player attacks an entity. If this returns true the attack will not happen.
+     */
     public boolean hitByEntity(Entity entityIn)
     {
         return entityIn instanceof EntityPlayer ? this.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer)entityIn), 0.0F) : false;
@@ -158,6 +178,9 @@ public abstract class EntityHanging extends Entity
         return this.facingDirection;
     }
 
+    /**
+     * Called when the entity is attacked.
+     */
     public boolean attackEntityFrom(DamageSource source, float amount)
     {
         if (this.isEntityInvulnerable(source))
@@ -177,6 +200,9 @@ public abstract class EntityHanging extends Entity
         }
     }
 
+    /**
+     * Tries to moves the entity by the passed in displacement. Args: x, y, z
+     */
     public void moveEntity(double x, double y, double z)
     {
         if (!this.worldObj.isRemote && !this.isDead && x * x + y * y + z * z > 0.0D)
@@ -186,6 +212,9 @@ public abstract class EntityHanging extends Entity
         }
     }
 
+    /**
+     * Adds to the current velocity of the entity. Args: x, y, z
+     */
     public void addVelocity(double x, double y, double z)
     {
         if (!this.worldObj.isRemote && !this.isDead && x * x + y * y + z * z > 0.0D)
@@ -195,6 +224,9 @@ public abstract class EntityHanging extends Entity
         }
     }
 
+    /**
+     * (abstract) Protected helper method to write subclass entity data to NBT.
+     */
     public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
         tagCompound.setByte("Facing", (byte)this.facingDirection.getHorizontalIndex());
@@ -203,6 +235,9 @@ public abstract class EntityHanging extends Entity
         tagCompound.setInteger("TileZ", this.getHangingPosition().getZ());
     }
 
+    /**
+     * (abstract) Protected helper method to read subclass entity data from NBT.
+     */
     public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
         this.hangingPosition = new BlockPos(tagCompund.getInteger("TileX"), tagCompund.getInteger("TileY"), tagCompund.getInteger("TileZ"));
@@ -229,6 +264,9 @@ public abstract class EntityHanging extends Entity
 
     public abstract int getHeightPixels();
 
+    /**
+     * Called when this entity is broken. Entity parameter may be null.
+     */
     public abstract void onBroken(Entity brokenEntity);
 
     protected boolean shouldSetPosAfterLoading()
@@ -236,6 +274,9 @@ public abstract class EntityHanging extends Entity
         return false;
     }
 
+    /**
+     * Sets the x,y,z of the entity from the given parameters. Also seems to set up a bounding box.
+     */
     public void setPosition(double x, double y, double z)
     {
         this.posX = x;

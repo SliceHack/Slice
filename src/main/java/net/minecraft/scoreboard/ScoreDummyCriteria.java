@@ -28,8 +28,8 @@ public class ScoreDummyCriteria implements IScoreObjectiveCriteria
         return false;
     }
 
-    public EnumRenderType getRenderType()
+    public IScoreObjectiveCriteria.EnumRenderType getRenderType()
     {
-        return EnumRenderType.INTEGER;
+        return IScoreObjectiveCriteria.EnumRenderType.INTEGER;
     }
 }

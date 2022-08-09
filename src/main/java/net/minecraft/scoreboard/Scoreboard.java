@@ -15,16 +15,24 @@ public class Scoreboard
     private final Map<String, ScoreObjective> scoreObjectives = Maps.<String, ScoreObjective>newHashMap();
     private final Map<IScoreObjectiveCriteria, List<ScoreObjective>> scoreObjectiveCriterias = Maps.<IScoreObjectiveCriteria, List<ScoreObjective>>newHashMap();
     private final Map<String, Map<ScoreObjective, Score>> entitiesScoreObjectives = Maps.<String, Map<ScoreObjective, Score>>newHashMap();
+
+    /** Index 0 is tab menu, 1 is sidebar, and 2 is below name */
     private final ScoreObjective[] objectiveDisplaySlots = new ScoreObjective[19];
     private final Map<String, ScorePlayerTeam> teams = Maps.<String, ScorePlayerTeam>newHashMap();
     private final Map<String, ScorePlayerTeam> teamMemberships = Maps.<String, ScorePlayerTeam>newHashMap();
     private static String[] field_178823_g = null;
 
+    /**
+     * Returns a ScoreObjective for the objective name
+     */
     public ScoreObjective getObjective(String name)
     {
         return (ScoreObjective)this.scoreObjectives.get(name);
     }
 
+    /**
+     * Create and returns the score objective for the given name and ScoreCriteria
+     */
     public ScoreObjective addScoreObjective(String name, IScoreObjectiveCriteria criteria)
     {
         if (name.length() > 16)
@@ -64,6 +72,9 @@ public class Scoreboard
         return collection == null ? Lists.<ScoreObjective>newArrayList() : Lists.newArrayList(collection);
     }
 
+    /**
+     * Returns if the entity has the given ScoreObjective
+     */
     public boolean entityHasObjective(String name, ScoreObjective p_178819_2_)
     {
         Map<ScoreObjective, Score> map = (Map)this.entitiesScoreObjectives.get(name);
@@ -79,6 +90,9 @@ public class Scoreboard
         }
     }
 
+    /**
+     * Returns the value of the given objective for the given entity name
+     */
     public Score getValueFromObjective(String name, ScoreObjective objective)
     {
         if (name.length() > 40)
@@ -135,6 +149,9 @@ public class Scoreboard
         return this.entitiesScoreObjectives.keySet();
     }
 
+    /**
+     * Remove the given ScoreObjective for the given Entity name.
+     */
     public void removeObjectiveFromEntity(String name, ScoreObjective objective)
     {
         if (objective == null)
@@ -223,16 +240,25 @@ public class Scoreboard
         this.onScoreObjectiveRemoved(p_96519_1_);
     }
 
+    /**
+     * 0 is tab menu, 1 is sidebar, 2 is below name
+     */
     public void setObjectiveInDisplaySlot(int p_96530_1_, ScoreObjective p_96530_2_)
     {
         this.objectiveDisplaySlots[p_96530_1_] = p_96530_2_;
     }
 
+    /**
+     * 0 is tab menu, 1 is sidebar, 2 is below name
+     */
     public ScoreObjective getObjectiveInDisplaySlot(int p_96539_1_)
     {
         return this.objectiveDisplaySlots[p_96539_1_];
     }
 
+    /**
+     * Retrieve the ScorePlayerTeam instance identified by the passed team name
+     */
     public ScorePlayerTeam getTeam(String p_96508_1_)
     {
         return (ScorePlayerTeam)this.teams.get(p_96508_1_);
@@ -262,6 +288,9 @@ public class Scoreboard
         }
     }
 
+    /**
+     * Removes the team from the scoreboard, updates all player memberships and broadcasts the deletion to all players
+     */
     public void removeTeam(ScorePlayerTeam p_96511_1_)
     {
         this.teams.remove(p_96511_1_.getRegisteredName());
@@ -274,6 +303,9 @@ public class Scoreboard
         this.func_96513_c(p_96511_1_);
     }
 
+    /**
+     * Adds a player to the given team
+     */
     public boolean addPlayerToTeam(String player, String newTeam)
     {
         if (player.length() > 40)
@@ -314,6 +346,10 @@ public class Scoreboard
         }
     }
 
+    /**
+     * Removes the given username from the given ScorePlayerTeam. If the player is not on the team then an
+     * IllegalStateException is thrown.
+     */
     public void removePlayerFromTeam(String p_96512_1_, ScorePlayerTeam p_96512_2_)
     {
         if (this.getPlayersTeam(p_96512_1_) != p_96512_2_)
@@ -337,11 +373,17 @@ public class Scoreboard
         return this.teams.values();
     }
 
+    /**
+     * Gets the ScorePlayerTeam object for the given username.
+     */
     public ScorePlayerTeam getPlayersTeam(String p_96509_1_)
     {
         return (ScorePlayerTeam)this.teamMemberships.get(p_96509_1_);
     }
 
+    /**
+     * Called when a score objective is added
+     */
     public void onScoreObjectiveAdded(ScoreObjective scoreObjectiveIn)
     {
     }
@@ -366,10 +408,16 @@ public class Scoreboard
     {
     }
 
+    /**
+     * This packet will notify the players that this team is created, and that will register it on the client
+     */
     public void broadcastTeamCreated(ScorePlayerTeam playerTeam)
     {
     }
 
+    /**
+     * This packet will notify the players that this team is updated
+     */
     public void sendTeamUpdate(ScorePlayerTeam playerTeam)
     {
     }
@@ -378,6 +426,9 @@ public class Scoreboard
     {
     }
 
+    /**
+     * Returns 'list' for 0, 'sidebar' for 1, 'belowName for 2, otherwise null.
+     */
     public static String getObjectiveDisplaySlot(int p_96517_0_)
     {
         switch (p_96517_0_)
@@ -406,6 +457,9 @@ public class Scoreboard
         }
     }
 
+    /**
+     * Returns 0 for (case-insensitive) 'list', 1 for 'sidebar', 2 for 'belowName', otherwise -1.
+     */
     public static int getObjectiveDisplaySlotNumber(String p_96537_0_)
     {
         if (p_96537_0_.equalsIgnoreCase("list"))

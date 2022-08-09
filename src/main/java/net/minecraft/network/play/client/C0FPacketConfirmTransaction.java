@@ -11,9 +11,7 @@ public class C0FPacketConfirmTransaction implements Packet<INetHandlerPlayServer
     public short uid;
     public boolean accepted;
 
-    public C0FPacketConfirmTransaction()
-    {
-    }
+    public C0FPacketConfirmTransaction() {}
 
     public C0FPacketConfirmTransaction(int windowId, short uid, boolean accepted)
     {
@@ -22,11 +20,17 @@ public class C0FPacketConfirmTransaction implements Packet<INetHandlerPlayServer
         this.accepted = accepted;
     }
 
+    /**
+     * Passes this Packet on to the NetHandler for processing.
+     */
     public void processPacket(INetHandlerPlayServer handler)
     {
         handler.processConfirmTransaction(this);
     }
 
+    /**
+     * Reads the raw packet data from the data stream.
+     */
     public void readPacketData(PacketBuffer buf) throws IOException
     {
         this.windowId = buf.readByte();
@@ -34,6 +38,9 @@ public class C0FPacketConfirmTransaction implements Packet<INetHandlerPlayServer
         this.accepted = buf.readByte() != 0;
     }
 
+    /**
+     * Writes the raw packet data to the data stream.
+     */
     public void writePacketData(PacketBuffer buf) throws IOException
     {
         buf.writeByte(this.windowId);

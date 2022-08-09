@@ -42,6 +42,8 @@ public class GuiCustomizeWorldScreen extends GuiScreen implements GuiSlider.Form
     };
     private ChunkProviderSettings.Factory field_175334_E = new ChunkProviderSettings.Factory();
     private ChunkProviderSettings.Factory field_175336_F;
+
+    /** A Random instance for this world customization */
     private Random random = new Random();
 
     public GuiCustomizeWorldScreen(GuiScreen p_i45521_1_, String p_i45521_2_)
@@ -50,6 +52,10 @@ public class GuiCustomizeWorldScreen extends GuiScreen implements GuiSlider.Form
         this.func_175324_a(p_i45521_2_);
     }
 
+    /**
+     * Adds the buttons (and other controls) to the screen in question. Called when the GUI is displayed and when the
+     * window resizes, the buttonList is cleared beforehand.
+     */
     public void initGui()
     {
         int i = 0;
@@ -93,6 +99,9 @@ public class GuiCustomizeWorldScreen extends GuiScreen implements GuiSlider.Form
         }
     }
 
+    /**
+     * Handles mouse input.
+     */
     public void handleMouseInput() throws IOException
     {
         super.handleMouseInput();
@@ -715,6 +724,9 @@ public class GuiCustomizeWorldScreen extends GuiScreen implements GuiSlider.Form
         }
     }
 
+    /**
+     * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
+     */
     protected void actionPerformed(GuiButton button) throws IOException
     {
         if (button.enabled)
@@ -852,6 +864,10 @@ public class GuiCustomizeWorldScreen extends GuiScreen implements GuiSlider.Form
         this.field_175347_t.enabled = this.field_175349_r.func_178059_e() != this.field_175349_r.func_178057_f() - 1;
     }
 
+    /**
+     * Fired when a key is typed (except F11 which toggles full screen). This is the equivalent of
+     * KeyListener.keyTyped(KeyEvent e). Args : character (character on the key), keyCode (lwjgl Keyboard key code)
+     */
     protected void keyTyped(char typedChar, int keyCode) throws IOException
     {
         super.keyTyped(typedChar, keyCode);
@@ -915,6 +931,9 @@ public class GuiCustomizeWorldScreen extends GuiScreen implements GuiSlider.Form
         }
     }
 
+    /**
+     * Called when the mouse is clicked. Args : mouseX, mouseY, clickedButton
+     */
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
     {
         super.mouseClicked(mouseX, mouseY, mouseButton);
@@ -925,6 +944,9 @@ public class GuiCustomizeWorldScreen extends GuiScreen implements GuiSlider.Form
         }
     }
 
+    /**
+     * Called when a mouse button is released.  Args : mouseX, mouseY, releaseButton
+     */
     protected void mouseReleased(int mouseX, int mouseY, int state)
     {
         super.mouseReleased(mouseX, mouseY, state);
@@ -939,6 +961,9 @@ public class GuiCustomizeWorldScreen extends GuiScreen implements GuiSlider.Form
         }
     }
 
+    /**
+     * Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
+     */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();

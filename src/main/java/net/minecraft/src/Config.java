@@ -49,7 +49,6 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.FrameTimer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Util;
 import net.optifine.DynamicLights;
 import net.optifine.GlErrors;
 import net.optifine.VersionCheckThread;
@@ -81,8 +80,8 @@ public class Config
     public static final String OF_NAME = "OptiFine";
     public static final String MC_VERSION = "1.8.9";
     public static final String OF_EDITION = "HD_U";
-    public static final String OF_RELEASE = "M6_pre2";
-    public static final String VERSION = "OptiFine_1.8.9_HD_U_M6_pre2";
+    public static final String OF_RELEASE = "M5";
+    public static final String VERSION = "OptiFine_1.8.9_HD_U_M5";
     private static String build = null;
     private static String newRelease = null;
     private static boolean notify64BitJava = false;
@@ -119,7 +118,7 @@ public class Config
 
     public static String getVersion()
     {
-        return "OptiFine_1.8.9_HD_U_M6_pre2";
+        return "OptiFine_1.8.9_HD_U_M5";
     }
 
     public static String getVersionDebug()
@@ -133,7 +132,7 @@ public class Config
             stringbuffer.append(", ");
         }
 
-        stringbuffer.append("OptiFine_1.8.9_HD_U_M6_pre2");
+        stringbuffer.append("OptiFine_1.8.9_HD_U_M5");
         String s = Shaders.getShaderPackName();
 
         if (s != null)
@@ -985,9 +984,9 @@ public class Config
         List list = resourcepackrepository.getRepositoryEntries();
         List list1 = new ArrayList();
 
-        for (Object o: list)
+        for (Object resourcepackrepository$entry0 : list)
         {
-            ResourcePackRepository.Entry resourcepackrepository$entry = (ResourcePackRepository.Entry) o;
+            ResourcePackRepository.Entry resourcepackrepository$entry = (ResourcePackRepository.Entry) resourcepackrepository$entry0;
             list1.add(resourcepackrepository$entry.getResourcePack());
         }
 
@@ -1895,12 +1894,8 @@ public class Config
                 Display.destroy();
                 Display.setDisplayMode(displaymode);
                 Display.create((new PixelFormat()).withDepthBits(24).withSamples(i));
-
-                if (Util.getOSType() == Util.EnumOS.WINDOWS)
-                {
-                    Display.setResizable(false);
-                    Display.setResizable(true);
-                }
+                Display.setResizable(false);
+                Display.setResizable(true);
             }
             catch (LWJGLException lwjglexception2)
             {
@@ -1911,12 +1906,8 @@ public class Config
                 {
                     Display.setDisplayMode(displaymode);
                     Display.create((new PixelFormat()).withDepthBits(24));
-
-                    if (Util.getOSType() == Util.EnumOS.WINDOWS)
-                    {
-                        Display.setResizable(false);
-                        Display.setResizable(true);
-                    }
+                    Display.setResizable(false);
+                    Display.setResizable(true);
                 }
                 catch (LWJGLException lwjglexception1)
                 {
@@ -1926,12 +1917,8 @@ public class Config
                     {
                         Display.setDisplayMode(displaymode);
                         Display.create();
-
-                        if (Util.getOSType() == Util.EnumOS.WINDOWS)
-                        {
-                            Display.setResizable(false);
-                            Display.setResizable(true);
-                        }
+                        Display.setResizable(false);
+                        Display.setResizable(true);
                     }
                     catch (LWJGLException lwjglexception)
                     {
@@ -2055,12 +2042,8 @@ public class Config
                 minecraft.gameSettings.updateVSync();
                 Display.update();
                 GlStateManager.enableTexture2D();
-
-                if (Util.getOSType() == Util.EnumOS.WINDOWS)
-                {
-                    Display.setResizable(false);
-                    Display.setResizable(true);
-                }
+                Display.setResizable(false);
+                Display.setResizable(true);
             }
         }
         catch (Exception exception)

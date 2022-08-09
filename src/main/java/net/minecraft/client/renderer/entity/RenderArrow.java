@@ -18,6 +18,9 @@ public class RenderArrow extends Render<EntityArrow>
         super(renderManagerIn);
     }
 
+    /**
+     * Renders the desired {@code T} type Entity.
+     */
     public void doRender(EntityArrow entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
         this.bindEntityTexture(entity);
@@ -82,6 +85,9 @@ public class RenderArrow extends Render<EntityArrow>
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }
 
+    /**
+     * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
+     */
     protected ResourceLocation getEntityTexture(EntityArrow entity)
     {
         return arrowTextures;

@@ -15,9 +15,13 @@ public class TileEntityPiston extends TileEntity implements ITickable
 {
     private IBlockState pistonState;
     private EnumFacing pistonFacing;
+
+    /** if this piston is extending or not */
     private boolean extending;
     private boolean shouldHeadBeRendered;
     private float progress;
+
+    /** the progress in (de)extending */
     private float lastProgress;
     private List<Entity> field_174933_k = Lists.<Entity>newArrayList();
 
@@ -43,6 +47,9 @@ public class TileEntityPiston extends TileEntity implements ITickable
         return 0;
     }
 
+    /**
+     * Returns true if a piston is extending
+     */
     public boolean isExtending()
     {
         return this.extending;
@@ -58,6 +65,10 @@ public class TileEntityPiston extends TileEntity implements ITickable
         return this.shouldHeadBeRendered;
     }
 
+    /**
+     * Get interpolated progress value (between lastProgress and progress) given the fractional time between ticks as an
+     * argument
+     */
     public float getProgress(float ticks)
     {
         if (ticks > 1.0F)
@@ -133,6 +144,9 @@ public class TileEntityPiston extends TileEntity implements ITickable
         }
     }
 
+    /**
+     * removes a piston's tile entity (and if the piston is moving, stops it)
+     */
     public void clearPistonTileEntity()
     {
         if (this.lastProgress < 1.0F && this.worldObj != null)
@@ -149,6 +163,9 @@ public class TileEntityPiston extends TileEntity implements ITickable
         }
     }
 
+    /**
+     * Like the old updateEntity(), except more generic.
+     */
     public void update()
     {
         this.lastProgress = this.progress;

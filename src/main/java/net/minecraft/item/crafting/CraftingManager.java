@@ -22,9 +22,13 @@ import net.minecraft.world.World;
 
 public class CraftingManager
 {
+    /** The static instance of this class */
     private static final CraftingManager instance = new CraftingManager();
     private final List<IRecipe> recipes = Lists.<IRecipe>newArrayList();
 
+    /**
+     * Returns the static instance of this class
+     */
     public static CraftingManager getInstance()
     {
         return instance;
@@ -189,6 +193,9 @@ public class CraftingManager
         });
     }
 
+    /**
+     * Adds a shaped recipe to the games recipe list.
+     */
     public ShapedRecipes addRecipe(ItemStack stack, Object... recipeComponents)
     {
         String s = "";
@@ -263,6 +270,9 @@ public class CraftingManager
         return shapedrecipes;
     }
 
+    /**
+     * Adds a shapeless crafting recipe to the the game.
+     */
     public void addShapelessRecipe(ItemStack stack, Object... recipeComponents)
     {
         List<ItemStack> list = Lists.<ItemStack>newArrayList();
@@ -291,11 +301,17 @@ public class CraftingManager
         this.recipes.add(new ShapelessRecipes(stack, list));
     }
 
+    /**
+     * Adds an IRecipe to the list of crafting recipes.
+     */
     public void addRecipe(IRecipe recipe)
     {
         this.recipes.add(recipe);
     }
 
+    /**
+     * Retrieves an ItemStack that has multiple recipes for it.
+     */
     public ItemStack findMatchingRecipe(InventoryCrafting p_82787_1_, World worldIn)
     {
         for (IRecipe irecipe : this.recipes)

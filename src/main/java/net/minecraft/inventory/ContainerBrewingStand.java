@@ -9,16 +9,18 @@ import net.minecraft.stats.AchievementList;
 public class ContainerBrewingStand extends Container
 {
     private IInventory tileBrewingStand;
+
+    /** Instance of Slot. */
     private final Slot theSlot;
     private int brewTime;
 
     public ContainerBrewingStand(InventoryPlayer playerInventory, IInventory tileBrewingStandIn)
     {
         this.tileBrewingStand = tileBrewingStandIn;
-        this.addSlotToContainer(new Potion(playerInventory.player, tileBrewingStandIn, 0, 56, 46));
-        this.addSlotToContainer(new Potion(playerInventory.player, tileBrewingStandIn, 1, 79, 53));
-        this.addSlotToContainer(new Potion(playerInventory.player, tileBrewingStandIn, 2, 102, 46));
-        this.theSlot = this.addSlotToContainer(new Ingredient(tileBrewingStandIn, 3, 79, 17));
+        this.addSlotToContainer(new ContainerBrewingStand.Potion(playerInventory.player, tileBrewingStandIn, 0, 56, 46));
+        this.addSlotToContainer(new ContainerBrewingStand.Potion(playerInventory.player, tileBrewingStandIn, 1, 79, 53));
+        this.addSlotToContainer(new ContainerBrewingStand.Potion(playerInventory.player, tileBrewingStandIn, 2, 102, 46));
+        this.theSlot = this.addSlotToContainer(new ContainerBrewingStand.Ingredient(tileBrewingStandIn, 3, 79, 17));
 
         for (int i = 0; i < 3; ++i)
         {
@@ -40,6 +42,9 @@ public class ContainerBrewingStand extends Container
         listener.sendAllWindowProperties(this, this.tileBrewingStand);
     }
 
+    /**
+     * Looks for changes made in the container, sends them to every listener.
+     */
     public void detectAndSendChanges()
     {
         super.detectAndSendChanges();
@@ -67,6 +72,9 @@ public class ContainerBrewingStand extends Container
         return this.tileBrewingStand.isUseableByPlayer(playerIn);
     }
 
+    /**
+     * Take a stack from the specified inventory slot.
+     */
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
     {
         ItemStack itemstack = null;
@@ -86,7 +94,7 @@ public class ContainerBrewingStand extends Container
                         return null;
                     }
                 }
-                else if (Potion.canHoldPotion(itemstack))
+                else if (ContainerBrewingStand.Potion.canHoldPotion(itemstack))
                 {
                     if (!this.mergeItemStack(itemstack1, 0, 3, false))
                     {

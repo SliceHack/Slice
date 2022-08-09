@@ -7,26 +7,32 @@ import net.minecraft.util.LongHashMap;
 
 public class BiomeCache
 {
+    /** Reference to the WorldChunkManager */
     private final WorldChunkManager chunkManager;
+
+    /** The last time this BiomeCache was cleaned, in milliseconds. */
     private long lastCleanupTime;
-    private LongHashMap<Block> cacheMap = new LongHashMap();
-    private List<Block> cache = Lists.<Block>newArrayList();
+    private LongHashMap<BiomeCache.Block> cacheMap = new LongHashMap();
+    private List<BiomeCache.Block> cache = Lists.<BiomeCache.Block>newArrayList();
 
     public BiomeCache(WorldChunkManager chunkManagerIn)
     {
         this.chunkManager = chunkManagerIn;
     }
 
-    public Block getBiomeCacheBlock(int x, int z)
+    /**
+     * Returns a biome cache block at location specified.
+     */
+    public BiomeCache.Block getBiomeCacheBlock(int x, int z)
     {
         x = x >> 4;
         z = z >> 4;
         long i = (long)x & 4294967295L | ((long)z & 4294967295L) << 32;
-        Block biomecache$block = (Block)this.cacheMap.getValueByKey(i);
+        BiomeCache.Block biomecache$block = (BiomeCache.Block)this.cacheMap.getValueByKey(i);
 
         if (biomecache$block == null)
         {
-            biomecache$block = new Block(x, z);
+            biomecache$block = new BiomeCache.Block(x, z);
             this.cacheMap.add(i, biomecache$block);
             this.cache.add(biomecache$block);
         }
@@ -41,6 +47,9 @@ public class BiomeCache
         return biomegenbase == null ? p_180284_3_ : biomegenbase;
     }
 
+    /**
+     * Removes BiomeCacheBlocks from this cache that haven't been accessed in at least 30 seconds.
+     */
     public void cleanupCache()
     {
         long i = MinecraftServer.getCurrentTimeMillis();
@@ -52,7 +61,7 @@ public class BiomeCache
 
             for (int k = 0; k < this.cache.size(); ++k)
             {
-                Block biomecache$block = (Block)this.cache.get(k);
+                BiomeCache.Block biomecache$block = (BiomeCache.Block)this.cache.get(k);
                 long l = i - biomecache$block.lastAccessTime;
 
                 if (l > 30000L || l < 0L)
@@ -65,6 +74,9 @@ public class BiomeCache
         }
     }
 
+    /**
+     * Returns the array of cached biome types in the BiomeCacheBlock at the given location.
+     */
     public BiomeGenBase[] getCachedBiomes(int x, int z)
     {
         return this.getBiomeCacheBlock(x, z).biomes;

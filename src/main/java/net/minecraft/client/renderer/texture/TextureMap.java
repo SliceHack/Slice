@@ -776,9 +776,9 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
     {
         Map map = new HashMap();
 
-        for (Object o : p_detectMinimumSpriteSize_1_.entrySet())
+        for (Object entry0 : p_detectMinimumSpriteSize_1_.entrySet())
         {
-            Entry entry = (Entry) o;
+            Entry entry = (Entry) entry0;
             TextureAtlasSprite textureatlassprite = (TextureAtlasSprite)entry.getValue();
             ResourceLocation resourcelocation = new ResourceLocation(textureatlassprite.getIconName());
             ResourceLocation resourcelocation1 = this.completeResourceLocation(resourcelocation);

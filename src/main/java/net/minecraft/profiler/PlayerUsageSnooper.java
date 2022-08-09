@@ -18,12 +18,18 @@ public class PlayerUsageSnooper
     private final Map<String, Object> snooperStats = Maps.<String, Object>newHashMap();
     private final Map<String, Object> clientStats = Maps.<String, Object>newHashMap();
     private final String uniqueID = UUID.randomUUID().toString();
+
+    /** URL of the server to send the report to */
     private final URL serverUrl;
     private final IPlayerUsage playerStatsCollector;
+
+    /** set to fire the snooperThread every 15 mins */
     private final Timer threadTrigger = new Timer("Snooper Timer", true);
     private final Object syncLock = new Object();
     private final long minecraftStartTimeMilis;
     private boolean isRunning;
+
+    /** incremented on every getSelfCounterFor */
     private int selfCounter;
 
     public PlayerUsageSnooper(String side, IPlayerUsage playerStatCollector, long startTime)
@@ -41,6 +47,9 @@ public class PlayerUsageSnooper
         this.minecraftStartTimeMilis = startTime;
     }
 
+    /**
+     * Note issuing start multiple times is not an error.
+     */
     public void startSnooper()
     {
         if (!this.isRunning)
@@ -75,6 +84,9 @@ public class PlayerUsageSnooper
         }
     }
 
+    /**
+     * Add OS data into the snooper
+     */
     private void addOSData()
     {
         this.addJvmArgsToSnooper();
@@ -167,6 +179,9 @@ public class PlayerUsageSnooper
         return this.uniqueID;
     }
 
+    /**
+     * Returns the saved value of System#currentTimeMillis when the game started
+     */
     public long getMinecraftStartTimeMillis()
     {
         return this.minecraftStartTimeMilis;

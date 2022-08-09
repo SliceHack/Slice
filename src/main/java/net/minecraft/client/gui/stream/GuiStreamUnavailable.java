@@ -27,16 +27,16 @@ public class GuiStreamUnavailable extends GuiScreen
     private static final Logger field_152322_a = LogManager.getLogger();
     private final IChatComponent field_152324_f;
     private final GuiScreen parentScreen;
-    private final Reason field_152326_h;
+    private final GuiStreamUnavailable.Reason field_152326_h;
     private final List<ChatComponentTranslation> field_152327_i;
     private final List<String> field_152323_r;
 
-    public GuiStreamUnavailable(GuiScreen p_i1070_1_, Reason p_i1070_2_)
+    public GuiStreamUnavailable(GuiScreen p_i1070_1_, GuiStreamUnavailable.Reason p_i1070_2_)
     {
         this(p_i1070_1_, p_i1070_2_, (List<ChatComponentTranslation>)null);
     }
 
-    public GuiStreamUnavailable(GuiScreen parentScreenIn, Reason p_i46311_2_, List<ChatComponentTranslation> p_i46311_3_)
+    public GuiStreamUnavailable(GuiScreen parentScreenIn, GuiStreamUnavailable.Reason p_i46311_2_, List<ChatComponentTranslation> p_i46311_3_)
     {
         this.field_152324_f = new ChatComponentTranslation("stream.unavailable.title", new Object[0]);
         this.field_152323_r = Lists.<String>newArrayList();
@@ -45,6 +45,10 @@ public class GuiStreamUnavailable extends GuiScreen
         this.field_152327_i = p_i46311_3_;
     }
 
+    /**
+     * Adds the buttons (and other controls) to the screen in question. Called when the GUI is displayed and when the
+     * window resizes, the buttonList is cleared beforehand.
+     */
     public void initGui()
     {
         if (this.field_152323_r.isEmpty())
@@ -73,10 +77,16 @@ public class GuiStreamUnavailable extends GuiScreen
         }
     }
 
+    /**
+     * Called when the screen is unloaded. Used to disable keyboard repeat events
+     */
     public void onGuiClosed()
     {
     }
 
+    /**
+     * Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
+     */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
@@ -93,6 +103,10 @@ public class GuiStreamUnavailable extends GuiScreen
     }
 
     @SuppressWarnings("incomplete-switch")
+
+    /**
+     * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
+     */
     protected void actionPerformed(GuiButton button) throws IOException
     {
         if (button.enabled)
@@ -151,17 +165,17 @@ public class GuiStreamUnavailable extends GuiScreen
             list.add(new ChatComponentTranslation("stream.unavailable.no_fbo.blend", new Object[] {Boolean.valueOf(GLContext.getCapabilities().GL_EXT_blend_func_separate)}));
             list.add(new ChatComponentTranslation("stream.unavailable.no_fbo.arb", new Object[] {Boolean.valueOf(GLContext.getCapabilities().GL_ARB_framebuffer_object)}));
             list.add(new ChatComponentTranslation("stream.unavailable.no_fbo.ext", new Object[] {Boolean.valueOf(GLContext.getCapabilities().GL_EXT_framebuffer_object)}));
-            minecraft.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, Reason.NO_FBO, list));
+            minecraft.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, GuiStreamUnavailable.Reason.NO_FBO, list));
         }
         else if (istream instanceof NullStream)
         {
             if (((NullStream)istream).func_152937_a().getMessage().contains("Can\'t load AMD 64-bit .dll on a IA 32-bit platform"))
             {
-                minecraft.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, Reason.LIBRARY_ARCH_MISMATCH));
+                minecraft.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, GuiStreamUnavailable.Reason.LIBRARY_ARCH_MISMATCH));
             }
             else
             {
-                minecraft.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, Reason.LIBRARY_FAILURE));
+                minecraft.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, GuiStreamUnavailable.Reason.LIBRARY_FAILURE));
             }
         }
         else if (!istream.func_152928_D() && istream.func_152912_E() == ErrorCode.TTV_EC_OS_TOO_OLD)
@@ -169,26 +183,26 @@ public class GuiStreamUnavailable extends GuiScreen
             switch (Util.getOSType())
             {
                 case WINDOWS:
-                    minecraft.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, Reason.UNSUPPORTED_OS_WINDOWS));
+                    minecraft.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, GuiStreamUnavailable.Reason.UNSUPPORTED_OS_WINDOWS));
                     break;
 
                 case OSX:
-                    minecraft.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, Reason.UNSUPPORTED_OS_MAC));
+                    minecraft.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, GuiStreamUnavailable.Reason.UNSUPPORTED_OS_MAC));
                     break;
 
                 default:
-                    minecraft.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, Reason.UNSUPPORTED_OS_OTHER));
+                    minecraft.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, GuiStreamUnavailable.Reason.UNSUPPORTED_OS_OTHER));
             }
         }
         else if (!minecraft.getTwitchDetails().containsKey("twitch_access_token"))
         {
             if (minecraft.getSession().getSessionType() == Session.Type.LEGACY)
             {
-                minecraft.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, Reason.ACCOUNT_NOT_MIGRATED));
+                minecraft.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, GuiStreamUnavailable.Reason.ACCOUNT_NOT_MIGRATED));
             }
             else
             {
-                minecraft.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, Reason.ACCOUNT_NOT_BOUND));
+                minecraft.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, GuiStreamUnavailable.Reason.ACCOUNT_NOT_BOUND));
             }
         }
         else if (!istream.func_152913_F())
@@ -196,22 +210,22 @@ public class GuiStreamUnavailable extends GuiScreen
             switch (istream.func_152918_H())
             {
                 case INVALID_TOKEN:
-                    minecraft.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, Reason.FAILED_TWITCH_AUTH));
+                    minecraft.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, GuiStreamUnavailable.Reason.FAILED_TWITCH_AUTH));
                     break;
 
                 case ERROR:
                 default:
-                    minecraft.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, Reason.FAILED_TWITCH_AUTH_ERROR));
+                    minecraft.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, GuiStreamUnavailable.Reason.FAILED_TWITCH_AUTH_ERROR));
             }
         }
         else if (istream.func_152912_E() != null)
         {
             List<ChatComponentTranslation> list1 = Arrays.<ChatComponentTranslation>asList(new ChatComponentTranslation[] {new ChatComponentTranslation("stream.unavailable.initialization_failure.extra", new Object[]{ErrorCode.getString(istream.func_152912_E())})});
-            minecraft.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, Reason.INITIALIZATION_FAILURE, list1));
+            minecraft.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, GuiStreamUnavailable.Reason.INITIALIZATION_FAILURE, list1));
         }
         else
         {
-            minecraft.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, Reason.UNKNOWN));
+            minecraft.displayGuiScreen(new GuiStreamUnavailable(p_152321_0_, GuiStreamUnavailable.Reason.UNKNOWN));
         }
     }
 

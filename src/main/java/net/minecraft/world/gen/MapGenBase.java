@@ -7,8 +7,13 @@ import net.minecraft.world.chunk.IChunkProvider;
 
 public class MapGenBase
 {
+    /** The number of Chunks to gen-check in any given direction. */
     protected int range = 8;
+
+    /** The RNG used by the MapGen classes. */
     protected Random rand = new Random();
+
+    /** This world object. */
     protected World worldObj;
 
     public void generate(IChunkProvider chunkProviderIn, World worldIn, int x, int z, ChunkPrimer chunkPrimerIn)
@@ -31,6 +36,9 @@ public class MapGenBase
         }
     }
 
+    /**
+     * Recursively called by generate()
+     */
     protected void recursiveGenerate(World worldIn, int chunkX, int chunkZ, int p_180701_4_, int p_180701_5_, ChunkPrimer chunkPrimerIn)
     {
     }

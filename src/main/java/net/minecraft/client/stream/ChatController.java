@@ -28,18 +28,18 @@ import tv.twitch.chat.StandardChatAPI;
 public class ChatController
 {
     private static final Logger LOGGER = LogManager.getLogger();
-    protected ChatListener field_153003_a = null;
+    protected ChatController.ChatListener field_153003_a = null;
     protected String field_153004_b = "";
     protected String field_153006_d = "";
     protected String field_153007_e = "";
     protected Core field_175992_e = null;
     protected Chat field_153008_f = null;
-    protected ChatState field_153011_i = ChatState.Uninitialized;
+    protected ChatController.ChatState field_153011_i = ChatController.ChatState.Uninitialized;
     protected AuthToken field_153012_j = new AuthToken();
-    protected HashMap<String, ChatChannelListener> field_175998_i = new HashMap();
+    protected HashMap<String, ChatController.ChatChannelListener> field_175998_i = new HashMap();
     protected int field_153015_m = 128;
-    protected EnumEmoticonMode field_175997_k = EnumEmoticonMode.None;
-    protected EnumEmoticonMode field_175995_l = EnumEmoticonMode.None;
+    protected ChatController.EnumEmoticonMode field_175997_k = ChatController.EnumEmoticonMode.None;
+    protected ChatController.EnumEmoticonMode field_175995_l = ChatController.EnumEmoticonMode.None;
     protected ChatEmoticonData field_175996_m = null;
     protected int field_175993_n = 500;
     protected int field_175994_o = 2000;
@@ -52,11 +52,11 @@ public class ChatController
                 ChatController.this.field_153008_f.setMessageFlushInterval(ChatController.this.field_175993_n);
                 ChatController.this.field_153008_f.setUserChangeEventInterval(ChatController.this.field_175994_o);
                 ChatController.this.func_153001_r();
-                ChatController.this.func_175985_a(ChatState.Initialized);
+                ChatController.this.func_175985_a(ChatController.ChatState.Initialized);
             }
             else
             {
-                ChatController.this.func_175985_a(ChatState.Uninitialized);
+                ChatController.this.func_175985_a(ChatController.ChatState.Uninitialized);
             }
 
             try
@@ -83,11 +83,11 @@ public class ChatController
                     ChatController.this.func_152995_h(String.format("Error shutting down the Twitch sdk: %s", new Object[] {s}));
                 }
 
-                ChatController.this.func_175985_a(ChatState.Uninitialized);
+                ChatController.this.func_175985_a(ChatController.ChatState.Uninitialized);
             }
             else
             {
-                ChatController.this.func_175985_a(ChatState.Initialized);
+                ChatController.this.func_175985_a(ChatController.ChatState.Initialized);
                 ChatController.this.func_152995_h(String.format("Error shutting down Twith chat: %s", new Object[] {p_chatShutdownCallback_1_}));
             }
 
@@ -112,7 +112,7 @@ public class ChatController
         }
     };
 
-    public void func_152990_a(ChatListener p_152990_1_)
+    public void func_152990_a(ChatController.ChatListener p_152990_1_)
     {
         this.field_153003_a = p_152990_1_;
     }
@@ -132,7 +132,7 @@ public class ChatController
         this.field_153004_b = p_152998_1_;
     }
 
-    public ChatState func_153000_j()
+    public ChatController.ChatState func_153000_j()
     {
         return this.field_153011_i;
     }
@@ -145,20 +145,20 @@ public class ChatController
         }
         else
         {
-            ChatChannelListener chatcontroller$chatchannellistener = (ChatChannelListener)this.field_175998_i.get(p_175990_1_);
-            return chatcontroller$chatchannellistener.func_176040_a() == EnumChannelState.Connected;
+            ChatController.ChatChannelListener chatcontroller$chatchannellistener = (ChatController.ChatChannelListener)this.field_175998_i.get(p_175990_1_);
+            return chatcontroller$chatchannellistener.func_176040_a() == ChatController.EnumChannelState.Connected;
         }
     }
 
-    public EnumChannelState func_175989_e(String p_175989_1_)
+    public ChatController.EnumChannelState func_175989_e(String p_175989_1_)
     {
         if (!this.field_175998_i.containsKey(p_175989_1_))
         {
-            return EnumChannelState.Disconnected;
+            return ChatController.EnumChannelState.Disconnected;
         }
         else
         {
-            ChatChannelListener chatcontroller$chatchannellistener = (ChatChannelListener)this.field_175998_i.get(p_175989_1_);
+            ChatController.ChatChannelListener chatcontroller$chatchannellistener = (ChatController.ChatChannelListener)this.field_175998_i.get(p_175989_1_);
             return chatcontroller$chatchannellistener.func_176040_a();
         }
     }
@@ -177,18 +177,18 @@ public class ChatController
 
     public boolean func_175984_n()
     {
-        if (this.field_153011_i != ChatState.Uninitialized)
+        if (this.field_153011_i != ChatController.ChatState.Uninitialized)
         {
             return false;
         }
         else
         {
-            this.func_175985_a(ChatState.Initializing);
+            this.func_175985_a(ChatController.ChatState.Initializing);
             ErrorCode errorcode = this.field_175992_e.initialize(this.field_153006_d, (String)null);
 
             if (ErrorCode.failed(errorcode))
             {
-                this.func_175985_a(ChatState.Uninitialized);
+                this.func_175985_a(ChatController.ChatState.Uninitialized);
                 String s1 = ErrorCode.getString(errorcode);
                 this.func_152995_h(String.format("Error initializing Twitch sdk: %s", new Object[] {s1}));
                 return false;
@@ -217,14 +217,14 @@ public class ChatController
                 if (ErrorCode.failed(errorcode))
                 {
                     this.field_175992_e.shutdown();
-                    this.func_175985_a(ChatState.Uninitialized);
+                    this.func_175985_a(ChatController.ChatState.Uninitialized);
                     String s = ErrorCode.getString(errorcode);
                     this.func_152995_h(String.format("Error initializing Twitch chat: %s", new Object[] {s}));
                     return false;
                 }
                 else
                 {
-                    this.func_175985_a(ChatState.Initialized);
+                    this.func_175985_a(ChatController.ChatState.Initialized);
                     return true;
                 }
             }
@@ -238,7 +238,7 @@ public class ChatController
 
     protected boolean func_175987_a(String p_175987_1_, boolean p_175987_2_)
     {
-        if (this.field_153011_i != ChatState.Initialized)
+        if (this.field_153011_i != ChatController.ChatState.Initialized)
         {
             return false;
         }
@@ -249,7 +249,7 @@ public class ChatController
         }
         else if (p_175987_1_ != null && !p_175987_1_.equals(""))
         {
-            ChatChannelListener chatcontroller$chatchannellistener = new ChatChannelListener(p_175987_1_);
+            ChatController.ChatChannelListener chatcontroller$chatchannellistener = new ChatController.ChatChannelListener(p_175987_1_);
             this.field_175998_i.put(p_175987_1_, chatcontroller$chatchannellistener);
             boolean flag = chatcontroller$chatchannellistener.func_176038_a(p_175987_2_);
 
@@ -268,7 +268,7 @@ public class ChatController
 
     public boolean func_175991_l(String p_175991_1_)
     {
-        if (this.field_153011_i != ChatState.Initialized)
+        if (this.field_153011_i != ChatController.ChatState.Initialized)
         {
             return false;
         }
@@ -279,14 +279,14 @@ public class ChatController
         }
         else
         {
-            ChatChannelListener chatcontroller$chatchannellistener = (ChatChannelListener)this.field_175998_i.get(p_175991_1_);
+            ChatController.ChatChannelListener chatcontroller$chatchannellistener = (ChatController.ChatChannelListener)this.field_175998_i.get(p_175991_1_);
             return chatcontroller$chatchannellistener.func_176034_g();
         }
     }
 
     public boolean func_152993_m()
     {
-        if (this.field_153011_i != ChatState.Initialized)
+        if (this.field_153011_i != ChatController.ChatState.Initialized)
         {
             return false;
         }
@@ -303,7 +303,7 @@ public class ChatController
             else
             {
                 this.func_152996_t();
-                this.func_175985_a(ChatState.ShuttingDown);
+                this.func_175985_a(ChatController.ChatState.ShuttingDown);
                 return true;
             }
         }
@@ -311,13 +311,13 @@ public class ChatController
 
     public void func_175988_p()
     {
-        if (this.func_153000_j() != ChatState.Uninitialized)
+        if (this.func_153000_j() != ChatController.ChatState.Uninitialized)
         {
             this.func_152993_m();
 
-            if (this.func_153000_j() == ChatState.ShuttingDown)
+            if (this.func_153000_j() == ChatController.ChatState.ShuttingDown)
             {
-                while (this.func_153000_j() != ChatState.Uninitialized)
+                while (this.func_153000_j() != ChatController.ChatState.Uninitialized)
                 {
                     try
                     {
@@ -335,7 +335,7 @@ public class ChatController
 
     public void func_152997_n()
     {
-        if (this.field_153011_i != ChatState.Uninitialized)
+        if (this.field_153011_i != ChatController.ChatState.Uninitialized)
         {
             ErrorCode errorcode = this.field_153008_f.flushEvents();
 
@@ -349,7 +349,7 @@ public class ChatController
 
     public boolean func_175986_a(String p_175986_1_, String p_175986_2_)
     {
-        if (this.field_153011_i != ChatState.Initialized)
+        if (this.field_153011_i != ChatController.ChatState.Initialized)
         {
             return false;
         }
@@ -360,12 +360,12 @@ public class ChatController
         }
         else
         {
-            ChatChannelListener chatcontroller$chatchannellistener = (ChatChannelListener)this.field_175998_i.get(p_175986_1_);
+            ChatController.ChatChannelListener chatcontroller$chatchannellistener = (ChatController.ChatChannelListener)this.field_175998_i.get(p_175986_1_);
             return chatcontroller$chatchannellistener.func_176037_b(p_175986_2_);
         }
     }
 
-    protected void func_175985_a(ChatState p_175985_1_)
+    protected void func_175985_a(ChatController.ChatState p_175985_1_)
     {
         if (p_175985_1_ != this.field_153011_i)
         {
@@ -387,7 +387,7 @@ public class ChatController
 
     protected void func_153001_r()
     {
-        if (this.field_175995_l != EnumEmoticonMode.None)
+        if (this.field_175995_l != ChatController.EnumEmoticonMode.None)
         {
             if (this.field_175996_m == null)
             {
@@ -468,7 +468,7 @@ public class ChatController
     {
         protected String field_176048_a = null;
         protected boolean field_176046_b = false;
-        protected EnumChannelState field_176047_c = EnumChannelState.Created;
+        protected ChatController.EnumChannelState field_176047_c = ChatController.EnumChannelState.Created;
         protected List<ChatUserInfo> field_176044_d = Lists.<ChatUserInfo>newArrayList();
         protected LinkedList<ChatRawMessage> field_176045_e = new LinkedList();
         protected LinkedList<ChatTokenizedMessage> field_176042_f = new LinkedList();
@@ -479,7 +479,7 @@ public class ChatController
             this.field_176048_a = p_i46061_2_;
         }
 
-        public EnumChannelState func_176040_a()
+        public ChatController.EnumChannelState func_176040_a()
         {
             return this.field_176047_c;
         }
@@ -507,7 +507,7 @@ public class ChatController
             }
             else
             {
-                this.func_176035_a(EnumChannelState.Connecting);
+                this.func_176035_a(ChatController.EnumChannelState.Connecting);
                 this.func_176041_h();
                 return true;
             }
@@ -528,7 +528,7 @@ public class ChatController
                         return false;
                     }
 
-                    this.func_176035_a(EnumChannelState.Disconnecting);
+                    this.func_176035_a(ChatController.EnumChannelState.Disconnecting);
                     return true;
 
                 case Created:
@@ -539,7 +539,7 @@ public class ChatController
             }
         }
 
-        protected void func_176035_a(EnumChannelState p_176035_1_)
+        protected void func_176035_a(ChatController.EnumChannelState p_176035_1_)
         {
             if (p_176035_1_ != this.field_176047_c)
             {
@@ -549,7 +549,7 @@ public class ChatController
 
         public void func_176032_a(String p_176032_1_)
         {
-            if (ChatController.this.field_175995_l == EnumEmoticonMode.None)
+            if (ChatController.this.field_175995_l == ChatController.EnumEmoticonMode.None)
             {
                 this.field_176045_e.clear();
                 this.field_176042_f.clear();
@@ -602,7 +602,7 @@ public class ChatController
 
         public boolean func_176037_b(String p_176037_1_)
         {
-            if (this.field_176047_c != EnumChannelState.Connected)
+            if (this.field_176047_c != ChatController.EnumChannelState.Connected)
             {
                 return false;
             }
@@ -625,7 +625,7 @@ public class ChatController
 
         protected void func_176041_h()
         {
-            if (ChatController.this.field_175995_l != EnumEmoticonMode.None)
+            if (ChatController.this.field_175995_l != ChatController.EnumEmoticonMode.None)
             {
                 if (this.field_176043_g == null)
                 {
@@ -729,9 +729,9 @@ public class ChatController
 
         private void func_176030_k()
         {
-            if (this.field_176047_c != EnumChannelState.Disconnected)
+            if (this.field_176047_c != ChatController.EnumChannelState.Disconnected)
             {
-                this.func_176035_a(EnumChannelState.Disconnected);
+                this.func_176035_a(ChatController.EnumChannelState.Disconnected);
                 this.func_176036_d(this.field_176048_a);
                 this.func_176033_j();
             }
@@ -751,7 +751,7 @@ public class ChatController
             switch (p_chatChannelMembershipCallback_2_)
             {
                 case TTV_CHAT_JOINED_CHANNEL:
-                    this.func_176035_a(EnumChannelState.Connected);
+                    this.func_176035_a(ChatController.EnumChannelState.Connected);
                     this.func_176031_c(p_chatChannelMembershipCallback_1_);
                     break;
 
@@ -876,7 +876,7 @@ public class ChatController
 
         void func_176024_e();
 
-        void func_176017_a(ChatState p_176017_1_);
+        void func_176017_a(ChatController.ChatState p_176017_1_);
 
         void func_176025_a(String p_176025_1_, ChatTokenizedMessage[] p_176025_2_);
 

@@ -24,11 +24,25 @@ import org.apache.logging.log4j.Logger;
 public class GuiMerchant extends GuiContainer
 {
     private static final Logger logger = LogManager.getLogger();
+
+    /** The GUI texture for the villager merchant GUI. */
     private static final ResourceLocation MERCHANT_GUI_TEXTURE = new ResourceLocation("textures/gui/container/villager.png");
+
+    /** The current IMerchant instance in use for this specific merchant. */
     private IMerchant merchant;
-    private MerchantButton nextButton;
-    private MerchantButton previousButton;
+
+    /** The button which proceeds to the next available merchant recipe. */
+    private GuiMerchant.MerchantButton nextButton;
+
+    /** Returns to the previous Merchant recipe if one is applicable. */
+    private GuiMerchant.MerchantButton previousButton;
+
+    /**
+     * The integer value corresponding to the currently selected merchant recipe.
+     */
     private int selectedMerchantRecipe;
+
+    /** The chat component utilized by this GuiMerchant instance. */
     private IChatComponent chatComponent;
 
     public GuiMerchant(InventoryPlayer p_i45500_1_, IMerchant p_i45500_2_, World worldIn)
@@ -38,17 +52,24 @@ public class GuiMerchant extends GuiContainer
         this.chatComponent = p_i45500_2_.getDisplayName();
     }
 
+    /**
+     * Adds the buttons (and other controls) to the screen in question. Called when the GUI is displayed and when the
+     * window resizes, the buttonList is cleared beforehand.
+     */
     public void initGui()
     {
         super.initGui();
         int i = (this.width - this.xSize) / 2;
         int j = (this.height - this.ySize) / 2;
-        this.buttonList.add(this.nextButton = new MerchantButton(1, i + 120 + 27, j + 24 - 1, true));
-        this.buttonList.add(this.previousButton = new MerchantButton(2, i + 36 - 19, j + 24 - 1, false));
+        this.buttonList.add(this.nextButton = new GuiMerchant.MerchantButton(1, i + 120 + 27, j + 24 - 1, true));
+        this.buttonList.add(this.previousButton = new GuiMerchant.MerchantButton(2, i + 36 - 19, j + 24 - 1, false));
         this.nextButton.enabled = false;
         this.previousButton.enabled = false;
     }
 
+    /**
+     * Draw the foreground layer for the GuiContainer (everything in front of the items). Args : mouseX, mouseY
+     */
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
         String s = this.chatComponent.getUnformattedText();
@@ -56,6 +77,9 @@ public class GuiMerchant extends GuiContainer
         this.fontRendererObj.drawString(I18n.format("container.inventory", new Object[0]), 8, this.ySize - 96 + 2, 4210752);
     }
 
+    /**
+     * Called from the main game loop to update the screen.
+     */
     public void updateScreen()
     {
         super.updateScreen();
@@ -68,6 +92,9 @@ public class GuiMerchant extends GuiContainer
         }
     }
 
+    /**
+     * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
+     */
     protected void actionPerformed(GuiButton button) throws IOException
     {
         boolean flag = false;
@@ -105,6 +132,9 @@ public class GuiMerchant extends GuiContainer
         }
     }
 
+    /**
+     * Args : renderPartialTicks, mouseX, mouseY
+     */
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -136,6 +166,9 @@ public class GuiMerchant extends GuiContainer
         }
     }
 
+    /**
+     * Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
+     */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         super.drawScreen(mouseX, mouseY, partialTicks);

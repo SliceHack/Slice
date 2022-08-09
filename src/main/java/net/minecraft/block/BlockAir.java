@@ -17,6 +17,9 @@ public class BlockAir extends Block
         super(Material.air);
     }
 
+    /**
+     * The type of render function called. 3 for standard block models, 2 for TESR's, 1 for liquids, -1 is no render
+     */
     public int getRenderType()
     {
         return -1;
@@ -27,6 +30,9 @@ public class BlockAir extends Block
         return null;
     }
 
+    /**
+     * Used to determine ambient occlusion and culling when rebuilding chunks for render
+     */
     public boolean isOpaqueCube()
     {
         return false;
@@ -37,10 +43,16 @@ public class BlockAir extends Block
         return false;
     }
 
+    /**
+     * Spawns this Block's drops into the World as EntityItems.
+     */
     public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune)
     {
     }
 
+    /**
+     * Whether this Block can be replaced directly by other blocks (true for e.g. tall grass)
+     */
     public boolean isReplaceable(World worldIn, BlockPos pos)
     {
         return true;

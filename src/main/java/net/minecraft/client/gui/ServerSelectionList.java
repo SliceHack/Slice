@@ -11,7 +11,7 @@ public class ServerSelectionList extends GuiListExtended
     private final GuiMultiplayer owner;
     private final List<ServerListEntryNormal> serverListInternet = Lists.<ServerListEntryNormal>newArrayList();
     private final List<ServerListEntryLanDetected> serverListLan = Lists.<ServerListEntryLanDetected>newArrayList();
-    private final IGuiListEntry lanScanEntry = new ServerListEntryLanScan();
+    private final GuiListExtended.IGuiListEntry lanScanEntry = new ServerListEntryLanScan();
     private int selectedSlotIndex = -1;
 
     public ServerSelectionList(GuiMultiplayer ownerIn, Minecraft mcIn, int widthIn, int heightIn, int topIn, int bottomIn, int slotHeightIn)
@@ -20,11 +20,14 @@ public class ServerSelectionList extends GuiListExtended
         this.owner = ownerIn;
     }
 
-    public IGuiListEntry getListEntry(int index)
+    /**
+     * Gets the IGuiListEntry object for the given index
+     */
+    public GuiListExtended.IGuiListEntry getListEntry(int index)
     {
         if (index < this.serverListInternet.size())
         {
-            return (IGuiListEntry)this.serverListInternet.get(index);
+            return (GuiListExtended.IGuiListEntry)this.serverListInternet.get(index);
         }
         else
         {
@@ -37,7 +40,7 @@ public class ServerSelectionList extends GuiListExtended
             else
             {
                 --index;
-                return (IGuiListEntry)this.serverListLan.get(index);
+                return (GuiListExtended.IGuiListEntry)this.serverListLan.get(index);
             }
         }
     }
@@ -52,6 +55,9 @@ public class ServerSelectionList extends GuiListExtended
         this.selectedSlotIndex = selectedSlotIndexIn;
     }
 
+    /**
+     * Returns true if the element passed in is currently selected
+     */
     protected boolean isSelected(int slotIndex)
     {
         return slotIndex == this.selectedSlotIndex;
@@ -87,6 +93,9 @@ public class ServerSelectionList extends GuiListExtended
         return super.getScrollBarX() + 30;
     }
 
+    /**
+     * Gets the width of the list
+     */
     public int getListWidth()
     {
         return super.getListWidth() + 85;

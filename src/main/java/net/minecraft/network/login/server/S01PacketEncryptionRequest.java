@@ -24,6 +24,9 @@ public class S01PacketEncryptionRequest implements Packet<INetHandlerLoginClient
         this.verifyToken = verifyToken;
     }
 
+    /**
+     * Reads the raw packet data from the data stream.
+     */
     public void readPacketData(PacketBuffer buf) throws IOException
     {
         this.hashedServerId = buf.readStringFromBuffer(20);
@@ -31,6 +34,9 @@ public class S01PacketEncryptionRequest implements Packet<INetHandlerLoginClient
         this.verifyToken = buf.readByteArray();
     }
 
+    /**
+     * Writes the raw packet data to the data stream.
+     */
     public void writePacketData(PacketBuffer buf) throws IOException
     {
         buf.writeString(this.hashedServerId);
@@ -38,6 +44,9 @@ public class S01PacketEncryptionRequest implements Packet<INetHandlerLoginClient
         buf.writeByteArray(this.verifyToken);
     }
 
+    /**
+     * Passes this Packet on to the NetHandler for processing.
+     */
     public void processPacket(INetHandlerLoginClient handler)
     {
         handler.handleEncryptionRequest(this);

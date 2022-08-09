@@ -23,7 +23,11 @@ public class EntityPigZombie extends EntityZombie
 {
     private static final UUID ATTACK_SPEED_BOOST_MODIFIER_UUID = UUID.fromString("49455A49-7EC5-45BA-B886-3B90B23A1718");
     private static final AttributeModifier ATTACK_SPEED_BOOST_MODIFIER = (new AttributeModifier(ATTACK_SPEED_BOOST_MODIFIER_UUID, "Attacking speed boost", 0.05D, 0)).setSaved(false);
+
+    /** Above zero if this PigZombie is Angry. */
     private int angerLevel;
+
+    /** A random delay until this PigZombie next makes a sound. */
     private int randomSoundDelay;
     private UUID angerTargetUUID;
 
@@ -45,8 +49,8 @@ public class EntityPigZombie extends EntityZombie
 
     protected void applyEntityAI()
     {
-        this.targetTasks.addTask(1, new AIHurtByAggressor(this));
-        this.targetTasks.addTask(2, new AITargetAggressor(this));
+        this.targetTasks.addTask(1, new EntityPigZombie.AIHurtByAggressor(this));
+        this.targetTasks.addTask(2, new EntityPigZombie.AITargetAggressor(this));
     }
 
     protected void applyEntityAttributes()
@@ -57,6 +61,9 @@ public class EntityPigZombie extends EntityZombie
         this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(5.0D);
     }
 
+    /**
+     * Called to update the entity's position/logic.
+     */
     public void onUpdate()
     {
         super.onUpdate();
@@ -96,16 +103,25 @@ public class EntityPigZombie extends EntityZombie
         super.updateAITasks();
     }
 
+    /**
+     * Checks if the entity's current position is a valid location to spawn this entity.
+     */
     public boolean getCanSpawnHere()
     {
         return this.worldObj.getDifficulty() != EnumDifficulty.PEACEFUL;
     }
 
+    /**
+     * Checks that the entity is not colliding with any blocks / liquids
+     */
     public boolean isNotColliding()
     {
         return this.worldObj.checkNoEntityCollision(this.getEntityBoundingBox(), this) && this.worldObj.getCollidingBoundingBoxes(this, this.getEntityBoundingBox()).isEmpty() && !this.worldObj.isAnyLiquid(this.getEntityBoundingBox());
     }
 
+    /**
+     * (abstract) Protected helper method to write subclass entity data to NBT.
+     */
     public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
         super.writeEntityToNBT(tagCompound);
@@ -121,6 +137,9 @@ public class EntityPigZombie extends EntityZombie
         }
     }
 
+    /**
+     * (abstract) Protected helper method to read subclass entity data from NBT.
+     */
     public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
         super.readEntityFromNBT(tagCompund);
@@ -141,6 +160,9 @@ public class EntityPigZombie extends EntityZombie
         }
     }
 
+    /**
+     * Called when the entity is attacked.
+     */
     public boolean attackEntityFrom(DamageSource source, float amount)
     {
         if (this.isEntityInvulnerable(source))
@@ -160,6 +182,9 @@ public class EntityPigZombie extends EntityZombie
         }
     }
 
+    /**
+     * Causes this PigZombie to become angry at the supplied Entity (which will be a player).
+     */
     private void becomeAngryAt(Entity p_70835_1_)
     {
         this.angerLevel = 400 + this.rand.nextInt(400);
@@ -176,21 +201,37 @@ public class EntityPigZombie extends EntityZombie
         return this.angerLevel > 0;
     }
 
+    /**
+     * Returns the sound this mob makes while it's alive.
+     */
     protected String getLivingSound()
     {
         return "mob.zombiepig.zpig";
     }
 
+    /**
+     * Returns the sound this mob makes when it is hurt.
+     */
     protected String getHurtSound()
     {
         return "mob.zombiepig.zpighurt";
     }
 
+    /**
+     * Returns the sound this mob makes on death.
+     */
     protected String getDeathSound()
     {
         return "mob.zombiepig.zpigdeath";
     }
 
+    /**
+     * Drop 0-2 items of this living's type
+     *  
+     * @param wasRecentlyHit true if this this entity was recently hit by appropriate entity (generally only if player
+     * or tameable)
+     * @param lootingModifier level of enchanment to be applied to this drop
+     */
     protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier)
     {
         int i = this.rand.nextInt(2 + lootingModifier);
@@ -208,21 +249,34 @@ public class EntityPigZombie extends EntityZombie
         }
     }
 
+    /**
+     * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
+     */
     public boolean interact(EntityPlayer player)
     {
         return false;
     }
 
+    /**
+     * Causes this Entity to drop a random item.
+     */
     protected void addRandomDrop()
     {
         this.dropItem(Items.gold_ingot, 1);
     }
 
+    /**
+     * Gives armor or weapon for entity based on given DifficultyInstance
+     */
     protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty)
     {
         this.setCurrentItemOrArmor(0, new ItemStack(Items.golden_sword));
     }
 
+    /**
+     * Called only once on an entity when first time spawned, via egg, mob spawner, natural spawning etc, but not called
+     * when entity is reloaded from nbt. Mainly used for initializing attributes and inventory
+     */
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata)
     {
         super.onInitialSpawn(difficulty, livingdata);

@@ -28,18 +28,15 @@ public class PlayerItemsLayer implements LayerRenderer
     {
         if (Config.isShowCapes())
         {
-            if (!entityLiving.isInvisible())
+            if (entityLiving instanceof AbstractClientPlayer)
             {
-                if (entityLiving instanceof AbstractClientPlayer)
-                {
-                    AbstractClientPlayer abstractclientplayer = (AbstractClientPlayer)entityLiving;
-                    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-                    GlStateManager.disableRescaleNormal();
-                    GlStateManager.enableCull();
-                    ModelBiped modelbiped = this.renderPlayer.getMainModel();
-                    PlayerConfigurations.renderPlayerItems(modelbiped, abstractclientplayer, scale, partialTicks);
-                    GlStateManager.disableCull();
-                }
+                AbstractClientPlayer abstractclientplayer = (AbstractClientPlayer)entityLiving;
+                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+                GlStateManager.disableRescaleNormal();
+                GlStateManager.enableCull();
+                ModelBiped modelbiped = this.renderPlayer.getMainModel();
+                PlayerConfigurations.renderPlayerItems(modelbiped, abstractclientplayer, scale, partialTicks);
+                GlStateManager.disableCull();
             }
         }
     }

@@ -27,9 +27,9 @@ public class EntityMinecartTNT extends EntityMinecart
         super(worldIn, x, y, z);
     }
 
-    public EnumMinecartType getMinecartType()
+    public EntityMinecart.EnumMinecartType getMinecartType()
     {
-        return EnumMinecartType.TNT;
+        return EntityMinecart.EnumMinecartType.TNT;
     }
 
     public IBlockState getDefaultDisplayTile()
@@ -37,6 +37,9 @@ public class EntityMinecartTNT extends EntityMinecart
         return Blocks.tnt.getDefaultState();
     }
 
+    /**
+     * Called to update the entity's position/logic.
+     */
     public void onUpdate()
     {
         super.onUpdate();
@@ -62,6 +65,9 @@ public class EntityMinecartTNT extends EntityMinecart
         }
     }
 
+    /**
+     * Called when the entity is attacked.
+     */
     public boolean attackEntityFrom(DamageSource source, float amount)
     {
         Entity entity = source.getSourceOfDamage();
@@ -95,6 +101,9 @@ public class EntityMinecartTNT extends EntityMinecart
         }
     }
 
+    /**
+     * Makes the minecart explode.
+     */
     protected void explodeCart(double p_94103_1_)
     {
         if (!this.worldObj.isRemote)
@@ -122,6 +131,9 @@ public class EntityMinecartTNT extends EntityMinecart
         super.fall(distance, damageMultiplier);
     }
 
+    /**
+     * Called every tick the minecart is on an activator rail. Args: x, y, z, is the rail receiving power
+     */
     public void onActivatorRailPass(int x, int y, int z, boolean receivingPower)
     {
         if (receivingPower && this.minecartTNTFuse < 0)
@@ -142,6 +154,9 @@ public class EntityMinecartTNT extends EntityMinecart
         }
     }
 
+    /**
+     * Ignites this TNT cart.
+     */
     public void ignite()
     {
         this.minecartTNTFuse = 80;
@@ -157,16 +172,25 @@ public class EntityMinecartTNT extends EntityMinecart
         }
     }
 
+    /**
+     * Gets the remaining fuse time in ticks.
+     */
     public int getFuseTicks()
     {
         return this.minecartTNTFuse;
     }
 
+    /**
+     * Returns true if the TNT minecart is ignited.
+     */
     public boolean isIgnited()
     {
         return this.minecartTNTFuse > -1;
     }
 
+    /**
+     * Explosion resistance of a block relative to this entity
+     */
     public float getExplosionResistance(Explosion explosionIn, World worldIn, BlockPos pos, IBlockState blockStateIn)
     {
         return !this.isIgnited() || !BlockRailBase.isRailBlock(blockStateIn) && !BlockRailBase.isRailBlock(worldIn, pos.up()) ? super.getExplosionResistance(explosionIn, worldIn, pos, blockStateIn) : 0.0F;
@@ -177,6 +201,9 @@ public class EntityMinecartTNT extends EntityMinecart
         return !this.isIgnited() || !BlockRailBase.isRailBlock(blockStateIn) && !BlockRailBase.isRailBlock(worldIn, pos.up()) ? super.verifyExplosion(explosionIn, worldIn, pos, blockStateIn, p_174816_5_) : false;
     }
 
+    /**
+     * (abstract) Protected helper method to read subclass entity data from NBT.
+     */
     protected void readEntityFromNBT(NBTTagCompound tagCompund)
     {
         super.readEntityFromNBT(tagCompund);
@@ -187,6 +214,9 @@ public class EntityMinecartTNT extends EntityMinecart
         }
     }
 
+    /**
+     * (abstract) Protected helper method to write subclass entity data to NBT.
+     */
     protected void writeEntityToNBT(NBTTagCompound tagCompound)
     {
         super.writeEntityToNBT(tagCompound);

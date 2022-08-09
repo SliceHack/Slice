@@ -15,9 +15,9 @@ import net.minecraft.world.World;
 public class BlockPressurePlate extends BlockBasePressurePlate
 {
     public static final PropertyBool POWERED = PropertyBool.create("powered");
-    private final Sensitivity sensitivity;
+    private final BlockPressurePlate.Sensitivity sensitivity;
 
-    protected BlockPressurePlate(Material materialIn, Sensitivity sensitivityIn)
+    protected BlockPressurePlate(Material materialIn, BlockPressurePlate.Sensitivity sensitivityIn)
     {
         super(materialIn);
         this.setDefaultState(this.blockState.getBaseState().withProperty(POWERED, Boolean.valueOf(false)));
@@ -67,11 +67,17 @@ public class BlockPressurePlate extends BlockBasePressurePlate
         return 0;
     }
 
+    /**
+     * Convert the given metadata into a BlockState for this Block
+     */
     public IBlockState getStateFromMeta(int meta)
     {
         return this.getDefaultState().withProperty(POWERED, Boolean.valueOf(meta == 1));
     }
 
+    /**
+     * Convert the BlockState into the correct metadata value
+     */
     public int getMetaFromState(IBlockState state)
     {
         return ((Boolean)state.getValue(POWERED)).booleanValue() ? 1 : 0;

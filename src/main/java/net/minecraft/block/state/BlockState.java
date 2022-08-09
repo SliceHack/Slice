@@ -47,18 +47,18 @@ public class BlockState
             }
         });
         this.properties = ImmutableList.copyOf(properties);
-        Map<Map<IProperty, Comparable>, StateImplementation> map = Maps.<Map<IProperty, Comparable>, StateImplementation>newLinkedHashMap();
-        List<StateImplementation> list = Lists.<StateImplementation>newArrayList();
+        Map<Map<IProperty, Comparable>, BlockState.StateImplementation> map = Maps.<Map<IProperty, Comparable>, BlockState.StateImplementation>newLinkedHashMap();
+        List<BlockState.StateImplementation> list = Lists.<BlockState.StateImplementation>newArrayList();
 
         for (List<Comparable> list1 : Cartesian.cartesianProduct(this.getAllowedValues()))
         {
             Map<IProperty, Comparable> map1 = MapPopulator.<IProperty, Comparable>createMap(this.properties, list1);
-            StateImplementation blockstate$stateimplementation = new StateImplementation(blockIn, ImmutableMap.copyOf(map1));
+            BlockState.StateImplementation blockstate$stateimplementation = new BlockState.StateImplementation(blockIn, ImmutableMap.copyOf(map1));
             map.put(map1, blockstate$stateimplementation);
             list.add(blockstate$stateimplementation);
         }
 
-        for (StateImplementation blockstate$stateimplementation1 : list)
+        for (BlockState.StateImplementation blockstate$stateimplementation1 : list)
         {
             blockstate$stateimplementation1.buildPropertyValueTable(map);
         }
@@ -168,7 +168,7 @@ public class BlockState
             return this.properties.hashCode();
         }
 
-        public void buildPropertyValueTable(Map<Map<IProperty, Comparable>, StateImplementation> map)
+        public void buildPropertyValueTable(Map<Map<IProperty, Comparable>, BlockState.StateImplementation> map)
         {
             if (this.propertyValueTable != null)
             {

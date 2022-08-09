@@ -18,7 +18,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class TileEntityBannerRenderer extends TileEntitySpecialRenderer<TileEntityBanner>
 {
-    private static final Map<String, TimedBannerTexture> DESIGNS = Maps.<String, TimedBannerTexture>newHashMap();
+    private static final Map<String, TileEntityBannerRenderer.TimedBannerTexture> DESIGNS = Maps.<String, TileEntityBannerRenderer.TimedBannerTexture>newHashMap();
     private static final ResourceLocation BANNERTEXTURES = new ResourceLocation("textures/entity/banner_base.png");
     private ModelBanner bannerModel = new ModelBanner();
 
@@ -92,7 +92,7 @@ public class TileEntityBannerRenderer extends TileEntitySpecialRenderer<TileEnti
         }
         else
         {
-            TimedBannerTexture tileentitybannerrenderer$timedbannertexture = (TimedBannerTexture)DESIGNS.get(s);
+            TileEntityBannerRenderer.TimedBannerTexture tileentitybannerrenderer$timedbannertexture = (TileEntityBannerRenderer.TimedBannerTexture)DESIGNS.get(s);
 
             if (tileentitybannerrenderer$timedbannertexture == null)
             {
@@ -104,7 +104,7 @@ public class TileEntityBannerRenderer extends TileEntitySpecialRenderer<TileEnti
                     while (iterator.hasNext())
                     {
                         String s1 = (String)iterator.next();
-                        TimedBannerTexture tileentitybannerrenderer$timedbannertexture1 = (TimedBannerTexture)DESIGNS.get(s1);
+                        TileEntityBannerRenderer.TimedBannerTexture tileentitybannerrenderer$timedbannertexture1 = (TileEntityBannerRenderer.TimedBannerTexture)DESIGNS.get(s1);
 
                         if (i - tileentitybannerrenderer$timedbannertexture1.systemTime > 60000L)
                         {
@@ -128,7 +128,7 @@ public class TileEntityBannerRenderer extends TileEntitySpecialRenderer<TileEnti
                     list2.add("textures/entity/banner/" + tileentitybanner$enumbannerpattern.getPatternName() + ".png");
                 }
 
-                tileentitybannerrenderer$timedbannertexture = new TimedBannerTexture();
+                tileentitybannerrenderer$timedbannertexture = new TileEntityBannerRenderer.TimedBannerTexture();
                 tileentitybannerrenderer$timedbannertexture.bannerTexture = new ResourceLocation(s);
                 Minecraft.getMinecraft().getTextureManager().loadTexture(tileentitybannerrenderer$timedbannertexture.bannerTexture, new LayeredColorMaskTexture(BANNERTEXTURES, list2, list));
                 DESIGNS.put(s, tileentitybannerrenderer$timedbannertexture);

@@ -5,21 +5,21 @@ import net.minecraft.world.IBlockAccess;
 
 public class BiomeColorHelper
 {
-    private static final ColorResolver GRASS_COLOR = new ColorResolver()
+    private static final BiomeColorHelper.ColorResolver GRASS_COLOR = new BiomeColorHelper.ColorResolver()
     {
         public int getColorAtPos(BiomeGenBase biome, BlockPos blockPosition)
         {
             return biome.getGrassColorAtPos(blockPosition);
         }
     };
-    private static final ColorResolver FOLIAGE_COLOR = new ColorResolver()
+    private static final BiomeColorHelper.ColorResolver FOLIAGE_COLOR = new BiomeColorHelper.ColorResolver()
     {
         public int getColorAtPos(BiomeGenBase biome, BlockPos blockPosition)
         {
             return biome.getFoliageColorAtPos(blockPosition);
         }
     };
-    private static final ColorResolver WATER_COLOR_MULTIPLIER = new ColorResolver()
+    private static final BiomeColorHelper.ColorResolver WATER_COLOR_MULTIPLIER = new BiomeColorHelper.ColorResolver()
     {
         public int getColorAtPos(BiomeGenBase biome, BlockPos blockPosition)
         {
@@ -27,7 +27,7 @@ public class BiomeColorHelper
         }
     };
 
-    private static int getColorAtPos(IBlockAccess blockAccess, BlockPos pos, ColorResolver colorResolver)
+    private static int getColorAtPos(IBlockAccess blockAccess, BlockPos pos, BiomeColorHelper.ColorResolver colorResolver)
     {
         int i = 0;
         int j = 0;

@@ -9,35 +9,41 @@ import net.minecraft.world.World;
 
 public class BlockRail extends BlockRailBase
 {
-    public static final PropertyEnum<EnumRailDirection> SHAPE = PropertyEnum.<EnumRailDirection>create("shape", EnumRailDirection.class);
+    public static final PropertyEnum<BlockRailBase.EnumRailDirection> SHAPE = PropertyEnum.<BlockRailBase.EnumRailDirection>create("shape", BlockRailBase.EnumRailDirection.class);
 
     protected BlockRail()
     {
         super(false);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(SHAPE, EnumRailDirection.NORTH_SOUTH));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(SHAPE, BlockRailBase.EnumRailDirection.NORTH_SOUTH));
     }
 
     protected void onNeighborChangedInternal(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
     {
-        if (neighborBlock.canProvidePower() && (new Rail(worldIn, pos, state)).countAdjacentRails() == 3)
+        if (neighborBlock.canProvidePower() && (new BlockRailBase.Rail(worldIn, pos, state)).countAdjacentRails() == 3)
         {
             this.func_176564_a(worldIn, pos, state, false);
         }
     }
 
-    public IProperty<EnumRailDirection> getShapeProperty()
+    public IProperty<BlockRailBase.EnumRailDirection> getShapeProperty()
     {
         return SHAPE;
     }
 
+    /**
+     * Convert the given metadata into a BlockState for this Block
+     */
     public IBlockState getStateFromMeta(int meta)
     {
-        return this.getDefaultState().withProperty(SHAPE, EnumRailDirection.byMetadata(meta));
+        return this.getDefaultState().withProperty(SHAPE, BlockRailBase.EnumRailDirection.byMetadata(meta));
     }
 
+    /**
+     * Convert the BlockState into the correct metadata value
+     */
     public int getMetaFromState(IBlockState state)
     {
-        return ((EnumRailDirection)state.getValue(SHAPE)).getMetadata();
+        return ((BlockRailBase.EnumRailDirection)state.getValue(SHAPE)).getMetadata();
     }
 
     protected BlockState createBlockState()

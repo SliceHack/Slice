@@ -43,6 +43,9 @@ public class S34PacketMaps implements Packet<INetHandlerPlayClient>
         }
     }
 
+    /**
+     * Reads the raw packet data from the data stream.
+     */
     public void readPacketData(PacketBuffer buf) throws IOException
     {
         this.mapId = buf.readVarIntFromBuffer();
@@ -66,6 +69,9 @@ public class S34PacketMaps implements Packet<INetHandlerPlayClient>
         }
     }
 
+    /**
+     * Writes the raw packet data to the data stream.
+     */
     public void writePacketData(PacketBuffer buf) throws IOException
     {
         buf.writeVarIntToBuffer(this.mapId);
@@ -90,6 +96,9 @@ public class S34PacketMaps implements Packet<INetHandlerPlayClient>
         }
     }
 
+    /**
+     * Passes this Packet on to the NetHandler for processing.
+     */
     public void processPacket(INetHandlerPlayClient handler)
     {
         handler.handleMaps(this);
@@ -100,6 +109,9 @@ public class S34PacketMaps implements Packet<INetHandlerPlayClient>
         return this.mapId;
     }
 
+    /**
+     * Sets new MapData from the packet to given MapData param
+     */
     public void setMapdataTo(MapData mapdataIn)
     {
         mapdataIn.scale = this.mapScale;

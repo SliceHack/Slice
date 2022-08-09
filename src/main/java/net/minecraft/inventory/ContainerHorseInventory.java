@@ -66,6 +66,9 @@ public class ContainerHorseInventory extends Container
         return this.horseInventory.isUseableByPlayer(playerIn) && this.theHorse.isEntityAlive() && this.theHorse.getDistanceToEntity(playerIn) < 8.0F;
     }
 
+    /**
+     * Take a stack from the specified inventory slot.
+     */
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
     {
         ItemStack itemstack = null;
@@ -115,6 +118,9 @@ public class ContainerHorseInventory extends Container
         return itemstack;
     }
 
+    /**
+     * Called when the container is closed.
+     */
     public void onContainerClosed(EntityPlayer playerIn)
     {
         super.onContainerClosed(playerIn);

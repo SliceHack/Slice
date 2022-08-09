@@ -90,9 +90,9 @@ public class GuiConnecting extends GuiScreen
                 }
                 catch (UnknownHostException unknownhostexception)
                 {
-                    if (GuiConnecting.this.cancel)
-                    {
-                        return;
+                        if (GuiConnecting.this.cancel)
+                        {
+                            return;
                     }
 
                     GuiConnecting.logger.error((String)"Couldn\'t connect to server", (Throwable)unknownhostexception);

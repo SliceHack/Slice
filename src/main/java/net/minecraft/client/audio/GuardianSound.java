@@ -11,11 +11,14 @@ public class GuardianSound extends MovingSound
     {
         super(new ResourceLocation("minecraft:mob.guardian.attack"));
         this.guardian = guardian;
-        this.attenuationType = AttenuationType.NONE;
+        this.attenuationType = ISound.AttenuationType.NONE;
         this.repeat = true;
         this.repeatDelay = 0;
     }
 
+    /**
+     * Like the old updateEntity(), except more generic.
+     */
     public void update()
     {
         if (!this.guardian.isDead && this.guardian.hasTargetedEntity())

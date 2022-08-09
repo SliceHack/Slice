@@ -7,12 +7,16 @@ import net.minecraft.item.ItemStack;
 public class ContainerBeacon extends Container
 {
     private IInventory tileBeacon;
-    private final BeaconSlot beaconSlot;
+
+    /**
+     * This beacon's slot where you put in Emerald, Diamond, Gold or Iron Ingot.
+     */
+    private final ContainerBeacon.BeaconSlot beaconSlot;
 
     public ContainerBeacon(IInventory playerInventory, IInventory tileBeaconIn)
     {
         this.tileBeacon = tileBeaconIn;
-        this.addSlotToContainer(this.beaconSlot = new BeaconSlot(tileBeaconIn, 0, 136, 110));
+        this.addSlotToContainer(this.beaconSlot = new ContainerBeacon.BeaconSlot(tileBeaconIn, 0, 136, 110));
         int i = 36;
         int j = 137;
 
@@ -46,6 +50,9 @@ public class ContainerBeacon extends Container
         return this.tileBeacon;
     }
 
+    /**
+     * Called when the container is closed.
+     */
     public void onContainerClosed(EntityPlayer playerIn)
     {
         super.onContainerClosed(playerIn);
@@ -66,6 +73,9 @@ public class ContainerBeacon extends Container
         return this.tileBeacon.isUseableByPlayer(playerIn);
     }
 
+    /**
+     * Take a stack from the specified inventory slot.
+     */
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
     {
         ItemStack itemstack = null;

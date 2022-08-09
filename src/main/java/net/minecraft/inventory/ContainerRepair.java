@@ -20,13 +20,25 @@ import org.apache.logging.log4j.Logger;
 public class ContainerRepair extends Container
 {
     private static final Logger logger = LogManager.getLogger();
+
+    /** Here comes out item you merged and/or renamed. */
     private IInventory outputSlot;
+
+    /**
+     * The 2slots where you put your items in that you want to merge and/or rename.
+     */
     private IInventory inputSlots;
     private World theWorld;
     private BlockPos selfPosition;
+
+    /** The maximum cost of repairing/renaming in the anvil. */
     public int maximumCost;
+
+    /** determined by damage of input item and stackSize of repair materials */
     private int materialCost;
     private String repairedItemName;
+
+    /** The player that has this container open. */
     private final EntityPlayer thePlayer;
 
     public ContainerRepair(InventoryPlayer playerInventory, World worldIn, EntityPlayer player)
@@ -128,6 +140,9 @@ public class ContainerRepair extends Container
         }
     }
 
+    /**
+     * Callback for when the crafting matrix is changed.
+     */
     public void onCraftMatrixChanged(IInventory inventoryIn)
     {
         super.onCraftMatrixChanged(inventoryIn);
@@ -138,6 +153,9 @@ public class ContainerRepair extends Container
         }
     }
 
+    /**
+     * called when the Anvil Input Slot changes, calculates the new result and puts it in the output slot
+     */
     public void updateRepairOutput()
     {
         int i = 0;
@@ -382,6 +400,9 @@ public class ContainerRepair extends Container
         }
     }
 
+    /**
+     * Called when the container is closed.
+     */
     public void onContainerClosed(EntityPlayer playerIn)
     {
         super.onContainerClosed(playerIn);
@@ -405,6 +426,9 @@ public class ContainerRepair extends Container
         return this.theWorld.getBlockState(this.selfPosition).getBlock() != Blocks.anvil ? false : playerIn.getDistanceSq((double)this.selfPosition.getX() + 0.5D, (double)this.selfPosition.getY() + 0.5D, (double)this.selfPosition.getZ() + 0.5D) <= 64.0D;
     }
 
+    /**
+     * Take a stack from the specified inventory slot.
+     */
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
     {
         ItemStack itemstack = null;
@@ -456,6 +480,9 @@ public class ContainerRepair extends Container
         return itemstack;
     }
 
+    /**
+     * used by the Anvil GUI to update the Item Name being typed by the player
+     */
     public void updateItemName(String newName)
     {
         this.repairedItemName = newName;

@@ -108,6 +108,9 @@ public class ServerCommandManager extends CommandHandler implements IAdminComman
         CommandBase.setAdminCommander(this);
     }
 
+    /**
+     * Send an informative message to the server operators
+     */
     public void notifyOperators(ICommandSender sender, ICommand command, int flags, String msgFormat, Object... msgParams)
     {
         boolean flag = true;

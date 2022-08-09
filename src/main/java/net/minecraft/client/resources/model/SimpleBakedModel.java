@@ -121,19 +121,19 @@ public class SimpleBakedModel implements IBakedModel
             this.builderCameraTransforms = cameraTransforms;
         }
 
-        public Builder addFaceQuad(EnumFacing facing, BakedQuad quad)
+        public SimpleBakedModel.Builder addFaceQuad(EnumFacing facing, BakedQuad quad)
         {
             ((List)this.builderFaceQuads.get(facing.ordinal())).add(quad);
             return this;
         }
 
-        public Builder addGeneralQuad(BakedQuad quad)
+        public SimpleBakedModel.Builder addGeneralQuad(BakedQuad quad)
         {
             this.builderGeneralQuads.add(quad);
             return this;
         }
 
-        public Builder setTexture(TextureAtlasSprite texture)
+        public SimpleBakedModel.Builder setTexture(TextureAtlasSprite texture)
         {
             this.builderTexture = texture;
             return this;

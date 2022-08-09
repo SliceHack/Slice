@@ -22,6 +22,9 @@ public class S06PacketUpdateHealth implements Packet<INetHandlerPlayClient>
         this.saturationLevel = saturationIn;
     }
 
+    /**
+     * Reads the raw packet data from the data stream.
+     */
     public void readPacketData(PacketBuffer buf) throws IOException
     {
         this.health = buf.readFloat();
@@ -29,6 +32,9 @@ public class S06PacketUpdateHealth implements Packet<INetHandlerPlayClient>
         this.saturationLevel = buf.readFloat();
     }
 
+    /**
+     * Writes the raw packet data to the data stream.
+     */
     public void writePacketData(PacketBuffer buf) throws IOException
     {
         buf.writeFloat(this.health);
@@ -36,6 +42,9 @@ public class S06PacketUpdateHealth implements Packet<INetHandlerPlayClient>
         buf.writeFloat(this.saturationLevel);
     }
 
+    /**
+     * Passes this Packet on to the NetHandler for processing.
+     */
     public void processPacket(INetHandlerPlayClient handler)
     {
         handler.handleUpdateHealth(this);

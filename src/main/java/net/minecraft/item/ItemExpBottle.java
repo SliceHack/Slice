@@ -18,6 +18,9 @@ public class ItemExpBottle extends Item
         return true;
     }
 
+    /**
+     * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
+     */
     public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn)
     {
         if (!playerIn.capabilities.isCreativeMode)

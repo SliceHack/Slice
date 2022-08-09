@@ -14,6 +14,9 @@ public class EntityAITargetNonTamed<T extends EntityLivingBase> extends EntityAI
         this.theTameable = entityIn;
     }
 
+    /**
+     * Returns whether the EntityAIBase should begin execution.
+     */
     public boolean shouldExecute()
     {
         return !this.theTameable.isTamed() && super.shouldExecute();

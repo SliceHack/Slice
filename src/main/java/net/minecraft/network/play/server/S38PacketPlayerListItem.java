@@ -6,45 +6,52 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import java.io.IOException;
 import java.util.List;
+
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.world.WorldSettings;
+import slice.util.LoggerUtil;
 
+@SuppressWarnings("all")
 public class S38PacketPlayerListItem implements Packet<INetHandlerPlayClient>
 {
-    private Action action;
-    private final List<AddPlayerData> players = Lists.<AddPlayerData>newArrayList();
+    private S38PacketPlayerListItem.Action action;
+    private final List<S38PacketPlayerListItem.AddPlayerData> players = Lists.<S38PacketPlayerListItem.AddPlayerData>newArrayList();
 
     public S38PacketPlayerListItem()
     {
     }
 
-    public S38PacketPlayerListItem(Action actionIn, EntityPlayerMP... players)
+    public S38PacketPlayerListItem(S38PacketPlayerListItem.Action actionIn, EntityPlayerMP... players)
     {
         this.action = actionIn;
 
         for (EntityPlayerMP entityplayermp : players)
         {
-            this.players.add(new AddPlayerData(entityplayermp.getGameProfile(), entityplayermp.ping, entityplayermp.theItemInWorldManager.getGameType(), entityplayermp.getTabListDisplayName()));
+            this.players.add(new S38PacketPlayerListItem.AddPlayerData(entityplayermp.getGameProfile(), entityplayermp.ping, entityplayermp.theItemInWorldManager.getGameType(), entityplayermp.getTabListDisplayName()));
         }
     }
 
-    public S38PacketPlayerListItem(Action actionIn, Iterable<EntityPlayerMP> players)
+    public S38PacketPlayerListItem(S38PacketPlayerListItem.Action actionIn, Iterable<EntityPlayerMP> players)
     {
         this.action = actionIn;
 
         for (EntityPlayerMP entityplayermp : players)
         {
-            this.players.add(new AddPlayerData(entityplayermp.getGameProfile(), entityplayermp.ping, entityplayermp.theItemInWorldManager.getGameType(), entityplayermp.getTabListDisplayName()));
+            this.players.add(new S38PacketPlayerListItem.AddPlayerData(entityplayermp.getGameProfile(), entityplayermp.ping, entityplayermp.theItemInWorldManager.getGameType(), entityplayermp.getTabListDisplayName()));
         }
     }
 
+    /**
+     * Reads the raw packet data from the data stream.
+     */
     public void readPacketData(PacketBuffer buf) throws IOException
     {
-        this.action = (Action)buf.readEnumValue(Action.class);
+        this.action = (S38PacketPlayerListItem.Action)buf.readEnumValue(S38PacketPlayerListItem.Action.class);
         int i = buf.readVarIntFromBuffer();
 
         for (int j = 0; j < i; ++j)
@@ -110,16 +117,19 @@ public class S38PacketPlayerListItem implements Packet<INetHandlerPlayClient>
                     gameprofile = new GameProfile(buf.readUuid(), (String)null);
             }
 
-            this.players.add(new AddPlayerData(gameprofile, k, worldsettings$gametype, ichatcomponent));
+            this.players.add(new S38PacketPlayerListItem.AddPlayerData(gameprofile, k, worldsettings$gametype, ichatcomponent));
         }
     }
 
+    /**
+     * Writes the raw packet data to the data stream.
+     */
     public void writePacketData(PacketBuffer buf) throws IOException
     {
         buf.writeEnumValue(this.action);
         buf.writeVarIntToBuffer(this.players.size());
 
-        for (AddPlayerData s38packetplayerlistitem$addplayerdata : this.players)
+        for (S38PacketPlayerListItem.AddPlayerData s38packetplayerlistitem$addplayerdata : this.players)
         {
             switch (this.action)
             {
@@ -190,17 +200,20 @@ public class S38PacketPlayerListItem implements Packet<INetHandlerPlayClient>
         }
     }
 
+    /**
+     * Passes this Packet on to the NetHandler for processing.
+     */
     public void processPacket(INetHandlerPlayClient handler)
     {
         handler.handlePlayerListItem(this);
     }
 
-    public List<AddPlayerData> getEntries()
+    public List<S38PacketPlayerListItem.AddPlayerData> getEntries()
     {
         return this.players;
     }
 
-    public Action getAction()
+    public S38PacketPlayerListItem.Action getAction()
     {
         return this.action;
     }

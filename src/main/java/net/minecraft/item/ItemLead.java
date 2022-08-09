@@ -18,6 +18,9 @@ public class ItemLead extends Item
         this.setCreativeTab(CreativeTabs.tabTools);
     }
 
+    /**
+     * Called when a Block is right-clicked with this Item
+     */
     public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         Block block = worldIn.getBlockState(pos).getBlock();

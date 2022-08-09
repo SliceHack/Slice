@@ -108,6 +108,10 @@ public class EntityFishHook extends Entity
     {
     }
 
+    /**
+     * Checks if the entity is in range to render by using the past in distance and comparing it to its average edge
+     * length * 64 * renderDistanceWeight Args: distance
+     */
     public boolean isInRangeToRenderDist(double distance)
     {
         double d0 = this.getEntityBoundingBox().getAverageEdgeLength() * 4.0D;
@@ -155,6 +159,9 @@ public class EntityFishHook extends Entity
         this.motionZ = this.clientMotionZ;
     }
 
+    /**
+     * Sets the velocity to the args. Args: x, y, z
+     */
     public void setVelocity(double x, double y, double z)
     {
         this.clientMotionX = this.motionX = x;
@@ -162,6 +169,9 @@ public class EntityFishHook extends Entity
         this.clientMotionZ = this.motionZ = z;
     }
 
+    /**
+     * Called to update the entity's position/logic.
+     */
     public void onUpdate()
     {
         super.onUpdate();
@@ -479,6 +489,9 @@ public class EntityFishHook extends Entity
         }
     }
 
+    /**
+     * (abstract) Protected helper method to write subclass entity data to NBT.
+     */
     public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
         tagCompound.setShort("xTile", (short)this.xTile);
@@ -490,6 +503,9 @@ public class EntityFishHook extends Entity
         tagCompound.setByte("inGround", (byte)(this.inGround ? 1 : 0));
     }
 
+    /**
+     * (abstract) Protected helper method to read subclass entity data from NBT.
+     */
     public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
         this.xTile = tagCompund.getShort("xTile");
@@ -591,6 +607,9 @@ public class EntityFishHook extends Entity
         }
     }
 
+    /**
+     * Will get destroyed next tick.
+     */
     public void setDead()
     {
         super.setDead();

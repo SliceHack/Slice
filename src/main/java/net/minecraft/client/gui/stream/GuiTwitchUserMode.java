@@ -167,6 +167,10 @@ public class GuiTwitchUserMode extends GuiScreen
         return ichatcomponent;
     }
 
+    /**
+     * Adds the buttons (and other controls) to the screen in question. Called when the GUI is displayed and when the
+     * window resizes, the buttonList is cleared beforehand.
+     */
     public void initGui()
     {
         int i = this.width / 3;
@@ -187,6 +191,9 @@ public class GuiTwitchUserMode extends GuiScreen
         this.field_152334_t = this.width / 2 - k / 2;
     }
 
+    /**
+     * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
+     */
     protected void actionPerformed(GuiButton button) throws IOException
     {
         if (button.enabled)
@@ -216,6 +223,9 @@ public class GuiTwitchUserMode extends GuiScreen
         }
     }
 
+    /**
+     * Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
+     */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();

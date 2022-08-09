@@ -73,18 +73,18 @@ public class ChunkUtils
             chunk.setHasEntities(false);
             List list2 = new ArrayList();
 
-            for (Object o : list)
+            for (Object field10 : list)
             {
-                Field field1 = (Field) o;
+                Field field1 = (Field) field10;
                 list2.add(field1.get(chunk));
             }
 
             chunk.setHasEntities(true);
             List list3 = new ArrayList();
 
-            for (Object o : list)
+            for (Object field20 : list)
             {
-                Field field2 = (Field) o;
+                Field field2 = (Field) field20;
                 list3.add(field2.get(chunk));
             }
 

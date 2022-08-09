@@ -344,9 +344,9 @@ public class CustomItemProperties
             Set set = map.keySet();
             Map map1 = new LinkedHashMap();
 
-            for (Object o : set)
+            for (Object e : set)
             {
-                String s1 = (String) o;
+                String s1 = (String) e;
                 String s2 = (String)map.get(s1);
                 s2 = fixTextureName(s2, basePath);
                 map1.put(s1, s2);
@@ -426,9 +426,9 @@ public class CustomItemProperties
             Set set = map.keySet();
             Map map1 = new LinkedHashMap();
 
-            for (Object o : set)
+            for (Object e : set)
             {
-                String s1 = (String) o;
+                String s1 = (String) e;
                 String s2 = (String)map.get(s1);
                 s2 = fixModelName(s2, basePath);
                 map1.put(s1, s2);
@@ -635,9 +635,9 @@ public class CustomItemProperties
         {
             List list = new ArrayList();
 
-            for (Object o : map.keySet())
+            for (Object e : map.keySet())
             {
-                String s1 = (String) o;
+                String s1 = (String) e;
                 String s2 = (String)map.get(s1);
                 String s3 = s1.substring(s.length());
                 NbtTagValue nbttagvalue = new NbtTagValue(s3, s2);
@@ -653,9 +653,9 @@ public class CustomItemProperties
     {
         Map map = new LinkedHashMap();
 
-        for (Object o: props.keySet())
+        for (Object e: props.keySet())
         {
-            String s = (String) o;
+            String s = (String) e;
             String s1 = props.getProperty(s);
 
             if (s.startsWith(keyPrefix))

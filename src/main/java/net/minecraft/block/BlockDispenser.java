@@ -42,6 +42,9 @@ public class BlockDispenser extends BlockContainer
         this.setCreativeTab(CreativeTabs.tabRedstone);
     }
 
+    /**
+     * How many world ticks before ticking
+     */
     public int tickRate(World worldIn)
     {
         return 4;
@@ -148,6 +151,9 @@ public class BlockDispenser extends BlockContainer
         return (IBehaviorDispenseItem)dispenseBehaviorRegistry.getObject(stack == null ? null : stack.getItem());
     }
 
+    /**
+     * Called when a neighboring block changes.
+     */
     public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
     {
         boolean flag = worldIn.isBlockPowered(pos) || worldIn.isBlockPowered(pos.up());
@@ -172,16 +178,26 @@ public class BlockDispenser extends BlockContainer
         }
     }
 
+    /**
+     * Returns a new instance of a block's tile entity class. Called on placing the block.
+     */
     public TileEntity createNewTileEntity(World worldIn, int meta)
     {
         return new TileEntityDispenser();
     }
 
+    /**
+     * Called by ItemBlocks just before a block is actually set in the world, to allow for adjustments to the
+     * IBlockstate
+     */
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
         return this.getDefaultState().withProperty(FACING, BlockPistonBase.getFacingFromEntity(worldIn, pos, placer)).withProperty(TRIGGERED, Boolean.valueOf(false));
     }
 
+    /**
+     * Called by ItemBlocks after a block is set in the world, to allow post-place logic
+     */
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
     {
         worldIn.setBlockState(pos, state.withProperty(FACING, BlockPistonBase.getFacingFromEntity(worldIn, pos, placer)), 2);
@@ -210,6 +226,9 @@ public class BlockDispenser extends BlockContainer
         super.breakBlock(worldIn, pos, state);
     }
 
+    /**
+     * Get the position where the dispenser at the given Coordinates should dispense to.
+     */
     public static IPosition getDispensePosition(IBlockSource coords)
     {
         EnumFacing enumfacing = getFacing(coords.getBlockMetadata());
@@ -219,6 +238,9 @@ public class BlockDispenser extends BlockContainer
         return new PositionImpl(d0, d1, d2);
     }
 
+    /**
+     * Get the facing of a dispenser with the given metadata
+     */
     public static EnumFacing getFacing(int meta)
     {
         return EnumFacing.getFront(meta & 7);
@@ -234,21 +256,33 @@ public class BlockDispenser extends BlockContainer
         return Container.calcRedstone(worldIn.getTileEntity(pos));
     }
 
+    /**
+     * The type of render function called. 3 for standard block models, 2 for TESR's, 1 for liquids, -1 is no render
+     */
     public int getRenderType()
     {
         return 3;
     }
 
+    /**
+     * Possibly modify the given BlockState before rendering it on an Entity (Minecarts, Endermen, ...)
+     */
     public IBlockState getStateForEntityRender(IBlockState state)
     {
         return this.getDefaultState().withProperty(FACING, EnumFacing.SOUTH);
     }
 
+    /**
+     * Convert the given metadata into a BlockState for this Block
+     */
     public IBlockState getStateFromMeta(int meta)
     {
         return this.getDefaultState().withProperty(FACING, getFacing(meta)).withProperty(TRIGGERED, Boolean.valueOf((meta & 8) > 0));
     }
 
+    /**
+     * Convert the BlockState into the correct metadata value
+     */
     public int getMetaFromState(IBlockState state)
     {
         int i = 0;

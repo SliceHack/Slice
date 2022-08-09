@@ -7,6 +7,9 @@ import net.minecraft.world.World;
 
 public interface IGrowable
 {
+    /**
+     * Whether this IGrowable can grow
+     */
     boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient);
 
     boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state);

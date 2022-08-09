@@ -12,10 +12,10 @@ import net.minecraft.util.IChatComponent;
 
 public class SpectatorMenu
 {
-    private static final ISpectatorMenuObject field_178655_b = new EndSpectatorObject();
-    private static final ISpectatorMenuObject field_178656_c = new MoveMenuObject(-1, true);
-    private static final ISpectatorMenuObject field_178653_d = new MoveMenuObject(1, true);
-    private static final ISpectatorMenuObject field_178654_e = new MoveMenuObject(1, false);
+    private static final ISpectatorMenuObject field_178655_b = new SpectatorMenu.EndSpectatorObject();
+    private static final ISpectatorMenuObject field_178656_c = new SpectatorMenu.MoveMenuObject(-1, true);
+    private static final ISpectatorMenuObject field_178653_d = new SpectatorMenu.MoveMenuObject(1, true);
+    private static final ISpectatorMenuObject field_178654_e = new SpectatorMenu.MoveMenuObject(1, false);
     public static final ISpectatorMenuObject field_178657_a = new ISpectatorMenuObject()
     {
         public void func_178661_a(SpectatorMenu menu)

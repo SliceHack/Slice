@@ -6,17 +6,17 @@ public class MathUtilsTest
 {
     public static void main(String[] args) throws Exception
     {
-        OPER[] amathutilstest$oper = OPER.values();
+        MathUtilsTest.OPER[] amathutilstest$oper = MathUtilsTest.OPER.values();
 
         for (int i = 0; i < amathutilstest$oper.length; ++i)
         {
-            OPER mathutilstest$oper = amathutilstest$oper[i];
+            MathUtilsTest.OPER mathutilstest$oper = amathutilstest$oper[i];
             dbg("******** " + mathutilstest$oper + " ***********");
             test(mathutilstest$oper, false);
         }
     }
 
-    private static void test(OPER oper, boolean fast)
+    private static void test(MathUtilsTest.OPER oper, boolean fast)
     {
         MathHelper.fastMath = fast;
         double d0;

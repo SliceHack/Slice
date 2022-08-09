@@ -32,11 +32,18 @@ public class BlockSponge extends Block
         this.setCreativeTab(CreativeTabs.tabBlock);
     }
 
+    /**
+     * Gets the localized name of this block. Used for the statistics page.
+     */
     public String getLocalizedName()
     {
         return StatCollector.translateToLocal(this.getUnlocalizedName() + ".dry.name");
     }
 
+    /**
+     * Gets the metadata of the item this Block can drop. This method is called when the block gets destroyed. It
+     * returns the metadata of the dropped item based on the old metadata of the block.
+     */
     public int damageDropped(IBlockState state)
     {
         return ((Boolean)state.getValue(WET)).booleanValue() ? 1 : 0;
@@ -47,6 +54,9 @@ public class BlockSponge extends Block
         this.tryAbsorb(worldIn, pos, state);
     }
 
+    /**
+     * Called when a neighboring block changes.
+     */
     public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
     {
         this.tryAbsorb(worldIn, pos, state);
@@ -106,17 +116,26 @@ public class BlockSponge extends Block
         return i > 0;
     }
 
+    /**
+     * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
+     */
     public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list)
     {
         list.add(new ItemStack(itemIn, 1, 0));
         list.add(new ItemStack(itemIn, 1, 1));
     }
 
+    /**
+     * Convert the given metadata into a BlockState for this Block
+     */
     public IBlockState getStateFromMeta(int meta)
     {
         return this.getDefaultState().withProperty(WET, Boolean.valueOf((meta & 1) == 1));
     }
 
+    /**
+     * Convert the BlockState into the correct metadata value
+     */
     public int getMetaFromState(IBlockState state)
     {
         return ((Boolean)state.getValue(WET)).booleanValue() ? 1 : 0;

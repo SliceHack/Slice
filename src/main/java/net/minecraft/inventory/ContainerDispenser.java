@@ -38,6 +38,9 @@ public class ContainerDispenser extends Container
         return this.dispenserInventory.isUseableByPlayer(playerIn);
     }
 
+    /**
+     * Take a stack from the specified inventory slot.
+     */
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
     {
         ItemStack itemstack = null;

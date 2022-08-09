@@ -12,9 +12,9 @@ public class BiomeGenOcean extends BiomeGenBase
         this.spawnableCreatureList.clear();
     }
 
-    public TempCategory getTempCategory()
+    public BiomeGenBase.TempCategory getTempCategory()
     {
-        return TempCategory.OCEAN;
+        return BiomeGenBase.TempCategory.OCEAN;
     }
 
     public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal)

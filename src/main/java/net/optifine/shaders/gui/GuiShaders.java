@@ -43,6 +43,10 @@ public class GuiShaders extends GuiScreenOF
         this.parentGui = par1GuiScreen;
     }
 
+    /**
+     * Adds the buttons (and other controls) to the screen in question. Called when the GUI is displayed and when the
+     * window resizes, the buttonList is cleared beforehand.
+     */
     public void initGui()
     {
         this.screenTitle = I18n.format("of.options.shadersTitle", new Object[0]);
@@ -91,12 +95,18 @@ public class GuiShaders extends GuiScreenOF
         }
     }
 
+    /**
+     * Handles mouse input.
+     */
     public void handleMouseInput() throws IOException
     {
         super.handleMouseInput();
         this.shaderList.handleMouseInput();
     }
 
+    /**
+     * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
+     */
     protected void actionPerformed(GuiButton button)
     {
         this.actionPerformed(button, false);
@@ -322,6 +332,9 @@ public class GuiShaders extends GuiScreenOF
         }
     }
 
+    /**
+     * Called when the screen is unloaded. Used to disable keyboard repeat events
+     */
     public void onGuiClosed()
     {
         super.onGuiClosed();
@@ -332,6 +345,9 @@ public class GuiShaders extends GuiScreenOF
         }
     }
 
+    /**
+     * Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
+     */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
@@ -360,6 +376,9 @@ public class GuiShaders extends GuiScreenOF
         this.tooltipManager.drawTooltips(mouseX, mouseY, this.buttonList);
     }
 
+    /**
+     * Called from the main game loop to update the screen.
+     */
     public void updateScreen()
     {
         super.updateScreen();

@@ -54,7 +54,7 @@ public class EntityGuardian extends EntityMob
         super(worldIn);
         this.experienceValue = 10;
         this.setSize(0.85F, 0.85F);
-        this.tasks.addTask(4, new AIGuardianAttack(this));
+        this.tasks.addTask(4, new EntityGuardian.AIGuardianAttack(this));
         EntityAIMoveTowardsRestriction entityaimovetowardsrestriction;
         this.tasks.addTask(5, entityaimovetowardsrestriction = new EntityAIMoveTowardsRestriction(this, 1.0D));
         this.tasks.addTask(7, this.wander = new EntityAIWander(this, 1.0D, 80));
@@ -63,8 +63,8 @@ public class EntityGuardian extends EntityMob
         this.tasks.addTask(9, new EntityAILookIdle(this));
         this.wander.setMutexBits(3);
         entityaimovetowardsrestriction.setMutexBits(3);
-        this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityLivingBase.class, 10, true, false, new GuardianTargetSelector(this)));
-        this.moveHelper = new GuardianMoveHelper(this);
+        this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityLivingBase.class, 10, true, false, new EntityGuardian.GuardianTargetSelector(this)));
+        this.moveHelper = new EntityGuardian.GuardianMoveHelper(this);
         this.field_175484_c = this.field_175482_b = this.rand.nextFloat();
     }
 
@@ -77,18 +77,27 @@ public class EntityGuardian extends EntityMob
         this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(30.0D);
     }
 
+    /**
+     * (abstract) Protected helper method to read subclass entity data from NBT.
+     */
     public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
         super.readEntityFromNBT(tagCompund);
         this.setElder(tagCompund.getBoolean("Elder"));
     }
 
+    /**
+     * (abstract) Protected helper method to write subclass entity data to NBT.
+     */
     public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
         super.writeEntityToNBT(tagCompound);
         tagCompound.setBoolean("Elder", this.isElder());
     }
 
+    /**
+     * Returns new PathNavigateGround instance
+     */
     protected PathNavigate getNewNavigator(World worldIn)
     {
         return new PathNavigateSwimmer(this, worldIn);
@@ -101,11 +110,17 @@ public class EntityGuardian extends EntityMob
         this.dataWatcher.addObject(17, Integer.valueOf(0));
     }
 
+    /**
+     * Returns true if given flag is set
+     */
     private boolean isSyncedFlagSet(int flagId)
     {
         return (this.dataWatcher.getWatchableObjectInt(16) & flagId) != 0;
     }
 
+    /**
+     * Sets a flag state "on/off" on both sides (client/server) by using DataWatcher
+     */
     private void setSyncedFlag(int flagId, boolean state)
     {
         int i = this.dataWatcher.getWatchableObjectInt(16);
@@ -140,6 +155,9 @@ public class EntityGuardian extends EntityMob
         return this.isSyncedFlagSet(4);
     }
 
+    /**
+     * Sets this Guardian to be an elder or not.
+     */
     public void setElder(boolean elder)
     {
         this.setSyncedFlag(4, elder);
@@ -222,26 +240,42 @@ public class EntityGuardian extends EntityMob
         }
     }
 
+    /**
+     * Get number of ticks, at least during which the living entity will be silent.
+     */
     public int getTalkInterval()
     {
         return 160;
     }
 
+    /**
+     * Returns the sound this mob makes while it's alive.
+     */
     protected String getLivingSound()
     {
         return !this.isInWater() ? "mob.guardian.land.idle" : (this.isElder() ? "mob.guardian.elder.idle" : "mob.guardian.idle");
     }
 
+    /**
+     * Returns the sound this mob makes when it is hurt.
+     */
     protected String getHurtSound()
     {
         return !this.isInWater() ? "mob.guardian.land.hit" : (this.isElder() ? "mob.guardian.elder.hit" : "mob.guardian.hit");
     }
 
+    /**
+     * Returns the sound this mob makes on death.
+     */
     protected String getDeathSound()
     {
         return !this.isInWater() ? "mob.guardian.land.death" : (this.isElder() ? "mob.guardian.elder.death" : "mob.guardian.death");
     }
 
+    /**
+     * returns if this entity triggers Block.onEntityWalking on the blocks they walk on. used for spiders and wolves to
+     * prevent them from trampling crops
+     */
     protected boolean canTriggerWalking()
     {
         return false;
@@ -257,6 +291,10 @@ public class EntityGuardian extends EntityMob
         return this.worldObj.getBlockState(pos).getBlock().getMaterial() == Material.water ? 10.0F + this.worldObj.getLightBrightness(pos) - 0.5F : super.getBlockPathWeight(pos);
     }
 
+    /**
+     * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons
+     * use this to react to sunlight and start to burn.
+     */
     public void onLivingUpdate()
     {
         if (this.worldObj.isRemote)
@@ -423,6 +461,13 @@ public class EntityGuardian extends EntityMob
         }
     }
 
+    /**
+     * Drop 0-2 items of this living's type
+     *  
+     * @param wasRecentlyHit true if this this entity was recently hit by appropriate entity (generally only if player
+     * or tameable)
+     * @param lootingModifier level of enchanment to be applied to this drop
+     */
     protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier)
     {
         int i = this.rand.nextInt(3) + this.rand.nextInt(lootingModifier + 1);
@@ -447,27 +492,42 @@ public class EntityGuardian extends EntityMob
         }
     }
 
+    /**
+     * Causes this Entity to drop a random item.
+     */
     protected void addRandomDrop()
     {
         ItemStack itemstack = ((WeightedRandomFishable)WeightedRandom.getRandomItem(this.rand, EntityFishHook.func_174855_j())).getItemStack(this.rand);
         this.entityDropItem(itemstack, 1.0F);
     }
 
+    /**
+     * Checks to make sure the light is not too bright where the mob is spawning
+     */
     protected boolean isValidLightLevel()
     {
         return true;
     }
 
+    /**
+     * Checks that the entity is not colliding with any blocks / liquids
+     */
     public boolean isNotColliding()
     {
         return this.worldObj.checkNoEntityCollision(this.getEntityBoundingBox(), this) && this.worldObj.getCollidingBoundingBoxes(this, this.getEntityBoundingBox()).isEmpty();
     }
 
+    /**
+     * Checks if the entity's current position is a valid location to spawn this entity.
+     */
     public boolean getCanSpawnHere()
     {
         return (this.rand.nextInt(20) == 0 || !this.worldObj.canBlockSeeSky(new BlockPos(this))) && super.getCanSpawnHere();
     }
 
+    /**
+     * Called when the entity is attacked.
+     */
     public boolean attackEntityFrom(DamageSource source, float amount)
     {
         if (!this.func_175472_n() && !source.isMagicDamage() && source.getSourceOfDamage() instanceof EntityLivingBase)
@@ -485,11 +545,18 @@ public class EntityGuardian extends EntityMob
         return super.attackEntityFrom(source, amount);
     }
 
+    /**
+     * The speed it takes to move the entityliving's rotationPitch through the faceEntity method. This is only currently
+     * use in wolves.
+     */
     public int getVerticalFaceSpeed()
     {
         return 180;
     }
 
+    /**
+     * Moves the entity based on the specified heading.  Args: strafe, forward
+     */
     public void moveEntityWithHeading(float strafe, float forward)
     {
         if (this.isServerWorld())

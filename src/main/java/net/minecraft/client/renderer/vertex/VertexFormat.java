@@ -10,6 +10,8 @@ public class VertexFormat
     private static final Logger LOGGER = LogManager.getLogger();
     private final List<VertexFormatElement> elements;
     private final List<Integer> offsets;
+
+    /** The next available offset in this vertex format */
     private int nextOffset;
     private int colorElementOffset;
     private List<Integer> uvOffsetsById;

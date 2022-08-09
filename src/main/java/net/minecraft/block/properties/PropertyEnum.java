@@ -38,6 +38,9 @@ public class PropertyEnum<T extends Enum<T> & IStringSerializable> extends Prope
         return this.allowedValues;
     }
 
+    /**
+     * Get the name for the given value.
+     */
     public String getName(T value)
     {
         return ((IStringSerializable)value).getName();

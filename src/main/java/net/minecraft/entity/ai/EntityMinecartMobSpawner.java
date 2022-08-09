@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 
 public class EntityMinecartMobSpawner extends EntityMinecart
 {
+    /** Mob spawner logic for this spawner minecart. */
     private final MobSpawnerBaseLogic mobSpawnerLogic = new MobSpawnerBaseLogic()
     {
         public void func_98267_a(int id)
@@ -36,9 +37,9 @@ public class EntityMinecartMobSpawner extends EntityMinecart
         super(worldIn, p_i1726_2_, p_i1726_4_, p_i1726_6_);
     }
 
-    public EnumMinecartType getMinecartType()
+    public EntityMinecart.EnumMinecartType getMinecartType()
     {
-        return EnumMinecartType.SPAWNER;
+        return EntityMinecart.EnumMinecartType.SPAWNER;
     }
 
     public IBlockState getDefaultDisplayTile()
@@ -46,12 +47,18 @@ public class EntityMinecartMobSpawner extends EntityMinecart
         return Blocks.mob_spawner.getDefaultState();
     }
 
+    /**
+     * (abstract) Protected helper method to read subclass entity data from NBT.
+     */
     protected void readEntityFromNBT(NBTTagCompound tagCompund)
     {
         super.readEntityFromNBT(tagCompund);
         this.mobSpawnerLogic.readFromNBT(tagCompund);
     }
 
+    /**
+     * (abstract) Protected helper method to write subclass entity data to NBT.
+     */
     protected void writeEntityToNBT(NBTTagCompound tagCompound)
     {
         super.writeEntityToNBT(tagCompound);
@@ -63,6 +70,9 @@ public class EntityMinecartMobSpawner extends EntityMinecart
         this.mobSpawnerLogic.setDelayToMin(id);
     }
 
+    /**
+     * Called to update the entity's position/logic.
+     */
     public void onUpdate()
     {
         super.onUpdate();

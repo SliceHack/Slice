@@ -16,6 +16,9 @@ public class NBTTagCompound extends NBTBase
 {
     private Map<String, NBTBase> tagMap = Maps.<String, NBTBase>newHashMap();
 
+    /**
+     * Write the actual data contents of the tag, implemented in NBT extension classes
+     */
     void write(DataOutput output) throws IOException
     {
         for (String s : this.tagMap.keySet())
@@ -59,77 +62,122 @@ public class NBTTagCompound extends NBTBase
         return this.tagMap.keySet();
     }
 
+    /**
+     * Gets the type byte for the tag.
+     */
     public byte getId()
     {
         return (byte)10;
     }
 
+    /**
+     * Stores the given tag into the map with the given string key. This is mostly used to store tag lists.
+     */
     public void setTag(String key, NBTBase value)
     {
         this.tagMap.put(key, value);
     }
 
+    /**
+     * Stores a new NBTTagByte with the given byte value into the map with the given string key.
+     */
     public void setByte(String key, byte value)
     {
         this.tagMap.put(key, new NBTTagByte(value));
     }
 
+    /**
+     * Stores a new NBTTagShort with the given short value into the map with the given string key.
+     */
     public void setShort(String key, short value)
     {
         this.tagMap.put(key, new NBTTagShort(value));
     }
 
+    /**
+     * Stores a new NBTTagInt with the given integer value into the map with the given string key.
+     */
     public void setInteger(String key, int value)
     {
         this.tagMap.put(key, new NBTTagInt(value));
     }
 
+    /**
+     * Stores a new NBTTagLong with the given long value into the map with the given string key.
+     */
     public void setLong(String key, long value)
     {
         this.tagMap.put(key, new NBTTagLong(value));
     }
 
+    /**
+     * Stores a new NBTTagFloat with the given float value into the map with the given string key.
+     */
     public void setFloat(String key, float value)
     {
         this.tagMap.put(key, new NBTTagFloat(value));
     }
 
+    /**
+     * Stores a new NBTTagDouble with the given double value into the map with the given string key.
+     */
     public void setDouble(String key, double value)
     {
         this.tagMap.put(key, new NBTTagDouble(value));
     }
 
+    /**
+     * Stores a new NBTTagString with the given string value into the map with the given string key.
+     */
     public void setString(String key, String value)
     {
         this.tagMap.put(key, new NBTTagString(value));
     }
 
+    /**
+     * Stores a new NBTTagByteArray with the given array as data into the map with the given string key.
+     */
     public void setByteArray(String key, byte[] value)
     {
         this.tagMap.put(key, new NBTTagByteArray(value));
     }
 
+    /**
+     * Stores a new NBTTagIntArray with the given array as data into the map with the given string key.
+     */
     public void setIntArray(String key, int[] value)
     {
         this.tagMap.put(key, new NBTTagIntArray(value));
     }
 
+    /**
+     * Stores the given boolean value as a NBTTagByte, storing 1 for true and 0 for false, using the given string key.
+     */
     public void setBoolean(String key, boolean value)
     {
         this.setByte(key, (byte)(value ? 1 : 0));
     }
 
+    /**
+     * gets a generic tag with the specified name
+     */
     public NBTBase getTag(String key)
     {
         return (NBTBase)this.tagMap.get(key);
     }
 
+    /**
+     * Gets the ID byte for the given tag key
+     */
     public byte getTagId(String key)
     {
         NBTBase nbtbase = (NBTBase)this.tagMap.get(key);
         return nbtbase != null ? nbtbase.getId() : 0;
     }
 
+    /**
+     * Returns whether the given string has been previously stored as a key in the map.
+     */
     public boolean hasKey(String key)
     {
         return this.tagMap.containsKey(key);
@@ -158,11 +206,14 @@ public class NBTTagCompound extends NBTBase
         }
     }
 
+    /**
+     * Retrieves a byte value using the specified key, or 0 if no such key was stored.
+     */
     public byte getByte(String key)
     {
         try
         {
-            return !this.hasKey(key, 99) ? 0 : ((NBTPrimitive)this.tagMap.get(key)).getByte();
+            return !this.hasKey(key, 99) ? 0 : ((NBTBase.NBTPrimitive)this.tagMap.get(key)).getByte();
         }
         catch (ClassCastException var3)
         {
@@ -170,11 +221,14 @@ public class NBTTagCompound extends NBTBase
         }
     }
 
+    /**
+     * Retrieves a short value using the specified key, or 0 if no such key was stored.
+     */
     public short getShort(String key)
     {
         try
         {
-            return !this.hasKey(key, 99) ? 0 : ((NBTPrimitive)this.tagMap.get(key)).getShort();
+            return !this.hasKey(key, 99) ? 0 : ((NBTBase.NBTPrimitive)this.tagMap.get(key)).getShort();
         }
         catch (ClassCastException var3)
         {
@@ -182,11 +236,14 @@ public class NBTTagCompound extends NBTBase
         }
     }
 
+    /**
+     * Retrieves an integer value using the specified key, or 0 if no such key was stored.
+     */
     public int getInteger(String key)
     {
         try
         {
-            return !this.hasKey(key, 99) ? 0 : ((NBTPrimitive)this.tagMap.get(key)).getInt();
+            return !this.hasKey(key, 99) ? 0 : ((NBTBase.NBTPrimitive)this.tagMap.get(key)).getInt();
         }
         catch (ClassCastException var3)
         {
@@ -194,11 +251,14 @@ public class NBTTagCompound extends NBTBase
         }
     }
 
+    /**
+     * Retrieves a long value using the specified key, or 0 if no such key was stored.
+     */
     public long getLong(String key)
     {
         try
         {
-            return !this.hasKey(key, 99) ? 0L : ((NBTPrimitive)this.tagMap.get(key)).getLong();
+            return !this.hasKey(key, 99) ? 0L : ((NBTBase.NBTPrimitive)this.tagMap.get(key)).getLong();
         }
         catch (ClassCastException var3)
         {
@@ -206,11 +266,14 @@ public class NBTTagCompound extends NBTBase
         }
     }
 
+    /**
+     * Retrieves a float value using the specified key, or 0 if no such key was stored.
+     */
     public float getFloat(String key)
     {
         try
         {
-            return !this.hasKey(key, 99) ? 0.0F : ((NBTPrimitive)this.tagMap.get(key)).getFloat();
+            return !this.hasKey(key, 99) ? 0.0F : ((NBTBase.NBTPrimitive)this.tagMap.get(key)).getFloat();
         }
         catch (ClassCastException var3)
         {
@@ -218,11 +281,14 @@ public class NBTTagCompound extends NBTBase
         }
     }
 
+    /**
+     * Retrieves a double value using the specified key, or 0 if no such key was stored.
+     */
     public double getDouble(String key)
     {
         try
         {
-            return !this.hasKey(key, 99) ? 0.0D : ((NBTPrimitive)this.tagMap.get(key)).getDouble();
+            return !this.hasKey(key, 99) ? 0.0D : ((NBTBase.NBTPrimitive)this.tagMap.get(key)).getDouble();
         }
         catch (ClassCastException var3)
         {
@@ -230,6 +296,9 @@ public class NBTTagCompound extends NBTBase
         }
     }
 
+    /**
+     * Retrieves a string value using the specified key, or an empty string if no such key was stored.
+     */
     public String getString(String key)
     {
         try
@@ -242,6 +311,9 @@ public class NBTTagCompound extends NBTBase
         }
     }
 
+    /**
+     * Retrieves a byte array using the specified key, or a zero-length array if no such key was stored.
+     */
     public byte[] getByteArray(String key)
     {
         try
@@ -254,6 +326,9 @@ public class NBTTagCompound extends NBTBase
         }
     }
 
+    /**
+     * Retrieves an int array using the specified key, or a zero-length array if no such key was stored.
+     */
     public int[] getIntArray(String key)
     {
         try
@@ -266,6 +341,10 @@ public class NBTTagCompound extends NBTBase
         }
     }
 
+    /**
+     * Retrieves a NBTTagCompound subtag matching the specified key, or a new empty NBTTagCompound if no such key was
+     * stored.
+     */
     public NBTTagCompound getCompoundTag(String key)
     {
         try
@@ -278,6 +357,9 @@ public class NBTTagCompound extends NBTBase
         }
     }
 
+    /**
+     * Gets the NBTTagList object with the given name. Args: name, NBTBase type
+     */
     public NBTTagList getTagList(String key, int type)
     {
         try
@@ -298,11 +380,18 @@ public class NBTTagCompound extends NBTBase
         }
     }
 
+    /**
+     * Retrieves a boolean value using the specified key, or false if no such key was stored. This uses the getByte
+     * method.
+     */
     public boolean getBoolean(String key)
     {
         return this.getByte(key) != 0;
     }
 
+    /**
+     * Remove the specified tag.
+     */
     public void removeTag(String key)
     {
         this.tagMap.remove(key);
@@ -325,11 +414,17 @@ public class NBTTagCompound extends NBTBase
         return stringbuilder.append('}').toString();
     }
 
+    /**
+     * Return whether this compound has no tags.
+     */
     public boolean hasNoTags()
     {
         return this.tagMap.isEmpty();
     }
 
+    /**
+     * Create a crash report which indicates a NBT read error.
+     */
     private CrashReport createCrashReport(final String key, final int expectedType, ClassCastException ex)
     {
         CrashReport crashreport = CrashReport.makeCrashReport(ex, "Reading NBT data");
@@ -352,6 +447,9 @@ public class NBTTagCompound extends NBTBase
         return crashreport;
     }
 
+    /**
+     * Creates a clone of the tag.
+     */
     public NBTBase copy()
     {
         NBTTagCompound nbttagcompound = new NBTTagCompound();
@@ -422,6 +520,10 @@ public class NBTTagCompound extends NBTBase
         }
     }
 
+    /**
+     * Merges this NBTTagCompound with the given compound. Any sub-compounds are merged using the same methods, other
+     * types of tags are overwritten from the given compound.
+     */
     public void merge(NBTTagCompound other)
     {
         for (String s : other.tagMap.keySet())

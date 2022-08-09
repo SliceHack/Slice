@@ -26,6 +26,9 @@ public class EntityFootStepFX extends EntityFX
         this.footstepMaxAge = 200;
     }
 
+    /**
+     * Renders the particle
+     */
     public void renderParticle(WorldRenderer worldRendererIn, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
     {
         float f = ((float)this.footstepAge + partialTicks) / (float)this.footstepMaxAge;
@@ -57,6 +60,9 @@ public class EntityFootStepFX extends EntityFX
         GlStateManager.enableLighting();
     }
 
+    /**
+     * Called to update the entity's position/logic.
+     */
     public void onUpdate()
     {
         ++this.footstepAge;

@@ -7,13 +7,13 @@ import net.minecraft.util.Session;
 
 public class GameConfiguration
 {
-    public final UserInformation userInfo;
-    public final DisplayInformation displayInfo;
-    public final FolderInformation folderInfo;
-    public final GameInformation gameInfo;
-    public final ServerInformation serverInfo;
+    public final GameConfiguration.UserInformation userInfo;
+    public final GameConfiguration.DisplayInformation displayInfo;
+    public final GameConfiguration.FolderInformation folderInfo;
+    public final GameConfiguration.GameInformation gameInfo;
+    public final GameConfiguration.ServerInformation serverInfo;
 
-    public GameConfiguration(UserInformation userInfoIn, DisplayInformation displayInfoIn, FolderInformation folderInfoIn, GameInformation gameInfoIn, ServerInformation serverInfoIn)
+    public GameConfiguration(GameConfiguration.UserInformation userInfoIn, GameConfiguration.DisplayInformation displayInfoIn, GameConfiguration.FolderInformation folderInfoIn, GameConfiguration.GameInformation gameInfoIn, GameConfiguration.ServerInformation serverInfoIn)
     {
         this.userInfo = userInfoIn;
         this.displayInfo = displayInfoIn;

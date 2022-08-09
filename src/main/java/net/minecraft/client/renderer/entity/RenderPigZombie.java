@@ -24,6 +24,9 @@ public class RenderPigZombie extends RenderBiped<EntityPigZombie>
         });
     }
 
+    /**
+     * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
+     */
     protected ResourceLocation getEntityTexture(EntityPigZombie entity)
     {
         return ZOMBIE_PIGMAN_TEXTURE;

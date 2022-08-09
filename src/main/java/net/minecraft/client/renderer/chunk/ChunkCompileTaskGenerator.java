@@ -10,19 +10,19 @@ public class ChunkCompileTaskGenerator
     private final RenderChunk renderChunk;
     private final ReentrantLock lock = new ReentrantLock();
     private final List<Runnable> listFinishRunnables = Lists.<Runnable>newArrayList();
-    private final Type type;
+    private final ChunkCompileTaskGenerator.Type type;
     private RegionRenderCacheBuilder regionRenderCacheBuilder;
     private CompiledChunk compiledChunk;
-    private Status status = Status.PENDING;
+    private ChunkCompileTaskGenerator.Status status = ChunkCompileTaskGenerator.Status.PENDING;
     private boolean finished;
 
-    public ChunkCompileTaskGenerator(RenderChunk renderChunkIn, Type typeIn)
+    public ChunkCompileTaskGenerator(RenderChunk renderChunkIn, ChunkCompileTaskGenerator.Type typeIn)
     {
         this.renderChunk = renderChunkIn;
         this.type = typeIn;
     }
 
-    public Status getStatus()
+    public ChunkCompileTaskGenerator.Status getStatus()
     {
         return this.status;
     }
@@ -52,7 +52,7 @@ public class ChunkCompileTaskGenerator
         this.regionRenderCacheBuilder = regionRenderCacheBuilderIn;
     }
 
-    public void setStatus(Status statusIn)
+    public void setStatus(ChunkCompileTaskGenerator.Status statusIn)
     {
         this.lock.lock();
 
@@ -72,13 +72,13 @@ public class ChunkCompileTaskGenerator
 
         try
         {
-            if (this.type == Type.REBUILD_CHUNK && this.status != Status.DONE)
+            if (this.type == ChunkCompileTaskGenerator.Type.REBUILD_CHUNK && this.status != ChunkCompileTaskGenerator.Status.DONE)
             {
                 this.renderChunk.setNeedsUpdate(true);
             }
 
             this.finished = true;
-            this.status = Status.DONE;
+            this.status = ChunkCompileTaskGenerator.Status.DONE;
 
             for (Runnable runnable : this.listFinishRunnables)
             {
@@ -115,7 +115,7 @@ public class ChunkCompileTaskGenerator
         return this.lock;
     }
 
-    public Type getType()
+    public ChunkCompileTaskGenerator.Type getType()
     {
         return this.type;
     }

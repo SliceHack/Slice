@@ -5,8 +5,13 @@ import net.minecraft.nbt.NBTTagList;
 
 public class Rotations
 {
+    /** Rotation on the X axis */
     protected final float x;
+
+    /** Rotation on the Y axis */
     protected final float y;
+
+    /** Rotation on the Z axis */
     protected final float z;
 
     public Rotations(float x, float y, float z)
@@ -45,16 +50,25 @@ public class Rotations
         }
     }
 
+    /**
+     * Gets the X axis rotation
+     */
     public float getX()
     {
         return this.x;
     }
 
+    /**
+     * Gets the Y axis rotation
+     */
     public float getY()
     {
         return this.y;
     }
 
+    /**
+     * Gets the Z axis rotation
+     */
     public float getZ()
     {
         return this.z;

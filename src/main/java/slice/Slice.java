@@ -29,7 +29,9 @@ import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
 import slice.module.Module;
 import slice.script.manager.ScriptManager;
+import slice.util.LoggerUtil;
 import slice.util.ResourceUtil;
+import slice.util.Timer;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -253,7 +255,6 @@ public enum Slice {
 
     @EventInfo
     public void onKey(EventKey e) {
-        if(e.getKey() == Keyboard.KEY_V) Minecraft.getMinecraft().displayGuiScreen(new GuiView(new Page("https://www.youtube.com/watch?v=dQw4w9WgXcQ")));
         if(e.getKey() == Keyboard.KEY_RSHIFT) Minecraft.getMinecraft().displayGuiScreen(clickGui);
         if (e.getKey() == Keyboard.KEY_PERIOD) Minecraft.getMinecraft().displayGuiScreen(new GuiChat("."));
         moduleManager.getModules().stream().filter(module -> module.getKey() == e.getKey()).forEach(Module::toggle); // key event

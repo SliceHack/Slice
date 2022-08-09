@@ -6,10 +6,21 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class MerchantRecipe
 {
+    /** Item the Villager buys. */
     private ItemStack itemToBuy;
+
+    /** Second Item the Villager buys. */
     private ItemStack secondItemToBuy;
+
+    /** Item the Villager sells. */
     private ItemStack itemToSell;
+
+    /**
+     * Saves how much has been tool used when put into to slot to be enchanted.
+     */
     private int toolUses;
+
+    /** Maximum times this trade can be used. */
     private int maxTradeUses;
     private boolean rewardsExp;
 
@@ -43,21 +54,33 @@ public class MerchantRecipe
         this(buy1, new ItemStack(sellItem));
     }
 
+    /**
+     * Gets the itemToBuy.
+     */
     public ItemStack getItemToBuy()
     {
         return this.itemToBuy;
     }
 
+    /**
+     * Gets secondItemToBuy.
+     */
     public ItemStack getSecondItemToBuy()
     {
         return this.secondItemToBuy;
     }
 
+    /**
+     * Gets if Villager has secondItemToBuy.
+     */
     public boolean hasSecondItemToBuy()
     {
         return this.secondItemToBuy != null;
     }
 
+    /**
+     * Gets itemToSell.
+     */
     public ItemStack getItemToSell()
     {
         return this.itemToSell;
@@ -88,6 +111,10 @@ public class MerchantRecipe
         return this.toolUses >= this.maxTradeUses;
     }
 
+    /**
+     * Compensates {@link net.minecraft.village.MerchantRecipe#toolUses toolUses} with {@link
+     * net.minecraft.village.MerchantRecipe#maxTradeUses maxTradeUses}
+     */
     public void compensateToolUses()
     {
         this.toolUses = this.maxTradeUses;

@@ -52,7 +52,10 @@ public class BlockPattern
         return this.palmLength;
     }
 
-    private PatternHelper checkPatternAt(BlockPos pos, EnumFacing finger, EnumFacing thumb, LoadingCache<BlockPos, BlockWorldState> lcache)
+    /**
+     * checks that the given pattern & rotation is at the block co-ordinates.
+     */
+    private BlockPattern.PatternHelper checkPatternAt(BlockPos pos, EnumFacing finger, EnumFacing thumb, LoadingCache<BlockPos, BlockWorldState> lcache)
     {
         for (int i = 0; i < this.palmLength; ++i)
         {
@@ -68,10 +71,14 @@ public class BlockPattern
             }
         }
 
-        return new PatternHelper(pos, finger, thumb, lcache, this.palmLength, this.thumbLength, this.fingerLength);
+        return new BlockPattern.PatternHelper(pos, finger, thumb, lcache, this.palmLength, this.thumbLength, this.fingerLength);
     }
 
-    public PatternHelper match(World worldIn, BlockPos pos)
+    /**
+     * Calculates whether the given world position matches the pattern. Warning, fairly heavy function. @return a
+     * BlockPattern.PatternHelper if found, null otherwise.
+     */
+    public BlockPattern.PatternHelper match(World worldIn, BlockPos pos)
     {
         LoadingCache<BlockPos, BlockWorldState> loadingcache = func_181627_a(worldIn, false);
         int i = Math.max(Math.max(this.palmLength, this.thumbLength), this.fingerLength);
@@ -84,7 +91,7 @@ public class BlockPattern
                 {
                     if (enumfacing1 != enumfacing && enumfacing1 != enumfacing.getOpposite())
                     {
-                        PatternHelper blockpattern$patternhelper = this.checkPatternAt(blockpos, enumfacing, enumfacing1, loadingcache);
+                        BlockPattern.PatternHelper blockpattern$patternhelper = this.checkPatternAt(blockpos, enumfacing, enumfacing1, loadingcache);
 
                         if (blockpattern$patternhelper != null)
                         {
@@ -100,9 +107,13 @@ public class BlockPattern
 
     public static LoadingCache<BlockPos, BlockWorldState> func_181627_a(World p_181627_0_, boolean p_181627_1_)
     {
-        return CacheBuilder.newBuilder().<BlockPos, BlockWorldState>build(new CacheLoader(p_181627_0_, p_181627_1_));
+        return CacheBuilder.newBuilder().<BlockPos, BlockWorldState>build(new BlockPattern.CacheLoader(p_181627_0_, p_181627_1_));
     }
 
+    /**
+     * Offsets the position of pos in the direction of finger and thumb facing by offset amounts, follows the right-hand
+     * rule for cross products (finger, thumb, palm) @return A new BlockPos offset in the facing directions
+     */
     protected static BlockPos translateOffset(BlockPos pos, EnumFacing finger, EnumFacing thumb, int palmOffset, int thumbOffset, int fingerOffset)
     {
         if (finger != thumb && finger != thumb.getOpposite())

@@ -6,20 +6,27 @@ import net.minecraft.util.IChatComponent;
 
 public class HoverEvent
 {
-    private final Action action;
+    private final HoverEvent.Action action;
     private final IChatComponent value;
 
-    public HoverEvent(Action actionIn, IChatComponent valueIn)
+    public HoverEvent(HoverEvent.Action actionIn, IChatComponent valueIn)
     {
         this.action = actionIn;
         this.value = valueIn;
     }
 
-    public Action getAction()
+    /**
+     * Gets the action to perform when this event is raised.
+     */
+    public HoverEvent.Action getAction()
     {
         return this.action;
     }
 
+    /**
+     * Gets the value to perform the action on when this event is raised.  For example, if the action is "show item",
+     * this would be the item to show.
+     */
     public IChatComponent getValue()
     {
         return this.value;
@@ -81,7 +88,7 @@ public class HoverEvent
         SHOW_ITEM("show_item", true),
         SHOW_ENTITY("show_entity", true);
 
-        private static final Map<String, Action> nameMapping = Maps.<String, Action>newHashMap();
+        private static final Map<String, HoverEvent.Action> nameMapping = Maps.<String, HoverEvent.Action>newHashMap();
         private final boolean allowedInChat;
         private final String canonicalName;
 
@@ -101,13 +108,13 @@ public class HoverEvent
             return this.canonicalName;
         }
 
-        public static Action getValueByCanonicalName(String canonicalNameIn)
+        public static HoverEvent.Action getValueByCanonicalName(String canonicalNameIn)
         {
-            return (Action)nameMapping.get(canonicalNameIn);
+            return (HoverEvent.Action)nameMapping.get(canonicalNameIn);
         }
 
         static {
-            for (Action hoverevent$action : values())
+            for (HoverEvent.Action hoverevent$action : values())
             {
                 nameMapping.put(hoverevent$action.getCanonicalName(), hoverevent$action);
             }

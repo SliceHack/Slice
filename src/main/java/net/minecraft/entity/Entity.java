@@ -46,6 +46,8 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import slice.event.events.EventSafeWalk;
+import slice.module.modules.movement.Safewalk;
 
 public abstract class Entity implements ICommandSender
 {
@@ -53,57 +55,155 @@ public abstract class Entity implements ICommandSender
     private static int nextEntityID;
     private int entityId;
     public double renderDistanceWeight;
+
+    /**
+     * Blocks entities from spawning when they do their AABB check to make sure the spot is clear of entities that can
+     * prevent spawning.
+     */
     public boolean preventEntitySpawning;
+
+    /** The entity that is riding this entity */
     public Entity riddenByEntity;
+
+    /** The entity we are currently riding */
     public Entity ridingEntity;
     public boolean forceSpawn;
+
+    /** Reference to the World object. */
     public World worldObj;
     public double prevPosX;
     public double prevPosY;
     public double prevPosZ;
+
+    /** Entity position X */
     public double posX;
+
+    /** Entity position Y */
     public double posY;
+
+    /** Entity position Z */
     public double posZ;
+
+    /** Entity motion X */
     public double motionX;
+
+    /** Entity motion Y */
     public double motionY;
+
+    /** Entity motion Z */
     public double motionZ;
+
+    /** Entity rotation Yaw */
     public float rotationYaw;
+
+    /** Entity rotation Pitch */
     public float rotationPitch;
     public float prevRotationYaw;
     public float prevRotationPitch;
+
+    /** Axis aligned bounding box. */
     private AxisAlignedBB boundingBox;
     public boolean onGround;
+
+    /**
+     * True if after a move this entity has collided with something on X- or Z-axis
+     */
     public boolean isCollidedHorizontally;
+
+    /**
+     * True if after a move this entity has collided with something on Y-axis
+     */
     public boolean isCollidedVertically;
+
+    /**
+     * True if after a move this entity has collided with something either vertically or horizontally
+     */
     public boolean isCollided;
     public boolean velocityChanged;
     protected boolean isInWeb;
     private boolean isOutsideBorder;
+
+    /**
+     * gets set by setEntityDead, so this must be the flag whether an Entity is dead (inactive may be better term)
+     */
     public boolean isDead;
+
+    /** How wide this entity is considered to be */
     public float width;
+
+    /** How high this entity is considered to be */
     public float height;
+
+    /** The previous ticks distance walked multiplied by 0.6 */
     public float prevDistanceWalkedModified;
+
+    /** The distance walked multiplied by 0.6 */
     public float distanceWalkedModified;
     public float distanceWalkedOnStepModified;
     public float fallDistance;
+
+    /**
+     * The distance that has to be exceeded in order to triger a new step sound and an onEntityWalking event on a block
+     */
     private int nextStepDistance;
+
+    /**
+     * The entity's X coordinate at the previous tick, used to calculate position during rendering routines
+     */
     public double lastTickPosX;
+
+    /**
+     * The entity's Y coordinate at the previous tick, used to calculate position during rendering routines
+     */
     public double lastTickPosY;
+
+    /**
+     * The entity's Z coordinate at the previous tick, used to calculate position during rendering routines
+     */
     public double lastTickPosZ;
+
+    /**
+     * How high this entity can step up when running into a block to try to get over it (currently make note the entity
+     * will always step up this amount and not just the amount needed)
+     */
     public float stepHeight;
+
+    /**
+     * Whether this entity won't clip with collision or not (make note it won't disable gravity)
+     */
     public boolean noClip;
+
+    /**
+     * Reduces the velocity applied by entity collisions by the specified percent.
+     */
     public float entityCollisionReduction;
     protected Random rand;
+
+    /** How many ticks has this entity had ran since being alive */
     public int ticksExisted;
+
+    /**
+     * The amount of ticks you have to stand inside of fire before be set on fire
+     */
     public int fireResistance;
     private int fire;
+
+    /**
+     * Whether this entity is currently inside of water (if it handles water movement that is)
+     */
     protected boolean inWater;
+
+    /**
+     * Remaining time an entity will be "immune" to further damage after being hurt.
+     */
     public int hurtResistantTime;
     protected boolean firstUpdate;
     protected boolean isImmuneToFire;
     protected DataWatcher dataWatcher;
     private double entityRiderPitchDelta;
     private double entityRiderYawDelta;
+
+    /** Has this entity been added to the chunk its within */
     public boolean addedToChunk;
     public int chunkCoordX;
     public int chunkCoordY;
@@ -111,17 +211,38 @@ public abstract class Entity implements ICommandSender
     public int serverPosX;
     public int serverPosY;
     public int serverPosZ;
+
+    /**
+     * Render entity even if it is outside the camera frustum. Only true in EntityFish for now. Used in RenderGlobal:
+     * render if ignoreFrustumCheck or in frustum.
+     */
     public boolean ignoreFrustumCheck;
     public boolean isAirBorne;
     public int timeUntilPortal;
+
+    /** Whether the entity is inside a Portal */
     protected boolean inPortal;
     protected int portalCounter;
+
+    /** Which dimension the player is in (-1 = the Nether, 0 = normal world) */
     public int dimension;
+
+    /** The position of the last portal the entity was in */
     protected BlockPos lastPortalPos;
+
+    /**
+     * A horizontal vector related to the position of the last portal the entity was in
+     */
     protected Vec3 lastPortalVec;
+
+    /**
+     * A direction related to the position of the last portal the entity was in
+     */
     protected EnumFacing teleportDirection;
     private boolean invulnerable;
     protected UUID entityUniqueID;
+
+    /** The command result statistics for this Entity. */
     private final CommandResultStats cmdResultStats;
 
     public int getEntityId()
@@ -134,6 +255,9 @@ public abstract class Entity implements ICommandSender
         this.entityId = id;
     }
 
+    /**
+     * Called by the /kill command.
+     */
     public void onKillCommand()
     {
         this.setDead();
@@ -186,6 +310,10 @@ public abstract class Entity implements ICommandSender
         return this.entityId;
     }
 
+    /**
+     * Keeps moving the entity up so it isn't colliding with blocks and other requirements for this entity to be spawned
+     * (only actually used on players though its also on Entity)
+     */
     protected void preparePlayerToSpawn()
     {
         if (this.worldObj != null)
@@ -207,11 +335,17 @@ public abstract class Entity implements ICommandSender
         }
     }
 
+    /**
+     * Will get destroyed next tick.
+     */
     public void setDead()
     {
         this.isDead = true;
     }
 
+    /**
+     * Sets the width and height of the entity. Args: width, height
+     */
     protected void setSize(float width, float height)
     {
         if (width != this.width || height != this.height)
@@ -228,12 +362,18 @@ public abstract class Entity implements ICommandSender
         }
     }
 
+    /**
+     * Sets the rotation of the entity. Args: yaw, pitch (both in degrees)
+     */
     protected void setRotation(float yaw, float pitch)
     {
         this.rotationYaw = yaw % 360.0F;
         this.rotationPitch = pitch % 360.0F;
     }
 
+    /**
+     * Sets the x,y,z of the entity from the given parameters. Also seems to set up a bounding box.
+     */
     public void setPosition(double x, double y, double z)
     {
         this.posX = x;
@@ -244,6 +384,10 @@ public abstract class Entity implements ICommandSender
         this.setEntityBoundingBox(new AxisAlignedBB(x - (double)f, y, z - (double)f, x + (double)f, y + (double)f1, z + (double)f));
     }
 
+    /**
+     * Adds 15% to the entity's yaw and subtracts 15% from the pitch. Clamps pitch from -90 to 90. Both arguments in
+     * degrees.
+     */
     public void setAngles(float yaw, float pitch)
     {
         float f = this.rotationPitch;
@@ -255,11 +399,17 @@ public abstract class Entity implements ICommandSender
         this.prevRotationYaw += this.rotationYaw - f1;
     }
 
+    /**
+     * Called to update the entity's position/logic.
+     */
     public void onUpdate()
     {
         this.onEntityUpdate();
     }
 
+    /**
+     * Gets called every tick from main Entity class
+     */
     public void onEntityUpdate()
     {
         this.worldObj.theProfiler.startSection("entityBaseTick");
@@ -377,11 +527,17 @@ public abstract class Entity implements ICommandSender
         this.worldObj.theProfiler.endSection();
     }
 
+    /**
+     * Return the amount of time this entity should stay in a portal before being transported.
+     */
     public int getMaxInPortalTime()
     {
         return 0;
     }
 
+    /**
+     * Called whenever the entity is walking inside of lava.
+     */
     protected void setOnFireFromLava()
     {
         if (!this.isImmuneToFire)
@@ -391,6 +547,9 @@ public abstract class Entity implements ICommandSender
         }
     }
 
+    /**
+     * Sets entity to burn for x amount of seconds, cannot lower amount of existing fire.
+     */
     public void setFire(int seconds)
     {
         int i = seconds * 20;
@@ -402,27 +561,42 @@ public abstract class Entity implements ICommandSender
         }
     }
 
+    /**
+     * Removes fire from entity.
+     */
     public void extinguish()
     {
         this.fire = 0;
     }
 
+    /**
+     * sets the dead flag. Used when you fall off the bottom of the world.
+     */
     protected void kill()
     {
         this.setDead();
     }
 
+    /**
+     * Checks if the offset position from the entity's current position is inside of liquid. Args: x, y, z
+     */
     public boolean isOffsetPositionInLiquid(double x, double y, double z)
     {
         AxisAlignedBB axisalignedbb = this.getEntityBoundingBox().offset(x, y, z);
         return this.isLiquidPresentInAABB(axisalignedbb);
     }
 
+    /**
+     * Determines if a liquid is present within the specified AxisAlignedBB.
+     */
     private boolean isLiquidPresentInAABB(AxisAlignedBB bb)
     {
         return this.worldObj.getCollidingBoundingBoxes(this, bb).isEmpty() && !this.worldObj.isAnyLiquid(bb);
     }
 
+    /**
+     * Tries to moves the entity by the passed in displacement. Args: x, y, z
+     */
     public void moveEntity(double x, double y, double z)
     {
         if (this.noClip)
@@ -451,7 +625,8 @@ public abstract class Entity implements ICommandSender
             double d3 = x;
             double d4 = y;
             double d5 = z;
-            boolean flag = this.onGround && this.isSneaking() && this instanceof EntityPlayer;
+
+            boolean flag = this.onGround && (this.isSneaking() || slice.Slice.INSTANCE.getModuleManager().getModule(Safewalk.class).isEnabled()) && this instanceof EntityPlayer;
 
             if (flag)
             {
@@ -763,6 +938,9 @@ public abstract class Entity implements ICommandSender
         }
     }
 
+    /**
+     * Resets the entity's position to the center (planar) and bottom (vertical) points of its bounding box.
+     */
     private void resetPositionToBB()
     {
         this.posX = (this.getEntityBoundingBox().minX + this.getEntityBoundingBox().maxX) / 2.0D;
@@ -831,16 +1009,26 @@ public abstract class Entity implements ICommandSender
         }
     }
 
+    /**
+     * @return True if this entity will not play sounds
+     */
     public boolean isSilent()
     {
         return this.dataWatcher.getWatchableObjectByte(4) == 1;
     }
 
+    /**
+     * When set to true the entity will not play sounds.
+     */
     public void setSilent(boolean isSilent)
     {
         this.dataWatcher.updateObject(4, Byte.valueOf((byte)(isSilent ? 1 : 0)));
     }
 
+    /**
+     * returns if this entity triggers Block.onEntityWalking on the blocks they walk on. used for spiders and wolves to
+     * prevent them from trampling crops
+     */
     protected boolean canTriggerWalking()
     {
         return true;
@@ -870,11 +1058,18 @@ public abstract class Entity implements ICommandSender
         }
     }
 
+    /**
+     * Returns the collision bounding box for this entity
+     */
     public AxisAlignedBB getCollisionBoundingBox()
     {
         return null;
     }
 
+    /**
+     * Will deal the specified amount of damage to the entity if the entity isn't immune to fire damage. Args:
+     * amountDamage
+     */
     protected void dealFireDamage(int amount)
     {
         if (!this.isImmuneToFire)
@@ -896,16 +1091,26 @@ public abstract class Entity implements ICommandSender
         }
     }
 
+    /**
+     * Checks if this entity is either in water or on an open air block in rain (used in wolves).
+     */
     public boolean isWet()
     {
         return this.inWater || this.worldObj.isRainingAt(new BlockPos(this.posX, this.posY, this.posZ)) || this.worldObj.isRainingAt(new BlockPos(this.posX, this.posY + (double)this.height, this.posZ));
     }
 
+    /**
+     * Checks if this entity is inside water (if inWater field is true as a result of handleWaterMovement() returning
+     * true)
+     */
     public boolean isInWater()
     {
         return this.inWater;
     }
 
+    /**
+     * Returns if this entity is in water and will end up adding the waters velocity to the entity
+     */
     public boolean handleWaterMovement()
     {
         if (this.worldObj.handleMaterialAcceleration(this.getEntityBoundingBox().expand(0.0D, -0.4000000059604645D, 0.0D).contract(0.001D, 0.001D, 0.001D), Material.water, this))
@@ -927,6 +1132,9 @@ public abstract class Entity implements ICommandSender
         return this.inWater;
     }
 
+    /**
+     * sets the players height back to normal after doing things like sleeping and dieing
+     */
     protected void resetHeight()
     {
         float f = MathHelper.sqrt_double(this.motionX * this.motionX * 0.20000000298023224D + this.motionY * this.motionY + this.motionZ * this.motionZ * 0.20000000298023224D) * 0.2F;
@@ -954,6 +1162,9 @@ public abstract class Entity implements ICommandSender
         }
     }
 
+    /**
+     * Attempts to create sprinting particles if the entity is sprinting and not in water.
+     */
     public void spawnRunningParticles()
     {
         if (this.isSprinting() && !this.isInWater())
@@ -982,6 +1193,9 @@ public abstract class Entity implements ICommandSender
         return "game.neutral.swim.splash";
     }
 
+    /**
+     * Checks if the current block the entity is within of the specified material type
+     */
     public boolean isInsideOfMaterial(Material materialIn)
     {
         double d0 = this.posY + (double)this.getEyeHeight();
@@ -1007,6 +1221,9 @@ public abstract class Entity implements ICommandSender
         return this.worldObj.isMaterialInBB(this.getEntityBoundingBox().expand(-0.10000000149011612D, -0.4000000059604645D, -0.10000000149011612D), Material.lava);
     }
 
+    /**
+     * Used in both water and by flying objects
+     */
     public void moveFlying(float strafe, float forward, float friction)
     {
         float f = strafe * strafe + forward * forward;
@@ -1036,17 +1253,26 @@ public abstract class Entity implements ICommandSender
         return this.worldObj.isBlockLoaded(blockpos) ? this.worldObj.getCombinedLight(blockpos, 0) : 0;
     }
 
+    /**
+     * Gets how bright this entity is.
+     */
     public float getBrightness(float partialTicks)
     {
         BlockPos blockpos = new BlockPos(this.posX, this.posY + (double)this.getEyeHeight(), this.posZ);
         return this.worldObj.isBlockLoaded(blockpos) ? this.worldObj.getLightBrightness(blockpos) : 0.0F;
     }
 
+    /**
+     * Sets the reference to the World object.
+     */
     public void setWorld(World worldIn)
     {
         this.worldObj = worldIn;
     }
 
+    /**
+     * Sets the entity's position and rotation.
+     */
     public void setPositionAndRotation(double x, double y, double z, float yaw, float pitch)
     {
         this.prevPosX = this.posX = x;
@@ -1075,6 +1301,9 @@ public abstract class Entity implements ICommandSender
         this.setLocationAndAngles((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, rotationYawIn, rotationPitchIn);
     }
 
+    /**
+     * Sets the location and Yaw/Pitch of an entity in the world
+     */
     public void setLocationAndAngles(double x, double y, double z, float yaw, float pitch)
     {
         this.lastTickPosX = this.prevPosX = this.posX = x;
@@ -1085,6 +1314,9 @@ public abstract class Entity implements ICommandSender
         this.setPosition(this.posX, this.posY, this.posZ);
     }
 
+    /**
+     * Returns the distance to the entity. Args: entity
+     */
     public float getDistanceToEntity(Entity entityIn)
     {
         float f = (float)(this.posX - entityIn.posX);
@@ -1093,6 +1325,9 @@ public abstract class Entity implements ICommandSender
         return MathHelper.sqrt_float(f * f + f1 * f1 + f2 * f2);
     }
 
+    /**
+     * Gets the squared distance to the position. Args: x, y, z
+     */
     public double getDistanceSq(double x, double y, double z)
     {
         double d0 = this.posX - x;
@@ -1111,6 +1346,9 @@ public abstract class Entity implements ICommandSender
         return pos.distanceSqToCenter(this.posX, this.posY, this.posZ);
     }
 
+    /**
+     * Gets the distance to the position. Args: x, y, z
+     */
     public double getDistance(double x, double y, double z)
     {
         double d0 = this.posX - x;
@@ -1119,6 +1357,9 @@ public abstract class Entity implements ICommandSender
         return (double)MathHelper.sqrt_double(d0 * d0 + d1 * d1 + d2 * d2);
     }
 
+    /**
+     * Gets the distance to the position. Args: pos
+     */
     public double getDistance(BlockPos pos)
     {
         double d0 = this.posX - pos.getX();
@@ -1126,6 +1367,18 @@ public abstract class Entity implements ICommandSender
         double d2 = this.posZ - pos.getZ();
         return (double)MathHelper.sqrt_double(d0 * d0 + d1 * d1 + d2 * d2);
     }
+
+    /**
+     * Returns the squared distance to the entity. Args: entity
+     */
+    public double getDistance(Entity entity)
+    {
+        return getDistanceToEntity(entity);
+    }
+
+    /**
+     * Returns the squared distance to the entity. Args: entity
+     */
     public double getDistanceSqToEntity(Entity entityIn)
     {
         double d0 = this.posX - entityIn.posX;
@@ -1134,10 +1387,16 @@ public abstract class Entity implements ICommandSender
         return d0 * d0 + d1 * d1 + d2 * d2;
     }
 
+    /**
+     * Called by a player entity when they collide with an entity
+     */
     public void onCollideWithPlayer(EntityPlayer entityIn)
     {
     }
 
+    /**
+     * Applies a velocity to each of the entities pushing them away from each other. Args: entity
+     */
     public void applyEntityCollision(Entity entityIn)
     {
         if (entityIn.riddenByEntity != this && entityIn.ridingEntity != this)
@@ -1181,6 +1440,9 @@ public abstract class Entity implements ICommandSender
         }
     }
 
+    /**
+     * Adds to the current velocity of the entity. Args: x, y, z
+     */
     public void addVelocity(double x, double y, double z)
     {
         this.motionX += x;
@@ -1189,11 +1451,17 @@ public abstract class Entity implements ICommandSender
         this.isAirBorne = true;
     }
 
+    /**
+     * Sets that this entity has been attacked.
+     */
     protected void setBeenAttacked()
     {
         this.velocityChanged = true;
     }
 
+    /**
+     * Called when the entity is attacked.
+     */
     public boolean attackEntityFrom(DamageSource source, float amount)
     {
         if (this.isEntityInvulnerable(source))
@@ -1207,6 +1475,9 @@ public abstract class Entity implements ICommandSender
         }
     }
 
+    /**
+     * interpolated look vector
+     */
     public Vec3 getLook(float partialTicks)
     {
         if (partialTicks == 1.0F)
@@ -1221,6 +1492,9 @@ public abstract class Entity implements ICommandSender
         }
     }
 
+    /**
+     * Creates a Vec3 using the pitch and yaw of the entities rotation.
+     */
     protected final Vec3 getVectorForRotation(float pitch, float yaw)
     {
         float f = MathHelper.cos(-yaw * 0.017453292F - (float)Math.PI);
@@ -1253,16 +1527,26 @@ public abstract class Entity implements ICommandSender
         return this.worldObj.rayTraceBlocks(vec3, vec32, false, false, true);
     }
 
+    /**
+     * Returns true if other Entities should be prevented from moving through this Entity.
+     */
     public boolean canBeCollidedWith()
     {
         return false;
     }
 
+    /**
+     * Returns true if this entity should push and be pushed by other entities when colliding.
+     */
     public boolean canBePushed()
     {
         return false;
     }
 
+    /**
+     * Adds a value to the player score. Currently not actually used and the entity passed in does nothing. Args:
+     * entity, scoreToAdd
+     */
     public void addToPlayerScore(Entity entityIn, int amount)
     {
     }
@@ -1276,6 +1560,10 @@ public abstract class Entity implements ICommandSender
         return this.isInRangeToRenderDist(d3);
     }
 
+    /**
+     * Checks if the entity is in range to render by using the past in distance and comparing it to its average edge
+     * length * 64 * renderDistanceWeight Args: distance
+     */
     public boolean isInRangeToRenderDist(double distance)
     {
         double d0 = this.getEntityBoundingBox().getAverageEdgeLength();
@@ -1289,6 +1577,10 @@ public abstract class Entity implements ICommandSender
         return distance < d0 * d0;
     }
 
+    /**
+     * Like writeToNBTOptional but does not check if the entity is ridden. Used for saving ridden entities with their
+     * riders.
+     */
     public boolean writeMountToNBT(NBTTagCompound tagCompund)
     {
         String s = this.getEntityString();
@@ -1305,6 +1597,11 @@ public abstract class Entity implements ICommandSender
         }
     }
 
+    /**
+     * Either write this entity to the NBT tag given and return true, or return false without doing anything. If this
+     * returns false the entity is not saved on disk. Ridden entities return false here as they are saved with their
+     * rider.
+     */
     public boolean writeToNBTOptional(NBTTagCompound tagCompund)
     {
         String s = this.getEntityString();
@@ -1321,6 +1618,9 @@ public abstract class Entity implements ICommandSender
         }
     }
 
+    /**
+     * Save the entity to NBT (calls an abstract helper method to write extra data)
+     */
     public void writeToNBT(NBTTagCompound tagCompund)
     {
         try
@@ -1372,6 +1672,9 @@ public abstract class Entity implements ICommandSender
         }
     }
 
+    /**
+     * Reads the entity from NBT (calls an abstract helper method to read specialized data)
+     */
     public void readFromNBT(NBTTagCompound tagCompund)
     {
         try
@@ -1454,19 +1757,31 @@ public abstract class Entity implements ICommandSender
         return true;
     }
 
+    /**
+     * Returns the string that identifies this Entity's class
+     */
     protected final String getEntityString()
     {
         return EntityList.getEntityString(this);
     }
 
+    /**
+     * (abstract) Protected helper method to read subclass entity data from NBT.
+     */
     protected abstract void readEntityFromNBT(NBTTagCompound tagCompund);
 
+    /**
+     * (abstract) Protected helper method to write subclass entity data to NBT.
+     */
     protected abstract void writeEntityToNBT(NBTTagCompound tagCompound);
 
     public void onChunkLoad()
     {
     }
 
+    /**
+     * creates a NBT list from the array of doubles passed to this function
+     */
     protected NBTTagList newDoubleNBTList(double... numbers)
     {
         NBTTagList nbttaglist = new NBTTagList();
@@ -1479,6 +1794,9 @@ public abstract class Entity implements ICommandSender
         return nbttaglist;
     }
 
+    /**
+     * Returns a new NBTTagList filled with the specified floats
+     */
     protected NBTTagList newFloatNBTList(float... numbers)
     {
         NBTTagList nbttaglist = new NBTTagList();
@@ -1501,6 +1819,9 @@ public abstract class Entity implements ICommandSender
         return this.entityDropItem(new ItemStack(itemIn, size, 0), offsetY);
     }
 
+    /**
+     * Drops an item at the position of the entity.
+     */
     public EntityItem entityDropItem(ItemStack itemStackIn, float offsetY)
     {
         if (itemStackIn.stackSize != 0 && itemStackIn.getItem() != null)
@@ -1516,11 +1837,17 @@ public abstract class Entity implements ICommandSender
         }
     }
 
+    /**
+     * Checks whether target entity is alive.
+     */
     public boolean isEntityAlive()
     {
         return !this.isDead;
     }
 
+    /**
+     * Checks if this entity is inside of an opaque block
+     */
     public boolean isEntityInsideOpaqueBlock()
     {
         if (this.noClip)
@@ -1552,16 +1879,26 @@ public abstract class Entity implements ICommandSender
         }
     }
 
+    /**
+     * First layer of player interaction
+     */
     public boolean interactFirst(EntityPlayer playerIn)
     {
         return false;
     }
 
+    /**
+     * Returns a boundingBox used to collide the entity with other entities and blocks. This enables the entity to be
+     * pushable on contact, like boats or minecarts.
+     */
     public AxisAlignedBB getCollisionBox(Entity entityIn)
     {
         return null;
     }
 
+    /**
+     * Handles updating while being ridden by an entity
+     */
     public void updateRidden()
     {
         if (this.ridingEntity.isDead)
@@ -1638,16 +1975,25 @@ public abstract class Entity implements ICommandSender
         }
     }
 
+    /**
+     * Returns the Y Offset of this entity.
+     */
     public double getYOffset()
     {
         return 0.0D;
     }
 
+    /**
+     * Returns the Y offset from the entity's position for any entity riding this one.
+     */
     public double getMountedYOffset()
     {
         return (double)this.height * 0.75D;
     }
 
+    /**
+     * Called when a player mounts an entity. e.g. mounts a pig, mounts a boat.
+     */
     public void mountEntity(Entity entityIn)
     {
         this.entityRiderPitchDelta = 0.0D;
@@ -1714,11 +2060,20 @@ public abstract class Entity implements ICommandSender
         return 0.1F;
     }
 
+    /**
+     * returns a (normalized) vector of where this entity is looking
+     */
     public Vec3 getLookVec()
     {
         return null;
     }
 
+    /**
+     * Marks the entity as being inside a portal, activating teleportation logic in onEntityUpdate() in the following
+     * tick(s).
+     *  
+     * @param pos The postion of the portal that the entity is in
+     */
     public void setPortal(BlockPos pos)
     {
         if (this.timeUntilPortal > 0)
@@ -1743,11 +2098,17 @@ public abstract class Entity implements ICommandSender
         }
     }
 
+    /**
+     * Return the amount of cooldown before this entity can use a portal again.
+     */
     public int getPortalCooldown()
     {
         return 300;
     }
 
+    /**
+     * Sets the velocity to the args. Args: x, y, z
+     */
     public void setVelocity(double x, double y, double z)
     {
         this.motionX = x;
@@ -1759,45 +2120,73 @@ public abstract class Entity implements ICommandSender
     {
     }
 
+    /**
+     * Setups the entity to do the hurt animation. Only used by packets in multiplayer.
+     */
     public void performHurtAnimation()
     {
     }
 
+    /**
+     * returns the inventory of this entity (only used in EntityPlayerMP it seems)
+     */
     public ItemStack[] getInventory()
     {
         return null;
     }
 
+    /**
+     * Sets the held item, or an armor slot. Slot 0 is held item. Slot 1-4 is armor. Params: Item, slot
+     */
     public void setCurrentItemOrArmor(int slotIn, ItemStack stack)
     {
     }
 
+    /**
+     * Returns true if the entity is on fire. Used by render to add the fire effect on rendering.
+     */
     public boolean isBurning()
     {
         boolean flag = this.worldObj != null && this.worldObj.isRemote;
         return !this.isImmuneToFire && (this.fire > 0 || flag && this.getFlag(0));
     }
 
+    /**
+     * Returns true if the entity is riding another entity, used by render to rotate the legs to be in 'sit' position
+     * for players.
+     */
     public boolean isRiding()
     {
         return this.ridingEntity != null;
     }
 
+    /**
+     * Returns if this entity is sneaking.
+     */
     public boolean isSneaking()
     {
         return this.getFlag(1);
     }
 
+    /**
+     * Sets the sneaking flag.
+     */
     public void setSneaking(boolean sneaking)
     {
         this.setFlag(1, sneaking);
     }
 
+    /**
+     * Get if the Entity is sprinting.
+     */
     public boolean isSprinting()
     {
         return this.getFlag(3);
     }
 
+    /**
+     * Set sprinting switch for Entity.
+     */
     public void setSprinting(boolean sprinting)
     {
         this.setFlag(3, sprinting);
@@ -1808,6 +2197,11 @@ public abstract class Entity implements ICommandSender
         return this.getFlag(5);
     }
 
+    /**
+     * Only used by renderer in EntityLivingBase subclasses.
+     * Determines if an entity is visible or not to a specfic player, if the entity is normally invisible.
+     * For EntityLivingBase subclasses, returning false when invisible will render the entity semitransparent.
+     */
     public boolean isInvisibleToPlayer(EntityPlayer player)
     {
         return player.isSpectator() ? false : this.isInvisible();
@@ -1828,11 +2222,18 @@ public abstract class Entity implements ICommandSender
         this.setFlag(4, eating);
     }
 
+    /**
+     * Returns true if the flag is active for the entity. Known flags: 0) is burning; 1) is sneaking; 2) is riding
+     * something; 3) is sprinting; 4) is eating
+     */
     protected boolean getFlag(int flag)
     {
         return (this.dataWatcher.getWatchableObjectByte(0) & 1 << flag) != 0;
     }
 
+    /**
+     * Enable or disable a entity flag, see getEntityFlag to read the know flags.
+     */
     protected void setFlag(int flag, boolean set)
     {
         byte b0 = this.dataWatcher.getWatchableObjectByte(0);
@@ -1857,6 +2258,9 @@ public abstract class Entity implements ICommandSender
         this.dataWatcher.updateObject(1, Short.valueOf((short)air));
     }
 
+    /**
+     * Called when a lightning bolt hits the entity.
+     */
     public void onStruckByLightning(EntityLightningBolt lightningBolt)
     {
         this.attackEntityFrom(DamageSource.lightningBolt, 5.0F);
@@ -1868,6 +2272,9 @@ public abstract class Entity implements ICommandSender
         }
     }
 
+    /**
+     * This method gets called when the entity kills another one.
+     */
     public void onKillEntity(EntityLivingBase entityLivingIn)
     {
     }
@@ -1950,12 +2357,18 @@ public abstract class Entity implements ICommandSender
         }
     }
 
+    /**
+     * Sets the Entity inside a web block.
+     */
     public void setInWeb()
     {
         this.isInWeb = true;
         this.fallDistance = 0.0F;
     }
 
+    /**
+     * Get the name of this object. For players this returns their username
+     */
     public String getName()
     {
         if (this.hasCustomName())
@@ -1975,11 +2388,17 @@ public abstract class Entity implements ICommandSender
         }
     }
 
+    /**
+     * Return the Entity parts making up this Entity (currently only for dragons)
+     */
     public Entity[] getParts()
     {
         return null;
     }
 
+    /**
+     * Returns true if Entity argument is equal to this Entity
+     */
     public boolean isEntityEqual(Entity entityIn)
     {
         return this == entityIn;
@@ -1990,19 +2409,33 @@ public abstract class Entity implements ICommandSender
         return 0.0F;
     }
 
+    /**
+     * Sets the head's yaw rotation of the entity.
+     */
     public void setRotationYawHead(float rotation)
     {
     }
 
+    /**
+     * Set the render yaw offset
+     *  
+     * @param offset The render yaw offset
+     */
     public void setRenderYawOffset(float offset)
     {
     }
 
+    /**
+     * If returns false, the item will not inflict any damage against entities.
+     */
     public boolean canAttackWithItem()
     {
         return true;
     }
 
+    /**
+     * Called when a player attacks an entity. If this returns true the attack will not happen.
+     */
     public boolean hitByEntity(Entity entityIn)
     {
         return false;
@@ -2018,11 +2451,17 @@ public abstract class Entity implements ICommandSender
         return this.invulnerable && source != DamageSource.outOfWorld && !source.isCreativePlayer();
     }
 
+    /**
+     * Sets this entity's location and angles to the location and angles of the passed in entity.
+     */
     public void copyLocationAndAnglesFrom(Entity entityIn)
     {
         this.setLocationAndAngles(entityIn.posX, entityIn.posY, entityIn.posZ, entityIn.rotationYaw, entityIn.rotationPitch);
     }
 
+    /**
+     * Prepares this entity in new dimension by copying NBT data from entity in old dimension
+     */
     public void copyDataFromOld(Entity entityIn)
     {
         NBTTagCompound nbttagcompound = new NBTTagCompound();
@@ -2034,6 +2473,9 @@ public abstract class Entity implements ICommandSender
         this.teleportDirection = entityIn.teleportDirection;
     }
 
+    /**
+     * Teleports the entity to another dimension. Params: Dimension number to teleport to
+     */
     public void travelToDimension(int dimensionId)
     {
         if (!this.worldObj.isRemote && !this.isDead)
@@ -2079,6 +2521,9 @@ public abstract class Entity implements ICommandSender
         }
     }
 
+    /**
+     * Explosion resistance of a block relative to this entity
+     */
     public float getExplosionResistance(Explosion explosionIn, World worldIn, BlockPos pos, IBlockState blockStateIn)
     {
         return blockStateIn.getBlock().getExplosionResistance(this);
@@ -2089,6 +2534,9 @@ public abstract class Entity implements ICommandSender
         return true;
     }
 
+    /**
+     * The maximum height from where the entity is alowed to jump (used in pathfinder)
+     */
     public int getMaxFallHeight()
     {
         return 3;
@@ -2104,6 +2552,9 @@ public abstract class Entity implements ICommandSender
         return this.teleportDirection;
     }
 
+    /**
+     * Return whether this entity should NOT trigger a pressure plate or a tripwire.
+     */
     public boolean doesEntityNotTriggerPressurePlate()
     {
         return false;
@@ -2145,6 +2596,9 @@ public abstract class Entity implements ICommandSender
         });
     }
 
+    /**
+     * Return whether this entity should be rendered as on fire.
+     */
     public boolean canRenderOnFire()
     {
         return this.isBurning();
@@ -2160,6 +2614,9 @@ public abstract class Entity implements ICommandSender
         return true;
     }
 
+    /**
+     * Get the formatted ChatComponent that will be used for the sender's username in chat
+     */
     public IChatComponent getDisplayName()
     {
         ChatComponentText chatcomponenttext = new ChatComponentText(this.getName());
@@ -2168,6 +2625,9 @@ public abstract class Entity implements ICommandSender
         return chatcomponenttext;
     }
 
+    /**
+     * Sets the custom name tag for this entity
+     */
     public void setCustomNameTag(String name)
     {
         this.dataWatcher.updateObject(2, name);
@@ -2178,6 +2638,9 @@ public abstract class Entity implements ICommandSender
         return this.dataWatcher.getWatchableObjectString(2);
     }
 
+    /**
+     * Returns true if this thing is named
+     */
     public boolean hasCustomName()
     {
         return this.dataWatcher.getWatchableObjectString(2).length() > 0;
@@ -2193,6 +2656,9 @@ public abstract class Entity implements ICommandSender
         return this.dataWatcher.getWatchableObjectByte(3) == 1;
     }
 
+    /**
+     * Sets the position of the entity and updates the 'last' variables
+     */
     public void setPositionAndUpdate(double x, double y, double z)
     {
         this.setLocationAndAngles(x, y, z, this.rotationYaw, this.rotationPitch);
@@ -2262,35 +2728,59 @@ public abstract class Entity implements ICommandSender
         return false;
     }
 
+    /**
+     * Send a chat message to the CommandSender
+     */
     public void addChatMessage(IChatComponent component)
     {
     }
 
+    /**
+     * Returns {@code true} if the CommandSender is allowed to execute the command, {@code false} if not
+     */
     public boolean canCommandSenderUseCommand(int permLevel, String commandName)
     {
         return true;
     }
 
+    /**
+     * Get the position in the world. <b>{@code null} is not allowed!</b> If you are not an entity in the world, return
+     * the coordinates 0, 0, 0
+     */
     public BlockPos getPosition()
     {
         return new BlockPos(this.posX, this.posY + 0.5D, this.posZ);
     }
 
+    /**
+     * Get the position vector. <b>{@code null} is not allowed!</b> If you are not an entity in the world, return 0.0D,
+     * 0.0D, 0.0D
+     */
     public Vec3 getPositionVector()
     {
         return new Vec3(this.posX, this.posY, this.posZ);
     }
 
+    /**
+     * Get the world, if available. <b>{@code null} is not allowed!</b> If you are not an entity in the world, return
+     * the overworld
+     */
     public World getEntityWorld()
     {
         return this.worldObj;
     }
 
+    /**
+     * Returns the entity associated with the command sender. MAY BE NULL!
+     */
     public Entity getCommandSenderEntity()
     {
         return this;
     }
 
+    /**
+     * Returns true if the command sender should be sent feedback about executed commands
+     */
     public boolean sendCommandFeedback()
     {
         return false;
@@ -2306,6 +2796,9 @@ public abstract class Entity implements ICommandSender
         return this.cmdResultStats;
     }
 
+    /**
+     * Set the CommandResultStats from the entity
+     */
     public void setCommandStats(Entity entityIn)
     {
         this.cmdResultStats.addAllStats(entityIn.getCommandStats());
@@ -2316,10 +2809,16 @@ public abstract class Entity implements ICommandSender
         return null;
     }
 
+    /**
+     * Called when client receives entity's NBTTagCompound from server.
+     */
     public void clientUpdateEntityNBT(NBTTagCompound compound)
     {
     }
 
+    /**
+     * New version of interactWith that includes vector information on where precisely the player targeted.
+     */
     public boolean interactAt(EntityPlayer player, Vec3 targetVec3)
     {
         return false;

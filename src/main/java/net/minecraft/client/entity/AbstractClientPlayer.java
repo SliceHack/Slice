@@ -46,12 +46,18 @@ public abstract class AbstractClientPlayer extends EntityPlayer
         PlayerConfigurations.getPlayerConfiguration(this);
     }
 
+    /**
+     * Returns true if the player is in spectator mode.
+     */
     public boolean isSpectator()
     {
         NetworkPlayerInfo networkplayerinfo = Minecraft.getMinecraft().getNetHandler().getPlayerInfo(this.getGameProfile().getId());
         return networkplayerinfo != null && networkplayerinfo.getGameType() == WorldSettings.GameType.SPECTATOR;
     }
 
+    /**
+     * Checks if this instance of AbstractClientPlayer has any associated player data.
+     */
     public boolean hasPlayerInfo()
     {
         return this.getPlayerInfo() != null;
@@ -67,12 +73,18 @@ public abstract class AbstractClientPlayer extends EntityPlayer
         return this.playerInfo;
     }
 
+    /**
+     * Returns true if the player has an associated skin.
+     */
     public boolean hasSkin()
     {
         NetworkPlayerInfo networkplayerinfo = this.getPlayerInfo();
         return networkplayerinfo != null && networkplayerinfo.hasLocationSkin();
     }
 
+    /**
+     * Returns true if the player instance has an associated skin.
+     */
     public ResourceLocation getLocationSkin()
     {
         NetworkPlayerInfo networkplayerinfo = this.getPlayerInfo();
@@ -119,6 +131,9 @@ public abstract class AbstractClientPlayer extends EntityPlayer
         return (ThreadDownloadImageData)itextureobject;
     }
 
+    /**
+     * Returns true if the username has an associated skin.
+     */
     public static ResourceLocation getLocationSkin(String username)
     {
         return new ResourceLocation("skins/" + StringUtils.stripControlCodes(username));
@@ -208,6 +223,9 @@ public abstract class AbstractClientPlayer extends EntityPlayer
         this.reloadCapeTimeMs = p_setReloadCapeTimeMs_1_;
     }
 
+    /**
+     * interpolated look vector
+     */
     public Vec3 getLook(float partialTicks)
     {
         return this.getVectorForRotation(this.rotationPitch, this.rotationYaw);

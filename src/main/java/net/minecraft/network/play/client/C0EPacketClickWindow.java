@@ -8,11 +8,22 @@ import net.minecraft.network.play.INetHandlerPlayServer;
 
 public class C0EPacketClickWindow implements Packet<INetHandlerPlayServer>
 {
+    /** The id of the window which was clicked. 0 for player inventory. */
     private int windowId;
+
+    /** Id of the clicked slot */
     private int slotId;
+
+    /** Button used */
     private int usedButton;
+
+    /** A unique number for the action, used for transaction handling */
     private short actionNumber;
+
+    /** The item stack present in the slot */
     private ItemStack clickedItem;
+
+    /** Inventory operation mode */
     private int mode;
 
     public C0EPacketClickWindow()
@@ -29,11 +40,17 @@ public class C0EPacketClickWindow implements Packet<INetHandlerPlayServer>
         this.mode = mode;
     }
 
+    /**
+     * Passes this Packet on to the NetHandler for processing.
+     */
     public void processPacket(INetHandlerPlayServer handler)
     {
         handler.processClickWindow(this);
     }
 
+    /**
+     * Reads the raw packet data from the data stream.
+     */
     public void readPacketData(PacketBuffer buf) throws IOException
     {
         this.windowId = buf.readByte();
@@ -44,6 +61,9 @@ public class C0EPacketClickWindow implements Packet<INetHandlerPlayServer>
         this.clickedItem = buf.readItemStackFromBuffer();
     }
 
+    /**
+     * Writes the raw packet data to the data stream.
+     */
     public void writePacketData(PacketBuffer buf) throws IOException
     {
         buf.writeByte(this.windowId);

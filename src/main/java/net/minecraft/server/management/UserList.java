@@ -53,7 +53,7 @@ public class UserList<K, V extends UserListEntry<K>>
     {
         this.saveFile = saveFile;
         GsonBuilder gsonbuilder = (new GsonBuilder()).setPrettyPrinting();
-        gsonbuilder.registerTypeHierarchyAdapter(UserListEntry.class, new Serializer());
+        gsonbuilder.registerTypeHierarchyAdapter(UserListEntry.class, new UserList.Serializer());
         this.gson = gsonbuilder.create();
     }
 
@@ -67,6 +67,9 @@ public class UserList<K, V extends UserListEntry<K>>
         this.lanServer = state;
     }
 
+    /**
+     * Adds an entry to the list
+     */
     public void addEntry(V entry)
     {
         this.values.put(this.getObjectKey(entry.getValue()), entry);
@@ -106,6 +109,9 @@ public class UserList<K, V extends UserListEntry<K>>
         return (String[])this.values.keySet().toArray(new String[this.values.size()]);
     }
 
+    /**
+     * Gets the key value for the given object
+     */
     protected String getObjectKey(K obj)
     {
         return obj.toString();
@@ -116,6 +122,9 @@ public class UserList<K, V extends UserListEntry<K>>
         return this.values.containsKey(this.getObjectKey(entry));
     }
 
+    /**
+     * Removes expired bans from the list. See {@link BanEntry#hasBanExpired}
+     */
     private void removeExpired()
     {
         List<K> list = Lists.<K>newArrayList();

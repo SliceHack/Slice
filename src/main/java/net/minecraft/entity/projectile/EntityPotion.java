@@ -14,6 +14,9 @@ import net.minecraft.world.World;
 
 public class EntityPotion extends EntityThrowable
 {
+    /**
+     * The damage value of the thrown potion that this EntityPotion represents.
+     */
     private ItemStack potionDamage;
 
     public EntityPotion(World worldIn)
@@ -43,6 +46,9 @@ public class EntityPotion extends EntityThrowable
         this.potionDamage = potionDamageIn;
     }
 
+    /**
+     * Gets the amount of gravity to apply to the thrown entity with each tick.
+     */
     protected float getGravityVelocity()
     {
         return 0.05F;
@@ -58,6 +64,9 @@ public class EntityPotion extends EntityThrowable
         return -20.0F;
     }
 
+    /**
+     * Sets the PotionEffect by the given id of the potion effect.
+     */
     public void setPotionDamage(int potionId)
     {
         if (this.potionDamage == null)
@@ -68,6 +77,9 @@ public class EntityPotion extends EntityThrowable
         this.potionDamage.setItemDamage(potionId);
     }
 
+    /**
+     * Returns the damage value of the thrown potion that this EntityPotion represents.
+     */
     public int getPotionDamage()
     {
         if (this.potionDamage == null)
@@ -78,6 +90,9 @@ public class EntityPotion extends EntityThrowable
         return this.potionDamage.getMetadata();
     }
 
+    /**
+     * Called when this EntityThrowable hits a block or entity.
+     */
     protected void onImpact(MovingObjectPosition p_70184_1_)
     {
         if (!this.worldObj.isRemote)
@@ -132,6 +147,9 @@ public class EntityPotion extends EntityThrowable
         }
     }
 
+    /**
+     * (abstract) Protected helper method to read subclass entity data from NBT.
+     */
     public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
         super.readEntityFromNBT(tagCompund);
@@ -151,6 +169,9 @@ public class EntityPotion extends EntityThrowable
         }
     }
 
+    /**
+     * (abstract) Protected helper method to write subclass entity data to NBT.
+     */
     public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
         super.writeEntityToNBT(tagCompound);

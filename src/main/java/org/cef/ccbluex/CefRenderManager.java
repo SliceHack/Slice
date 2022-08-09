@@ -78,7 +78,7 @@ public class CefRenderManager {
             }
             builder.addJcefArgs(args);
             builder.getCefSettings().windowless_rendering_enabled = true;
-            builder.getCefSettings().locale = gameSettings.language;
+            builder.getCefSettings().locale = gameSettings.forceUnicodeFont;
             builder.getCefSettings().cache_path = cacheDir.getAbsolutePath();
             builder.getCefSettings().user_agent = "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.7113.93 Safari/537.36 Java/1.8.0_191";
 

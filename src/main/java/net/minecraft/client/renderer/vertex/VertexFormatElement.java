@@ -6,17 +6,17 @@ import org.apache.logging.log4j.Logger;
 public class VertexFormatElement
 {
     private static final Logger LOGGER = LogManager.getLogger();
-    private final EnumType type;
-    private final EnumUsage usage;
+    private final VertexFormatElement.EnumType type;
+    private final VertexFormatElement.EnumUsage usage;
     private int index;
     private int elementCount;
 
-    public VertexFormatElement(int indexIn, EnumType typeIn, EnumUsage usageIn, int count)
+    public VertexFormatElement(int indexIn, VertexFormatElement.EnumType typeIn, VertexFormatElement.EnumUsage usageIn, int count)
     {
         if (!this.func_177372_a(indexIn, usageIn))
         {
             LOGGER.warn("Multiple vertex elements of the same type other than UVs are not supported. Forcing type to UV.");
-            this.usage = EnumUsage.UV;
+            this.usage = VertexFormatElement.EnumUsage.UV;
         }
         else
         {
@@ -28,17 +28,17 @@ public class VertexFormatElement
         this.elementCount = count;
     }
 
-    private final boolean func_177372_a(int p_177372_1_, EnumUsage p_177372_2_)
+    private final boolean func_177372_a(int p_177372_1_, VertexFormatElement.EnumUsage p_177372_2_)
     {
-        return p_177372_1_ == 0 || p_177372_2_ == EnumUsage.UV;
+        return p_177372_1_ == 0 || p_177372_2_ == VertexFormatElement.EnumUsage.UV;
     }
 
-    public final EnumType getType()
+    public final VertexFormatElement.EnumType getType()
     {
         return this.type;
     }
 
-    public final EnumUsage getUsage()
+    public final VertexFormatElement.EnumUsage getUsage()
     {
         return this.usage;
     }
@@ -65,7 +65,7 @@ public class VertexFormatElement
 
     public final boolean isPositionElement()
     {
-        return this.usage == EnumUsage.POSITION;
+        return this.usage == VertexFormatElement.EnumUsage.POSITION;
     }
 
     public boolean equals(Object p_equals_1_)

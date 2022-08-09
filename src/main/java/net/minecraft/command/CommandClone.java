@@ -16,21 +16,33 @@ import net.minecraft.world.gen.structure.StructureBoundingBox;
 
 public class CommandClone extends CommandBase
 {
+    /**
+     * Gets the name of the command
+     */
     public String getCommandName()
     {
         return "clone";
     }
 
+    /**
+     * Return the required permission level for this command.
+     */
     public int getRequiredPermissionLevel()
     {
         return 2;
     }
 
+    /**
+     * Gets the usage string for the command.
+     */
     public String getCommandUsage(ICommandSender sender)
     {
         return "commands.clone.usage";
     }
 
+    /**
+     * Callback when the command is invoked
+     */
     public void processCommand(ICommandSender sender, String[] args) throws CommandException
     {
         if (args.length < 9)
@@ -98,9 +110,9 @@ public class CommandClone extends CommandBase
                                 }
                             }
 
-                            List<StaticCloneData> list = Lists.<StaticCloneData>newArrayList();
-                            List<StaticCloneData> list1 = Lists.<StaticCloneData>newArrayList();
-                            List<StaticCloneData> list2 = Lists.<StaticCloneData>newArrayList();
+                            List<CommandClone.StaticCloneData> list = Lists.<CommandClone.StaticCloneData>newArrayList();
+                            List<CommandClone.StaticCloneData> list1 = Lists.<CommandClone.StaticCloneData>newArrayList();
+                            List<CommandClone.StaticCloneData> list2 = Lists.<CommandClone.StaticCloneData>newArrayList();
                             LinkedList<BlockPos> linkedlist = Lists.<BlockPos>newLinkedList();
                             BlockPos blockpos3 = new BlockPos(structureboundingbox1.minX - structureboundingbox.minX, structureboundingbox1.minY - structureboundingbox.minY, structureboundingbox1.minZ - structureboundingbox.minZ);
 
@@ -122,17 +134,17 @@ public class CommandClone extends CommandBase
                                             {
                                                 NBTTagCompound nbttagcompound = new NBTTagCompound();
                                                 tileentity.writeToNBT(nbttagcompound);
-                                                list1.add(new StaticCloneData(blockpos5, iblockstate, nbttagcompound));
+                                                list1.add(new CommandClone.StaticCloneData(blockpos5, iblockstate, nbttagcompound));
                                                 linkedlist.addLast(blockpos4);
                                             }
                                             else if (!iblockstate.getBlock().isFullBlock() && !iblockstate.getBlock().isFullCube())
                                             {
-                                                list2.add(new StaticCloneData(blockpos5, iblockstate, (NBTTagCompound)null));
+                                                list2.add(new CommandClone.StaticCloneData(blockpos5, iblockstate, (NBTTagCompound)null));
                                                 linkedlist.addFirst(blockpos4);
                                             }
                                             else
                                             {
-                                                list.add(new StaticCloneData(blockpos5, iblockstate, (NBTTagCompound)null));
+                                                list.add(new CommandClone.StaticCloneData(blockpos5, iblockstate, (NBTTagCompound)null));
                                                 linkedlist.addLast(blockpos4);
                                             }
                                         }
@@ -160,13 +172,13 @@ public class CommandClone extends CommandBase
                                 }
                             }
 
-                            List<StaticCloneData> list3 = Lists.<StaticCloneData>newArrayList();
+                            List<CommandClone.StaticCloneData> list3 = Lists.<CommandClone.StaticCloneData>newArrayList();
                             list3.addAll(list);
                             list3.addAll(list1);
                             list3.addAll(list2);
-                            List<StaticCloneData> list4 = Lists.<StaticCloneData>reverse(list3);
+                            List<CommandClone.StaticCloneData> list4 = Lists.<CommandClone.StaticCloneData>reverse(list3);
 
-                            for (StaticCloneData commandclone$staticclonedata : list4)
+                            for (CommandClone.StaticCloneData commandclone$staticclonedata : list4)
                             {
                                 TileEntity tileentity2 = world.getTileEntity(commandclone$staticclonedata.pos);
 
@@ -180,7 +192,7 @@ public class CommandClone extends CommandBase
 
                             i = 0;
 
-                            for (StaticCloneData commandclone$staticclonedata1 : list3)
+                            for (CommandClone.StaticCloneData commandclone$staticclonedata1 : list3)
                             {
                                 if (world.setBlockState(commandclone$staticclonedata1.pos, commandclone$staticclonedata1.blockState, 2))
                                 {
@@ -188,7 +200,7 @@ public class CommandClone extends CommandBase
                                 }
                             }
 
-                            for (StaticCloneData commandclone$staticclonedata2 : list1)
+                            for (CommandClone.StaticCloneData commandclone$staticclonedata2 : list1)
                             {
                                 TileEntity tileentity3 = world.getTileEntity(commandclone$staticclonedata2.pos);
 
@@ -204,7 +216,7 @@ public class CommandClone extends CommandBase
                                 world.setBlockState(commandclone$staticclonedata2.pos, commandclone$staticclonedata2.blockState, 2);
                             }
 
-                            for (StaticCloneData commandclone$staticclonedata3 : list4)
+                            for (CommandClone.StaticCloneData commandclone$staticclonedata3 : list4)
                             {
                                 world.notifyNeighborsRespectDebug(commandclone$staticclonedata3.pos, commandclone$staticclonedata3.blockState.getBlock());
                             }

@@ -25,14 +25,28 @@ public class ScreenShotHelper
 {
     private static final Logger logger = LogManager.getLogger();
     private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss");
+
+    /** A buffer to hold pixel values returned by OpenGL. */
     private static IntBuffer pixelBuffer;
+
+    /**
+     * The built-up array that contains all the pixel values returned by OpenGL.
+     */
     private static int[] pixelValues;
 
+    /**
+     * Saves a screenshot in the game directory with a time-stamped filename.  Args: gameDirectory,
+     * requestedWidthInPixels, requestedHeightInPixels, frameBuffer
+     */
     public static IChatComponent saveScreenshot(File gameDirectory, int width, int height, Framebuffer buffer)
     {
         return saveScreenshot(gameDirectory, (String)null, width, height, buffer);
     }
 
+    /**
+     * Saves a screenshot in the game directory with the given file name (or null to generate a time-stamped name).
+     * Args: gameDirectory, fileName, requestedWidthInPixels, requestedHeightInPixels, frameBuffer
+     */
     public static IChatComponent saveScreenshot(File gameDirectory, String screenshotName, int width, int height, Framebuffer buffer)
     {
         try
@@ -40,7 +54,7 @@ public class ScreenShotHelper
             File file1 = new File(gameDirectory, "screenshots");
             file1.mkdir();
             Minecraft minecraft = Minecraft.getMinecraft();
-            int i = Config.getGameSettings().guiScale;
+            int i = Config.getGameSettings().particleSetting;
             ScaledResolution scaledresolution = new ScaledResolution(minecraft);
             int j = scaledresolution.getScaleFactor();
             int k = Config.getScreenshotSize();
@@ -48,7 +62,7 @@ public class ScreenShotHelper
 
             if (flag)
             {
-                Config.getGameSettings().guiScale = j * k;
+                Config.getGameSettings().particleSetting = j * k;
                 resize(width * k, height * k);
                 GlStateManager.pushMatrix();
                 GlStateManager.clear(16640);
@@ -111,7 +125,7 @@ public class ScreenShotHelper
             {
                 minecraft.getFramebuffer().unbindFramebuffer();
                 GlStateManager.popMatrix();
-                Config.getGameSettings().guiScale = i;
+                Config.getGameSettings().particleSetting = i;
                 resize(width, height);
             }
 
@@ -140,6 +154,12 @@ public class ScreenShotHelper
         }
     }
 
+    /**
+     * Creates a unique PNG file in the given directory named by a timestamp.  Handles cases where the timestamp alone
+     * is not enough to create a uniquely named file, though it still might suffer from an unlikely race condition where
+     * the filename was unique when this method was called, but another process or thread created a file at the same
+     * path immediately after this method returned.
+     */
     private static File getTimestampedPNGFileForDirectory(File gameDirectory)
     {
         String s = dateFormat.format(new Date()).toString();

@@ -17,8 +17,10 @@ import net.minecraft.util.MathHelper;
 public class Teleporter
 {
     private final WorldServer worldServerInstance;
+
+    /** A private Random() function in Teleporter */
     private final Random random;
-    private final LongHashMap<PortalPosition> destinationCoordinateCache = new LongHashMap();
+    private final LongHashMap<Teleporter.PortalPosition> destinationCoordinateCache = new LongHashMap();
     private final List<Long> destinationCoordinateKeys = Lists.<Long>newArrayList();
 
     public Teleporter(WorldServer worldIn)
@@ -77,7 +79,7 @@ public class Teleporter
 
         if (this.destinationCoordinateCache.containsItem(l))
         {
-            PortalPosition teleporter$portalposition = (PortalPosition)this.destinationCoordinateCache.getValueByKey(l);
+            Teleporter.PortalPosition teleporter$portalposition = (Teleporter.PortalPosition)this.destinationCoordinateCache.getValueByKey(l);
             d0 = 0.0D;
             blockpos = teleporter$portalposition;
             teleporter$portalposition.lastUpdateTime = this.worldServerInstance.getTotalWorldTime();
@@ -121,7 +123,7 @@ public class Teleporter
         {
             if (flag)
             {
-                this.destinationCoordinateCache.add(l, new PortalPosition(blockpos, this.worldServerInstance.getTotalWorldTime()));
+                this.destinationCoordinateCache.add(l, new Teleporter.PortalPosition(blockpos, this.worldServerInstance.getTotalWorldTime()));
                 this.destinationCoordinateKeys.add(Long.valueOf(l));
             }
 
@@ -390,6 +392,10 @@ public class Teleporter
         return true;
     }
 
+    /**
+     * called periodically to remove out-of-date portal locations from the cache list. Argument par1 is a
+     * WorldServer.getTotalWorldTime() value.
+     */
     public void removeStalePortalLocations(long worldTime)
     {
         if (worldTime % 100L == 0L)
@@ -400,7 +406,7 @@ public class Teleporter
             while (iterator.hasNext())
             {
                 Long olong = (Long)iterator.next();
-                PortalPosition teleporter$portalposition = (PortalPosition)this.destinationCoordinateCache.getValueByKey(olong.longValue());
+                Teleporter.PortalPosition teleporter$portalposition = (Teleporter.PortalPosition)this.destinationCoordinateCache.getValueByKey(olong.longValue());
 
                 if (teleporter$portalposition == null || teleporter$portalposition.lastUpdateTime < i)
                 {

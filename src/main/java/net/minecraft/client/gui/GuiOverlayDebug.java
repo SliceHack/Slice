@@ -57,7 +57,7 @@ public class GuiOverlayDebug extends Gui
         this.renderDebugInfoRight(scaledResolutionIn);
         GlStateManager.popMatrix();
 
-        if (this.mc.gameSettings.showLagometer)
+        if (this.mc.gameSettings.lastServer)
         {
             this.renderLagometer();
         }

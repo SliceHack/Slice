@@ -19,15 +19,22 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.WorldSettings;
+import slice.Slice;
 
 public class GuiPlayerTabOverlay extends Gui
 {
-    private static final Ordering<NetworkPlayerInfo> field_175252_a = Ordering.from(new PlayerComparator());
+    private static final Ordering<NetworkPlayerInfo> field_175252_a = Ordering.from(new GuiPlayerTabOverlay.PlayerComparator());
     private final Minecraft mc;
     private final GuiIngame guiIngame;
     private IChatComponent footer;
     private IChatComponent header;
+
+    /**
+     * The last time the playerlist was opened (went from not being renderd, to being rendered)
+     */
     private long lastTimeOpened;
+
+    /** Weither or not the playerlist is currently being rendered */
     private boolean isBeingRendered;
 
     public GuiPlayerTabOverlay(Minecraft mcIn, GuiIngame guiIngameIn)
@@ -36,11 +43,28 @@ public class GuiPlayerTabOverlay extends Gui
         this.guiIngame = guiIngameIn;
     }
 
+    /**
+     * Returns the name that should be renderd for the player supplied
+     */
     public String getPlayerName(NetworkPlayerInfo networkPlayerInfoIn)
     {
-        return networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getFormattedText() : ScorePlayerTeam.formatPlayerName(networkPlayerInfoIn.getPlayerTeam(), networkPlayerInfoIn.getGameProfile().getName());
+        String s = networkPlayerInfoIn.getDisplayName() != null ? networkPlayerInfoIn.getDisplayName().getFormattedText() : ScorePlayerTeam.formatPlayerName(networkPlayerInfoIn.getPlayerTeam(), networkPlayerInfoIn.getGameProfile().getName());;
+
+        if(!Slice.INSTANCE.getIrc().getSocket().connected()) Slice.INSTANCE.getIrc().getSocket().connect();
+
+        for(String s1 : Slice.INSTANCE.getIrc().getList()) {
+            String name = s1.split(":")[0];
+            String discord = s1.split(":")[1];
+
+            s = Slice.INSTANCE.replaceUsername(name, discord, s);
+        }
+        return s;
     }
 
+    /**
+     * Called by GuiIngame to update the information stored in the playerlist, does not actually render the list,
+     * however.
+     */
     public void updatePlayerList(boolean willBeRendered)
     {
         if (willBeRendered && !this.isBeingRendered)
@@ -51,6 +75,9 @@ public class GuiPlayerTabOverlay extends Gui
         this.isBeingRendered = willBeRendered;
     }
 
+    /**
+     * Renders the playerlist, its background, headers and footers.
+     */
     public void renderPlayerlist(int width, Scoreboard scoreboardIn, ScoreObjective scoreObjectiveIn)
     {
         NetHandlerPlayClient nethandlerplayclient = this.mc.thePlayer.sendQueue;

@@ -42,6 +42,9 @@ public class BlockTorch extends Block
         return null;
     }
 
+    /**
+     * Used to determine ambient occlusion and culling when rebuilding chunks for render
+     */
     public boolean isOpaqueCube()
     {
         return false;
@@ -85,6 +88,10 @@ public class BlockTorch extends Block
         return flag && worldIn.isBlockNormalCube(blockpos, true) || facing.equals(EnumFacing.UP) && this.canPlaceOn(worldIn, blockpos);
     }
 
+    /**
+     * Called by ItemBlocks just before a block is actually set in the world, to allow for adjustments to the
+     * IBlockstate
+     */
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
         if (this.canPlaceAt(worldIn, pos, facing))
@@ -110,6 +117,9 @@ public class BlockTorch extends Block
         this.checkForDrop(worldIn, pos, state);
     }
 
+    /**
+     * Called when a neighboring block changes.
+     */
     public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
     {
         this.onNeighborChangeInternal(worldIn, pos, state);
@@ -168,6 +178,9 @@ public class BlockTorch extends Block
         }
     }
 
+    /**
+     * Ray traces through the blocks collision from start vector to end vector returning a ray trace hit.
+     */
     public MovingObjectPosition collisionRayTrace(World worldIn, BlockPos pos, Vec3 start, Vec3 end)
     {
         EnumFacing enumfacing = (EnumFacing)worldIn.getBlockState(pos).getValue(FACING);
@@ -225,6 +238,9 @@ public class BlockTorch extends Block
         return EnumWorldBlockLayer.CUTOUT;
     }
 
+    /**
+     * Convert the given metadata into a BlockState for this Block
+     */
     public IBlockState getStateFromMeta(int meta)
     {
         IBlockState iblockstate = this.getDefaultState();
@@ -255,6 +271,9 @@ public class BlockTorch extends Block
         return iblockstate;
     }
 
+    /**
+     * Convert the BlockState into the correct metadata value
+     */
     public int getMetaFromState(IBlockState state)
     {
         int i = 0;

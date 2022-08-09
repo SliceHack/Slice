@@ -35,21 +35,27 @@ public class EntitySpider extends EntityMob
         this.setSize(1.4F, 0.9F);
         this.tasks.addTask(1, new EntityAISwimming(this));
         this.tasks.addTask(3, new EntityAILeapAtTarget(this, 0.4F));
-        this.tasks.addTask(4, new AISpiderAttack(this, EntityPlayer.class));
-        this.tasks.addTask(4, new AISpiderAttack(this, EntityIronGolem.class));
+        this.tasks.addTask(4, new EntitySpider.AISpiderAttack(this, EntityPlayer.class));
+        this.tasks.addTask(4, new EntitySpider.AISpiderAttack(this, EntityIronGolem.class));
         this.tasks.addTask(5, new EntityAIWander(this, 0.8D));
         this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(6, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
-        this.targetTasks.addTask(2, new AISpiderTarget(this, EntityPlayer.class));
-        this.targetTasks.addTask(3, new AISpiderTarget(this, EntityIronGolem.class));
+        this.targetTasks.addTask(2, new EntitySpider.AISpiderTarget(this, EntityPlayer.class));
+        this.targetTasks.addTask(3, new EntitySpider.AISpiderTarget(this, EntityIronGolem.class));
     }
 
+    /**
+     * Returns the Y offset from the entity's position for any entity riding this one.
+     */
     public double getMountedYOffset()
     {
         return (double)(this.height * 0.5F);
     }
 
+    /**
+     * Returns new PathNavigateGround instance
+     */
     protected PathNavigate getNewNavigator(World worldIn)
     {
         return new PathNavigateClimber(this, worldIn);
@@ -61,6 +67,9 @@ public class EntitySpider extends EntityMob
         this.dataWatcher.addObject(16, new Byte((byte)0));
     }
 
+    /**
+     * Called to update the entity's position/logic.
+     */
     public void onUpdate()
     {
         super.onUpdate();
@@ -78,16 +87,25 @@ public class EntitySpider extends EntityMob
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.30000001192092896D);
     }
 
+    /**
+     * Returns the sound this mob makes while it's alive.
+     */
     protected String getLivingSound()
     {
         return "mob.spider.say";
     }
 
+    /**
+     * Returns the sound this mob makes when it is hurt.
+     */
     protected String getHurtSound()
     {
         return "mob.spider.say";
     }
 
+    /**
+     * Returns the sound this mob makes on death.
+     */
     protected String getDeathSound()
     {
         return "mob.spider.death";
@@ -103,6 +121,13 @@ public class EntitySpider extends EntityMob
         return Items.string;
     }
 
+    /**
+     * Drop 0-2 items of this living's type
+     *  
+     * @param wasRecentlyHit true if this this entity was recently hit by appropriate entity (generally only if player
+     * or tameable)
+     * @param lootingModifier level of enchanment to be applied to this drop
+     */
     protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier)
     {
         super.dropFewItems(wasRecentlyHit, lootingModifier);
@@ -113,15 +138,24 @@ public class EntitySpider extends EntityMob
         }
     }
 
+    /**
+     * returns true if this entity is by a ladder, false otherwise
+     */
     public boolean isOnLadder()
     {
         return this.isBesideClimbableBlock();
     }
 
+    /**
+     * Sets the Entity inside a web block.
+     */
     public void setInWeb()
     {
     }
 
+    /**
+     * Get this Entity's EnumCreatureAttribute
+     */
     public EnumCreatureAttribute getCreatureAttribute()
     {
         return EnumCreatureAttribute.ARTHROPOD;
@@ -132,11 +166,19 @@ public class EntitySpider extends EntityMob
         return potioneffectIn.getPotionID() == Potion.poison.id ? false : super.isPotionApplicable(potioneffectIn);
     }
 
+    /**
+     * Returns true if the WatchableObject (Byte) is 0x01 otherwise returns false. The WatchableObject is updated using
+     * setBesideClimableBlock.
+     */
     public boolean isBesideClimbableBlock()
     {
         return (this.dataWatcher.getWatchableObjectByte(16) & 1) != 0;
     }
 
+    /**
+     * Updates the WatchableObject (Byte) created in entityInit(), setting it to 0x01 if par1 is true or 0x00 if it is
+     * false.
+     */
     public void setBesideClimbableBlock(boolean p_70839_1_)
     {
         byte b0 = this.dataWatcher.getWatchableObjectByte(16);
@@ -153,6 +195,10 @@ public class EntitySpider extends EntityMob
         this.dataWatcher.updateObject(16, Byte.valueOf(b0));
     }
 
+    /**
+     * Called only once on an entity when first time spawned, via egg, mob spawner, natural spawning etc, but not called
+     * when entity is reloaded from nbt. Mainly used for initializing attributes and inventory
+     */
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata)
     {
         livingdata = super.onInitialSpawn(difficulty, livingdata);
@@ -168,17 +214,17 @@ public class EntitySpider extends EntityMob
 
         if (livingdata == null)
         {
-            livingdata = new GroupData();
+            livingdata = new EntitySpider.GroupData();
 
             if (this.worldObj.getDifficulty() == EnumDifficulty.HARD && this.worldObj.rand.nextFloat() < 0.1F * difficulty.getClampedAdditionalDifficulty())
             {
-                ((GroupData)livingdata).func_111104_a(this.worldObj.rand);
+                ((EntitySpider.GroupData)livingdata).func_111104_a(this.worldObj.rand);
             }
         }
 
-        if (livingdata instanceof GroupData)
+        if (livingdata instanceof EntitySpider.GroupData)
         {
-            int i = ((GroupData)livingdata).potionEffectId;
+            int i = ((EntitySpider.GroupData)livingdata).potionEffectId;
 
             if (i > 0 && Potion.potionTypes[i] != null)
             {

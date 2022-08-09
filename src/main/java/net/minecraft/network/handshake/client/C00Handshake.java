@@ -25,6 +25,9 @@ public class C00Handshake implements Packet<INetHandlerHandshakeServer>
         this.requestedState = requestedState;
     }
 
+    /**
+     * Reads the raw packet data from the data stream.
+     */
     public void readPacketData(PacketBuffer buf) throws IOException
     {
         this.protocolVersion = buf.readVarIntFromBuffer();
@@ -33,6 +36,9 @@ public class C00Handshake implements Packet<INetHandlerHandshakeServer>
         this.requestedState = EnumConnectionState.getById(buf.readVarIntFromBuffer());
     }
 
+    /**
+     * Writes the raw packet data to the data stream.
+     */
     public void writePacketData(PacketBuffer buf) throws IOException
     {
         buf.writeVarIntToBuffer(this.protocolVersion);
@@ -41,6 +47,9 @@ public class C00Handshake implements Packet<INetHandlerHandshakeServer>
         buf.writeVarIntToBuffer(this.requestedState.getId());
     }
 
+    /**
+     * Passes this Packet on to the NetHandler for processing.
+     */
     public void processPacket(INetHandlerHandshakeServer handler)
     {
         handler.processHandshake(this);

@@ -12,11 +12,24 @@ import net.minecraft.client.settings.GameSettings;
 
 public class GuiLanguage extends GuiScreen
 {
+    /** The parent Gui screen */
     protected GuiScreen parentScreen;
-    private List list;
+
+    /** The List GuiSlot object reference. */
+    private GuiLanguage.List list;
+
+    /** Reference to the GameSettings object. */
     private final GameSettings game_settings_3;
+
+    /** Reference to the LanguageManager object. */
     private final LanguageManager languageManager;
+
+    /**
+     * A button which allows the user to determine if the Unicode font should be forced.
+     */
     private GuiOptionButton forceUnicodeFontBtn;
+
+    /** The button to confirm the current settings. */
     private GuiOptionButton confirmSettingsBtn;
 
     public GuiLanguage(GuiScreen screen, GameSettings gameSettingsObj, LanguageManager manager)
@@ -26,20 +39,30 @@ public class GuiLanguage extends GuiScreen
         this.languageManager = manager;
     }
 
+    /**
+     * Adds the buttons (and other controls) to the screen in question. Called when the GUI is displayed and when the
+     * window resizes, the buttonList is cleared beforehand.
+     */
     public void initGui()
     {
         this.buttonList.add(this.forceUnicodeFontBtn = new GuiOptionButton(100, this.width / 2 - 155, this.height - 38, GameSettings.Options.FORCE_UNICODE_FONT, this.game_settings_3.getKeyBinding(GameSettings.Options.FORCE_UNICODE_FONT)));
         this.buttonList.add(this.confirmSettingsBtn = new GuiOptionButton(6, this.width / 2 - 155 + 160, this.height - 38, I18n.format("gui.done", new Object[0])));
-        this.list = new List(this.mc);
+        this.list = new GuiLanguage.List(this.mc);
         this.list.registerScrollButtons(7, 8);
     }
 
+    /**
+     * Handles mouse input.
+     */
     public void handleMouseInput() throws IOException
     {
         super.handleMouseInput();
         this.list.handleMouseInput();
     }
 
+    /**
+     * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
+     */
     protected void actionPerformed(GuiButton button) throws IOException
     {
         if (button.enabled)
@@ -72,6 +95,9 @@ public class GuiLanguage extends GuiScreen
         }
     }
 
+    /**
+     * Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
+     */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.list.drawScreen(mouseX, mouseY, partialTicks);
@@ -105,9 +131,9 @@ public class GuiLanguage extends GuiScreen
         {
             Language language = (Language)this.languageMap.get(this.langCodeList.get(slotIndex));
             GuiLanguage.this.languageManager.setCurrentLanguage(language);
-            GuiLanguage.this.game_settings_3.language = language.getLanguageCode();
+            GuiLanguage.this.game_settings_3.forceUnicodeFont = language.getLanguageCode();
             this.mc.refreshResources();
-            GuiLanguage.this.fontRendererObj.setUnicodeFlag(GuiLanguage.this.languageManager.isCurrentLocaleUnicode() || GuiLanguage.this.game_settings_3.forceUnicodeFont);
+            GuiLanguage.this.fontRendererObj.setUnicodeFlag(GuiLanguage.this.languageManager.isCurrentLocaleUnicode() || GuiLanguage.this.game_settings_3.logger);
             GuiLanguage.this.fontRendererObj.setBidiFlag(GuiLanguage.this.languageManager.isCurrentLanguageBidirectional());
             GuiLanguage.this.confirmSettingsBtn.displayString = I18n.format("gui.done", new Object[0]);
             GuiLanguage.this.forceUnicodeFontBtn.displayString = GuiLanguage.this.game_settings_3.getKeyBinding(GameSettings.Options.FORCE_UNICODE_FONT);

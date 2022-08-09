@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 
 public class EntityPainting extends EntityHanging
 {
-    public EnumArt art;
+    public EntityPainting.EnumArt art;
 
     public EntityPainting(World worldIn)
     {
@@ -24,9 +24,9 @@ public class EntityPainting extends EntityHanging
     public EntityPainting(World worldIn, BlockPos pos, EnumFacing facing)
     {
         super(worldIn, pos);
-        List<EnumArt> list = Lists.<EnumArt>newArrayList();
+        List<EntityPainting.EnumArt> list = Lists.<EntityPainting.EnumArt>newArrayList();
 
-        for (EnumArt entitypainting$enumart : EnumArt.values())
+        for (EntityPainting.EnumArt entitypainting$enumart : EntityPainting.EnumArt.values())
         {
             this.art = entitypainting$enumart;
             this.updateFacingWithBoundingBox(facing);
@@ -39,7 +39,7 @@ public class EntityPainting extends EntityHanging
 
         if (!list.isEmpty())
         {
-            this.art = (EnumArt)list.get(this.rand.nextInt(list.size()));
+            this.art = (EntityPainting.EnumArt)list.get(this.rand.nextInt(list.size()));
         }
 
         this.updateFacingWithBoundingBox(facing);
@@ -49,7 +49,7 @@ public class EntityPainting extends EntityHanging
     {
         this(worldIn, pos, facing);
 
-        for (EnumArt entitypainting$enumart : EnumArt.values())
+        for (EntityPainting.EnumArt entitypainting$enumart : EntityPainting.EnumArt.values())
         {
             if (entitypainting$enumart.title.equals(title))
             {
@@ -61,17 +61,23 @@ public class EntityPainting extends EntityHanging
         this.updateFacingWithBoundingBox(facing);
     }
 
+    /**
+     * (abstract) Protected helper method to write subclass entity data to NBT.
+     */
     public void writeEntityToNBT(NBTTagCompound tagCompound)
     {
         tagCompound.setString("Motive", this.art.title);
         super.writeEntityToNBT(tagCompound);
     }
 
+    /**
+     * (abstract) Protected helper method to read subclass entity data from NBT.
+     */
     public void readEntityFromNBT(NBTTagCompound tagCompund)
     {
         String s = tagCompund.getString("Motive");
 
-        for (EnumArt entitypainting$enumart : EnumArt.values())
+        for (EntityPainting.EnumArt entitypainting$enumart : EntityPainting.EnumArt.values())
         {
             if (entitypainting$enumart.title.equals(s))
             {
@@ -81,7 +87,7 @@ public class EntityPainting extends EntityHanging
 
         if (this.art == null)
         {
-            this.art = EnumArt.KEBAB;
+            this.art = EntityPainting.EnumArt.KEBAB;
         }
 
         super.readEntityFromNBT(tagCompund);
@@ -97,6 +103,9 @@ public class EntityPainting extends EntityHanging
         return this.art.sizeY;
     }
 
+    /**
+     * Called when this entity is broken. Entity parameter may be null.
+     */
     public void onBroken(Entity brokenEntity)
     {
         if (this.worldObj.getGameRules().getBoolean("doEntityDrops"))
@@ -115,6 +124,9 @@ public class EntityPainting extends EntityHanging
         }
     }
 
+    /**
+     * Sets the location and Yaw/Pitch of an entity in the world
+     */
     public void setLocationAndAngles(double x, double y, double z, float yaw, float pitch)
     {
         BlockPos blockpos = this.hangingPosition.add(x - this.posX, y - this.posY, z - this.posZ);

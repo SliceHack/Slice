@@ -30,9 +30,9 @@ public class EntityMinecartFurnace extends EntityMinecart
         super(worldIn, x, y, z);
     }
 
-    public EnumMinecartType getMinecartType()
+    public EntityMinecart.EnumMinecartType getMinecartType()
     {
-        return EnumMinecartType.FURNACE;
+        return EntityMinecart.EnumMinecartType.FURNACE;
     }
 
     protected void entityInit()
@@ -41,6 +41,9 @@ public class EntityMinecartFurnace extends EntityMinecart
         this.dataWatcher.addObject(16, new Byte((byte)0));
     }
 
+    /**
+     * Called to update the entity's position/logic.
+     */
     public void onUpdate()
     {
         super.onUpdate();
@@ -63,6 +66,9 @@ public class EntityMinecartFurnace extends EntityMinecart
         }
     }
 
+    /**
+     * Get's the maximum speed for a minecart
+     */
     protected double getMaximumSpeed()
     {
         return 0.2D;
@@ -129,6 +135,9 @@ public class EntityMinecartFurnace extends EntityMinecart
         super.applyDrag();
     }
 
+    /**
+     * First layer of player interaction
+     */
     public boolean interactFirst(EntityPlayer playerIn)
     {
         ItemStack itemstack = playerIn.inventory.getCurrentItem();
@@ -148,6 +157,9 @@ public class EntityMinecartFurnace extends EntityMinecart
         return true;
     }
 
+    /**
+     * (abstract) Protected helper method to write subclass entity data to NBT.
+     */
     protected void writeEntityToNBT(NBTTagCompound tagCompound)
     {
         super.writeEntityToNBT(tagCompound);
@@ -156,6 +168,9 @@ public class EntityMinecartFurnace extends EntityMinecart
         tagCompound.setShort("Fuel", (short)this.fuel);
     }
 
+    /**
+     * (abstract) Protected helper method to read subclass entity data from NBT.
+     */
     protected void readEntityFromNBT(NBTTagCompound tagCompund)
     {
         super.readEntityFromNBT(tagCompund);

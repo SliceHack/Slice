@@ -15,8 +15,8 @@ public class ScorePlayerTeam extends Team
     private String colorSuffix = "";
     private boolean allowFriendlyFire = true;
     private boolean canSeeFriendlyInvisibles = true;
-    private EnumVisible nameTagVisibility = EnumVisible.ALWAYS;
-    private EnumVisible deathMessageVisibility = EnumVisible.ALWAYS;
+    private Team.EnumVisible nameTagVisibility = Team.EnumVisible.ALWAYS;
+    private Team.EnumVisible deathMessageVisibility = Team.EnumVisible.ALWAYS;
     private EnumChatFormatting chatFormat = EnumChatFormatting.RESET;
 
     public ScorePlayerTeam(Scoreboard theScoreboardIn, String name)
@@ -26,6 +26,9 @@ public class ScorePlayerTeam extends Team
         this.teamNameSPT = name;
     }
 
+    /**
+     * Retrieve the name by which this team is registered in the scoreboard
+     */
     public String getRegisteredName()
     {
         return this.registeredName;
@@ -54,6 +57,9 @@ public class ScorePlayerTeam extends Team
         return this.membershipSet;
     }
 
+    /**
+     * Returns the color prefix for the player's team name
+     */
     public String getColorPrefix()
     {
         return this.namePrefixSPT;
@@ -72,6 +78,9 @@ public class ScorePlayerTeam extends Team
         }
     }
 
+    /**
+     * Returns the color suffix for the player's team name
+     */
     public String getColorSuffix()
     {
         return this.colorSuffix;
@@ -88,6 +97,9 @@ public class ScorePlayerTeam extends Team
         return this.getColorPrefix() + input + this.getColorSuffix();
     }
 
+    /**
+     * Returns the player name including the color prefixes and suffixes
+     */
     public static String formatPlayerName(Team p_96667_0_, String p_96667_1_)
     {
         return p_96667_0_ == null ? p_96667_1_ : p_96667_0_.formatString(p_96667_1_);
@@ -115,23 +127,23 @@ public class ScorePlayerTeam extends Team
         this.theScoreboard.sendTeamUpdate(this);
     }
 
-    public EnumVisible getNameTagVisibility()
+    public Team.EnumVisible getNameTagVisibility()
     {
         return this.nameTagVisibility;
     }
 
-    public EnumVisible getDeathMessageVisibility()
+    public Team.EnumVisible getDeathMessageVisibility()
     {
         return this.deathMessageVisibility;
     }
 
-    public void setNameTagVisibility(EnumVisible p_178772_1_)
+    public void setNameTagVisibility(Team.EnumVisible p_178772_1_)
     {
         this.nameTagVisibility = p_178772_1_;
         this.theScoreboard.sendTeamUpdate(this);
     }
 
-    public void setDeathMessageVisibility(EnumVisible p_178773_1_)
+    public void setDeathMessageVisibility(Team.EnumVisible p_178773_1_)
     {
         this.deathMessageVisibility = p_178773_1_;
         this.theScoreboard.sendTeamUpdate(this);

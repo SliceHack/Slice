@@ -19,21 +19,33 @@ import net.minecraft.world.World;
 
 public class CommandSpreadPlayers extends CommandBase
 {
+    /**
+     * Gets the name of the command
+     */
     public String getCommandName()
     {
         return "spreadplayers";
     }
 
+    /**
+     * Return the required permission level for this command.
+     */
     public int getRequiredPermissionLevel()
     {
         return 2;
     }
 
+    /**
+     * Gets the usage string for the command.
+     */
     public String getCommandUsage(ICommandSender sender)
     {
         return "commands.spreadplayers.usage";
     }
 
+    /**
+     * Callback when the command is invoked
+     */
     public void processCommand(ICommandSender sender, String[] args) throws CommandException
     {
         if (args.length < 6)
@@ -88,19 +100,19 @@ public class CommandSpreadPlayers extends CommandBase
             else
             {
                 sender.addChatMessage(new ChatComponentTranslation("commands.spreadplayers.spreading." + (flag ? "teams" : "players"), new Object[] {Integer.valueOf(list.size()), Double.valueOf(d3), Double.valueOf(d0), Double.valueOf(d1), Double.valueOf(d2)}));
-                this.func_110669_a(sender, list, new Position(d0, d1), d2, d3, ((Entity)list.get(0)).worldObj, flag);
+                this.func_110669_a(sender, list, new CommandSpreadPlayers.Position(d0, d1), d2, d3, ((Entity)list.get(0)).worldObj, flag);
             }
         }
     }
 
-    private void func_110669_a(ICommandSender p_110669_1_, List<Entity> p_110669_2_, Position p_110669_3_, double p_110669_4_, double p_110669_6_, World worldIn, boolean p_110669_9_) throws CommandException
+    private void func_110669_a(ICommandSender p_110669_1_, List<Entity> p_110669_2_, CommandSpreadPlayers.Position p_110669_3_, double p_110669_4_, double p_110669_6_, World worldIn, boolean p_110669_9_) throws CommandException
     {
         Random random = new Random();
         double d0 = p_110669_3_.field_111101_a - p_110669_6_;
         double d1 = p_110669_3_.field_111100_b - p_110669_6_;
         double d2 = p_110669_3_.field_111101_a + p_110669_6_;
         double d3 = p_110669_3_.field_111100_b + p_110669_6_;
-        Position[] acommandspreadplayers$position = this.func_110670_a(random, p_110669_9_ ? this.func_110667_a(p_110669_2_) : p_110669_2_.size(), d0, d1, d2, d3);
+        CommandSpreadPlayers.Position[] acommandspreadplayers$position = this.func_110670_a(random, p_110669_9_ ? this.func_110667_a(p_110669_2_) : p_110669_2_.size(), d0, d1, d2, d3);
         int i = this.func_110668_a(p_110669_3_, p_110669_4_, worldIn, random, d0, d1, d2, d3, acommandspreadplayers$position, p_110669_9_);
         double d4 = this.func_110671_a(p_110669_2_, worldIn, acommandspreadplayers$position, p_110669_9_);
         notifyOperators(p_110669_1_, this, "commands.spreadplayers.success." + (p_110669_9_ ? "teams" : "players"), new Object[] {Integer.valueOf(acommandspreadplayers$position.length), Double.valueOf(p_110669_3_.field_111101_a), Double.valueOf(p_110669_3_.field_111100_b)});
@@ -130,7 +142,7 @@ public class CommandSpreadPlayers extends CommandBase
         return set.size();
     }
 
-    private int func_110668_a(Position p_110668_1_, double p_110668_2_, World worldIn, Random p_110668_5_, double p_110668_6_, double p_110668_8_, double p_110668_10_, double p_110668_12_, Position[] p_110668_14_, boolean p_110668_15_) throws CommandException
+    private int func_110668_a(CommandSpreadPlayers.Position p_110668_1_, double p_110668_2_, World worldIn, Random p_110668_5_, double p_110668_6_, double p_110668_8_, double p_110668_10_, double p_110668_12_, CommandSpreadPlayers.Position[] p_110668_14_, boolean p_110668_15_) throws CommandException
     {
         boolean flag = true;
         double d0 = 3.4028234663852886E38D;
@@ -143,15 +155,15 @@ public class CommandSpreadPlayers extends CommandBase
 
             for (int j = 0; j < p_110668_14_.length; ++j)
             {
-                Position commandspreadplayers$position = p_110668_14_[j];
+                CommandSpreadPlayers.Position commandspreadplayers$position = p_110668_14_[j];
                 int k = 0;
-                Position commandspreadplayers$position1 = new Position();
+                CommandSpreadPlayers.Position commandspreadplayers$position1 = new CommandSpreadPlayers.Position();
 
                 for (int l = 0; l < p_110668_14_.length; ++l)
                 {
                     if (j != l)
                     {
-                        Position commandspreadplayers$position2 = p_110668_14_[l];
+                        CommandSpreadPlayers.Position commandspreadplayers$position2 = p_110668_14_[l];
                         double d1 = commandspreadplayers$position.func_111099_a(commandspreadplayers$position2);
                         d0 = Math.min(d1, d0);
 
@@ -191,7 +203,7 @@ public class CommandSpreadPlayers extends CommandBase
 
             if (!flag)
             {
-                for (Position commandspreadplayers$position3 : p_110668_14_)
+                for (CommandSpreadPlayers.Position commandspreadplayers$position3 : p_110668_14_)
                 {
                     if (!commandspreadplayers$position3.func_111098_b(worldIn))
                     {
@@ -212,16 +224,16 @@ public class CommandSpreadPlayers extends CommandBase
         }
     }
 
-    private double func_110671_a(List<Entity> p_110671_1_, World worldIn, Position[] p_110671_3_, boolean p_110671_4_)
+    private double func_110671_a(List<Entity> p_110671_1_, World worldIn, CommandSpreadPlayers.Position[] p_110671_3_, boolean p_110671_4_)
     {
         double d0 = 0.0D;
         int i = 0;
-        Map<Team, Position> map = Maps.<Team, Position>newHashMap();
+        Map<Team, CommandSpreadPlayers.Position> map = Maps.<Team, CommandSpreadPlayers.Position>newHashMap();
 
         for (int j = 0; j < p_110671_1_.size(); ++j)
         {
             Entity entity = (Entity)p_110671_1_.get(j);
-            Position commandspreadplayers$position;
+            CommandSpreadPlayers.Position commandspreadplayers$position;
 
             if (p_110671_4_)
             {
@@ -232,7 +244,7 @@ public class CommandSpreadPlayers extends CommandBase
                     map.put(team, p_110671_3_[i++]);
                 }
 
-                commandspreadplayers$position = (Position)map.get(team);
+                commandspreadplayers$position = (CommandSpreadPlayers.Position)map.get(team);
             }
             else
             {
@@ -258,13 +270,13 @@ public class CommandSpreadPlayers extends CommandBase
         return d0;
     }
 
-    private Position[] func_110670_a(Random p_110670_1_, int p_110670_2_, double p_110670_3_, double p_110670_5_, double p_110670_7_, double p_110670_9_)
+    private CommandSpreadPlayers.Position[] func_110670_a(Random p_110670_1_, int p_110670_2_, double p_110670_3_, double p_110670_5_, double p_110670_7_, double p_110670_9_)
     {
-        Position[] acommandspreadplayers$position = new Position[p_110670_2_];
+        CommandSpreadPlayers.Position[] acommandspreadplayers$position = new CommandSpreadPlayers.Position[p_110670_2_];
 
         for (int i = 0; i < acommandspreadplayers$position.length; ++i)
         {
-            Position commandspreadplayers$position = new Position();
+            CommandSpreadPlayers.Position commandspreadplayers$position = new CommandSpreadPlayers.Position();
             commandspreadplayers$position.func_111097_a(p_110670_1_, p_110670_3_, p_110670_5_, p_110670_7_, p_110670_9_);
             acommandspreadplayers$position[i] = commandspreadplayers$position;
         }
@@ -292,7 +304,7 @@ public class CommandSpreadPlayers extends CommandBase
             this.field_111100_b = p_i1358_3_;
         }
 
-        double func_111099_a(Position p_111099_1_)
+        double func_111099_a(CommandSpreadPlayers.Position p_111099_1_)
         {
             double d0 = this.field_111101_a - p_111099_1_.field_111101_a;
             double d1 = this.field_111100_b - p_111099_1_.field_111100_b;
@@ -311,7 +323,7 @@ public class CommandSpreadPlayers extends CommandBase
             return MathHelper.sqrt_double(this.field_111101_a * this.field_111101_a + this.field_111100_b * this.field_111100_b);
         }
 
-        public void func_111094_b(Position p_111094_1_)
+        public void func_111094_b(CommandSpreadPlayers.Position p_111094_1_)
         {
             this.field_111101_a -= p_111094_1_.field_111101_a;
             this.field_111100_b -= p_111094_1_.field_111100_b;

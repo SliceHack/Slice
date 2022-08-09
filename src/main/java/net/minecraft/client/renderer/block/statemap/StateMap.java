@@ -57,19 +57,19 @@ public class StateMap extends StateMapperBase
         private String suffix;
         private final List < IProperty<? >> ignored = Lists. < IProperty<? >> newArrayList();
 
-        public Builder withName(IProperty<?> builderPropertyIn)
+        public StateMap.Builder withName(IProperty<?> builderPropertyIn)
         {
             this.name = builderPropertyIn;
             return this;
         }
 
-        public Builder withSuffix(String builderSuffixIn)
+        public StateMap.Builder withSuffix(String builderSuffixIn)
         {
             this.suffix = builderSuffixIn;
             return this;
         }
 
-        public Builder ignore(IProperty<?>... p_178442_1_)
+        public StateMap.Builder ignore(IProperty<?>... p_178442_1_)
         {
             Collections.addAll(this.ignored, p_178442_1_);
             return this;

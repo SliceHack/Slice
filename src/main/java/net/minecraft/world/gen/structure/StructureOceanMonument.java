@@ -96,7 +96,7 @@ public class StructureOceanMonument extends MapGenStructure
 
     protected StructureStart getStructureStart(int chunkX, int chunkZ)
     {
-        return new StartMonument(this.worldObj, this.rand, chunkX, chunkZ);
+        return new StructureOceanMonument.StartMonument(this.worldObj, this.rand, chunkX, chunkZ);
     }
 
     public List<BiomeGenBase.SpawnListEntry> getScatteredFeatureSpawnList()

@@ -212,9 +212,9 @@ public class HttpPipeline
 
     public static boolean hasActiveRequests()
     {
-        for (Object o : mapConnections.values())
+        for (Object httppipelineconnection0 : mapConnections.values())
         {
-            HttpPipelineConnection httppipelineconnection = (HttpPipelineConnection) o;
+            HttpPipelineConnection httppipelineconnection =(HttpPipelineConnection) httppipelineconnection0;
             if (httppipelineconnection.hasActiveRequests())
             {
                 return true;

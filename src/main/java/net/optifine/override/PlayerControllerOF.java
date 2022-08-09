@@ -25,6 +25,9 @@ public class PlayerControllerOF extends PlayerControllerMP
         super(mcIn, netHandler);
     }
 
+    /**
+     * Called when the player is hitting a block with an item.
+     */
     public boolean clickBlock(BlockPos loc, EnumFacing face)
     {
         this.acting = true;
@@ -43,6 +46,9 @@ public class PlayerControllerOF extends PlayerControllerMP
         return flag;
     }
 
+    /**
+     * Notifies the server of things like consuming food, etc...
+     */
     public boolean sendUseItem(EntityPlayer player, World worldIn, ItemStack stack)
     {
         this.acting = true;
@@ -60,12 +66,22 @@ public class PlayerControllerOF extends PlayerControllerMP
         return flag;
     }
 
+    /**
+     * Send packet to server - player is interacting with another entity (left click)
+     */
     public boolean interactWithEntitySendPacket(EntityPlayer player, Entity target)
     {
         this.lastClickEntity = target;
         return super.interactWithEntitySendPacket(player, target);
     }
 
+    /**
+     * Return true when the player rightclick on an entity
+     *  
+     * @param player The player's instance
+     * @param entityIn The entity clicked
+     * @param movingObject The object clicked
+     */
     public boolean isPlayerRightClickingOnEntity(EntityPlayer player, Entity target, MovingObjectPosition ray)
     {
         this.lastClickEntity = target;

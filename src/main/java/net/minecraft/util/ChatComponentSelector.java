@@ -2,6 +2,9 @@ package net.minecraft.util;
 
 public class ChatComponentSelector extends ChatComponentStyle
 {
+    /**
+     * The selector used to find the matching entities of this text component
+     */
     private final String selector;
 
     public ChatComponentSelector(String selectorIn)
@@ -9,16 +12,26 @@ public class ChatComponentSelector extends ChatComponentStyle
         this.selector = selectorIn;
     }
 
+    /**
+     * Gets the selector of this component, in plain text.
+     */
     public String getSelector()
     {
         return this.selector;
     }
 
+    /**
+     * Gets the text of this component, without any special formatting codes added, for chat.  TODO: why is this two
+     * different methods?
+     */
     public String getUnformattedTextForChat()
     {
         return this.selector;
     }
 
+    /**
+     * Creates a copy of this component.  Almost a deep copy, except the style is shallow-copied.
+     */
     public ChatComponentSelector createCopy()
     {
         ChatComponentSelector chatcomponentselector = new ChatComponentSelector(this.selector);

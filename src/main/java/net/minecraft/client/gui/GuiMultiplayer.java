@@ -19,7 +19,6 @@ import org.lwjgl.input.Keyboard;
 import slice.Slice;
 import slice.util.RenderUtil;
 
-@SuppressWarnings("all")
 public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
 {
     private static final Logger logger = LogManager.getLogger();

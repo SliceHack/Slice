@@ -18,6 +18,8 @@ public class RenderDragon extends RenderLiving<EntityDragon>
     private static final ResourceLocation enderDragonCrystalBeamTextures = new ResourceLocation("textures/entity/endercrystal/endercrystal_beam.png");
     private static final ResourceLocation enderDragonExplodingTextures = new ResourceLocation("textures/entity/enderdragon/dragon_exploding.png");
     private static final ResourceLocation enderDragonTextures = new ResourceLocation("textures/entity/enderdragon/dragon.png");
+
+    /** An instance of the dragon model in RenderDragon */
     protected ModelDragon modelDragon;
 
     public RenderDragon(RenderManager renderManagerIn)
@@ -50,6 +52,9 @@ public class RenderDragon extends RenderLiving<EntityDragon>
         }
     }
 
+    /**
+     * Renders the model in RenderLiving
+     */
     protected void renderModel(EntityDragon entitylivingbaseIn, float p_77036_2_, float p_77036_3_, float p_77036_4_, float p_77036_5_, float p_77036_6_, float scaleFactor)
     {
         if (entitylivingbaseIn.deathTicks > 0)
@@ -81,6 +86,9 @@ public class RenderDragon extends RenderLiving<EntityDragon>
         }
     }
 
+    /**
+     * Renders the desired {@code T} type Entity.
+     */
     public void doRender(EntityDragon entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
         BossStatus.setBossStatus(entity, false);
@@ -92,6 +100,9 @@ public class RenderDragon extends RenderLiving<EntityDragon>
         }
     }
 
+    /**
+     * Draws the ray from the dragon to it's crystal
+     */
     protected void drawRechargeRay(EntityDragon dragon, double p_180574_2_, double p_180574_4_, double p_180574_6_, float p_180574_8_)
     {
         float f = (float)dragon.healingEnderCrystal.innerRotation + p_180574_8_;
@@ -133,6 +144,9 @@ public class RenderDragon extends RenderLiving<EntityDragon>
         GlStateManager.popMatrix();
     }
 
+    /**
+     * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
+     */
     protected ResourceLocation getEntityTexture(EntityDragon entity)
     {
         return enderDragonTextures;

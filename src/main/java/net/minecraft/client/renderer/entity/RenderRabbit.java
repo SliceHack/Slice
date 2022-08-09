@@ -21,6 +21,9 @@ public class RenderRabbit extends RenderLiving<EntityRabbit>
         super(renderManagerIn, modelBaseIn, shadowSizeIn);
     }
 
+    /**
+     * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
+     */
     protected ResourceLocation getEntityTexture(EntityRabbit entity)
     {
         String s = EnumChatFormatting.getTextWithoutFormattingCodes(entity.getName());

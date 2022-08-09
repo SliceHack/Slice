@@ -34,6 +34,9 @@ public class ScoreboardSaveData extends WorldSavedData
         }
     }
 
+    /**
+     * reads in data from the NBTTagCompound into this MapDataBase
+     */
     public void readFromNBT(NBTTagCompound nbt)
     {
         if (this.theScoreboard == null)
@@ -188,6 +191,9 @@ public class ScoreboardSaveData extends WorldSavedData
         }
     }
 
+    /**
+     * write data to NBTTagCompound from this MapDataBase, similar to Entities and TileEntities
+     */
     public void writeToNBT(NBTTagCompound nbt)
     {
         if (this.theScoreboard == null)

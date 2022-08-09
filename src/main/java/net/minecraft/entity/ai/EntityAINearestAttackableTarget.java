@@ -15,7 +15,9 @@ public class EntityAINearestAttackableTarget<T extends EntityLivingBase> extends
 {
     protected final Class<T> targetClass;
     private final int targetChance;
-    protected final Sorter theNearestAttackableTargetSorter;
+
+    /** Instance of EntityAINearestAttackableTargetSorter. */
+    protected final EntityAINearestAttackableTarget.Sorter theNearestAttackableTargetSorter;
     protected Predicate <? super T > targetEntitySelector;
     protected EntityLivingBase targetEntity;
 
@@ -34,7 +36,7 @@ public class EntityAINearestAttackableTarget<T extends EntityLivingBase> extends
         super(creature, checkSight, onlyNearby);
         this.targetClass = classTarget;
         this.targetChance = chance;
-        this.theNearestAttackableTargetSorter = new Sorter(creature);
+        this.theNearestAttackableTargetSorter = new EntityAINearestAttackableTarget.Sorter(creature);
         this.setMutexBits(1);
         this.targetEntitySelector = new Predicate<T>()
         {
@@ -79,6 +81,9 @@ public class EntityAINearestAttackableTarget<T extends EntityLivingBase> extends
         };
     }
 
+    /**
+     * Returns whether the EntityAIBase should begin execution.
+     */
     public boolean shouldExecute()
     {
         if (this.targetChance > 0 && this.taskOwner.getRNG().nextInt(this.targetChance) != 0)
@@ -103,6 +108,9 @@ public class EntityAINearestAttackableTarget<T extends EntityLivingBase> extends
         }
     }
 
+    /**
+     * Execute a one shot task or start executing a continuous task
+     */
     public void startExecuting()
     {
         this.taskOwner.setAttackTarget(this.targetEntity);

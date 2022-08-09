@@ -22,6 +22,9 @@ public class BlockLilyPad extends BlockBush
         this.setCreativeTab(CreativeTabs.tabDecorations);
     }
 
+    /**
+     * Add all collision boxes of this Block to the list that intersect with the given mask.
+     */
     public void addCollisionBoxesToList(World worldIn, BlockPos pos, IBlockState state, AxisAlignedBB mask, List<AxisAlignedBB> list, Entity collidingEntity)
     {
         if (collidingEntity == null || !(collidingEntity instanceof EntityBoat))
@@ -50,6 +53,9 @@ public class BlockLilyPad extends BlockBush
         return 2129968;
     }
 
+    /**
+     * is the block grass, dirt or farmland
+     */
     protected boolean canPlaceBlockOn(Block ground)
     {
         return ground == Blocks.water;
@@ -68,6 +74,9 @@ public class BlockLilyPad extends BlockBush
         }
     }
 
+    /**
+     * Convert the BlockState into the correct metadata value
+     */
     public int getMetaFromState(IBlockState state)
     {
         return 0;

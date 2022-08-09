@@ -5,16 +5,29 @@ import net.minecraft.world.storage.WorldInfo;
 
 public final class WorldSettings
 {
+    /** The seed for the map. */
     private final long seed;
-    private final GameType theGameType;
+
+    /** The EnumGameType. */
+    private final WorldSettings.GameType theGameType;
+
+    /**
+     * Switch for the map features. 'true' for enabled, 'false' for disabled.
+     */
     private final boolean mapFeaturesEnabled;
+
+    /** True if hardcore mode is enabled */
     private final boolean hardcoreEnabled;
     private final WorldType terrainType;
+
+    /** True if Commands (cheats) are allowed. */
     private boolean commandsAllowed;
+
+    /** True if the Bonus Chest is enabled. */
     private boolean bonusChestEnabled;
     private String worldName;
 
-    public WorldSettings(long seedIn, GameType gameType, boolean enableMapFeatures, boolean hardcoreMode, WorldType worldTypeIn)
+    public WorldSettings(long seedIn, WorldSettings.GameType gameType, boolean enableMapFeatures, boolean hardcoreMode, WorldType worldTypeIn)
     {
         this.worldName = "";
         this.seed = seedIn;
@@ -29,12 +42,18 @@ public final class WorldSettings
         this(info.getSeed(), info.getGameType(), info.isMapFeaturesEnabled(), info.isHardcoreModeEnabled(), info.getTerrainType());
     }
 
+    /**
+     * Enables the bonus chest.
+     */
     public WorldSettings enableBonusChest()
     {
         this.bonusChestEnabled = true;
         return this;
     }
 
+    /**
+     * Enables Commands (cheats).
+     */
     public WorldSettings enableCommands()
     {
         this.commandsAllowed = true;
@@ -47,26 +66,41 @@ public final class WorldSettings
         return this;
     }
 
+    /**
+     * Returns true if the Bonus Chest is enabled.
+     */
     public boolean isBonusChestEnabled()
     {
         return this.bonusChestEnabled;
     }
 
+    /**
+     * Returns the seed for the world.
+     */
     public long getSeed()
     {
         return this.seed;
     }
 
-    public GameType getGameType()
+    /**
+     * Gets the game type.
+     */
+    public WorldSettings.GameType getGameType()
     {
         return this.theGameType;
     }
 
+    /**
+     * Returns true if hardcore mode is enabled, otherwise false
+     */
     public boolean getHardcoreEnabled()
     {
         return this.hardcoreEnabled;
     }
 
+    /**
+     * Get whether the map features (e.g. strongholds) generation is enabled or disabled.
+     */
     public boolean isMapFeaturesEnabled()
     {
         return this.mapFeaturesEnabled;
@@ -77,14 +111,20 @@ public final class WorldSettings
         return this.terrainType;
     }
 
+    /**
+     * Returns true if Commands (cheats) are allowed.
+     */
     public boolean areCommandsAllowed()
     {
         return this.commandsAllowed;
     }
 
-    public static GameType getGameTypeById(int id)
+    /**
+     * Gets the GameType by ID
+     */
+    public static WorldSettings.GameType getGameTypeById(int id)
     {
-        return GameType.getByID(id);
+        return WorldSettings.GameType.getByID(id);
     }
 
     public String getWorldName()
@@ -160,9 +200,9 @@ public final class WorldSettings
             return this == SURVIVAL || this == ADVENTURE;
         }
 
-        public static GameType getByID(int idIn)
+        public static WorldSettings.GameType getByID(int idIn)
         {
-            for (GameType worldsettings$gametype : values())
+            for (WorldSettings.GameType worldsettings$gametype : values())
             {
                 if (worldsettings$gametype.id == idIn)
                 {
@@ -173,9 +213,9 @@ public final class WorldSettings
             return SURVIVAL;
         }
 
-        public static GameType getByName(String gamemodeName)
+        public static WorldSettings.GameType getByName(String gamemodeName)
         {
-            for (GameType worldsettings$gametype : values())
+            for (WorldSettings.GameType worldsettings$gametype : values())
             {
                 if (worldsettings$gametype.name.equals(gamemodeName))
                 {

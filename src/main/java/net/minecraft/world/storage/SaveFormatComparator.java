@@ -4,11 +4,16 @@ import net.minecraft.world.WorldSettings;
 
 public class SaveFormatComparator implements Comparable<SaveFormatComparator>
 {
+    /** the file name of this save */
     private final String fileName;
+
+    /** the displayed name of this save file */
     private final String displayName;
     private final long lastTimePlayed;
     private final long sizeOnDisk;
     private final boolean requiresConversion;
+
+    /** Instance of EnumGameType. */
     private final WorldSettings.GameType theEnumGameType;
     private final boolean hardcore;
     private final boolean cheatsEnabled;
@@ -25,11 +30,17 @@ public class SaveFormatComparator implements Comparable<SaveFormatComparator>
         this.cheatsEnabled = cheatsEnabledIn;
     }
 
+    /**
+     * return the file name
+     */
     public String getFileName()
     {
         return this.fileName;
     }
 
+    /**
+     * return the display name of the save
+     */
     public String getDisplayName()
     {
         return this.displayName;
@@ -55,6 +66,9 @@ public class SaveFormatComparator implements Comparable<SaveFormatComparator>
         return this.lastTimePlayed < p_compareTo_1_.lastTimePlayed ? 1 : (this.lastTimePlayed > p_compareTo_1_.lastTimePlayed ? -1 : this.fileName.compareTo(p_compareTo_1_.fileName));
     }
 
+    /**
+     * Gets the EnumGameType.
+     */
     public WorldSettings.GameType getEnumGameType()
     {
         return this.theEnumGameType;
@@ -65,6 +79,9 @@ public class SaveFormatComparator implements Comparable<SaveFormatComparator>
         return this.hardcore;
     }
 
+    /**
+     * @return {@code true} if cheats are enabled for this world
+     */
     public boolean getCheatsEnabled()
     {
         return this.cheatsEnabled;

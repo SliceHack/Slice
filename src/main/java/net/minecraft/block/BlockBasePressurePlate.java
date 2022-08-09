@@ -46,6 +46,9 @@ public abstract class BlockBasePressurePlate extends Block
         }
     }
 
+    /**
+     * How many world ticks before ticking
+     */
     public int tickRate(World worldIn)
     {
         return 20;
@@ -56,6 +59,9 @@ public abstract class BlockBasePressurePlate extends Block
         return null;
     }
 
+    /**
+     * Used to determine ambient occlusion and culling when rebuilding chunks for render
+     */
     public boolean isOpaqueCube()
     {
         return false;
@@ -71,6 +77,9 @@ public abstract class BlockBasePressurePlate extends Block
         return true;
     }
 
+    /**
+     * Return true if an entity can be spawned inside the block (used to get the player's bed spawn location)
+     */
     public boolean canSpawnInBlock()
     {
         return true;
@@ -81,6 +90,9 @@ public abstract class BlockBasePressurePlate extends Block
         return this.canBePlacedOn(worldIn, pos.down());
     }
 
+    /**
+     * Called when a neighboring block changes.
+     */
     public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
     {
         if (!this.canBePlacedOn(worldIn, pos.down()))
@@ -95,6 +107,9 @@ public abstract class BlockBasePressurePlate extends Block
         return World.doesBlockHaveSolidTopSurface(worldIn, pos) || worldIn.getBlockState(pos).getBlock() instanceof BlockFence;
     }
 
+    /**
+     * Called randomly when setTickRandomly is set to true (used by e.g. crops to grow, etc.)
+     */
     public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random)
     {
     }
@@ -112,6 +127,9 @@ public abstract class BlockBasePressurePlate extends Block
         }
     }
 
+    /**
+     * Called When an Entity Collided with the Block
+     */
     public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn)
     {
         if (!worldIn.isRemote)
@@ -125,6 +143,9 @@ public abstract class BlockBasePressurePlate extends Block
         }
     }
 
+    /**
+     * Updates the pressure plate when stepped on
+     */
     protected void updateState(World worldIn, BlockPos pos, IBlockState state, int oldRedstoneStrength)
     {
         int i = this.computeRedstoneStrength(worldIn, pos);
@@ -154,6 +175,9 @@ public abstract class BlockBasePressurePlate extends Block
         }
     }
 
+    /**
+     * Returns the cubic AABB inset by 1/8 on all sides
+     */
     protected AxisAlignedBB getSensitiveAABB(BlockPos pos)
     {
         float f = 0.125F;
@@ -170,6 +194,9 @@ public abstract class BlockBasePressurePlate extends Block
         super.breakBlock(worldIn, pos, state);
     }
 
+    /**
+     * Notify block and block below of changes
+     */
     protected void updateNeighbors(World worldIn, BlockPos pos)
     {
         worldIn.notifyNeighborsOfStateChange(pos, this);
@@ -186,11 +213,17 @@ public abstract class BlockBasePressurePlate extends Block
         return side == EnumFacing.UP ? this.getRedstoneStrength(state) : 0;
     }
 
+    /**
+     * Can this block provide power. Only wire currently seems to have this change based on its state.
+     */
     public boolean canProvidePower()
     {
         return true;
     }
 
+    /**
+     * Sets the block's bounds for rendering it as an item
+     */
     public void setBlockBoundsForItemRender()
     {
         float f = 0.5F;

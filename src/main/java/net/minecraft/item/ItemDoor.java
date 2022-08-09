@@ -19,6 +19,9 @@ public class ItemDoor extends Item
         this.setCreativeTab(CreativeTabs.tabRedstone);
     }
 
+    /**
+     * Called when a Block is right-clicked with this Item
+     */
     public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (side != EnumFacing.UP)

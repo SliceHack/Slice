@@ -5,11 +5,14 @@ import java.util.Random;
 
 public class WeightedRandom
 {
-    public static int getTotalWeight(Collection <? extends Item > collection)
+    /**
+     * Returns the total weight of all items in a collection.
+     */
+    public static int getTotalWeight(Collection <? extends WeightedRandom.Item > collection)
     {
         int i = 0;
 
-        for (Item weightedrandom$item : collection)
+        for (WeightedRandom.Item weightedrandom$item : collection)
         {
             i += weightedrandom$item.itemWeight;
         }
@@ -17,7 +20,7 @@ public class WeightedRandom
         return i;
     }
 
-    public static <T extends Item> T getRandomItem(Random random, Collection<T> collection, int totalWeight)
+    public static <T extends WeightedRandom.Item> T getRandomItem(Random random, Collection<T> collection, int totalWeight)
     {
         if (totalWeight <= 0)
         {
@@ -30,7 +33,7 @@ public class WeightedRandom
         }
     }
 
-    public static <T extends Item> T getRandomItem(Collection<T> collection, int weight)
+    public static <T extends WeightedRandom.Item> T getRandomItem(Collection<T> collection, int weight)
     {
         for (T t : collection)
         {
@@ -45,7 +48,7 @@ public class WeightedRandom
         return (T)null;
     }
 
-    public static <T extends Item> T getRandomItem(Random random, Collection<T> collection)
+    public static <T extends WeightedRandom.Item> T getRandomItem(Random random, Collection<T> collection)
     {
         return getRandomItem(random, collection, getTotalWeight(collection));
     }
