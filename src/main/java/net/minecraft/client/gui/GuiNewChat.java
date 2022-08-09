@@ -11,7 +11,10 @@ import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import slice.Slice;
+import slice.module.modules.render.Interface;
 
+@SuppressWarnings("all")
 public class GuiNewChat extends Gui
 {
     private static final Logger logger = LogManager.getLogger();
@@ -29,6 +32,9 @@ public class GuiNewChat extends Gui
 
     public void drawChat(int updateCounter)
     {
+        Interface interfaceModule = (Interface) Slice.INSTANCE.getModuleManager().getModule(Interface.class);
+        boolean clearChat = interfaceModule.getClearChat().getValue();
+
         if (this.mc.gameSettings.chatVisibility != EntityPlayer.EnumChatVisibility.HIDDEN)
         {
             int i = this.getLineCount();
@@ -79,7 +85,7 @@ public class GuiNewChat extends Gui
                             {
                                 int i2 = 0;
                                 int j2 = -i1 * 9;
-                                drawRect(i2, j2 - 9, i2 + l + 4, j2, l1 / 2 << 24);
+                                if(!clearChat) drawRect(i2, j2 - 9, i2 + l + 4, j2, l1 / 2 << 24);
                                 String s = chatline.getChatComponent().getFormattedText();
                                 GlStateManager.enableBlend();
                                 this.mc.fontRendererObj.drawStringWithShadow(s, (float)i2, (float)(j2 - 8), 16777215 + (l1 << 24));
@@ -103,8 +109,8 @@ public class GuiNewChat extends Gui
                     {
                         int k3 = j3 > 0 ? 170 : 96;
                         int l3 = this.isScrolled ? 13382451 : 3355562;
-                        drawRect(0, -j3, 2, -j3 - k1, l3 + (k3 << 24));
-                        drawRect(2, -j3, 1, -j3 - k1, 13421772 + (k3 << 24));
+                        if(!clearChat) drawRect(0, -j3, 2, -j3 - k1, l3 + (k3 << 24));
+                        if(!clearChat) drawRect(2, -j3, 1, -j3 - k1, 13421772 + (k3 << 24));
                     }
                 }
 
