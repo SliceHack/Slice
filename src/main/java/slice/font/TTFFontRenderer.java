@@ -1,5 +1,6 @@
 package slice.font;
 
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.MathHelper;
@@ -230,10 +231,29 @@ public class TTFFontRenderer {
         renderString(text, x, y, color, false);
     }
 
-    public void drawCenteredString(String text, float x, float y, int color) {
-        Gui.drawCenteredString(this, text, x, y, color);
+    /**
+     * Renders the specified text to the screen, center-aligned. Args : renderer, string, x, y, color
+     */
+    public void drawCenteredString(FontRenderer fontRendererIn, String text, int x, int y, int color)
+    {
+        fontRendererIn.drawStringWithShadow(text, (float)(x - fontRendererIn.getStringWidth(text) / 2), (float)y, color);
     }
 
+    public static void drawCenteredStringStatic(FontRenderer fontRendererIn, String text, int x, int y, int color)
+    {
+        fontRendererIn.drawStringWithShadow(text, (float)(x - fontRendererIn.getStringWidth(text) / 2), (float)y, color);
+    }
+
+    public static void drawCenteredStringStatic(FontRenderer fontRendererIn, String text, float x, float y, int color)
+    {
+        fontRendererIn.drawStringWithShadow(text, (float)(x - fontRendererIn.getStringWidth(text) / 2), (float)y, color);
+    }
+
+
+    public static void drawCenteredString(TTFFontRenderer fontRendererIn, String text, float x, float y, int color)
+    {
+        fontRendererIn.drawStringWithShadow(text, (float)(x - fontRendererIn.getWidth(text) / 2), (float)y, color);
+    }
     /**
      * Renders the given string.
      *

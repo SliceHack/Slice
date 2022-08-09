@@ -40,7 +40,7 @@ public class MainMenu extends GuiScreen {
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Thin", fontHeight);
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
-        font.drawCenteredString("Slice", (sr.getScaledWidth() / 2f)+3, 25, -1);
+        Gui.drawCenteredString(font, "Slice", (sr.getScaledWidth() / 2f)+3, 25, -1);
         GlStateManager.popMatrix();
 
         this.buttonList.forEach(button -> button.drawButton(Minecraft.getMinecraft(), mouseX, mouseY));

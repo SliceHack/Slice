@@ -108,35 +108,25 @@ import net.optifine.shaders.Shaders;
 
 public class RenderManager
 {
-    private Map<Class , Render> entityRenderMap = Maps.newHashMap();
+    private Map<Class, Render> entityRenderMap = Maps.newHashMap();
     private Map<String, RenderPlayer> skinMap = Maps.<String, RenderPlayer>newHashMap();
     private RenderPlayer playerRenderer;
-
-    /** Renders fonts */
     private FontRenderer textRenderer;
     private double renderPosX;
     private double renderPosY;
     private double renderPosZ;
     public TextureManager renderEngine;
-
-    /** Reference to the World object. */
     public World worldObj;
-
-    /** Rendermanager's variable for the player */
     public Entity livingPlayer;
     public Entity pointedEntity;
     public float playerViewY;
     public float playerViewX;
-
-    /** Reference to the GameSettings object. */
     public GameSettings options;
     public double viewerPosX;
     public double viewerPosY;
     public double viewerPosZ;
     private boolean renderOutlines = false;
     private boolean renderShadow = true;
-
-    /** whether bounding box should be rendered or not */
     private boolean debugBoundingBox = false;
     public Render renderRender = null;
 
@@ -280,7 +270,7 @@ public class RenderManager
             this.playerViewX = livingPlayerIn.prevRotationPitch + (livingPlayerIn.rotationPitch - livingPlayerIn.prevRotationPitch) * partialTicks;
         }
 
-        if (optionsIn.showDebugInfo == 2)
+        if (optionsIn.thirdPersonView == 2)
         {
             this.playerViewY += 180.0F;
         }
@@ -376,11 +366,6 @@ public class RenderManager
         return this.doRenderEntity(entityIn, x, y, z, entityYaw, partialTicks, false);
     }
 
-    public boolean renderEntityWithPosYaw(Entity entityIn, double x, double y, double z, float entityYaw, float partialTicks, boolean name)
-    {
-        return this.doRenderEntity(entityIn, x, y, z, entityYaw, partialTicks, false, name);
-    }
-
     public boolean doRenderEntity(Entity entity, double x, double y, double z, float entityYaw, float partialTicks, boolean hideDebugBox)
     {
         Render<Entity> render = null;
@@ -455,89 +440,6 @@ public class RenderManager
         }
     }
 
-    public boolean doRenderEntity(Entity entity, double x, double y, double z, float entityYaw, float partialTicks, boolean hideDebugBox, boolean name)
-    {
-        Render<Entity> render = null;
-
-        try
-        {
-            render = this.<Entity>getEntityRenderObject(entity);
-
-            if (render != null && this.renderEngine != null)
-            {
-                try
-                {
-                    if (render instanceof RendererLivingEntity)
-                    {
-                        ((RendererLivingEntity)render).setRenderOutlines(this.renderOutlines);
-                    }
-
-                    if (CustomEntityModels.isActive())
-                    {
-                        this.renderRender = render;
-                    }
-
-                    render.doRender(entity, x, y, z, entityYaw, partialTicks, name);
-                }
-                catch (Throwable throwable2)
-                {
-                    throw new ReportedException(CrashReport.makeCrashReport(throwable2, "Rendering entity in world"));
-                }
-
-                try
-                {
-                    if (!this.renderOutlines)
-                    {
-                        render.doRenderShadowAndFire(entity, x, y, z, entityYaw, partialTicks);
-                    }
-                }
-                catch (Throwable throwable1)
-                {
-                    throw new ReportedException(CrashReport.makeCrashReport(throwable1, "Post-rendering entity in world"));
-                }
-
-                if (this.debugBoundingBox && !entity.isInvisible() && !hideDebugBox)
-                {
-                    try
-                    {
-                        this.renderDebugBoundingBox(entity, x, y, z, entityYaw, partialTicks);
-                    }
-                    catch (Throwable throwable)
-                    {
-                        throw new ReportedException(CrashReport.makeCrashReport(throwable, "Rendering entity hitbox in world"));
-                    }
-                }
-            }
-            else if (this.renderEngine != null)
-            {
-                return false;
-            }
-
-            return true;
-        }
-        catch (Throwable throwable3)
-        {
-            CrashReport crashreport = CrashReport.makeCrashReport(throwable3, "Rendering entity in world");
-            CrashReportCategory crashreportcategory = crashreport.makeCategory("Entity being rendered");
-            entity.addEntityCrashInfo(crashreportcategory);
-            CrashReportCategory crashreportcategory1 = crashreport.makeCategory("Renderer details");
-            crashreportcategory1.addCrashSection("Assigned renderer", render);
-            crashreportcategory1.addCrashSection("Location", CrashReportCategory.getCoordinateInfo(x, y, z));
-            crashreportcategory1.addCrashSection("Rotation", Float.valueOf(entityYaw));
-            crashreportcategory1.addCrashSection("Delta", Float.valueOf(partialTicks));
-            throw new ReportedException(crashreport);
-        }
-    }
-
-    /**
-     * Renders the bounding box around an entity when F3+B is pressed
-     *
-     * @param x X position where to render the debug bounding box
-     * @param y Y position where to render the debug bounding box
-     * @param z Z position where to render the debug bounding box
-     * @param entityYaw The entity yaw
-     * @param partialTicks The partials ticks
-     */
     private void renderDebugBoundingBox(Entity entityIn, double x, double y, double z, float entityYaw, float partialTicks)
     {
         if (!Shaders.isShadowPass)
@@ -573,9 +475,6 @@ public class RenderManager
         }
     }
 
-    /**
-     * World sets this RenderManager's worldObj to the world provided
-     */
     public void set(World worldIn)
     {
         this.worldObj = worldIn;
@@ -589,9 +488,6 @@ public class RenderManager
         return d0 * d0 + d1 * d1 + d2 * d2;
     }
 
-    /**
-     * Returns the font renderer
-     */
     public FontRenderer getFontRenderer()
     {
         return this.textRenderer;

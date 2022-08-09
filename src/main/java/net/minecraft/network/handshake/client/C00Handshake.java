@@ -6,6 +6,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.handshake.INetHandlerHandshakeServer;
 
+@SuppressWarnings("all")
 public class C00Handshake implements Packet<INetHandlerHandshakeServer>
 {
     private int protocolVersion;

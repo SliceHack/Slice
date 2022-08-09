@@ -75,12 +75,6 @@ public class PlayerProfileCache
         this.load();
     }
 
-    /**
-     * Get a GameProfile given the MinecraftServer and the player's username.
-
-     *  The UUID of the GameProfile will <b>not</b> be null. If the server is offline, a UUID based on the hash of the
-     * username will be used.
-     */
     private static GameProfile getGameProfile(MinecraftServer server, String username)
     {
         final GameProfile[] agameprofile = new GameProfile[1];
@@ -107,17 +101,11 @@ public class PlayerProfileCache
         return agameprofile[0];
     }
 
-    /**
-     * Add an entry to this cache
-     */
     public void addEntry(GameProfile gameProfile)
     {
         this.addEntry(gameProfile, (Date)null);
     }
 
-    /**
-     * Add an entry to this cache
-     */
     private void addEntry(GameProfile gameProfile, Date expirationDate)
     {
         UUID uuid = gameProfile.getId();
@@ -146,10 +134,6 @@ public class PlayerProfileCache
         this.save();
     }
 
-    /**
-     * Get a player's GameProfile given their username. Mojang's server's will be contacted if the entry is not cached
-     * locally.
-     */
     public GameProfile getGameProfileForUsername(String username)
     {
         String s = username.toLowerCase(Locale.ROOT);
@@ -184,27 +168,18 @@ public class PlayerProfileCache
         return playerprofilecache$profileentry == null ? null : playerprofilecache$profileentry.getGameProfile();
     }
 
-    /**
-     * Get an array of the usernames that are cached in this cache
-     */
     public String[] getUsernames()
     {
         List<String> list = Lists.newArrayList(this.usernameToProfileEntryMap.keySet());
         return (String[])list.toArray(new String[list.size()]);
     }
 
-    /**
-     * Get a player's {@link GameProfile} given their UUID
-     */
     public GameProfile getProfileByUUID(UUID uuid)
     {
         PlayerProfileCache.ProfileEntry playerprofilecache$profileentry = (PlayerProfileCache.ProfileEntry)this.uuidToProfileEntryMap.get(uuid);
         return playerprofilecache$profileentry == null ? null : playerprofilecache$profileentry.getGameProfile();
     }
 
-    /**
-     * Get a {@link ProfileEntry} by UUID
-     */
     private PlayerProfileCache.ProfileEntry getByUUID(UUID uuid)
     {
         PlayerProfileCache.ProfileEntry playerprofilecache$profileentry = (PlayerProfileCache.ProfileEntry)this.uuidToProfileEntryMap.get(uuid);
@@ -219,39 +194,40 @@ public class PlayerProfileCache
         return playerprofilecache$profileentry;
     }
 
-    /**
-     * Load the cached profiles from disk
-     */
     public void load()
     {
-        try {
-            BufferedReader bufferedreader = null;
+        BufferedReader bufferedreader = null;
 
-            try {
-                bufferedreader = Files.newReader(this.usercacheFile, Charsets.UTF_8);
-                List<PlayerProfileCache.ProfileEntry> list = (List) this.gson.fromJson((Reader) bufferedreader, TYPE);
-                this.usernameToProfileEntryMap.clear();
-                this.uuidToProfileEntryMap.clear();
-                this.gameProfiles.clear();
+        try
+        {
+            bufferedreader = Files.newReader(this.usercacheFile, Charsets.UTF_8);
+            List<PlayerProfileCache.ProfileEntry> list = (List)this.gson.fromJson((Reader)bufferedreader, TYPE);
+            this.usernameToProfileEntryMap.clear();
+            this.uuidToProfileEntryMap.clear();
+            this.gameProfiles.clear();
 
-                for (PlayerProfileCache.ProfileEntry playerprofilecache$profileentry : Lists.reverse(list)) {
-                    if (playerprofilecache$profileentry != null) {
-                        this.addEntry(playerprofilecache$profileentry.getGameProfile(), playerprofilecache$profileentry.getExpirationDate());
-                    }
+            for (PlayerProfileCache.ProfileEntry playerprofilecache$profileentry : Lists.reverse(list))
+            {
+                if (playerprofilecache$profileentry != null)
+                {
+                    this.addEntry(playerprofilecache$profileentry.getGameProfile(), playerprofilecache$profileentry.getExpirationDate());
                 }
-            } catch (FileNotFoundException var9) {
-                ;
-            } catch (JsonParseException var10) {
-                ;
-            } finally {
-                IOUtils.closeQuietly((Reader) bufferedreader);
             }
-        } catch (Exception ignored){}
+        }
+        catch (FileNotFoundException var9)
+        {
+            ;
+        }
+        catch (JsonParseException var10)
+        {
+            ;
+        }
+        finally
+        {
+            IOUtils.closeQuietly((Reader)bufferedreader);
+        }
     }
 
-    /**
-     * Save the cached profiles to disk
-     */
     public void save()
     {
         String s = this.gson.toJson((Object)this.getEntriesWithLimit(1000));

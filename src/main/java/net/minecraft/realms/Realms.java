@@ -5,12 +5,12 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.util.UUIDTypeAdapter;
 import java.net.Proxy;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.util.Session;
 import net.minecraft.world.WorldSettings;
 import slice.gui.main.MainMenu;
 
+@SuppressWarnings("all")
 public class Realms
 {
     public static boolean isTouchScreen()
@@ -108,7 +108,7 @@ public class Realms
 
     public static boolean getRealmsNotificationsEnabled()
     {
-        return Minecraft.getMinecraft().gameSettings.getOptionOrdinalValue(GameSettings.Options.enumFloat);
+        return Minecraft.getMinecraft().gameSettings.getOptionOrdinalValue(GameSettings.Options.REALMS_NOTIFICATIONS);
     }
 
     public static boolean inTitleScreen()

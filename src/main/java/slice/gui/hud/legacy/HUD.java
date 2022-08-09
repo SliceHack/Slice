@@ -41,7 +41,7 @@ public class HUD {
     public static void draw() {
 
         /* f3 */
-        if (Minecraft.getMinecraft().gameSettings.showDebugProfilerChart || !Slice.INSTANCE.getModuleManager().getModule(hudClass).isEnabled())
+        if (Minecraft.getMinecraft().gameSettings.showDebugInfo || !Slice.INSTANCE.getModuleManager().getModule(hudClass).isEnabled())
             return;
 
         mode = Slice.INSTANCE.getModuleManager().getModule(hudClass).getMode();

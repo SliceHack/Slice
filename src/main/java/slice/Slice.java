@@ -238,7 +238,7 @@ public enum Slice {
 
     @EventInfo
     public void onGuiRender(EventGuiRender e) {
-        if(Minecraft.getMinecraft().gameSettings.showDebugProfilerChart) return;
+        if(Minecraft.getMinecraft().gameSettings.showDebugInfo) return;
         html.forEach((html) -> {
             if(html.isInit()) html.draw(e);
             else html.init();

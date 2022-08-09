@@ -289,7 +289,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
    }
 
    protected boolean func_174985_d() {
-      return !Config.isFastRender() && !Config.isShaders() && !Config.isAntialiasing()?this.field_175015_z != null && this.field_174991_A != null && this.field_72777_q.field_71439_g != null && this.field_72777_q.field_71439_g.func_175149_v() && this.field_72777_q.field_71474_y.field_152396_an.func_151470_d():false;
+      return !Config.isFastRender() && !Config.isShaders() && !Config.isAntialiasing()?this.field_175015_z != null && this.field_174991_A != null && this.field_72777_q.field_71439_g != null && this.field_72777_q.field_71439_g.func_175149_v() && this.field_72777_q.field_71474_y.field_178883_an.func_151470_d():false;
    }
 
    private void func_174964_o() {
@@ -622,7 +622,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                Entity entity3 = (Entity)list.get(k);
                boolean flag2 = this.field_72777_q.func_175606_aa() instanceof EntityLivingBase && ((EntityLivingBase)this.field_72777_q.func_175606_aa()).func_70608_bn();
                boolean flag3 = entity3.func_145770_h(d0, d1, d2) && (entity3.field_70158_ak || p_180446_2_.func_78546_a(entity3.func_174813_aQ()) || entity3.field_70153_n == this.field_72777_q.field_71439_g) && entity3 instanceof EntityPlayer;
-               if((entity3 != this.field_72777_q.func_175606_aa() || this.field_72777_q.field_71474_y.field_74330_P != 0 || flag2) && flag3) {
+               if((entity3 != this.field_72777_q.func_175606_aa() || this.field_72777_q.field_71474_y.field_74320_O != 0 || flag2) && flag3) {
                   this.field_175010_j.func_147937_a(entity3, p_180446_3_);
                }
             }
@@ -676,7 +676,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                         }
 
                         boolean flag5 = this.field_72777_q.func_175606_aa() instanceof EntityLivingBase?((EntityLivingBase)this.field_72777_q.func_175606_aa()).func_70608_bn():false;
-                        if((entity2 != this.field_72777_q.func_175606_aa() || flag8 || this.field_72777_q.field_71474_y.field_74330_P != 0 || flag5) && (entity2.field_70163_u < 0.0D || entity2.field_70163_u >= 256.0D || this.field_72769_h.func_175667_e(new BlockPos(entity2)))) {
+                        if((entity2 != this.field_72777_q.func_175606_aa() || flag8 || this.field_72777_q.field_71474_y.field_74320_O != 0 || flag5) && (entity2.field_70163_u < 0.0D || entity2.field_70163_u >= 256.0D || this.field_72769_h.func_175667_e(new BlockPos(entity2)))) {
                            ++this.field_72749_I;
                            this.renderedEntity = entity2;
                            if(flag6) {
@@ -1141,7 +1141,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
    protected Vector3f func_174962_a(Entity p_174962_1_, double p_174962_2_) {
       float f = (float)((double)p_174962_1_.field_70127_C + (double)(p_174962_1_.field_70125_A - p_174962_1_.field_70127_C) * p_174962_2_);
       float f1 = (float)((double)p_174962_1_.field_70126_B + (double)(p_174962_1_.field_70177_z - p_174962_1_.field_70126_B) * p_174962_2_);
-      if(Minecraft.func_71410_x().field_71474_y.field_74330_P == 2) {
+      if(Minecraft.func_71410_x().field_71474_y.field_74320_O == 2) {
          f += 180.0F;
       }
 
@@ -2286,7 +2286,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
 
    private EntityFX func_174974_b(int p_174974_1_, boolean p_174974_2_, double p_174974_3_, double p_174974_5_, double p_174974_7_, double p_174974_9_, double p_174974_11_, double p_174974_13_, int... p_174974_15_) {
       if(this.field_72777_q != null && this.field_72777_q.func_175606_aa() != null && this.field_72777_q.field_71452_i != null) {
-         int i = this.field_72777_q.field_71474_y.field_74363_ab;
+         int i = this.field_72777_q.field_71474_y.field_74362_aa;
          if(i == 1 && this.field_72769_h.field_73012_v.nextInt(3) == 0) {
             i = 2;
          }

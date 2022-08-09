@@ -102,7 +102,7 @@ public class ItemRenderer
 
     /**
      * Rotate the render around X and Y
-     *  
+     *
      * @param angleY The angle for the rotation arround Y
      */
     private void rotateArroundXAndY(float angle, float angleY)
@@ -144,7 +144,7 @@ public class ItemRenderer
 
     /**
      * Return the angle to render the Map
-     *  
+     *
      * @param pitch The player's pitch
      */
     private float getMapAngleFromPitch(float pitch)
@@ -237,7 +237,7 @@ public class ItemRenderer
 
     /**
      * Render the player's arm
-     *  
+     *
      * @param equipProgress The progress of equiping the item
      * @param swingProgress The swing movement progression
      */
@@ -270,7 +270,7 @@ public class ItemRenderer
 
     /**
      * Rotate and translate render to show item consumption
-     *  
+     *
      * @param swingProgress The swing movement progress
      */
     private void doItemUsedTransformations(float swingProgress)
@@ -283,7 +283,7 @@ public class ItemRenderer
 
     /**
      * Perform the drinking animation movement
-     *  
+     *
      * @param partialTicks Partials ticks
      */
     private void performDrinking(AbstractClientPlayer clientPlayer, float partialTicks)
@@ -373,7 +373,7 @@ public class ItemRenderer
 
     /**
      * Translate and rotate the render to look like holding a bow
-     *  
+     *
      * @param partialTicks Partial ticks
      */
     private void doBowTransformations(float partialTicks, AbstractClientPlayer clientPlayer)
@@ -443,7 +443,7 @@ public class ItemRenderer
                     EnumAction enumaction = this.itemToRender.getItemUseAction();
 
                     if(Aura.fakeBlock) {
-                    	enumaction = EnumAction.BLOCK;
+                        enumaction = EnumAction.BLOCK;
                     }
 
                     switch (enumaction)
@@ -567,7 +567,7 @@ public class ItemRenderer
 
     /**
      * Render the block in the player's hand
-     *  
+     *
      * @param partialTicks Partial ticks
      * @param atlas The TextureAtlasSprite to render
      */
@@ -601,7 +601,7 @@ public class ItemRenderer
     /**
      * Renders a texture that warps around based on the direction the player is looking. Texture needs to be bound
      * before being called. Used for the water overlay. Args: parialTickTime
-     *  
+     *
      * @param partialTicks Partial ticks
      */
     private void renderWaterOverlayTexture(float partialTicks)
@@ -638,7 +638,7 @@ public class ItemRenderer
 
     /**
      * Renders the fire on the screen for first person mode. Arg: partialTickTime
-     *  
+     *
      * @param partialTicks Partial ticks
      */
     private void renderFireInFirstPerson(float partialTicks)

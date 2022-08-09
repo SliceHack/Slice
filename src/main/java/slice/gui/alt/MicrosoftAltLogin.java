@@ -49,13 +49,13 @@ public class MicrosoftAltLogin extends GuiScreen {
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Thin",  35);
 
-        font.drawCenteredString("Microsoft Alt Login", (sr.getScaledWidth() / 2f)+3, 25, -1);
+        Gui.drawCenteredString(font, "Microsoft Alt Login", (sr.getScaledWidth() / 2f)+3, 25, -1);
 
         username.drawTextBox();
         password.drawTextBox();
 
         if(loginText != null) {
-            font.drawCenteredString(loginText, (sr.getScaledWidth() / 2f)+3, height / 2f + 25, -1);
+            Gui.drawCenteredString(font, loginText, (sr.getScaledWidth() / 2f)+3, height / 2f + 25, -1);
         }
 
         font.drawString("Username:", ((sr.getScaledWidth() / 2f)-100)-font.getWidth("Username: "), height / 2f - 50, -1);

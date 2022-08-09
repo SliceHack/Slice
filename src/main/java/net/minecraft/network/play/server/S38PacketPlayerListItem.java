@@ -6,17 +6,13 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import java.io.IOException;
 import java.util.List;
-
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.world.WorldSettings;
-import slice.util.LoggerUtil;
 
-@SuppressWarnings("all")
 public class S38PacketPlayerListItem implements Packet<INetHandlerPlayClient>
 {
     private S38PacketPlayerListItem.Action action;
@@ -46,9 +42,6 @@ public class S38PacketPlayerListItem implements Packet<INetHandlerPlayClient>
         }
     }
 
-    /**
-     * Reads the raw packet data from the data stream.
-     */
     public void readPacketData(PacketBuffer buf) throws IOException
     {
         this.action = (S38PacketPlayerListItem.Action)buf.readEnumValue(S38PacketPlayerListItem.Action.class);
@@ -121,9 +114,6 @@ public class S38PacketPlayerListItem implements Packet<INetHandlerPlayClient>
         }
     }
 
-    /**
-     * Writes the raw packet data to the data stream.
-     */
     public void writePacketData(PacketBuffer buf) throws IOException
     {
         buf.writeEnumValue(this.action);
@@ -200,9 +190,6 @@ public class S38PacketPlayerListItem implements Packet<INetHandlerPlayClient>
         }
     }
 
-    /**
-     * Passes this Packet on to the NetHandler for processing.
-     */
     public void processPacket(INetHandlerPlayClient handler)
     {
         handler.handlePlayerListItem(this);

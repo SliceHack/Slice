@@ -3,6 +3,7 @@ package slice.gui.main;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.ScaledResolution;
 import slice.Slice;
@@ -60,7 +61,7 @@ public class MainButton extends GuiButton {
 
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", (int)fontHeight);
         RenderUtil.drawRoundedRect(xPosition, yPosition, xPosition + this.width, yPosition + this.height, radius, !hovered ? Integer.MIN_VALUE : Color.pink.getRGB());
-        font.drawCenteredString(this.displayString, xPosition + (this.width / 2f),yPosition + (this.height / 2f) - (fontHeight / 2) + 6, -1);
+        Gui.drawCenteredString(font, this.displayString, xPosition + (this.width / 2f),yPosition + (this.height / 2f) - (fontHeight / 2) + 6, -1);
         x = xPosition;
         y = yPosition;
     }

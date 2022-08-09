@@ -18,9 +18,9 @@ public class KeyUtil {
      * */
     public KeyBinding[] moveKeys() {
         return new KeyBinding[] {
+                Minecraft.getMinecraft().gameSettings.keyBindForward, Minecraft.getMinecraft().gameSettings.keyBindBack,
                 Minecraft.getMinecraft().gameSettings.keyBindLeft, Minecraft.getMinecraft().gameSettings.keyBindRight,
-                Minecraft.getMinecraft().gameSettings.keyBindBack, Minecraft.getMinecraft().gameSettings.keyBindJump,
-                Minecraft.getMinecraft().gameSettings.keyBindSneak,
+                Minecraft.getMinecraft().gameSettings.keyBindJump,
         };
     }
 
@@ -28,21 +28,21 @@ public class KeyUtil {
      * sneak key
      * */
     public KeyBinding sneak() {
-        return Minecraft.getMinecraft().gameSettings.keyBindSprint;
+        return Minecraft.getMinecraft().gameSettings.keyBindSneak;
     }
 
     /**
      * forward key
      * */
     public KeyBinding forward() {
-        return Minecraft.getMinecraft().gameSettings.keyBindLeft;
+        return Minecraft.getMinecraft().gameSettings.keyBindForward;
     }
 
     /**
      * backward key
      * */
     public KeyBinding back() {
-        return Minecraft.getMinecraft().gameSettings.keyBindRight;
+        return Minecraft.getMinecraft().gameSettings.keyBindBack;
     }
 
     /**
@@ -56,7 +56,7 @@ public class KeyUtil {
      * right key
      * */
     public KeyBinding right() {
-        return Minecraft.getMinecraft().gameSettings.keyBindJump;
+        return Minecraft.getMinecraft().gameSettings.keyBindRight;
     }
 
     /**

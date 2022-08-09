@@ -297,7 +297,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
       this.func_78470_f();
       this.field_78535_ad = this.field_78539_ae;
       this.field_78491_C = this.field_78490_B;
-      if(this.field_78531_r.field_71474_y.field_74325_U) {
+      if(this.field_78531_r.field_71474_y.field_74326_T) {
          float f = this.field_78531_r.field_71474_y.field_74341_c * 0.6F + 0.2F;
          float f1 = f * f * f * 8.0F;
          this.field_78498_J = this.field_78527_v.func_76333_a(this.field_78496_H, 0.05F * f1);
@@ -467,7 +467,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
          Entity entity = this.field_78531_r.func_175606_aa();
          float f = 70.0F;
          if(p_78481_2_) {
-            f = this.field_78531_r.field_71474_y.field_74333_Y;
+            f = this.field_78531_r.field_71474_y.field_74334_X;
             if(Config.isDynamicFov()) {
                f *= this.field_78506_S + (this.field_78507_R - this.field_78506_S) * p_78481_1_;
             }
@@ -482,8 +482,8 @@ public class EntityRenderer implements IResourceManagerReloadListener {
          if(flag) {
             if(!Config.zoomMode) {
                Config.zoomMode = true;
-               Config.zoomSmoothCamera = this.field_78531_r.field_71474_y.field_74325_U;
-               this.field_78531_r.field_71474_y.field_74325_U = true;
+               Config.zoomSmoothCamera = this.field_78531_r.field_71474_y.field_74326_T;
+               this.field_78531_r.field_71474_y.field_74326_T = true;
                this.field_78531_r.field_71438_f.field_147595_R = true;
             }
 
@@ -492,7 +492,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
             }
          } else if(Config.zoomMode) {
             Config.zoomMode = false;
-            this.field_78531_r.field_71474_y.field_74325_U = Config.zoomSmoothCamera;
+            this.field_78531_r.field_71474_y.field_74326_T = Config.zoomSmoothCamera;
             this.field_78527_v = new MouseFilter();
             this.field_78526_w = new MouseFilter();
             this.field_78531_r.field_71438_f.field_147595_R = true;
@@ -559,7 +559,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
       if(entity instanceof EntityLivingBase && ((EntityLivingBase)entity).func_70608_bn()) {
          f = (float)((double)f + 1.0D);
          GlStateManager.func_179109_b(0.0F, 0.3F, 0.0F);
-         if(!this.field_78531_r.field_71474_y.field_74334_X) {
+         if(!this.field_78531_r.field_71474_y.field_74325_U) {
             BlockPos blockpos = new BlockPos(entity);
             IBlockState iblockstate = this.field_78531_r.field_71441_e.func_180495_p(blockpos);
             Block block = iblockstate.func_177230_c();
@@ -573,14 +573,14 @@ public class EntityRenderer implements IResourceManagerReloadListener {
             GlStateManager.func_179114_b(entity.field_70126_B + (entity.field_70177_z - entity.field_70126_B) * p_78467_1_ + 180.0F, 0.0F, -1.0F, 0.0F);
             GlStateManager.func_179114_b(entity.field_70127_C + (entity.field_70125_A - entity.field_70127_C) * p_78467_1_, -1.0F, 0.0F, 0.0F);
          }
-      } else if(this.field_78531_r.field_71474_y.field_74330_P > 0) {
+      } else if(this.field_78531_r.field_71474_y.field_74320_O > 0) {
          double d3 = (double)(this.field_78491_C + (this.field_78490_B - this.field_78491_C) * p_78467_1_);
-         if(this.field_78531_r.field_71474_y.field_74334_X) {
+         if(this.field_78531_r.field_71474_y.field_74325_U) {
             GlStateManager.func_179109_b(0.0F, 0.0F, (float)(-d3));
          } else {
             float f1 = entity.field_70177_z;
             float f2 = entity.field_70125_A;
-            if(this.field_78531_r.field_71474_y.field_74330_P == 2) {
+            if(this.field_78531_r.field_71474_y.field_74320_O == 2) {
                f2 += 180.0F;
             }
 
@@ -604,7 +604,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
                }
             }
 
-            if(this.field_78531_r.field_71474_y.field_74330_P == 2) {
+            if(this.field_78531_r.field_71474_y.field_74320_O == 2) {
                GlStateManager.func_179114_b(180.0F, 0.0F, 1.0F, 0.0F);
             }
 
@@ -619,7 +619,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
       }
 
       if(Reflector.EntityViewRenderEvent_CameraSetup_Constructor.exists()) {
-         if(!this.field_78531_r.field_71474_y.field_74334_X) {
+         if(!this.field_78531_r.field_71474_y.field_74325_U) {
             float f6 = entity.field_70126_B + (entity.field_70177_z - entity.field_70126_B) * p_78467_1_ + 180.0F;
             float f7 = entity.field_70127_C + (entity.field_70125_A - entity.field_70127_C) * p_78467_1_;
             float f8 = 0.0F;
@@ -638,7 +638,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
             GlStateManager.func_179114_b(f7, 1.0F, 0.0F, 0.0F);
             GlStateManager.func_179114_b(f6, 0.0F, 1.0F, 0.0F);
          }
-      } else if(!this.field_78531_r.field_71474_y.field_74334_X) {
+      } else if(!this.field_78531_r.field_71474_y.field_74325_U) {
          GlStateManager.func_179114_b(entity.field_70127_C + (entity.field_70125_A - entity.field_70127_C) * p_78467_1_, 1.0F, 0.0F, 0.0F);
          if(entity instanceof EntityAnimal) {
             EntityAnimal entityanimal = (EntityAnimal)entity;
@@ -764,7 +764,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
 
             flag = this.field_78531_r.func_175606_aa() instanceof EntityLivingBase && ((EntityLivingBase)this.field_78531_r.func_175606_aa()).func_70608_bn();
             boolean flag1 = !ReflectorForge.renderFirstPersonHand(this.field_78531_r.field_71438_f, p_renderHand_1_, p_renderHand_2_);
-            if(flag1 && this.field_78531_r.field_71474_y.field_74330_P == 0 && !flag && !this.field_78531_r.field_71474_y.field_74320_O && !this.field_78531_r.field_71442_b.func_78747_a()) {
+            if(flag1 && this.field_78531_r.field_71474_y.field_74320_O == 0 && !flag && !this.field_78531_r.field_71474_y.field_74319_N && !this.field_78531_r.field_71442_b.func_78747_a()) {
                this.func_180436_i();
                if(Config.isShaders()) {
                   ShadersRender.renderItemFP(this.field_78516_c, p_renderHand_1_, p_renderHand_5_);
@@ -783,7 +783,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
          }
 
          this.func_175072_h();
-         if(this.field_78531_r.field_71474_y.field_74330_P == 0 && !flag) {
+         if(this.field_78531_r.field_71474_y.field_74320_O == 0 && !flag) {
             this.field_78516_c.func_78447_b(p_renderHand_1_);
             this.func_78482_e(p_renderHand_1_);
          }
@@ -907,7 +907,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
                   f10 = 1.0F;
                }
 
-               float f16 = this.field_78531_r.field_71474_y.field_151452_as;
+               float f16 = this.field_78531_r.field_71474_y.field_74333_Y;
                float f17 = 1.0F - f8;
                float f13 = 1.0F - f9;
                float f14 = 1.0F - f10;
@@ -994,7 +994,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
             i = -1;
          }
 
-         if(this.field_78531_r.field_71474_y.field_74325_U) {
+         if(this.field_78531_r.field_71474_y.field_74326_T) {
             this.field_78496_H += f2;
             this.field_78497_I += f3;
             float f4 = p_181560_1_ - this.field_78492_L;
@@ -1040,14 +1040,14 @@ public class EntityRenderer implements IResourceManagerReloadListener {
 
             this.field_78510_Z = System.nanoTime();
             this.field_78531_r.field_71424_I.func_76318_c("gui");
-            if(!this.field_78531_r.field_71474_y.field_74320_O || this.field_78531_r.field_71462_r != null) {
+            if(!this.field_78531_r.field_71474_y.field_74319_N || this.field_78531_r.field_71462_r != null) {
                GlStateManager.func_179092_a(516, 0.1F);
                this.field_78531_r.field_71456_v.func_175180_a(p_181560_1_);
-               if(this.field_78531_r.field_71474_y.ofShowFps && !this.field_78531_r.field_71474_y.field_74329_Q) {
+               if(this.field_78531_r.field_71474_y.ofShowFps && !this.field_78531_r.field_71474_y.field_74330_P) {
                   Config.drawFps();
                }
 
-               if(this.field_78531_r.field_71474_y.field_74329_Q) {
+               if(this.field_78531_r.field_71474_y.field_74330_P) {
                   Lagometer.showLagometer(scaledresolution);
                }
             }
@@ -1102,7 +1102,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
       MemoryMonitor.update();
       Lagometer.updateLagometer();
       if(this.field_78531_r.field_71474_y.ofProfiler) {
-         this.field_78531_r.field_71474_y.field_181657_aC = true;
+         this.field_78531_r.field_71474_y.field_74329_Q = true;
       }
 
    }
@@ -1117,7 +1117,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
          return false;
       } else {
          Entity entity = this.field_78531_r.func_175606_aa();
-         boolean flag = entity instanceof EntityPlayer && !this.field_78531_r.field_71474_y.field_74320_O;
+         boolean flag = entity instanceof EntityPlayer && !this.field_78531_r.field_71474_y.field_74319_N;
          if(flag && !((EntityPlayer)entity).field_71075_bZ.field_75099_e) {
             ItemStack itemstack = ((EntityPlayer)entity).func_71045_bC();
             if(this.field_78531_r.field_71476_x != null && this.field_78531_r.field_71476_x.field_72313_a == MovingObjectPosition.MovingObjectType.BLOCK) {
@@ -1137,7 +1137,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
    }
 
    private void func_175067_i(float p_175067_1_) {
-      if(this.field_78531_r.field_71474_y.field_74329_Q && !this.field_78531_r.field_71474_y.field_74320_O && !this.field_78531_r.field_71439_g.func_175140_cp() && !this.field_78531_r.field_71474_y.field_178879_v) {
+      if(this.field_78531_r.field_71474_y.field_74330_P && !this.field_78531_r.field_71474_y.field_74319_N && !this.field_78531_r.field_71439_g.func_175140_cp() && !this.field_78531_r.field_71474_y.field_178879_v) {
          Entity entity = this.field_78531_r.func_175606_aa();
          GlStateManager.func_179147_l();
          GlStateManager.func_179120_a(770, 771, 1, 0);
@@ -1219,7 +1219,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
          Shaders.setCamera(p_175068_2_);
       }
 
-      ActiveRenderInfo.func_74583_a(this.field_78531_r.field_71439_g, this.field_78531_r.field_71474_y.field_74330_P == 2);
+      ActiveRenderInfo.func_74583_a(this.field_78531_r.field_71439_g, this.field_78531_r.field_71474_y.field_74320_O == 2);
       this.field_78531_r.field_71424_I.func_76318_c("frustum");
       ClippingHelper clippinghelper = ClippingHelperImpl.func_78558_a();
       this.field_78531_r.field_71424_I.func_76318_c("culling");
@@ -1357,7 +1357,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
          EntityPlayer entityplayer1 = (EntityPlayer)entity;
          GlStateManager.func_179118_c();
          this.field_78531_r.field_71424_I.func_76318_c("outline");
-         if((!Reflector.ForgeHooksClient_onDrawBlockHighlight.exists() || !Reflector.callBoolean(Reflector.ForgeHooksClient_onDrawBlockHighlight, new Object[]{renderglobal, entityplayer1, this.field_78531_r.field_71476_x, Integer.valueOf(0), entityplayer1.func_70694_bm(), Float.valueOf(p_175068_2_)})) && !this.field_78531_r.field_71474_y.field_74320_O) {
+         if((!Reflector.ForgeHooksClient_onDrawBlockHighlight.exists() || !Reflector.callBoolean(Reflector.ForgeHooksClient_onDrawBlockHighlight, new Object[]{renderglobal, entityplayer1, this.field_78531_r.field_71476_x, Integer.valueOf(0), entityplayer1.func_70694_bm(), Float.valueOf(p_175068_2_)})) && !this.field_78531_r.field_71474_y.field_74319_N) {
             renderglobal.func_72731_b(entityplayer1, this.field_78531_r.field_71476_x, 0, p_175068_2_);
          }
 
@@ -1526,9 +1526,9 @@ public class EntityRenderer implements IResourceManagerReloadListener {
          double d2 = 0.0D;
          int j = 0;
          int k = (int)(100.0F * f * f);
-         if(this.field_78531_r.field_71474_y.field_74363_ab == 1) {
+         if(this.field_78531_r.field_71474_y.field_74362_aa == 1) {
             k >>= 1;
-         } else if(this.field_78531_r.field_71474_y.field_74363_ab == 2) {
+         } else if(this.field_78531_r.field_71474_y.field_74362_aa == 2) {
             k = 0;
          }
 

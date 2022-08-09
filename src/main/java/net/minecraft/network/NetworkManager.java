@@ -377,7 +377,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
 
     /**
      * Create a new NetworkManager from the server host and connect it to the server
-     *  
+     *
      * @param address The address of the server
      * @param serverPort The server port
      * @param useNativeTransport True if the client use the native transport system

@@ -3,6 +3,7 @@ package slice.gui.alt.manager;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.opengl.GL11;
@@ -20,7 +21,7 @@ public class AltManager extends GuiScreen {
 
         RenderUtil.drawRect(0, 0, (width/8)*2, height, Integer.MIN_VALUE);
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Thin", height / 7);
-        font.drawCenteredString("Alt Manager", (width / 2f), 10, -1);
+        Gui.drawCenteredString(font, "Alt Manager", (width / 2f), 10, -1);
 
         super.drawScreen(mouseX, mouseY, partialTicks);
     }

@@ -304,7 +304,7 @@ public class RenderManager {
          this.field_78732_j = p_180597_3_.field_70127_C + (p_180597_3_.field_70125_A - p_180597_3_.field_70127_C) * p_180597_6_;
       }
 
-      if(p_180597_5_.field_74330_P == 2) {
+      if(p_180597_5_.field_74320_O == 2) {
          this.field_78735_i += 180.0F;
       }
 

@@ -7,6 +7,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.login.INetHandlerLoginServer;
 
+@SuppressWarnings("all")
 public class C00PacketLoginStart implements Packet<INetHandlerLoginServer>
 {
     private GameProfile profile;

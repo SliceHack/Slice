@@ -13,7 +13,6 @@ import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@SuppressWarnings("all")
 public class FallbackResourceManager implements IResourceManager
 {
     private static final Logger logger = LogManager.getLogger();

@@ -2,6 +2,7 @@ package slice.clickgui.pane;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import slice.Slice;
 import slice.clickgui.module.ModuleButton;
@@ -79,7 +80,7 @@ public class DropdownPane {
         RenderUtil.drawRoundedRect(x, y, x + (width+20), y + 20, 10, new Color(255,171,171).getRGB());
 
         GlStateManager.popMatrix();
-        font.drawCenteredString(category.getName(), x+((float)width/2)+9, y + ((height/2f)+1), -1);
+        Gui.drawCenteredString(font, category.getName(), x+((float)width/2)+9, y + ((height/2f)+1), -1);
 
         if(open) moduleButtons.forEach(moduleButton -> moduleButton.drawButton(mouseX, mouseY));
 

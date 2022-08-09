@@ -56,7 +56,7 @@ public class GuiOverlayDebug extends Gui {
       this.func_180798_a();
       this.func_175239_b(p_175237_1_);
       GlStateManager.func_179121_F();
-      if(this.field_175242_a.field_71474_y.field_74332_R) {
+      if(this.field_175242_a.field_71474_y.field_181657_aC) {
          this.func_181554_e();
       }
 
