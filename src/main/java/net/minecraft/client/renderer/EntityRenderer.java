@@ -2723,11 +2723,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
         if (this.mc.currentScreen instanceof MainMenu)
         {
-<<<<<<< HEAD
             this.updateMainMenu((MainMenu) this.mc.currentScreen);
-=======
-            this.updateMainMenu((GuiMainMenu) this.mc.currentScreen);
->>>>>>> parent of c3f4cf0c (Update optifine)
         }
 
         if (this.updatedWorld != world)
