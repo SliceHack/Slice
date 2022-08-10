@@ -133,58 +133,62 @@ public class GuiNewChat extends Gui
 
     public void printChatMessageWithOptionalDeletion(IChatComponent chatComponent, int chatLineId)
     {
-        this.setChatLine(chatComponent, chatLineId, this.mc.ingameGUI.getUpdateCounter(), false);
+        new Thread(() -> setChatLine(chatComponent, chatLineId, this.mc.ingameGUI.getUpdateCounter(), false)).start();
         logger.info("[CHAT] " + chatComponent.getUnformattedText());
     }
 
     private void setChatLine(IChatComponent chatComponent, int chatLineId, int updateCounter, boolean displayOnly)
     {
-        if (chatLineId != 0)
-        {
-            this.deleteChatLine(chatLineId);
-        }
-
-        int i = MathHelper.floor_float((float)this.getChatWidth() / this.getChatScale());
-        List<IChatComponent> list = GuiUtilRenderComponents.splitText(chatComponent, i, this.mc.fontRendererObj, false, false);
-        boolean flag = this.getChatOpen();
-
-        for (IChatComponent ichatcomponent : list)
-        {
-            if (flag && this.scrollPos > 0)
+        new Thread(() -> {
+            if (chatLineId != 0)
             {
-                this.isScrolled = true;
-                this.scroll(1);
+                this.deleteChatLine(chatLineId);
             }
 
-            this.drawnChatLines.add(0, new ChatLine(updateCounter, ichatcomponent, chatLineId));
-        }
+            int i = MathHelper.floor_float((float)this.getChatWidth() / this.getChatScale());
+            List<IChatComponent> list = GuiUtilRenderComponents.splitText(chatComponent, i, this.mc.fontRendererObj, false, false);
+            boolean flag = this.getChatOpen();
 
-        while (this.drawnChatLines.size() > 100)
-        {
-            this.drawnChatLines.remove(this.drawnChatLines.size() - 1);
-        }
-
-        if (!displayOnly)
-        {
-            this.chatLines.add(0, new ChatLine(updateCounter, chatComponent, chatLineId));
-
-            while (this.chatLines.size() > 100)
+            for (IChatComponent ichatcomponent : list)
             {
-                this.chatLines.remove(this.chatLines.size() - 1);
+                if (flag && this.scrollPos > 0)
+                {
+                    this.isScrolled = true;
+                    this.scroll(1);
+                }
+
+                this.drawnChatLines.add(0, new ChatLine(updateCounter, ichatcomponent, chatLineId));
             }
-        }
+
+            while (this.drawnChatLines.size() > 100)
+            {
+                this.drawnChatLines.remove(this.drawnChatLines.size() - 1);
+            }
+
+            if (!displayOnly)
+            {
+                this.chatLines.add(0, new ChatLine(updateCounter, chatComponent, chatLineId));
+
+                while (this.chatLines.size() > 100)
+                {
+                    this.chatLines.remove(this.chatLines.size() - 1);
+                }
+            }
+        }).start();
     }
 
     public void refreshChat()
     {
-        this.drawnChatLines.clear();
-        this.resetScroll();
+        new Thread(() -> {
+            this.drawnChatLines.clear();
+            this.resetScroll();
 
-        for (int i = this.chatLines.size() - 1; i >= 0; --i)
-        {
-            ChatLine chatline = (ChatLine)this.chatLines.get(i);
-            this.setChatLine(chatline.getChatComponent(), chatline.getChatLineID(), chatline.getUpdatedCounter(), true);
-        }
+            for (int i = this.chatLines.size() - 1; i >= 0; --i)
+            {
+                ChatLine chatline = (ChatLine)this.chatLines.get(i);
+                this.setChatLine(chatline.getChatComponent(), chatline.getChatLineID(), chatline.getUpdatedCounter(), true);
+            }
+        }).start();
     }
 
     public List<String> getSentMessages()

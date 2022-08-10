@@ -4,7 +4,6 @@ import lombok.Getter;
 import me.friwi.jcefmaven.impl.progress.ConsoleProgressHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
-import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S02PacketChat;
@@ -93,7 +92,8 @@ public enum Slice {
     private final List<ViewNoGui> html = new ArrayList<>();
 
     /** other things */
-    private int ping, playerCount;
+    private final int ping = 0;
+    private int players = 0;
     private final String date;
 
     Slice() {
@@ -168,8 +168,6 @@ public enum Slice {
 
     @EventInfo
     public void onUpdate(EventUpdate e) {
-        playerCount = Minecraft.getMinecraft().getCurrentServerData().playerList.length();
-
         html.forEach((html) -> html.onResize(Minecraft.getMinecraft(), Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight));
         for(Module module : moduleManager.getModules()) {
 
@@ -181,6 +179,7 @@ public enum Slice {
                 eventManager.register(module);
             }
         }
+        players = Minecraft.getMinecraft().getCurrentServerData().playerList.length();
         
         serverLastYaw = Minecraft.getMinecraft().thePlayer.lastReportedYaw;
         serverLastPitch = Minecraft.getMinecraft().thePlayer.lastReportedPitch;
