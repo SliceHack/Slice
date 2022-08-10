@@ -19,6 +19,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.WorldSettings;
+import slice.util.LoggerUtil;
 
 public class GuiPlayerTabOverlay extends Gui
 {

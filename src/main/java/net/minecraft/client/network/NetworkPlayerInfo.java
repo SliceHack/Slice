@@ -17,7 +17,7 @@ public class NetworkPlayerInfo
 {
     private final GameProfile gameProfile;
     private WorldSettings.GameType gameType;
-    private int responseTime;
+    public int responseTime;
     private boolean playerTexturesLoaded = false;
     private ResourceLocation locationSkin;
     private ResourceLocation locationCape;

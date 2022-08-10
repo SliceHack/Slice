@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -43,8 +44,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraft.world.border.WorldBorder;
 import net.optifine.CustomColors;
+import slice.Slice;
 import slice.event.events.Event2D;
 import slice.gui.hud.legacy.HUD;
+import slice.util.LoggerUtil;
 
 public class GuiIngame extends Gui
 {
@@ -336,6 +339,12 @@ public class GuiIngame extends Gui
         else
         {
             this.overlayPlayerList.updatePlayerList(false);
+        }
+
+        for(NetworkPlayerInfo npi : Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap()) {
+            if(npi.getGameProfile().getName().equalsIgnoreCase(Minecraft.getMinecraft().session.getUsername())) {
+                Slice.INSTANCE.ping = npi.responseTime;
+            }
         }
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

@@ -1,17 +1,13 @@
 package slice;
 
 import lombok.Getter;
-import lombok.Setter;
 import me.friwi.jcefmaven.impl.progress.ConsoleProgressHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
-import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S02PacketChat;
-import net.minecraft.network.play.server.S38PacketPlayerListItem;
 import org.cef.ccbluex.CefRenderManager;
-import org.cef.ccbluex.GuiView;
 import org.cef.ccbluex.Page;
 import org.lwjgl.input.Keyboard;
 import slice.api.API;
@@ -32,9 +28,7 @@ import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
 import slice.module.Module;
 import slice.script.manager.ScriptManager;
-import slice.util.LoggerUtil;
 import slice.util.ResourceUtil;
-import slice.util.Timer;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -95,11 +89,8 @@ public enum Slice {
     private final List<ViewNoGui> html = new ArrayList<>();
 
     /** other things */
-    private final int ping = 0;
-    private int players = 0;
+    public int ping = 0, players = 0;
     private final String date;
-
-    public S38PacketPlayerListItem.AddPlayerData playerData;
 
     Slice() {
         connecting = true;
@@ -186,7 +177,6 @@ public enum Slice {
         }
         players = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap().size();
 
-        LoggerUtil.addMessage(Minecraft.getMinecraft().getCurrentServerData().pingToServer + "");
         serverLastYaw = Minecraft.getMinecraft().thePlayer.lastReportedYaw;
         serverLastPitch = Minecraft.getMinecraft().thePlayer.lastReportedPitch;
         serverLastX = Minecraft.getMinecraft().thePlayer.lastReportedPosX;
