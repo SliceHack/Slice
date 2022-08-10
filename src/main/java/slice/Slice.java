@@ -4,6 +4,7 @@ import lombok.Getter;
 import me.friwi.jcefmaven.impl.progress.ConsoleProgressHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
+import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S02PacketChat;
@@ -179,8 +180,8 @@ public enum Slice {
                 eventManager.register(module);
             }
         }
-        players = Minecraft.getMinecraft().getCurrentServerData().playerList.length();
-        
+        players = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap().size();
+
         serverLastYaw = Minecraft.getMinecraft().thePlayer.lastReportedYaw;
         serverLastPitch = Minecraft.getMinecraft().thePlayer.lastReportedPitch;
         serverLastX = Minecraft.getMinecraft().thePlayer.lastReportedPosX;
