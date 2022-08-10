@@ -1,6 +1,7 @@
 package slice;
 
 import lombok.Getter;
+import lombok.Setter;
 import me.friwi.jcefmaven.impl.progress.ConsoleProgressHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
@@ -8,6 +9,7 @@ import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S02PacketChat;
+import net.minecraft.network.play.server.S38PacketPlayerListItem;
 import org.cef.ccbluex.CefRenderManager;
 import org.cef.ccbluex.GuiView;
 import org.cef.ccbluex.Page;
@@ -97,6 +99,8 @@ public enum Slice {
     private int players = 0;
     private final String date;
 
+    public S38PacketPlayerListItem.AddPlayerData playerData;
+
     Slice() {
         connecting = true;
         eventManager = new EventManager();
@@ -182,6 +186,7 @@ public enum Slice {
         }
         players = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap().size();
 
+        LoggerUtil.addMessage(Minecraft.getMinecraft().getCurrentServerData().pingToServer + "");
         serverLastYaw = Minecraft.getMinecraft().thePlayer.lastReportedYaw;
         serverLastPitch = Minecraft.getMinecraft().thePlayer.lastReportedPitch;
         serverLastX = Minecraft.getMinecraft().thePlayer.lastReportedPosX;
