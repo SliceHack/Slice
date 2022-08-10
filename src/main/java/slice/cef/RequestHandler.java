@@ -10,7 +10,7 @@ import slice.Slice;
 public class RequestHandler {
     public static RequestHandler INSTANCE;
 
-    public final CefBrowser browser;
+    public CefBrowser browser;
 
     public RequestHandler(CefBrowser browser) {
         INSTANCE = this;
@@ -66,6 +66,8 @@ public class RequestHandler {
         INSTANCE.sendJavascript("document.querySelector(\"iframe[src='SessionHUD/index.html']\").style.visibility = \"visible\";");
     }
 
-
+    public void hideAllHUD() {
+        INSTANCE.sendJavascript("document.body.style.visibility = \"hidden\";");
+    }
 
 }

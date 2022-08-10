@@ -64,6 +64,10 @@ public class ViewNoGui {
     }
 
     public void draw(EventGuiRender e2d) {
+        if(Minecraft.getMinecraft() == null) return;
+        if(Minecraft.getMinecraft().theWorld == null) return;
+        if(Minecraft.getMinecraft().thePlayer == null) return;
+
         GlStateManager.disableDepth();
         GlStateManager.enableTexture2D();
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);

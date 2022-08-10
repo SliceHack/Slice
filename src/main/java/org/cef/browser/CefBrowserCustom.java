@@ -16,6 +16,7 @@ import org.cef.handler.CefRenderHandler;
 import org.cef.handler.CefScreenInfo;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import slice.Slice;
 import slice.util.LoggerUtil;
 
@@ -38,6 +39,13 @@ public class CefBrowserCustom extends CefBrowser_N implements CefRenderHandler {
     }
 
     public CefBrowserCustom(CefClient client, String url, boolean transparent, CefRequestContext context, ICefRenderer renderer, CefBrowserCustom parent, Point inspectAt) {
+        super(client, url, context, parent, inspectAt);
+        this.isTransparent_ = transparent;
+        this.renderer_ = renderer;
+        Slice.INSTANCE.getCefRenderManager().getBrowsers().add(this);
+    }
+
+    public CefBrowserCustom(CefClient client, String url, boolean transparent, CefRequestContext context, ICefRenderer renderer, CefBrowserCustom parent, Point inspectAt, boolean runRequestHandler) {
         super(client, url, context, parent, inspectAt);
         this.isTransparent_ = transparent;
         this.renderer_ = renderer;
@@ -140,18 +148,10 @@ public class CefBrowserCustom extends CefBrowser_N implements CefRenderHandler {
     }
 
     public void mcefUpdate() {
-        (new UpdateMCEF()).update();
-    }
-
-    public class UpdateMCEF {
-        public void update() {
-            synchronized(paintData) {
-                if(paintData.hasFrame) {
-                    renderer_.onPaint(false, paintData.dirtyRects, paintData.buffer, paintData.width, paintData.height, paintData.fullReRender);
-                    paintData.hasFrame = false;
-                    paintData.fullReRender = false;
-                }
-            }
+        if(paintData.hasFrame) {
+            renderer_.onPaint(false, paintData.dirtyRects, paintData.buffer, paintData.width, paintData.height, paintData.fullReRender);
+            paintData.hasFrame = false;
+            paintData.fullReRender = false;
         }
     }
 
@@ -215,24 +215,18 @@ public class CefBrowserCustom extends CefBrowser_N implements CefRenderHandler {
     // these methods are fucking protected in the superclass, we need to wrap it
 
     public void wasResized_(int width, int height) {
-        new Thread(() -> {
-            this.browser_rect_.setBounds(0, 0, width, height);
-            super.wasResized(width, height);
-        }).start();
+        this.browser_rect_.setBounds(0, 0, width, height);
+        super.wasResized(width, height);
     }
 
     public void mouseMoved(int x, int y, int mods) {
-        new Thread(() -> {
-            MouseEvent ev = new MouseEvent(dc_, MouseEvent.MOUSE_MOVED, 0, mods, x, y, 0, false);
-            sendMouseEvent(ev);
-        }).start();
+        MouseEvent ev = new MouseEvent(dc_, MouseEvent.MOUSE_MOVED, 0, mods, x, y, 0, false);
+        sendMouseEvent(ev);
     }
 
     public void mouseInteracted(int x, int y, int mods, int btn, boolean pressed, int ccnt) {
-        new Thread(() -> {
-            MouseEvent ev = new MouseEvent(dc_, pressed ? MouseEvent.MOUSE_PRESSED : MouseEvent.MOUSE_RELEASED, 0, mods, x, y, ccnt, false, remapMouseCode(btn));
-            sendMouseEvent(ev);
-        }).start();
+        MouseEvent ev = new MouseEvent(dc_, pressed ? MouseEvent.MOUSE_PRESSED : MouseEvent.MOUSE_RELEASED, 0, mods, x, y, ccnt, false, remapMouseCode(btn));
+        sendMouseEvent(ev);
     }
 
     private static int remapMouseCode(int kc) {
@@ -245,18 +239,14 @@ public class CefBrowserCustom extends CefBrowser_N implements CefRenderHandler {
     }
 
     public void mouseScrolled(int x, int y, int mods, int amount, int rot) {
-        new Thread(() -> {
-            MouseWheelEvent ev = new MouseWheelEvent(dc_, MouseEvent.MOUSE_WHEEL, 0, mods, x, y, 0, false, MouseWheelEvent.WHEEL_UNIT_SCROLL, amount, rot);
-            sendMouseWheelEvent(ev);
-        }).start();
+        MouseWheelEvent ev = new MouseWheelEvent(dc_, MouseEvent.MOUSE_WHEEL, 0, mods, x, y, 0, false, MouseWheelEvent.WHEEL_UNIT_SCROLL, amount, rot);
+        sendMouseWheelEvent(ev);
     }
 
     public void keyTyped(char c, int mods) {
-        new Thread(() -> {
-            KeyEvent ev = new KeyEvent(dc_, KeyEvent.KEY_TYPED, 0, mods, 0, c);
+        KeyEvent ev = new KeyEvent(dc_, KeyEvent.KEY_TYPED, 0, mods, 0, c);
 
-            sendKeyEvent(ev);
-        }).start();
+        sendKeyEvent(ev);
     }
 
     /**
@@ -288,10 +278,8 @@ public class CefBrowserCustom extends CefBrowser_N implements CefRenderHandler {
     }
 
     public void keyEventByKeyCode(int keyCode, char c, int mods, boolean pressed) {
-        new Thread(() -> {
-            KeyEvent ev = new KeyEvent(dc_, pressed ? KeyEvent.KEY_PRESSED : KeyEvent.KEY_RELEASED, 0, mods, remapKeycode(keyCode, c), c);
-            sendKeyEvent(ev);
-        }).start();
+        KeyEvent ev = new KeyEvent(dc_, pressed ? KeyEvent.KEY_PRESSED : KeyEvent.KEY_RELEASED, 0, mods, remapKeycode(keyCode, c), c);
+        sendKeyEvent(ev);
     }
 
     @Override

@@ -23,11 +23,13 @@ import slice.file.Saver;
 import slice.font.FontManager;
 import slice.gui.alt.manager.AltManager;
 import slice.gui.hud.slice.HUD;
+import slice.gui.main.NewMainMenu;
 import slice.manager.CommandManager;
 import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
 import slice.module.Module;
 import slice.script.manager.ScriptManager;
+import slice.util.LoggerUtil;
 import slice.util.ResourceUtil;
 
 import java.io.File;

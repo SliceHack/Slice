@@ -177,6 +177,7 @@ import slice.event.events.*;
 import slice.gui.alt.manager.AltManager;
 import slice.gui.hud.legacy.HUD;
 import slice.gui.main.MainMenu;
+import slice.gui.main.NewMainMenu;
 import viamcp.ViaMCP;
 import viamcp.gui.GuiProtocolSelector;
 
@@ -481,6 +482,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         this.effectRenderer = new EffectRenderer(this.theWorld, this.renderEngine);
         this.checkGLError("Post startup");
 
+        Slice.INSTANCE.init();
         try
         {
             ViaMCP.getInstance().start();
@@ -523,7 +525,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         }
 
         this.renderGlobal.makeEntityOutlineShader();
-        Slice.INSTANCE.init();
     }
 
     private void registerMetadataSerializers()

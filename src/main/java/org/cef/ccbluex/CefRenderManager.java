@@ -7,6 +7,9 @@ import me.friwi.jcefmaven.CefInitializationException;
 import me.friwi.jcefmaven.IProgressHandler;
 import me.friwi.jcefmaven.UnsupportedPlatformException;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiMultiplayer;
+import net.minecraft.client.gui.GuiOptions;
+import net.minecraft.client.gui.GuiSelectWorld;
 import net.minecraft.client.settings.GameSettings;
 import org.cef.CefApp;
 import org.cef.CefClient;
@@ -18,12 +21,15 @@ import org.cef.browser.scheme.SchemeResourceHandler;
 import org.cef.callback.CefQueryCallback;
 import org.cef.handler.CefMessageRouterHandlerAdapter;
 import ru.vidtu.ias.utils.Request;
+import slice.Slice;
 import slice.cef.RequestHandler;
 import slice.event.data.EventInfo;
 import slice.event.events.Event2D;
 import slice.event.events.EventUpdate;
 import slice.event.events.EventUpdateLWJGL;
 import slice.event.manager.EventManager;
+import slice.gui.main.MainMenu;
+import slice.gui.main.NewMainMenu;
 import slice.util.LoggerUtil;
 
 import java.io.File;
@@ -93,8 +99,27 @@ public class CefRenderManager {
                 @Override
                 public boolean onQuery(CefBrowser browser, CefFrame frame, long queryId, String request, boolean persistent, CefQueryCallback callback) {
                     callback.success("OK");
-                    LoggerUtil.addTerminalMessage("Browser Ready!");
-                    RequestHandler requeststuff = new RequestHandler(browser);
+
+                    switch (request) {
+                        case "READY":
+                            new RequestHandler(browser);
+                            LoggerUtil.addTerminalMessage("Browser Ready!");
+                            break;
+                        case "SinglePlayerScreen":
+                            Minecraft.getMinecraft().displayGuiScreen(new GuiSelectWorld(null));
+                            break;
+                        case "MultiPlayerScreen":
+                            Minecraft.getMinecraft().displayGuiScreen(new GuiMultiplayer(null));
+                            break;
+                        case "OptionsScreen":
+                            Minecraft.getMinecraft().displayGuiScreen(new GuiOptions(null, Minecraft.getMinecraft().gameSettings));
+                            break;
+                        case "Exit":
+                            Minecraft.getMinecraft().shutdownMinecraftApplet();
+                            break;
+
+                    }
+
                     return super.onQuery(browser, frame, queryId, request, persistent, callback);
                 }
             }, true);
@@ -114,26 +139,15 @@ public class CefRenderManager {
         cefApp.dispose();
     }
 
-    @EventInfo
-    public void onUpdate(EventUpdate e) {
-        (new Update()).update();
-    }
-
-    @EventInfo
-    public void on2D(Event2D e) {
-        (new Update()).update();
-    }
+//    @EventInfo
+//    public void on2D(Event2D e) {
+//        cefApp.doMessageLoopWork(0L);
+//        browsers.forEach(CefBrowserCustom::mcefUpdate);
+//    }
 
     @EventInfo
     public void onUpdateDisplay(EventUpdateLWJGL e) {
-        (new Update()).update();
+        cefApp.doMessageLoopWork(0L);
+        browsers.forEach(CefBrowserCustom::mcefUpdate);
     }
-
-    public class Update {
-        public void update() {
-            cefApp.doMessageLoopWork(0L);
-            browsers.forEach(CefBrowserCustom::mcefUpdate);
-        }
-    }
-
 }

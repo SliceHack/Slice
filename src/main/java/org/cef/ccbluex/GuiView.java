@@ -36,7 +36,7 @@ public class GuiView extends GuiScreen {
     public GuiView(Page page) {
         this.page = page;
 
-        if(this instanceof GuiView) init();
+        init();
     }
 
     public void init() {
@@ -79,10 +79,12 @@ public class GuiView extends GuiScreen {
         // key up
         HashMap<Integer, Character> pressedKeyMap123 = new HashMap<>();
         pressedKeyMap123.forEach((key, chair) -> {
-            if (!Keyboard.isKeyDown(key)) {
-                cefBrowser.keyEventByKeyCode(key, chair, keyModifiers(0), false);
-                pressedKeyMap.remove(key);
-            }
+            new Thread(() -> {
+                if (!Keyboard.isKeyDown(key)) {
+                    cefBrowser.keyEventByKeyCode(key, chair, keyModifiers(0), false);
+                    pressedKeyMap.remove(key);
+                }
+            }).start();
         });
 
         GlStateManager.disableDepth();

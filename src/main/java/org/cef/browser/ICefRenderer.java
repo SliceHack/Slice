@@ -7,7 +7,7 @@ import java.nio.ByteBuffer;
  * @author Feather Client Team
  */
 public interface ICefRenderer {
-    public void render(double x1, double y1, double x2, double y2);
+    void render(double x1, double y1, double x2, double y2);
 
     void destroy();
 

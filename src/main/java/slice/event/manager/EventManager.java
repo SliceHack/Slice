@@ -69,7 +69,7 @@ public class EventManager {
 
                 if(method.getParameterTypes().length == 1
                         && method.isAnnotationPresent(EventInfo.class)
-                        && method.getParameterTypes()[0].equals(event.getClass())) {
+                        && (method.getParameterTypes()[0].equals(event.getClass()) || method.getParameterTypes()[0].equals(Event.class))) {
                     new EventSender(event, method, object);
                 }
             }
