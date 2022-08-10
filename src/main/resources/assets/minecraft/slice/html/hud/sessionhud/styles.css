@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+.box {
+    position: absolute;
+    top: 80px;
+    height: 350px;
+    width: 300px;
+    border-radius: 10px;
+    text-align: center;
+    background: rgba(60, 60, 60, 0.3);
+    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.title {
+    position: relative;
+    color: white;
+    font-family: 'Poppins';
+    top: -10px;
+}
+
+hr {
+    position: absolute;
+    top: 15%;
+    left: 10%;
+    width: 80%;
+    height: 1px;
+    border-color: transparent;
+    border-radius: 3px;
+    background-image: -webkit-linear-gradient(318deg, #c31432, #009fff, #ff416c, #8a2387, #ed213a);
+    background-image: -o-linear-gradient(318deg, #b92b27, #c31432, #009fff, #ff416c, #8a2387, #ed213a);
+    background-image: linear-gradient(132deg, #b92b27, #c31432, #009fff, #ff416c);
+    background-size: 400% 400%;
+    -webkit-animation: textcolorchange 15s linear infinite;
+    animation: textcolorchange 15s linear infinite;
+}
+
+@-webkit-keyframes textcolorchange {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    25% {
+        background-position: 50% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    75% {
+        background-position: 75% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes textcolorchange {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    25% {
+        background-position: 50% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    75% {
+        background-position: 75% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+h3 {
+    font-family: 'Poppins';
+    font-size: 15px;
+    color: white;
+}
+
+.text {
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
