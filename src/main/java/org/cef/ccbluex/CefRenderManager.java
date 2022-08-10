@@ -139,11 +139,11 @@ public class CefRenderManager {
         cefApp.dispose();
     }
 
-//    @EventInfo
-//    public void on2D(Event2D e) {
-//        cefApp.doMessageLoopWork(0L);
-//        browsers.forEach(CefBrowserCustom::mcefUpdate);
-//    }
+    @EventInfo
+    public void on2D(Event2D e) {
+        cefApp.doMessageLoopWork(0L);
+        browsers.forEach(CefBrowserCustom::mcefUpdate);
+    }
 
     @EventInfo
     public void onUpdateDisplay(EventUpdateLWJGL e) {
