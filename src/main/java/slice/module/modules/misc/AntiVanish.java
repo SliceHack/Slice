@@ -15,8 +15,6 @@ import slice.notification.Type;
 @ModuleInfo(name = "AntiVanish", description = "Finds vanished players", category = Category.MISC)
 public class AntiVanish extends Module {
 
-    private double lastNotify = -1L;
-
     @EventInfo
     public void onPacket(EventPacket e) {
         if(mc.theWorld == null) return;
@@ -42,10 +40,10 @@ public class AntiVanish extends Module {
     }
 
     private void foundVanish() {
-        if((System.currentTimeMillis()-lastNotify)>5000){
+        if(timer.hasTimeReached(5000L)) {
             NotificationManager.queue(new Notification(Type.WARNING, "A Player is vanished", 4));
+            timer.reset();
         }
-        lastNotify = System.currentTimeMillis();
 
     }
 }
