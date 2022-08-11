@@ -12,6 +12,7 @@ import net.minecraft.util.MathHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import slice.Slice;
+import slice.font.TTFFontRenderer;
 import slice.module.modules.render.Interface;
 
 @SuppressWarnings("all")
@@ -34,6 +35,20 @@ public class GuiNewChat extends Gui
     {
         Interface interfaceModule = (Interface) Slice.INSTANCE.getModuleManager().getModule(Interface.class);
         boolean clearChat = interfaceModule.getClearChat().getValue();
+        boolean fontChat = interfaceModule.getFontChat().getValue();
+
+        TTFFontRenderer font;
+        switch (interfaceModule.getFontChatMode().getValue()) {
+            case "Poppins":
+                font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 19);
+                break;
+            case "Arial":
+                font = Slice.INSTANCE.getFontManager().getArialFont(19);
+                break;
+            default:
+                font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 19);
+                break;
+        }
 
         if (this.mc.gameSettings.chatVisibility != EntityPlayer.EnumChatVisibility.HIDDEN)
         {
@@ -88,7 +103,8 @@ public class GuiNewChat extends Gui
                                 if(!clearChat) drawRect(i2, j2 - 9, i2 + l + 4, j2, l1 / 2 << 24);
                                 String s = chatline.getChatComponent().getFormattedText();
                                 GlStateManager.enableBlend();
-                                this.mc.fontRendererObj.drawStringWithShadow(s, (float)i2, (float)(j2 - 8), 16777215 + (l1 << 24));
+                                if(!fontChat) this.mc.fontRendererObj.drawStringWithShadow(s, (float)i2, (float)(j2 - 8), 16777215 + (l1 << 24));
+                                else font.drawStringWithShadow(s, (float)i2, (float)(j2 - 8), 16777215 + (l1 << 24));
                                 GlStateManager.disableAlpha();
                                 GlStateManager.disableBlend();
                             }
@@ -98,7 +114,7 @@ public class GuiNewChat extends Gui
 
                 if (flag)
                 {
-                    int k2 = this.mc.fontRendererObj.FONT_HEIGHT;
+                    int k2 = !fontChat ? this.mc.fontRendererObj.FONT_HEIGHT : font.getFont().getSize();
                     GlStateManager.translate(-3.0F, 0.0F, 0.0F);
                     int l2 = k * k2 + k;
                     int i3 = j * k2 + j;

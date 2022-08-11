@@ -14,6 +14,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import slice.Slice;
+import slice.font.TTFFontRenderer;
+import slice.module.modules.render.Interface;
 
 public class GuiChat extends GuiScreen
 {
@@ -305,7 +308,10 @@ public class GuiChat extends GuiScreen
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
-        drawRect(2, this.height - 14, this.width - 2, this.height - 2, Integer.MIN_VALUE);
+        Interface interfaceModule = (Interface) Slice.INSTANCE.getModuleManager().getModule(Interface.class);
+        boolean clearChat = interfaceModule.getClearChat().getValue();
+
+        if(!clearChat) drawRect(2, this.height - 14, this.width - 2, this.height - 2, Integer.MIN_VALUE);
         this.inputField.drawTextBox();
         IChatComponent ichatcomponent = this.mc.ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());
 
