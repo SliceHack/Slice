@@ -123,7 +123,6 @@ public enum Slice {
     /**
      * Calls when minecraft is initialized and ready to be used.
      * */
-    @SuppressWarnings("all")
     public void init() {
         notificationManager = new NotificationManager();
 
