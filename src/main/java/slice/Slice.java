@@ -28,6 +28,7 @@ import slice.manager.CommandManager;
 import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
 import slice.module.Module;
+import slice.notification.NotificationManager;
 import slice.script.manager.ScriptManager;
 import slice.util.LoggerUtil;
 import slice.util.ResourceUtil;
@@ -56,6 +57,8 @@ public enum Slice {
     private final SettingsManager settingsManager;
     private final FontManager fontManager;
     private final ScriptManager scriptManager;
+
+    private NotificationManager notificationManager;
 
     /* data */
     private final ClickGui clickGui;
@@ -94,6 +97,7 @@ public enum Slice {
     public int ping = 0, players = 0;
     private final String date;
 
+
     Slice() {
         connecting = true;
         eventManager = new EventManager();
@@ -121,37 +125,36 @@ public enum Slice {
      * */
     @SuppressWarnings("all")
     public void init() {
+        notificationManager = new NotificationManager();
+
+        File sliceDir = new File(Minecraft.getMinecraft().mcDataDir, "Slice"), sliceHTML = new File(sliceDir, "html"), sliceHUD = new File(sliceHTML, "hud");
+        File html = new File(sliceHUD, "index.html"), css = new File(sliceHUD, "styles.css");
+
+
+        extractHTML(sliceHUD, "/slice/html/hud");
+        extractHTML(new File(sliceHUD, "TargetHUD"), "slice/html/hud/targethud");
+        extractHTML(new File(sliceHUD, "SessionHUD"), "/slice/html/hud/sessionhud");
+        extractHTML(new File(sliceHUD, "Notification"), "/slice/html/hud/notification");
+
+        this.html.add(new ViewNoGui(new Page("file:///" + html.getAbsolutePath() + "?name=" + NAME + "&version=" + VERSION + "&discord=" + discordName)));
+    }
+
+    @SuppressWarnings("all")
+    public void extractHTML(File computerPath, String path) {
         File sliceDir = new File(Minecraft.getMinecraft().mcDataDir, "Slice"),
                 sliceHTML = new File(sliceDir, "html"),
                 sliceHUD = new File(sliceHTML, "hud");
 
         if(!sliceHTML.exists()) sliceHTML.mkdirs();
 
-        File html = new File(sliceHUD, "index.html");
-        File css = new File(sliceHUD, "styles.css");
+        File html = new File(computerPath, "index.html"), css = new File(computerPath, "styles.css");
+
         if(!html.exists() || !css.exists()) {
-            ResourceUtil.extractResource("/slice/html/hud/index.html", html.toPath());
-            ResourceUtil.extractResource("/slice/html/hud/styles.css", css.toPath());
-            sliceHUD.mkdirs();
+            ResourceUtil.extractResource(path + "/index.html", html.toPath());
+            ResourceUtil.extractResource(path + "/styles.css", css.toPath());
+
+            if(sliceHUD.getParentFile().exists()) sliceHUD.mkdirs();
         }
-
-        File targetHudHTML = new File(sliceHUD, "TargetHUD\\index.html");
-        File targetHUDcss = new File(sliceHUD, "TargetHUD\\styles.css");
-
-        if(!targetHudHTML.exists() || !targetHUDcss.exists()) {
-            ResourceUtil.extractResource("/slice/html/hud/targethud/index.html", targetHudHTML.toPath());
-            ResourceUtil.extractResource("/slice/html/hud/targethud/styles.css", targetHUDcss.toPath());
-        }
-
-        File sessionHudHTML = new File(sliceHUD, "SessionHUD\\index.html");
-        File sessionHUDcss = new File(sliceHUD, "SessionHUD\\styles.css");
-
-        if(!sessionHudHTML.exists() || !sessionHUDcss.exists()) {
-            ResourceUtil.extractResource("/slice/html/hud/sessionhud/index.html", sessionHudHTML.toPath());
-            ResourceUtil.extractResource("/slice/html/hud/sessionhud/styles.css", sessionHUDcss.toPath());
-        }
-
-        this.html.add(new ViewNoGui(new Page("file:///" + html.getAbsolutePath() + "?name=" + NAME + "&version=" + VERSION + "&discord=" + discordName)));
     }
 
     /**

@@ -5,6 +5,7 @@ import lombok.Setter;
 import net.minecraft.entity.EntityLivingBase;
 import org.cef.browser.CefBrowser;
 import slice.Slice;
+import slice.notification.Notification;
 
 @Getter @Setter
 public class RequestHandler {
@@ -66,8 +67,7 @@ public class RequestHandler {
         INSTANCE.sendJavascript("document.querySelector(\"iframe[src='SessionHUD/index.html']\").style.visibility = \"visible\";");
     }
 
-    public void hideAllHUD() {
-        INSTANCE.sendJavascript("document.body.style.visibility = \"hidden\";");
+    public static void addNotification(Notification notification) {
+        INSTANCE.sendJavascript("addNotification(\"" + notification.getTitle() + "\", \"" + notification.getMessage() + "\", " + notification.getSeconds() + ");");
     }
-
 }

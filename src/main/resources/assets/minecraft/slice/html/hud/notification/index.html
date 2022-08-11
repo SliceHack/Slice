@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="styles.css">
+    <title>Notification</title>
+</head>
+<body>
+    <div class="box">
+        <div class="line"></div>
+        <div class="timerLine"></div>
+        <div class="topText">Information</div>
+        <div class="bottomText">Test Text</div>
+    </div>
+    <script>
+        var count = 0;
+        var finished = false;
+        document.querySelector(".topText").innerHTML = getUrlVars()['name'].replaceAll("%20", " ").replaceAll("%27", "'");
+        document.querySelector(".bottomText").innerHTML = getUrlVars()['message'].replaceAll("%20", " ").replaceAll("%27", "'");
+
+        document.querySelector(".timerLine").style.animation = "timerLine " + getUrlVars()['seconds'] + "s";
+        document.querySelector(".topText").style.color = "#FF0000";
+        document.querySelector(".topText").style.left = "calc(50% - " + document.querySelector(".topText").offsetWidth / 2 + "px)";
+        document.querySelector(".box").style.top = "calc(50% - " + -((document.querySelector(".box").offsetHeight)*3.5) + "px)";
+        setupBottom();
+
+        window.addEventListener("resize", function() {
+            if(!finished) {
+                document.querySelector(".topText").style.left = "calc(50% - " + document.querySelector(".topText").offsetWidth / 2 + "px)";
+                document.querySelector(".box").style.top = "calc(50% - " + -((document.querySelector(".box").offsetHeight) * 3.5) + "px)";
+                setupBottom();
+            }
+        });
+
+        document.querySelector(".timerLine").addEventListener("animationend", function(){
+            document.querySelector(".box").style.animation = "out 2s";
+        });
+
+        document.querySelector(".box").addEventListener("animationend", function(){
+            count++;
+            if(count == 2) {
+                document.querySelector(".timerLine").style.width = "0%";
+            }
+            if(count == 3) {
+                document.querySelector(".box").remove();
+                document.body.remove();
+                finished = true;
+            }
+        } );
+
+        function getUrlVars() {
+            var vars = {};
+            var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+                vars[key] = value;
+            });
+            return vars;
+        }
+
+        function setupBottom() {
+            document.querySelector(".bottomText").style.left = "calc(50% - " + (document.querySelector(".bottomText").offsetWidth/2) + "px)";
+        }
+    </script>
+</body>
+</html>

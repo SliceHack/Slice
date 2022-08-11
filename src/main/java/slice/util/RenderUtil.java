@@ -3,12 +3,14 @@ package slice.util;
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.AxisAlignedBB;
 import org.lwjgl.opengl.GL11;
 
+import java.awt.*;
 import java.util.UUID;
 
 /**
@@ -18,6 +20,9 @@ import java.util.UUID;
  * */
 @UtilityClass
 public class RenderUtil {
+
+    private static final Tessellator tessellator = Tessellator.getInstance();
+    private static final WorldRenderer worldRenderer = tessellator.getWorldRenderer();
 
     /**
      * Render's an Image
@@ -101,4 +106,22 @@ public class RenderUtil {
         float blue = (hex & 0xFF) / 255.0F;
         GL11.glColor4f(red, green, blue, alpha);
     }
+
+    /**
+     * draws a bounding box
+     *
+     * @pamra axisAlignedBB the axis
+     * @pamra color the color
+     * */
+    public void drawBoundingBox(AxisAlignedBB axisAlignedBB, Color color) {
+        worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
+        GL11.glColor4d(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
+        worldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.minZ).endVertex();
+        worldRenderer.pos(axisAlignedBB.maxX, axisAlignedBB.minY, axisAlignedBB.minZ).endVertex();
+        worldRenderer.pos(axisAlignedBB.maxX, axisAlignedBB.minY, axisAlignedBB.maxZ).endVertex();
+        worldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.maxZ).endVertex();
+        worldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.minZ).endVertex();
+        tessellator.draw();
+    }
+
 }
