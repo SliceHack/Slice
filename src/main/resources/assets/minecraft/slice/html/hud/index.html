@@ -36,6 +36,13 @@
         function addNotification(name, message, seconds) {
             let iframe = document.createElement("iframe");
             iframe.src = "Notification/index.html?name=" + name + "&message=" + message + "&seconds=" + seconds;
+            iframe.style.border = "none";
+
+            iframe.addEventListener("load", function() {
+                setTimeout(function() {
+                    iframe.remove();
+                }, (seconds+2) * 1000);
+            });
             document.body.appendChild(iframe);
         }
 
