@@ -71,7 +71,6 @@ public class Module {
             HUD.smoothArrayListHUD.onToggle(this);
             Slice.INSTANCE.getSaver().save();
         } catch (Exception ignored){}
-        Slice.INSTANCE.getNotificationManager().queueNotification(new Notification(Type.INFO, "Module " + name + (enabled ? " enabled" : " disabled"), 2));
     }
 
     public void startOnEnable() {

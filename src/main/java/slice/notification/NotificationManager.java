@@ -13,10 +13,19 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Class for the notification manager
+ *
+ * @author Nick
+ */
 @Getter @Setter
 public class NotificationManager {
 
+
+    /** the current notification  */
     private Notification currentNotification;
+
+    /** the notifications list */
     private List<Notification> notifications = new ArrayList<>();
 
     public NotificationManager() {
@@ -43,7 +52,20 @@ public class NotificationManager {
         }
     }
 
+    /**
+     * Adds a notification to the queue
+     * @param notification The notification to add
+     */
     public void queueNotification(Notification notification) {
         notifications.add(notification);
+    }
+
+    /**
+     * Queues a notification
+     *
+     * @param notification The title of the notification
+     * */
+    public static void queue(Notification notification) {
+        Slice.INSTANCE.getNotificationManager().queueNotification(notification);
     }
 }
