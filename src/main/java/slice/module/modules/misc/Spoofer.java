@@ -6,6 +6,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.client.C17PacketCustomPayload;
 import slice.event.data.EventInfo;
+import slice.event.events.EventClientBrand;
 import slice.event.events.EventPacket;
 import slice.module.Module;
 import slice.module.data.Category;
@@ -19,7 +20,6 @@ import java.nio.Buffer;
 public class Spoofer extends Module {
 
     ModeValue mode = new ModeValue("Mode", "Lunar", "Lunar", "Geyser", "Forge");
-
     @EventInfo
     public void onPacket(EventPacket e) {
         Packet<?> p = e.getPacket();
@@ -43,7 +43,6 @@ public class Spoofer extends Module {
                         break;
 
                 }
-                return;
             }
 
             switch (mode.getValue()) {
@@ -55,18 +54,22 @@ public class Spoofer extends Module {
                     break;
                 }
                 case "Lunar": {
-                    packet.channel = "REGISTER";
-                    packet.data = packetBuffer("Lunar-Client", false);
+                    packet.data = packetBuffer("llunarclient:" + lunarSha(), false);
                     break;
                 }
             }
         }
+
     }
 
     public String lunarSha() {
-        String sha = "";
-        for(int i = 0; i < 9; i++) sha += (int) (Math.random() * 10);
-        return sha;
+        String chars = "abcdefghijklmnopqrstuvwxyz1234567890";
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 7; i++) {
+            int index = (int) (Math.random() * chars.length());
+            sb.append(chars.charAt(index));
+        }
+        return sb.toString();
     }
 
     public PacketBuffer packetBuffer(String data, boolean string) {
