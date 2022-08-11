@@ -1,5 +1,7 @@
 package slice.module.modules.misc;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S14PacketEntity;
 import net.minecraft.network.play.server.S1DPacketEntityEffect;
@@ -19,13 +21,14 @@ public class AntiVanish extends Module {
     public void onPacket(EventPacket e) {
         if(mc.theWorld == null) return;
         if(mc.thePlayer == null) return;
+        if(mc.isSingleplayer()) return;
 
         Packet<?> packet = e.getPacket();
 
         if(packet instanceof S1DPacketEntityEffect) {
             S1DPacketEntityEffect s1d = (S1DPacketEntityEffect) packet;
 
-            if (mc.theWorld.getEntityByID(s1d.getEntityId()) != null) return;
+            if(mc.theWorld.getEntityByID(s1d.getEntityId()) != null) return;
 
             foundVanish();
         }
@@ -46,4 +49,5 @@ public class AntiVanish extends Module {
         }
 
     }
+
 }
