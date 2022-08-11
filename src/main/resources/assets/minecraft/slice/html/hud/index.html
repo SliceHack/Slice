@@ -17,26 +17,6 @@
     </div>
 
     <script>
-
-        // //make a function which gets the paramters from the url
-        // document.querySelector(".text").innerHTML = getUrlVars()["name"] + " | " + getUrlVars()["version"] + " | " + getUrlVars()["discord"].replace(/%20/g, " ");
-
-        // // subract font width from the box width
-        // const fontWidth = document.querySelector(".text").offsetWidth;
-        // const boxWidth = document.querySelector(".box").offsetWidth;
-        // const difference = boxWidth - fontWidth;
-        // document.querySelector(".box").style.width = (fontWidth) + "px";
-
-        // document.querySelector(".text").style.left = ((fontWidth / 13)) + "px";
-
-        // function getUrlVars() {
-        //     var vars = {};
-        //     var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
-        //         vars[key] = value;
-        //     });
-        //     return vars;
-        // }
-
         window.cefQuery({
             request: 'READY',
             persistent: false,
@@ -51,6 +31,12 @@
                 max: max,
                 name: name
             }, "*");
+        }
+
+        function addNotification(name, message, seconds) {
+            let iframe = document.createElement("iframe");
+            iframe.src = "Notification/index.html?name=" + name + "&message=" + message + "&seconds=" + seconds;
+            document.body.appendChild(iframe);
         }
 
     </script>
