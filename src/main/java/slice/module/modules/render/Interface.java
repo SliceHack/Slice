@@ -16,9 +16,9 @@ public class Interface extends Module {
 
     BooleanValue clearChat = new BooleanValue("Transparent Chat", true);
     BooleanValue fontChat = new BooleanValue("Font Chat", true);
+    BooleanValue toggleNotifications = new BooleanValue("Toggle Notifications", false);
     ModeValue fontChatMode = new ModeValue("Font Mode", "Poppins", "Poppins", "Arial");
 
-    BooleanValue toggleNotifications = new BooleanValue("Toggle Notifications", false);
 
     public void onUpdateNoToggle(EventUpdate event) {
         fontChatMode.setHidden(!fontChat.getValue());

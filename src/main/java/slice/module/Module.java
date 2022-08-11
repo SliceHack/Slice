@@ -76,7 +76,7 @@ public class Module {
 
         Interface interfaceModule = (Interface) Slice.INSTANCE.getModuleManager().getModule(Interface.class);
         if(interfaceModule.getToggleNotifications().getValue()) {
-            NotificationManager.queue(new Notification(Type.INFO, enabled ? "Enabled " + name : "Disabled " + name, 1));
+            NotificationManager.queue(new Notification(Type.INFO, enabled ? "Enabled " + name : "Disabled " + name, 2.5));
         }
     }
 
