@@ -11,7 +11,9 @@ import slice.event.events.EventUpdate;
 import slice.gui.hud.legacy.HUD;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
+import slice.module.modules.render.Interface;
 import slice.notification.Notification;
+import slice.notification.NotificationManager;
 import slice.notification.Type;
 import slice.setting.Setting;
 import slice.setting.settings.ModeValue;
@@ -71,6 +73,11 @@ public class Module {
             HUD.smoothArrayListHUD.onToggle(this);
             Slice.INSTANCE.getSaver().save();
         } catch (Exception ignored){}
+
+        Interface interfaceModule = (Interface) Slice.INSTANCE.getModuleManager().getModule(Interface.class);
+        if(interfaceModule.getToggleNotifications().getValue()) {
+            NotificationManager.queue(new Notification(Type.INFO, enabled ? "Enabled " + name : "Disabled " + name, 1));
+        }
     }
 
     public void startOnEnable() {
