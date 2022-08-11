@@ -23,13 +23,12 @@ public class Notification {
         this.title = type.getName();
         this.message = message;
         this.seconds = seconds;
-        Slice.INSTANCE.getEventManager().register(this);
     }
 
-    @EventInfo
-    public void onUpdate(EventUpdate e) {
-        if(timer.hasTimeReached(1000)) {
-            timer.reset();
-        }
+    public Notification(String type, String message, double seconds) {
+        this.title = type;
+        this.message = message;
+        this.seconds = seconds;
     }
+
 }

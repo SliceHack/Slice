@@ -64,6 +64,7 @@ public class ModuleManager {
         register(new Spoofer());
         register(new SumoFences());
         register(new TargetStrafe());
+        register(new AntiVanish());
     }
 
     /**
