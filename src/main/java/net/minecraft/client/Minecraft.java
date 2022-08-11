@@ -1032,11 +1032,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                 AltManager altManager = (AltManager) this.currentScreen;
                 altManager.onTick();
             }
-            if (this.currentScreen instanceof GuiProtocolSelector) {
-                GuiProtocolSelector guiProtocolSelector = (GuiProtocolSelector) this.currentScreen;
-                guiProtocolSelector.onTick();
-            }
-        }
+         }
 
         this.mcProfiler.endStartSection("preRenderErrors");
         long i1 = System.nanoTime() - l;
