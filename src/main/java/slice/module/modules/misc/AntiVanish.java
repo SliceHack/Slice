@@ -35,7 +35,7 @@ public class AntiVanish extends Module {
         if(packet instanceof S14PacketEntity) {
             S14PacketEntity s14 = (S14PacketEntity) e.getPacket();
 
-            if(s14.getEntity(mc.theWorld) != null)  return;
+            if(s14.getEntity(mc.theWorld) != null) return;
 
             foundVanish();
         }
