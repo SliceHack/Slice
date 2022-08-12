@@ -4,6 +4,7 @@ import com.sliceclient.anticheat.check.data.CheckInfo;
 import com.sliceclient.anticheat.user.User;
 import lombok.Getter;
 import lombok.Setter;
+import slice.util.LoggerUtil;
 
 /**
  * The Check class is the base class for all checks.
@@ -31,5 +32,20 @@ public class Check {
         name = info.name();
         type = info.type();
         description = info.description();
+    }
+
+    /**
+     * Flags the check as failed.
+     * */
+    public void flag() {
+        LoggerUtil.addMessage("&c" + user.getPlayer().getName() + " &7has failed check &c" + name + " &7(Type " + type + ")");
+    }
+
+    /**
+     * Prints a debug message to the chat.
+     * @param message The message to print.
+     * */
+    public void debug(String message) {
+        LoggerUtil.addMessage("&7[&cDEBUG&7] &c" + user.getPlayer().getName() + " &7" + message);
     }
 }

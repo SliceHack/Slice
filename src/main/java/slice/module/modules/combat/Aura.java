@@ -68,9 +68,9 @@ public class Aura extends Module {
 
 
     public void onUpdateNoToggle(EventUpdate event) {
-        if(rotateTarget == null) {
-            deltaPitch = mc.thePlayer.rotationYaw;
-            deltaYaw = mc.thePlayer.rotationYawHead;
+        if(!this.isEnabled() || (rotateTarget == null && target == null)) {
+            deltaPitch = mc.thePlayer.rotationPitch;
+            deltaYaw = mc.thePlayer.rotationYaw;
         }
     }
 
