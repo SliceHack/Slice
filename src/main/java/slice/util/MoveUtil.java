@@ -40,6 +40,16 @@ public class MoveUtil {
     }
 
     /**
+     * Resets the player's motion to 0
+     * */
+    public void resetMotion(boolean yPosition) {
+        Minecraft.getMinecraft().thePlayer.motionX = 0;
+        Minecraft.getMinecraft().thePlayer.motionZ = 0;
+        if (yPosition)
+            Minecraft.getMinecraft().thePlayer.posY = 0;
+    }
+
+    /**
      * Sets a player's speed
      *
      * @parma speed - the speed and friction to apply to the player
