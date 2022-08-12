@@ -46,6 +46,14 @@ public enum SliceAC {
                 if(entity instanceof EntityPlayer) {
                     EntityPlayer player = (EntityPlayer) entity;
 
+                    if(player == Minecraft.getMinecraft().thePlayer) {
+                        if(!userManager.hasPlayer(player)) {
+                            userManager.remove(userManager.getUser(player));
+                        }
+                    }
+
+                    if(player == Minecraft.getMinecraft().thePlayer) return;
+
                     if(!userManager.hasPlayer(player)) {
                         userManager.addUser(player);
                     }

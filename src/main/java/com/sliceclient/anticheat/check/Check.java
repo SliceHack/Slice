@@ -18,7 +18,7 @@ public class Check {
     private final CheckInfo info = getClass().getAnnotation(CheckInfo.class);
 
     /** Info */
-    private final String name, type, description;
+    private final String name, type, description
 
     /** User */
     protected User user;
@@ -38,7 +38,7 @@ public class Check {
      * Flags the check as failed.
      * */
     public void flag() {
-        LoggerUtil.addMessage("&c" + user.getPlayer().getName() + " &7has failed check &c" + name + " &7(Type " + type + ")");
+        LoggerUtil.addMessage("&c" + user.getPlayer().getName() + " &7has failed &c" + name + " &7(&cType " + type + "&7)");
     }
 
     /**
