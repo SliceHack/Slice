@@ -34,7 +34,7 @@ import slice.script.manager.ScriptManager;
 import slice.util.LoggerUtil;
 import slice.util.ResourceUtil;
 
-import java.io.File;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -98,7 +98,11 @@ public enum Slice {
     private final List<ViewNoGui> html = new ArrayList<>();
 
     /** other things */
-    public int ping = 0, players = 0;
+    public int ping = 0, players = 0, seconds = 0, minutes = 0, hours = 0;
+    public final long startTime;
+    public long totalTime;
+    public String playTime, totalPlayTime;
+
     private final String date;
 
     Slice() {
@@ -117,9 +121,11 @@ public enum Slice {
         discordRPC.start();
         API.sendAuthRequest(irc);
 
-        eventManager.register(this);
-
         date = (new SimpleDateFormat("dd/MM/yyyy")).format(new Date());
+        totalTime = loadTotalTime();
+        startTime = System.currentTimeMillis();
+
+        eventManager.register(this);
 
         Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
     }
@@ -168,6 +174,7 @@ public enum Slice {
         irc.getSocket().disconnect();
         connecting = false;
         saver.save();
+        saveTotalTime();
         html.forEach(ViewNoGui::destroy);
     }
 
@@ -246,6 +253,7 @@ public enum Slice {
     @EventInfo
     public void onGuiRender(EventGuiRender e) {
         if(Minecraft.getMinecraft().gameSettings.showDebugInfo) return;
+
         html.forEach((html) -> {
             if(html.isInit()) html.draw(e);
             else html.init();
@@ -283,6 +291,34 @@ public enum Slice {
             }
         }
         return message.replaceAll(username,  username + " §c(§b" + discordName + "§c)" + lastColor);
+    }
+
+    public long loadTotalTime() {
+        File file = new File(Minecraft.getMinecraft().mcDataDir, "Slice/totalTime.txt");
+        if(file.exists()) {
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(file));
+                String line = reader.readLine();
+                reader.close();
+                return Long.parseLong(line);
+            } catch (IOException e) {
+                return System.currentTimeMillis() - startTime;
+            }
+        }
+
+        return System.currentTimeMillis() - startTime;
+    }
+
+    public void saveTotalTime() {
+        File file = new File(Minecraft.getMinecraft().mcDataDir, "Slice/totalTime.txt");
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+            writer.write(totalTime + "");
+            writer.close();
+            System.out.println("Saved total time: " + totalTime);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

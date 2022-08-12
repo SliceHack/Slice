@@ -18,7 +18,7 @@ public class Check {
     private final CheckInfo info = getClass().getAnnotation(CheckInfo.class);
 
     /** Info */
-    private final String name, type, description
+    private final String name, type, description;
 
     /** User */
     protected User user;

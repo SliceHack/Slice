@@ -13,6 +13,7 @@ import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
 import slice.setting.settings.ModeValue;
+import slice.util.LoggerUtil;
 
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
