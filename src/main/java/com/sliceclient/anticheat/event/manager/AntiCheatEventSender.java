@@ -2,7 +2,6 @@ package com.sliceclient.anticheat.event.manager;
 
 import com.sliceclient.anticheat.event.AntiCheatEvent;
 import lombok.Getter;
-import slice.util.LoggerUtil;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

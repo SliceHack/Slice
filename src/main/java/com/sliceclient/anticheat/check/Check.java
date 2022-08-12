@@ -1,6 +1,5 @@
 package com.sliceclient.anticheat.check;
 
-import com.sliceclient.anticheat.SliceAC;
 import com.sliceclient.anticheat.check.data.CheckInfo;
 import com.sliceclient.anticheat.user.User;
 import lombok.Getter;
