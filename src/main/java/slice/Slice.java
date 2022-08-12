@@ -1,5 +1,6 @@
 package slice;
 
+import com.sliceclient.anticheat.SliceAC;
 import lombok.Getter;
 import me.friwi.jcefmaven.impl.progress.ConsoleProgressHandler;
 import net.minecraft.client.Minecraft;
@@ -87,6 +88,9 @@ public enum Slice {
     /** KillAura target for target hud */
     public EntityLivingBase target;
 
+    /** anticheat */
+    private SliceAC anticheat;
+
     private HUD hud;
 
     /** html */
@@ -96,7 +100,6 @@ public enum Slice {
     /** other things */
     public int ping = 0, players = 0;
     private final String date;
-
 
     Slice() {
         connecting = true;
@@ -114,6 +117,7 @@ public enum Slice {
         discordRPC.start();
         API.sendAuthRequest(irc);
         eventManager.register(this);
+        anticheat = SliceAC.INSTANCE;
 
         date = (new SimpleDateFormat("dd/MM/yyyy")).format(new Date());
 
