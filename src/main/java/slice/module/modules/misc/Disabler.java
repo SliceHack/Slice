@@ -2,9 +2,11 @@ package slice.module.modules.misc;
 
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C00PacketKeepAlive;
+import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 import slice.event.Event;
 import slice.event.data.EventInfo;
+import slice.event.data.PacketEvent;
 import slice.event.events.EventPacket;
 import slice.event.events.EventUpdate;
 import slice.module.Module;
@@ -56,9 +58,8 @@ public class Disabler extends Module {
         }
     }
 
-    @EventInfo
-    public void onPacket(EventPacket e) {
-        Packet<?> p = e.getPacket();
+    @PacketEvent
+    public void onC00PacketKeepAlive(C00PacketKeepAlive p, EventPacket e) {
         switch (mode.getValue()) {
             case "WarzoneMC":
                 if(mc.isSingleplayer())

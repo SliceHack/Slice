@@ -1,8 +1,12 @@
 package slice.event.manager;
 
 import lombok.Getter;
+import net.minecraft.network.Packet;
 import slice.event.Event;
 import slice.event.data.EventInfo;
+import slice.event.data.PacketEvent;
+import slice.event.events.EventPacket;
+import slice.event.manager.sender.EventPacketSender;
 import slice.event.manager.sender.EventSender;
 
 import java.lang.reflect.Method;
@@ -64,6 +68,12 @@ public class EventManager {
     public void runEvent(Event event) {
         List<Object> registeredObjects = new ArrayList<>(this.registeredObjects);
 
+        if(event instanceof EventPacket) {
+            EventPacket eventPacket = (EventPacket) event;
+            Packet<?> p = eventPacket.getPacket();
+            onPacket(p, eventPacket);
+        }
+
         for (Object object : registeredObjects) {
             for (Method method : getMethods(object.getClass())) {
 
@@ -71,6 +81,26 @@ public class EventManager {
                         && method.isAnnotationPresent(EventInfo.class)
                         && (method.getParameterTypes()[0].equals(event.getClass()) || method.getParameterTypes()[0].equals(Event.class))) {
                     new EventSender(event, method, object);
+                }
+            }
+        }
+    }
+
+    /**
+     * Runs all the packet events.
+     *
+     * @param packet The packet event to run.
+     * */
+    public void onPacket(Packet<?> packet, EventPacket e) {
+        List<Object> registeredObjects = new ArrayList<>(this.registeredObjects);
+
+        for (Object object : registeredObjects) {
+            for (Method method : getMethods(object.getClass())) {
+
+                if(method.getParameterTypes().length >= 1 && method.getParameterTypes().length <= 2
+                        && method.isAnnotationPresent(PacketEvent.class)
+                        && (method.getParameterTypes()[0].equals(packet.getClass()) || method.getParameterTypes()[0].equals(Packet.class))) {
+                    new EventPacketSender(packet, method, object, e);
                 }
             }
         }

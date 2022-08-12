@@ -7,6 +7,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.*;
 import org.lwjgl.input.Keyboard;
 import slice.event.data.EventInfo;
+import slice.event.data.PacketEvent;
 import slice.event.events.EventClientTick;
 import slice.event.events.EventPacket;
 import slice.event.events.EventUpdate;
