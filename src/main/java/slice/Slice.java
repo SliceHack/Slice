@@ -89,7 +89,7 @@ public enum Slice {
     public EntityLivingBase target;
 
     /** anticheat */
-    private SliceAC anticheat;
+    public SliceAC anticheat;
 
     private HUD hud;
 
@@ -116,8 +116,8 @@ public enum Slice {
         discordRPC = new StartDiscordRPC();
         discordRPC.start();
         API.sendAuthRequest(irc);
+
         eventManager.register(this);
-        anticheat = SliceAC.INSTANCE;
 
         date = (new SimpleDateFormat("dd/MM/yyyy")).format(new Date());
 
@@ -129,6 +129,7 @@ public enum Slice {
      * */
     public void init() {
         notificationManager = new NotificationManager();
+        anticheat = SliceAC.INSTANCE;
 
         File sliceDir = new File(Minecraft.getMinecraft().mcDataDir, "Slice"), sliceHTML = new File(sliceDir, "html"), sliceHUD = new File(sliceHTML, "hud");
         File html = new File(sliceHUD, "index.html"), css = new File(sliceHUD, "styles.css");

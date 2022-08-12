@@ -1,5 +1,6 @@
 package com.sliceclient.anticheat.user;
 
+import com.sliceclient.anticheat.manager.CheckManager;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,9 +19,13 @@ public class User {
     /** Violation level */
     private int vl;
 
+    /** CheckManager */
+    private CheckManager checkManager;
+
     public User(EntityPlayer player) {
         this.player = player;
         this.vl = 0;
+        this.checkManager = new CheckManager(this);
     }
 
 }

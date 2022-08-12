@@ -1,5 +1,6 @@
 package slice.discord;
 
+import com.sliceclient.anticheat.SliceAC;
 import net.arikia.dev.drpc.DiscordEventHandlers;
 import net.arikia.dev.drpc.DiscordRPC;
 import net.arikia.dev.drpc.DiscordRichPresence;

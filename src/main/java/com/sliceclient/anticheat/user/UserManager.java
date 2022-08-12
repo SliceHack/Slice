@@ -1,5 +1,6 @@
 package com.sliceclient.anticheat.user;
 
+import com.sliceclient.anticheat.SliceAC;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.ArrayList;
@@ -50,6 +51,7 @@ public class UserManager {
      * @param user the user
      * */
     public void remove(User user) {
+        user.getCheckManager().getChecks().forEach(check -> SliceAC.INSTANCE.getEventManager().unregister(check));
         users.remove(user);
     }
 }

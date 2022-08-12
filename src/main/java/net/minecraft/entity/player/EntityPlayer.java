@@ -6,6 +6,8 @@ import com.mojang.authlib.GameProfile;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+
+import com.sliceclient.anticheat.event.events.PlayerAntiCheatUpdateEvent;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.BlockDirectional;
@@ -194,6 +196,9 @@ public abstract class EntityPlayer extends EntityLivingBase
 
     public void onUpdate()
     {
+        PlayerAntiCheatUpdateEvent event = new PlayerAntiCheatUpdateEvent(this, posX, posY, posZ, lastTickPosX, lastTickPosY, lastTickPosZ, rotationYaw, rotationPitch, onGround, false);
+        event.call();
+
         this.noClip = this.isSpectator();
 
         if (this.isSpectator())
@@ -338,6 +343,9 @@ public abstract class EntityPlayer extends EntityLivingBase
         {
             this.setPosition(d3, this.posY, d4);
         }
+
+        PlayerAntiCheatUpdateEvent e = new PlayerAntiCheatUpdateEvent(this, posX, posY, posZ, lastTickPosX, lastTickPosY, lastTickPosZ, rotationYaw, rotationPitch, onGround, true);
+        e.call();
     }
 
     public int getMaxInPortalTime()
