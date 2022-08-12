@@ -29,13 +29,14 @@ public class AntiCheatEventManager {
      */
     public void runEvent(AntiCheatEvent event) {
         registeredObjects.forEach((object, player) -> {
-            LoggerUtil.addMessage(player.getName() + "");
-            try {
-                for(Method method : object.getClass().getMethods()) {
-                    new AntiCheatEventSender(event, method, object);
+            if(event.getPlayer() == player) {
+                try {
+                    for(Method method : object.getClass().getMethods()) {
+                        new AntiCheatEventSender(event, method, object);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         });
     }
