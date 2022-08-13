@@ -13,12 +13,16 @@ public class RequestHandler {
 
     public CefBrowser browser;
 
+    private boolean TargetHudShown = true;
+    private boolean SessionHudShown = false;
+
     public RequestHandler(CefBrowser browser) {
         INSTANCE = this;
         this.browser = browser;
         this.setupInfo();
         sendJavascript("let iframe;");
         this.setupTargetHUD();
+        RequestHandler.hideTargetHUD();
         this.setupSessionHUD();
     }
 
@@ -40,6 +44,7 @@ public class RequestHandler {
     }
 
     public static void updateTargetHUD(EntityLivingBase target) {
+        if (!INSTANCE.TargetHudShown) return;
         double health = target.getHealth();
         double max = target.getMaxHealth();
         String name = target.getName();
@@ -48,10 +53,14 @@ public class RequestHandler {
     }
 
     public static void hideTargetHUD() {
+        if (!INSTANCE.TargetHudShown) return;
+        INSTANCE.TargetHudShown = false;
         INSTANCE.sendJavascript("document.querySelector(\"iframe[src='TargetHUD/index.html']\").style.visibility = \"hidden\";");
     }
 
     public static void showTargetHUD() {
+        if (INSTANCE.TargetHudShown) return;
+        INSTANCE.TargetHudShown = true;
         INSTANCE.sendJavascript("document.querySelector(\"iframe[src='TargetHUD/index.html']\").style.visibility = \"visible\";");
     }
 
@@ -60,11 +69,20 @@ public class RequestHandler {
     }
 
     public static void hideSessionHUD() {
+        if (!INSTANCE.SessionHudShown) return;
+        INSTANCE.SessionHudShown = false;
         INSTANCE.sendJavascript("document.querySelector(\"iframe[src='SessionHUD/index.html']\").style.visibility = \"hidden\";");
     }
 
     public static void showSessionHUD() {
+        if (INSTANCE.SessionHudShown) return;
+        INSTANCE.SessionHudShown = true;
         INSTANCE.sendJavascript("document.querySelector(\"iframe[src='SessionHUD/index.html']\").style.visibility = \"visible\";");
+    }
+
+    public static void updateSessionHUD() {
+        if (!INSTANCE.SessionHudShown) return;
+        INSTANCE.sendJavascript("updateSessionHUD(\"" + Slice.INSTANCE.getDate() + "\", " + Slice.INSTANCE.getPlayers() + ", " + Slice.INSTANCE.getPing() + ", \"" + Slice.INSTANCE.getTotalPlayTime() + "\", \"" + Slice.INSTANCE.getPlayTime() + "\");");
     }
 
     public static void addNotification(Notification notification) {

@@ -1,6 +1,5 @@
 package slice.module.modules.render;
 
-import javafx.scene.input.DataFormat;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
