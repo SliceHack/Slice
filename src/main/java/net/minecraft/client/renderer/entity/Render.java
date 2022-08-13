@@ -24,6 +24,8 @@ import net.minecraft.world.World;
 import net.optifine.entity.model.IEntityRenderer;
 import net.optifine.shaders.Shaders;
 import org.lwjgl.opengl.GL11;
+import slice.Slice;
+import slice.util.LoggerUtil;
 
 public abstract class Render<T extends Entity> implements IEntityRenderer
 {
@@ -354,6 +356,10 @@ public abstract class Render<T extends Entity> implements IEntityRenderer
             if (str.equals("deadmau5"))
             {
                 i = -10;
+            }
+
+            for(String s : Slice.INSTANCE.getIrc().getList()) {
+                str = Slice.INSTANCE.replaceUsername(s.split(":")[0], s.split(":")[1], str);
             }
 
             int j = fontrenderer.getStringWidth(str) / 2;
