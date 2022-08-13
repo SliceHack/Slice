@@ -2,6 +2,8 @@ package com.sliceclient.anticheat.manager;
 
 import com.sliceclient.anticheat.SliceAC;
 import com.sliceclient.anticheat.check.Check;
+import com.sliceclient.anticheat.check.checks.misc.badpackets.BadPacketsA;
+import com.sliceclient.anticheat.check.checks.movement.fly.FlyA;
 import com.sliceclient.anticheat.check.checks.movement.ground.GroundSpoofA;
 import com.sliceclient.anticheat.check.checks.movement.speed.SpeedA;
 import com.sliceclient.anticheat.user.User;
@@ -27,6 +29,8 @@ public class CheckManager {
     public CheckManager(User user) {
         register(new GroundSpoofA());
         register(new SpeedA());
+        register(new FlyA());
+        register(new BadPacketsA());
 
         checks.forEach(check -> { check.setUser(user); SliceAC.INSTANCE.getEventManager().register(check, user.getPlayer()); });
     }
