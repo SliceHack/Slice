@@ -180,19 +180,18 @@ public class Fly extends Module {
                 if(mc.thePlayer.ticksExisted % 20 == 1) MoveUtil.strafe((float)(0.2783*1.2));
                 break;
             case "Dev":
-                if(mc.thePlayer.ticksExisted % 9 == 0 && stage == 0) stage = 1;
-
-                if(mc.thePlayer.ticksExisted % 10 == 0 && stage == 1) {
+                if(mc.thePlayer.ticksExisted % 2 == 0) {
                     float yaw = mc.thePlayer.rotationYaw;
 
                     double x = mc.thePlayer.posX + Math.cos(Math.toRadians(yaw + 90));
                     double z = mc.thePlayer.posZ + Math.sin(Math.toRadians(yaw + 90));
                     double y = mc.thePlayer.posY;
                     mc.thePlayer.setPosition(x, y, z);
-                    stage = 0;
+                    timer.reset();
                     break;
                 }
-                if(stage == 1) mc.thePlayer.motionY = -0.0001;
+                mc.timer.timerSpeed = 0.1F;
+                MoveUtil.strafe(7);
                 break;
         }
     }
@@ -204,12 +203,12 @@ public class Fly extends Module {
         if(mc.theWorld == null)
             return;
 
-        if(stage == 1 && MoveUtil.isMoving() && mode.getValue().equalsIgnoreCase("Dev")) {
-            if(e.isOutgoing()) {
-                if(p instanceof C03PacketPlayer) return;
-                if(p instanceof S02PacketChat) return;
-
+        if(mode.getValue().equalsIgnoreCase("Dev")) {
+            if(p instanceof C03PacketPlayer.C04PacketPlayerPosition) {
+                C03PacketPlayer.C04PacketPlayerPosition c04 = (C03PacketPlayer.C04PacketPlayerPosition) p;
+                c04.setMoving(false);
                 e.setCancelled(true);
+                mc.thePlayer.sendQueue.addToSendNoEvent(new C03PacketPlayer.C06PacketPlayerPosLook(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch, false));
             }
         }
 
