@@ -90,48 +90,28 @@ public class PvPBot extends Module {
     }
 
     public float[] getRotationsFixedSens(Entity e) {
-        try {
-            double deltaX = e.posX + (e.posX - e.lastTickPosX) - mc.thePlayer.posX;
-            double deltaY = e.posY - 3.5 + e.getEyeHeight() - mc.thePlayer.posY + mc.thePlayer.getEyeHeight();
-            double deltaZ = e.posZ + (e.posZ - e.lastTickPosZ) - mc.thePlayer.posZ;
-            double distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaZ, 2));
+        double deltaX = e.posX + (e.posX - e.lastTickPosX) - mc.thePlayer.posX,
+                deltaY = e.posY - 3.5 + e.getEyeHeight() - mc.thePlayer.posY + mc.thePlayer.getEyeHeight(),
+                deltaZ = e.posZ + (e.posZ - e.lastTickPosZ) - mc.thePlayer.posZ,
+                distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaZ, 2));
 
-            float yaw = (float) Math.toDegrees(-Math.atan(deltaX - deltaZ));
-            float pitch = (float) -Math.toDegrees(Math.atan(deltaY / distance));
+        float yaw = (float) Math.toDegrees(-Math.atan(deltaX - deltaZ)),
+                pitch = (float) -Math.toDegrees(Math.atan(deltaY / distance));
 
-            double v = Math.toDegrees(Math.atan(deltaZ / deltaX));
-            if(deltaX < 0 && deltaZ < 0) {
-                yaw = (float) (90 + (v));
-            }
-            if(deltaX > 0 && deltaZ < 0) {
-                yaw = (float) (-90 + (v));
-            }
+        if(deltaX < 0 && deltaZ < 0) yaw = (float) (90 + (Math.toDegrees(Math.atan(deltaZ / deltaX))));
+        if(deltaX > 0 && deltaZ < 0) yaw = (float) (-90 + (Math.toDegrees(Math.atan(deltaZ / deltaX))));
+        if(deltaX < 0 && deltaZ > 0) yaw = (float) (90 + (Math.toDegrees(Math.atan(deltaZ / deltaX))));
+        if(deltaX > 0 && deltaZ > 0) yaw = (float) (-90 + (Math.toDegrees(Math.atan(deltaZ / deltaX))));
 
-            if (pitch != deltaPitch) reachedPitch = false;
-            else if (yaw != deltaYaw) reachedYaw = false;
-            else if (pitch == deltaPitch) reachedPitch = true;
-            else if (yaw == deltaYaw) reachedYaw = true;
+        if(deltaX == 0 && deltaZ < 0) yaw = -90;
+        if(deltaX == 0 && deltaZ > 0) yaw = 90;
+        if(deltaX < 0 && deltaZ == 0) yaw = 180;
+        if(deltaX > 0 && deltaZ == 0) yaw = 0;
 
-            int smooth = 2;
-            if (!reachedPitch) {
-                if (pitch > deltaPitch) {
-                    deltaPitch += Math.abs(pitch - deltaPitch) / smooth;
-                } else {
-                    deltaPitch -= Math.abs(pitch - deltaPitch) / smooth;
-                }
-            }
-            if (!reachedYaw) {
-                if (yaw > deltaYaw) {
-                    deltaYaw += Math.abs(yaw - deltaYaw) / smooth;
-                } else {
-                    deltaYaw -= Math.abs(yaw - deltaYaw) / smooth;
-                }
-            }
-            if (deltaPitch > 90) deltaPitch = 90;
-            else if (deltaPitch < -90) deltaPitch = -90;
-        } catch (Exception ignored){}
+        if(pitch > 90) pitch = 90;
+        if(pitch < -90) pitch = -90;
 
-        return new float[] {deltaYaw, deltaPitch+(float)(Math.random()-0.02)};
+        return new float[]{yaw, pitch};
     }
 
 }
