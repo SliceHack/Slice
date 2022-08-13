@@ -28,4 +28,17 @@ public class User {
         this.checkManager = new CheckManager(this);
     }
 
+    /**
+     * Gets the player's flight status.
+     */
+    public boolean getAllowFlight() {
+        return player.capabilities.allowFlying;
+    }
+
+    /**
+     * Checks if the player is flying.
+     */
+    public boolean isFlying() {
+        return player.capabilities.isFlying;
+    }
 }

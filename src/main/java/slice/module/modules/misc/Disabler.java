@@ -1,9 +1,9 @@
 package slice.module.modules.misc;
 
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.client.C00PacketKeepAlive;
-import net.minecraft.network.play.client.C03PacketPlayer;
-import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
+import net.minecraft.network.play.client.*;
 import slice.event.Event;
 import slice.event.data.EventInfo;
 import slice.event.data.PacketEvent;
@@ -61,6 +61,7 @@ public class Disabler extends Module {
 
     @EventInfo
     public void onEvent(EventPacket e) {
+        if(e.isOutgoing()) {
+        }
     }
-
 }
