@@ -24,6 +24,7 @@ public class RequestHandler {
         this.setupTargetHUD();
         RequestHandler.hideTargetHUD();
         this.setupSessionHUD();
+        RequestHandler.hideSessionHUD();
     }
 
     public void sendJavascript(String js) {
