@@ -32,6 +32,10 @@ public class AntiCheatEventSender {
             if(!getMethodParameterType(method, 0).equals(event.getClass())) return;
 
             method.invoke(target, event);
+
+            try {
+                finalize(); // To avoid memory leaks.
+            } catch (Throwable ignored){}
         } catch (Exception e) {
             e.printStackTrace();
         }

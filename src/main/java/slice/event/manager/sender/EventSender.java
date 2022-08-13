@@ -49,6 +49,10 @@ public class EventSender {
             if(!getMethodParameterType(method, 0).equals(event.getClass())) return;
 
             method.invoke(object, event);
+
+            try {
+                finalize(); // To avoid memory leaks.
+            } catch (Throwable ignored){}
         } catch (Exception ignored) {}
     }
 
