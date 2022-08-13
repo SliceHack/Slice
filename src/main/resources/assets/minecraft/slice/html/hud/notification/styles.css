@@ -40,8 +40,8 @@
     background-image: -o-linear-gradient(318deg, #b92b27, #c31432, #009fff, #ff416c, #8a2387, #ed213a);
     background-image: linear-gradient(132deg, #b92b27, #c31432, #009fff, #ff416c);
     background-size: 400% 400%;
-    -webkit-animation: textcolorchange 15s linear infinite;
-    animation: textcolorchange 15s linear infinite;
+    -webkit-animation: textcolorchange 5s linear infinite;
+    animation: textcolorchange 5s linear infinite;
 }
 
 .box .topText {

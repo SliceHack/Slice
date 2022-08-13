@@ -20,5 +20,24 @@
             <h3 class="players">Players:</h3>
         </div>
     </div>
+
+    <script>
+        window.onmessage = function(e) {
+            let data = e.data;
+            let total = document.querySelector(".total");
+            total.innerHTML = "Total Playtime: " + data.totalPlayTime;
+            let playtime = document.querySelector(".playtime");
+            playtime.innerHTML = "Playtime: " + data.playTime;
+            let time = document.querySelector(".time");
+            time.innerHTML = "Time: " + data.time;
+            let date = document.querySelector(".date");
+            date.innerHTML = "Date: " + data.date;
+            let ping = document.querySelector(".ping");
+            ping.innerHTML = "Ping: " + data.ping;
+            let players = document.querySelector(".players");
+            players.innerHTML = "Players: " + data.players;
+        };
+    </script>
+
 </body>
 </html>

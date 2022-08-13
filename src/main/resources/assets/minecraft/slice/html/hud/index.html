@@ -20,7 +20,7 @@
         window.cefQuery({
             request: 'READY',
             persistent: false,
-            onSuccess: function (response) {},
+            onSuccess: function (response) { },
             onFailure: function (error_code, error_message) { }
         });
 
@@ -38,12 +38,29 @@
             iframe.src = "Notification/index.html?name=" + name + "&message=" + message + "&seconds=" + seconds;
             iframe.style.border = "none";
 
-            iframe.addEventListener("load", function() {
-                setTimeout(function() {
+            iframe.addEventListener("load", function () {
+                setTimeout(function () {
                     iframe.remove();
-                }, (seconds+2) * 1000);
+                }, (seconds + 2) * 1000);
             });
             document.body.appendChild(iframe);
+        }
+
+        function getFormattedTime() {
+            var d = new Date();
+            return d.toLocaleTimeString();
+        }
+
+        function updateSessionHUD(date, players, ping, totalPlayTime, playTime) {
+            let iframe = document.querySelector("iframe[src='SessionHUD/index.html']");
+            iframe.contentWindow.postMessage({
+                date: date,
+                players: players,
+                ping: ping,
+                totalPlayTime: totalPlayTime,
+                playTime: playTime,
+                time: getFormattedTime()
+            }, "*");
         }
 
     </script>

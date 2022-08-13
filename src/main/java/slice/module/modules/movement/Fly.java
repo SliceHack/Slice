@@ -5,6 +5,7 @@ import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.*;
+import net.minecraft.network.play.server.S02PacketChat;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import org.lwjgl.input.Keyboard;
 import slice.event.data.EventInfo;
@@ -20,6 +21,7 @@ import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
 import slice.util.LoggerUtil;
 import slice.util.MoveUtil;
+import slice.util.RotationUtil;
 
 @ModuleInfo(name = "Fly", key = Keyboard.KEY_G, description = "Allows you to fly like a bird", category = Category.MOVEMENT)
 @SuppressWarnings("all")
@@ -177,6 +179,21 @@ public class Fly extends Module {
                 if(mc.thePlayer.ticksExisted % 20 == 9) MoveUtil.strafe(MoveUtil.getSpeed() * 1.125f);
                 if(mc.thePlayer.ticksExisted % 20 == 1) MoveUtil.strafe((float)(0.2783*1.2));
                 break;
+            case "Dev":
+                if(mc.thePlayer.ticksExisted % 9 == 0 && stage == 0) stage = 1;
+
+                if(mc.thePlayer.ticksExisted % 10 == 0 && stage == 1) {
+                    float yaw = mc.thePlayer.rotationYaw;
+
+                    double x = mc.thePlayer.posX + Math.cos(Math.toRadians(yaw + 90));
+                    double z = mc.thePlayer.posZ + Math.sin(Math.toRadians(yaw + 90));
+                    double y = mc.thePlayer.posY;
+                    mc.thePlayer.setPosition(x, y, z);
+                    stage = 0;
+                    break;
+                }
+                if(stage == 1) mc.thePlayer.motionY = -0.0001;
+                break;
         }
     }
 
@@ -186,6 +203,15 @@ public class Fly extends Module {
 
         if(mc.theWorld == null)
             return;
+
+        if(stage == 1 && MoveUtil.isMoving() && mode.getValue().equalsIgnoreCase("Dev")) {
+            if(e.isOutgoing()) {
+                if(p instanceof C03PacketPlayer) return;
+                if(p instanceof S02PacketChat) return;
+
+                e.setCancelled(true);
+            }
+        }
 
         if(mode.getValue().equalsIgnoreCase("Vulcan")) {
             if(stage == 2) {
