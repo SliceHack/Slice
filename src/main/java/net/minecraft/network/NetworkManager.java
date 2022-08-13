@@ -2,6 +2,7 @@ package net.minecraft.network;
 
 import com.google.common.collect.Queues;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import com.sliceclient.anticheat.event.events.AntiCheatPlayerAnimationEvent;
 import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.connection.UserConnectionImpl;
 import com.viaversion.viaversion.protocol.ProtocolPipelineImpl;
@@ -42,6 +43,8 @@ import java.util.Queue;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javax.crypto.SecretKey;
 
+import net.minecraft.network.play.client.C0BPacketEntityAction;
+import net.minecraft.network.play.server.S0BPacketAnimation;
 import net.minecraft.network.play.server.S14PacketEntity;
 import net.minecraft.network.play.server.S18PacketEntityTeleport;
 import net.minecraft.util.ChatComponentText;
@@ -168,6 +171,12 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
 
     protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, Packet p_channelRead0_2_) throws Exception
     {
+        if(p_channelRead0_1_ instanceof S0BPacketAnimation) {
+            S0BPacketAnimation packet = (S0BPacketAnimation) p_channelRead0_2_;
+            AntiCheatPlayerAnimationEvent event = new AntiCheatPlayerAnimationEvent(packet.getEntityID());
+            event.call();
+        }
+
         EventPacket eventPacket = new EventPacket(p_channelRead0_2_, false);
         eventPacket.call();
         if(eventPacket.isCancelled())

@@ -8,8 +8,10 @@ import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.network.play.server.S04PacketEntityEquipment;
 import slice.Slice;
 import slice.event.data.EventInfo;
+import slice.event.events.EventPacket;
 import slice.event.events.EventUpdate;
 import slice.util.LoggerUtil;
 
@@ -49,6 +51,10 @@ public enum SliceAC {
                 user.setCheckManager(new CheckManager(user));
             }
         }
+    }
+
+    @EventInfo
+    public void onPacket(EventPacket e) {
     }
 
     public class UpdateUserList {
