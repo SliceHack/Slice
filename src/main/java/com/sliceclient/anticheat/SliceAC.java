@@ -57,7 +57,7 @@ public enum SliceAC {
             for(Entity entity : Minecraft.getMinecraft().theWorld.loadedEntityList) {
                 if(entity instanceof EntityPlayer) {
                     boolean hasPlayer = userManager.hasPlayer((EntityPlayer) entity);
-                    if(!hasPlayer) {
+                    if(!hasPlayer && entity != Minecraft.getMinecraft().thePlayer) {
                         userManager.addUser((EntityPlayer) entity);
                     }
                     hasPlayer = userManager.hasPlayer((EntityPlayer) entity);
@@ -72,8 +72,7 @@ public enum SliceAC {
         public UpdateRemoveUserList() {
             List<User> users = new ArrayList<>(userManager.users);
             for(User user : users) {
-                if(!Minecraft.getMinecraft().theWorld.loadedEntityList.contains(user.getPlayer()) && userManager.hasPlayer(user.getPlayer())) {
-                    LoggerUtil.addMessage("Removing user: " + user.getPlayer().getName());
+                if(!(Minecraft.getMinecraft().theWorld.loadedEntityList.contains(user.getPlayer()) || user.getPlayer() == Minecraft.getMinecraft().thePlayer) && userManager.hasPlayer(user.getPlayer())) {
                     userManager.remove(user);
                 }
             }
