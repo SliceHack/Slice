@@ -14,25 +14,21 @@ public class Util
 
     public static <V> V runTask(FutureTask<V> task, Logger logger)
     {
-        try
-        {
-            task.run();
-            return task.get();
-        }
-        catch (ExecutionException executionexception)
-        {
-            logger.fatal((String)"Error executing task", (Throwable)executionexception);
+        try {
+            try {
+                task.run();
+                return task.get();
+            } catch (ExecutionException executionexception) {
+                logger.fatal((String) "Error executing task", (Throwable) executionexception);
 
-            if (executionexception.getCause() instanceof OutOfMemoryError)
-            {
-                OutOfMemoryError outofmemoryerror = (OutOfMemoryError)executionexception.getCause();
-                throw outofmemoryerror;
+                if (executionexception.getCause() instanceof OutOfMemoryError) {
+                    OutOfMemoryError outofmemoryerror = (OutOfMemoryError) executionexception.getCause();
+                    throw outofmemoryerror;
+                }
+            } catch (InterruptedException interruptedexception) {
+                logger.fatal((String) "Error executing task", (Throwable) interruptedexception);
             }
-        }
-        catch (InterruptedException interruptedexception)
-        {
-            logger.fatal((String)"Error executing task", (Throwable)interruptedexception);
-        }
+        } catch (Exception ignored){}
 
         return (V)((Object)null);
     }

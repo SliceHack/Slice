@@ -739,33 +739,31 @@ public class RenderChunk
 
     public AabbFrame getBoundingBoxParent()
     {
-        if (this.boundingBoxParent == null)
-        {
-            BlockPos blockpos = this.getPosition();
-            int i = blockpos.getX();
-            int j = blockpos.getY();
-            int k = blockpos.getZ();
-            int l = 5;
-            int i1 = i >> l << l;
-            int j1 = j >> l << l;
-            int k1 = k >> l << l;
+        try {
+            if (this.boundingBoxParent == null) {
+                BlockPos blockpos = this.getPosition();
+                int i = blockpos.getX();
+                int j = blockpos.getY();
+                int k = blockpos.getZ();
+                int l = 5;
+                int i1 = i >> l << l;
+                int j1 = j >> l << l;
+                int k1 = k >> l << l;
 
-            if (i1 != i || j1 != j || k1 != k)
-            {
-                AabbFrame aabbframe = this.renderGlobal.getRenderChunk(new BlockPos(i1, j1, k1)).getBoundingBoxParent();
+                if (i1 != i || j1 != j || k1 != k) {
+                    AabbFrame aabbframe = this.renderGlobal.getRenderChunk(new BlockPos(i1, j1, k1)).getBoundingBoxParent();
 
-                if (aabbframe != null && aabbframe.minX == (double)i1 && aabbframe.minY == (double)j1 && aabbframe.minZ == (double)k1)
-                {
-                    this.boundingBoxParent = aabbframe;
+                    if (aabbframe != null && aabbframe.minX == (double) i1 && aabbframe.minY == (double) j1 && aabbframe.minZ == (double) k1) {
+                        this.boundingBoxParent = aabbframe;
+                    }
+                }
+
+                if (this.boundingBoxParent == null) {
+                    int l1 = 1 << l;
+                    this.boundingBoxParent = new AabbFrame((double) i1, (double) j1, (double) k1, (double) (i1 + l1), (double) (j1 + l1), (double) (k1 + l1));
                 }
             }
-
-            if (this.boundingBoxParent == null)
-            {
-                int l1 = 1 << l;
-                this.boundingBoxParent = new AabbFrame((double)i1, (double)j1, (double)k1, (double)(i1 + l1), (double)(j1 + l1), (double)(k1 + l1));
-            }
-        }
+        } catch (Exception ignored) {}
 
         return this.boundingBoxParent;
     }

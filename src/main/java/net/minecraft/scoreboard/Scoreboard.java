@@ -316,15 +316,14 @@ public class Scoreboard
 
     public void removePlayerFromTeam(String p_96512_1_, ScorePlayerTeam p_96512_2_)
     {
-        if (this.getPlayersTeam(p_96512_1_) != p_96512_2_)
-        {
-            throw new IllegalStateException("Player is either on another team or not on any team. Cannot remove from team \'" + p_96512_2_.getRegisteredName() + "\'.");
-        }
-        else
-        {
-            this.teamMemberships.remove(p_96512_1_);
-            p_96512_2_.getMembershipCollection().remove(p_96512_1_);
-        }
+        try {
+            if (this.getPlayersTeam(p_96512_1_) != p_96512_2_) {
+                throw new IllegalStateException("Player is either on another team or not on any team. Cannot remove from team \'" + p_96512_2_.getRegisteredName() + "\'.");
+            } else {
+                this.teamMemberships.remove(p_96512_1_);
+                p_96512_2_.getMembershipCollection().remove(p_96512_1_);
+            }
+        } catch (Exception ignored){}
     }
 
     public Collection<String> getTeamNames()

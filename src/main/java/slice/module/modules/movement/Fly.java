@@ -5,6 +5,7 @@ import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.*;
+import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import org.lwjgl.input.Keyboard;
 import slice.event.data.EventInfo;
 import slice.event.data.PacketEvent;
@@ -24,7 +25,7 @@ import slice.util.MoveUtil;
 @SuppressWarnings("all")
 public class Fly extends Module {
 
-    ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla", "Dev", "PvPGym", "Hycraft", "UwUGuard", "Vulcan", "Vulcan2", "UwUGuardGlide");
+    ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla", "Dev", "PvPGym", "Zonecraft", "UwUGuard", "Vulcan", "Vulcan2", "UwUGuardGlide");
     BooleanValue bobbing = new BooleanValue("Bobbing", true);
     NumberValue speed = new NumberValue("Speed", 3.0D, 0.1D, 6.0D, NumberValue.Type.DOUBLE);
 
@@ -164,14 +165,17 @@ public class Fly extends Module {
                 MoveUtil.strafe(7);
                 mc.timer.timerSpeed = 0.1f;
                 break;
-            case "Hycraft":
-                mc.thePlayer.motionY = 0F;
-                mc.timer.timerSpeed = 10.0F;
-                break;
-            case "Dev":
-                if(stage == 0) {  damage(3.4F); stage = 1; }
-                if(stage == 1 && mc.thePlayer.hurtResistantTime > 2) {  stage = 3; }
-                if(stage == 3) { mc.thePlayer.motionY = 0; /*MoveUtil.strafe(0.5D);*/ }
+            case "Zonecraft":
+                if(!MoveUtil.isMoving()) MoveUtil.resetMotion(false);
+                if(mc.thePlayer.onGround) { MoveUtil.jump(); break; }
+
+                mc.thePlayer.motionY = 0.0;
+
+                if(mc.thePlayer.ticksExisted % 20 < 10) mc.timer.timerSpeed = 1.25f;
+                else mc.timer.timerSpeed = 0.8f;
+
+                if(mc.thePlayer.ticksExisted % 20 == 9) MoveUtil.strafe(MoveUtil.getSpeed() * 1.125f);
+                if(mc.thePlayer.ticksExisted % 20 == 1) MoveUtil.strafe((float)(0.2783*1.2));
                 break;
         }
     }
@@ -183,14 +187,6 @@ public class Fly extends Module {
         if(mc.theWorld == null)
             return;
 
-        if(mode.getValue().equalsIgnoreCase("Hycraft")) {
-            if (p instanceof C03PacketPlayer.C06PacketPlayerPosLook
-                    || p instanceof C03PacketPlayer.C04PacketPlayerPosition
-                    || p instanceof C03PacketPlayer.C05PacketPlayerLook) {
-
-                e.setCancelled(mc.thePlayer.ticksExisted % 5 != 0);
-            }
-        }
         if(mode.getValue().equalsIgnoreCase("Vulcan")) {
             if(stage == 2) {
                 if(e.isOutgoing() && !(p instanceof C03PacketPlayer)) {
