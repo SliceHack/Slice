@@ -10,15 +10,13 @@ import slice.module.data.ModuleInfo;
 @ModuleInfo(name = "DavidZar", description = "Automatically clicks the cookie thingy in david Zar's plugin", category = Category.MISC)
 public class DavidZarCookieClicker extends Module {
 
-    private int gui;
-
     @EventInfo
     public void onUpdate(EventUpdate e) {
         if(mc.currentScreen instanceof GuiChest) {
             GuiChest gui = (GuiChest) mc.currentScreen;
 
 
-            int[] slots = {11, 10, 20, 19};
+            int[] slots = { 11, 10, 20, 19 };
             for (int slot : slots) {
                 if (mc.thePlayer.inventory.getStackInSlot(slot) == null) {
                     if (timer.hasTimeReached(200)) {
