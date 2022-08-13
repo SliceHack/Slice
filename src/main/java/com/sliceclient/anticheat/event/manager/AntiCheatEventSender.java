@@ -2,6 +2,7 @@ package com.sliceclient.anticheat.event.manager;
 
 import com.sliceclient.anticheat.event.AntiCheatEvent;
 import lombok.Getter;
+import slice.util.LoggerUtil;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -30,7 +31,6 @@ public class AntiCheatEventSender {
             if(!hasAnnotation(method, AntiCheatEventInfo.class)) return;
             if(method.getParameterTypes().length != 1) return;
             if(!getMethodParameterType(method, 0).equals(event.getClass())) return;
-
             method.invoke(target, event);
 
             try {

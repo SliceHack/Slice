@@ -25,7 +25,6 @@ public class User {
     public User(EntityPlayer player) {
         this.player = player;
         this.vl = 0;
-        this.checkManager = new CheckManager(this);
     }
 
     /**

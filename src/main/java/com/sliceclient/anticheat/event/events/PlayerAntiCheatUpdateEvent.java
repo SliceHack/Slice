@@ -4,6 +4,7 @@ import com.sliceclient.anticheat.event.AntiCheatEvent;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.entity.player.EntityPlayer;
+import slice.util.LoggerUtil;
 
 /**
  * The PlayerAntiCheatUpdateEvent class.

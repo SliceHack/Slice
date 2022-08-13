@@ -1,6 +1,7 @@
 package com.sliceclient.anticheat;
 
 import com.sliceclient.anticheat.manager.AntiCheatEventManager;
+import com.sliceclient.anticheat.manager.CheckManager;
 import com.sliceclient.anticheat.user.User;
 import com.sliceclient.anticheat.user.UserManager;
 import lombok.Getter;
@@ -10,6 +11,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import slice.Slice;
 import slice.event.data.EventInfo;
 import slice.event.events.EventUpdate;
+import slice.util.LoggerUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Anti-Cheat class.
@@ -37,6 +42,13 @@ public enum SliceAC {
     public void onUpdate(EventUpdate e) {
         new UpdateUserList();
         new UpdateRemoveUserList();
+
+        for(User user : userManager.users) {
+            boolean checkManagerNull = user.getCheckManager() == null;
+            if(checkManagerNull) {
+                user.setCheckManager(new CheckManager(user));
+            }
+        }
     }
 
     public class UpdateUserList {
@@ -44,19 +56,11 @@ public enum SliceAC {
         public UpdateUserList() {
             for(Entity entity : Minecraft.getMinecraft().theWorld.loadedEntityList) {
                 if(entity instanceof EntityPlayer) {
-                    EntityPlayer player = (EntityPlayer) entity;
-
-                    if(player == Minecraft.getMinecraft().thePlayer) {
-                        if(!userManager.hasPlayer(player)) {
-                            userManager.remove(userManager.getUser(player));
-                        }
+                    boolean hasPlayer = userManager.hasPlayer((EntityPlayer) entity);
+                    if(!hasPlayer) {
+                        userManager.addUser((EntityPlayer) entity);
                     }
-
-                    if(player == Minecraft.getMinecraft().thePlayer) return;
-
-                    if(!userManager.hasPlayer(player)) {
-                        userManager.addUser(player);
-                    }
+                    hasPlayer = userManager.hasPlayer((EntityPlayer) entity);
                 }
             }
         }
@@ -66,8 +70,10 @@ public enum SliceAC {
     public class UpdateRemoveUserList {
 
         public UpdateRemoveUserList() {
-            for(User user : userManager.users) {
-                if(!Minecraft.getMinecraft().theWorld.loadedEntityList.contains(user.getPlayer())) {
+            List<User> users = new ArrayList<>(userManager.users);
+            for(User user : users) {
+                if(!Minecraft.getMinecraft().theWorld.loadedEntityList.contains(user.getPlayer()) && userManager.hasPlayer(user.getPlayer())) {
+                    LoggerUtil.addMessage("Removing user: " + user.getPlayer().getName());
                     userManager.remove(user);
                 }
             }
