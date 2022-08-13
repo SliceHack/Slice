@@ -59,21 +59,8 @@ public class Disabler extends Module {
         }
     }
 
-    @PacketEvent
-    public void onC00PacketKeepAlive(C00PacketKeepAlive p, EventPacket e) {
-        switch (mode.getValue()) {
-            case "WarzoneMC":
-                if(mc.isSingleplayer())
-                    return;
-
-                if(p instanceof C00PacketKeepAlive) {
-                    packets.add((C00PacketKeepAlive) p);
-                    index++;
-                    e.setCancelled(true);
-                    return;
-                }
-                break;
-        }
+    @EventInfo
+    public void onEvent(EventPacket e) {
     }
 
 }

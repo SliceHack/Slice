@@ -65,6 +65,7 @@ public class ModuleManager {
         register(new SumoFences());
         register(new TargetStrafe());
         register(new AntiVanish());
+        register(new DavidZarCookieClicker());
     }
 
     /**
