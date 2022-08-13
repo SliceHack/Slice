@@ -13,8 +13,8 @@ public class RequestHandler {
 
     public CefBrowser browser;
 
-    private boolean TargetHudShown = true;
-    private boolean SessionHudShown = false;
+    private boolean TargetHudShown;
+    private boolean SessionHudShown;
 
     public RequestHandler(CefBrowser browser) {
         INSTANCE = this;
@@ -22,8 +22,10 @@ public class RequestHandler {
         this.setupInfo();
         sendJavascript("let iframe;");
         this.setupTargetHUD();
+        TargetHudShown = true;
         RequestHandler.hideTargetHUD();
         this.setupSessionHUD();
+        SessionHudShown = true;
         RequestHandler.hideSessionHUD();
     }
 
