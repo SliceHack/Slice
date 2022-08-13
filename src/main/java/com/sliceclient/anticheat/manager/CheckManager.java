@@ -4,6 +4,7 @@ import com.sliceclient.anticheat.SliceAC;
 import com.sliceclient.anticheat.check.Check;
 import com.sliceclient.anticheat.check.checks.TestCheck;
 import com.sliceclient.anticheat.check.checks.movement.ground.GroundSpoofA;
+import com.sliceclient.anticheat.check.checks.movement.ground.GroundSpoofB;
 import com.sliceclient.anticheat.user.User;
 import lombok.Getter;
 
@@ -26,6 +27,7 @@ public class CheckManager {
      */
     public CheckManager(User user) {
         register(new GroundSpoofA());
+        register(new GroundSpoofB());
         checks.forEach(check -> { check.setUser(user); SliceAC.INSTANCE.getEventManager().register(check, user.getPlayer()); });
     }
 
