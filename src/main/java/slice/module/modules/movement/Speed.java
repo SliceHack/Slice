@@ -24,7 +24,7 @@ import slice.util.RotationUtil;
 @ModuleInfo(name = "Speed", description = "Allows you to move fast!!", key = Keyboard.KEY_X, category = Category.MOVEMENT)
 public class Speed extends Module {
 
-    ModeValue mode = new ModeValue("Mode", "Bhop", "Bhop", "Hycraft", "Dev", "Astro", "MMC", "UwUGuard", "Legit", "Matrix");
+    ModeValue mode = new ModeValue("Mode", "Bhop", "Bhop", "Hycraft", "Dev", "Zonecraft", "Astro", "MMC", "UwUGuard", "Legit");
 
     int onGroundTicks, offGroundTicks;
 
@@ -58,20 +58,12 @@ public class Speed extends Module {
         }
 
         switch (mode.getValue()) {
-            case "Dev":
-                if(mc.thePlayer.fallDistance > 4)
-                    break;
-
+            case "Zonecraft":
                 if(!MoveUtil.isMoving()) break;
+                if(!mc.thePlayer.onGround) break;
 
-                if(mc.thePlayer.onGround) {
-                    MoveUtil.jump();
-                    MoveUtil.strafe(0.48);
-                }
-
-                if(offGroundTicks >= 7) {
-                    mc.thePlayer.motionY = -2F;
-                }
+                if (mc.thePlayer.ticksExisted % 3 == 0) { MoveUtil.strafe(0.89F); mc.thePlayer.motionY = 0.38F; }
+                else MoveUtil.resetMotion(false);
                 break;
             case "Matrix":
                 if(mc.thePlayer.moveForward == 0) break;
