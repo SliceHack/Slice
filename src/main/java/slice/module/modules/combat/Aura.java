@@ -205,11 +205,9 @@ public class Aura extends Module {
                 if (e.isPre()) {
                     if (timer.hasReached((long) (1000 / cps)) && hasReached(target)) {
 
-                        if(hasRotated) {
-                            if (!noSwing.getValue()) mc.thePlayer.swingItem();
-                            timer.reset();
-                            attack();
-                        }
+                        if (!noSwing.getValue()) mc.thePlayer.swingItem();
+                        timer.reset();
+                        attack();
 
                     }
                 }

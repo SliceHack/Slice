@@ -161,7 +161,7 @@ public class GuiChat extends GuiScreen
             }
 
             if (!isShiftKeyDown())
-            {
+            {   
                 i *= 7;
             }
 
@@ -176,9 +176,9 @@ public class GuiChat extends GuiScreen
     {
         if (mouseButton == 0)
         {
-            IChatComponent ichatcomponent = this.mc.ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());
+            IChatComponent var4 = this.mc.ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());
 
-            if (this.handleComponentClick(ichatcomponent))
+            if (this.handleComponentClick(var4))
             {
                 return;
             }

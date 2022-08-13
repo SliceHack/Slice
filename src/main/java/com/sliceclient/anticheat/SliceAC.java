@@ -59,6 +59,7 @@ public enum SliceAC {
 
     public class UpdateUserList {
 
+        @SuppressWarnings("all")
         public UpdateUserList() {
             for(Entity entity : Minecraft.getMinecraft().theWorld.loadedEntityList) {
                 if(entity instanceof EntityPlayer) {
@@ -67,13 +68,17 @@ public enum SliceAC {
                     if((!hasPlayer && entity != Minecraft.getMinecraft().thePlayer) && isNetworkPlayer) {
                         userManager.addUser((EntityPlayer) entity);
                     }
-                    hasPlayer = userManager.hasPlayer((EntityPlayer) entity);
                 }
             }
+
+            try {
+                finalize();
+            } catch (Throwable ignored){}
         }
 
     }
 
+    @SuppressWarnings("all")
     public class UpdateRemoveUserList {
 
         public UpdateRemoveUserList() {
@@ -89,6 +94,10 @@ public enum SliceAC {
                     userManager.remove(user);
                 }
             }
+
+            try {
+                finalize();
+            } catch (Throwable ignored){}
         }
 
     }
