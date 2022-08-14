@@ -45,14 +45,6 @@ public class RequestHandler {
         if(INSTANCE == null) return;
 
         INSTANCE.sendJavascript("addToArrayList(\"" + text + "\");");
-
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                INSTANCE.sendJavascript("addToArrayList(\"" + text + "\");");
-            }
-        };
-        timerTask.run();
     }
 
     public static void removeFromArrayList(String text) {
