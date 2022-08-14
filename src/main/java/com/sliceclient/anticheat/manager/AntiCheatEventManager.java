@@ -4,6 +4,8 @@ import com.sliceclient.anticheat.event.AntiCheatEvent;
 import com.sliceclient.anticheat.event.manager.AntiCheatEventSender;
 import lombok.Getter;
 import net.minecraft.entity.player.EntityPlayer;
+import slice.Slice;
+import slice.module.modules.misc.AntiCheat;
 import slice.util.LoggerUtil;
 
 import java.lang.reflect.Method;
@@ -32,7 +34,9 @@ public class AntiCheatEventManager {
             if(event.getPlayer() == player) {
                 try {
                     for(Method method : object.getClass().getMethods()) {
-                        new AntiCheatEventSender(event, method, object);
+                        if(Slice.INSTANCE.getModuleManager().getModule(AntiCheat.class).isEnabled()) {
+                            new AntiCheatEventSender(event, method, object);
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

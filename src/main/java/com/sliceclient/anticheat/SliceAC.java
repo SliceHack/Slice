@@ -49,9 +49,7 @@ public enum SliceAC {
         for(User user : userManager.users) {
             boolean checkManagerNull = user.getCheckManager() == null;
             if(checkManagerNull) {
-                if(Slice.INSTANCE.getModuleManager().getModule(AntiCheat.class).isEnabled()) {
-                    user.setCheckManager(new CheckManager(user));
-                }
+                user.setCheckManager(new CheckManager(user));
             }
         }
     }
@@ -66,19 +64,13 @@ public enum SliceAC {
         public UpdateUserList() {
             for(Entity entity : Minecraft.getMinecraft().theWorld.loadedEntityList) {
                 if(entity instanceof EntityPlayer) {
-                    if(Slice.INSTANCE.getModuleManager().getModule(AntiCheat.class).isEnabled()) {
-                        boolean hasPlayer = userManager.hasPlayer((EntityPlayer) entity);
-                        boolean isNetworkPlayer = Minecraft.getMinecraft().getNetHandler().getPlayerInfo(entity.getUniqueID()) != null;
-                        if ((!hasPlayer && entity != Minecraft.getMinecraft().thePlayer) && isNetworkPlayer) {
-                            userManager.addUser((EntityPlayer) entity);
-                        }
+                    boolean hasPlayer = userManager.hasPlayer((EntityPlayer) entity);
+                    boolean isNetworkPlayer = Minecraft.getMinecraft().getNetHandler().getPlayerInfo(entity.getUniqueID()) != null;
+                    if ((!hasPlayer && entity != Minecraft.getMinecraft().thePlayer) && isNetworkPlayer) {
+                        userManager.addUser((EntityPlayer) entity);
                     }
                 }
             }
-
-            try {
-                finalize();
-            } catch (Throwable ignored){}
         }
 
     }
@@ -96,10 +88,6 @@ public enum SliceAC {
                 }
 
                 if(!isNetworkPlayer) {
-                    userManager.remove(user);
-                }
-
-                if(Slice.INSTANCE.getModuleManager().getModule(AntiCheat.class).isEnabled()) {
                     userManager.remove(user);
                 }
             }

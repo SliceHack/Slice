@@ -173,8 +173,6 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
     {
         if(p_channelRead0_1_ instanceof S0BPacketAnimation) {
             S0BPacketAnimation packet = (S0BPacketAnimation) p_channelRead0_2_;
-            AntiCheatPlayerAnimationEvent event = new AntiCheatPlayerAnimationEvent(packet.getEntityID());
-            event.call();
         }
 
         EventPacket eventPacket = new EventPacket(p_channelRead0_2_, false);
