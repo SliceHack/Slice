@@ -2,17 +2,13 @@ package slice.manager;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.minecraft.entity.EntityLivingBase;
 import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.modules.combat.*;
 import slice.module.modules.misc.*;
 import slice.module.modules.movement.*;
 import slice.module.modules.player.Derp;
-import slice.module.modules.render.Animations;
-import slice.module.modules.render.Chams;
-import slice.module.modules.render.HUD;
-import slice.module.modules.render.Interface;
+import slice.module.modules.render.*;
 import slice.module.modules.world.Phase;
 import slice.module.modules.world.SumoFences;
 import slice.module.modules.world.TimeChanger;

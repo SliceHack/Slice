@@ -45,7 +45,6 @@ public enum SliceAC {
     public void onUpdate(EventUpdate e) {
         new UpdateUserList();
         new UpdateRemoveUserList();
-        LoggerUtil.addMessage(userManager.users.size() + "");
 
         for(User user : userManager.users) {
             boolean checkManagerNull = user.getCheckManager() == null;
