@@ -90,7 +90,6 @@ public class CefRenderManager {
 
             cefApp = builder.build();
             cefClient = cefApp.createClient();
-
             cefMessageRouter = CefMessageRouter.create();
             cefMessageRouter.addHandler(new CefMessageRouterHandlerAdapter() {
                 /**
