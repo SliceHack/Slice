@@ -196,7 +196,7 @@ public abstract class EntityPlayer extends EntityLivingBase
 
     public void onUpdate()
     {
-        PlayerAntiCheatUpdateEvent event = new PlayerAntiCheatUpdateEvent(this, posX, posY, posZ, lastTickPosX, lastTickPosY, lastTickPosZ, rotationYaw, rotationPitch, onGround, false);
+        PlayerAntiCheatUpdateEvent event = new PlayerAntiCheatUpdateEvent(this, posX, posY, posZ, prevChasingPosX, prevChasingPosY, prevChasingPosZ, rotationYaw, rotationPitch, onGround, true);
         event.call();
 
         this.noClip = this.isSpectator();
@@ -343,9 +343,8 @@ public abstract class EntityPlayer extends EntityLivingBase
         {
             this.setPosition(d3, this.posY, d4);
         }
-
-        PlayerAntiCheatUpdateEvent e = new PlayerAntiCheatUpdateEvent(this, posX, posY, posZ, lastTickPosX, lastTickPosY, lastTickPosZ, rotationYaw, rotationPitch, onGround, true);
-        e.call();
+        event = new PlayerAntiCheatUpdateEvent(this, posX, posY, posZ, lastTickPosX, lastTickPosY, lastTickPosZ, rotationYaw, rotationPitch, onGround, false);
+        event.call();
     }
 
     public int getMaxInPortalTime()

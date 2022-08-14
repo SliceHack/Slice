@@ -50,6 +50,7 @@ public enum SliceAC {
             boolean checkManagerNull = user.getCheckManager() == null;
             if(checkManagerNull) {
                 user.setCheckManager(new CheckManager(user));
+                LoggerUtil.addMessage("Created new CheckManager for " + user.getPlayer().getName());
             }
         }
     }
@@ -62,33 +63,33 @@ public enum SliceAC {
 
         @SuppressWarnings("all")
         public UpdateUserList() {
-            for(EntityPlayer player : Minecraft.getMinecraft().theWorld.playerEntities) {
-
-                boolean hasPlayer = userManager.hasPlayer(player);
-                boolean isNetworkPlayer = Minecraft.getMinecraft().getNetHandler().getPlayerInfo(player.getUniqueID()) != null;
-
-                if(isNetworkPlayer && !hasPlayer && player != Minecraft.getMinecraft().thePlayer) {
-                    userManager.addUser(player);
+            for (Entity entity : Minecraft.getMinecraft().theWorld.loadedEntityList) {
+                if (entity instanceof EntityPlayer) {
+                    boolean hasPlayer = userManager.hasPlayer((EntityPlayer) entity);
+                    boolean isNetworkPlayer = Minecraft.getMinecraft().getNetHandler().getPlayerInfo(entity.getUniqueID()) != null;
+                    if ((!hasPlayer && entity != Minecraft.getMinecraft().thePlayer) && isNetworkPlayer) {
+                        userManager.addUser((EntityPlayer) entity);
+                    }
                 }
             }
-        }
 
+        }
     }
 
     @SuppressWarnings("all")
     public class UpdateRemoveUserList {
-
         public UpdateRemoveUserList() {
-            for(EntityPlayer player : Minecraft.getMinecraft().theWorld.playerEntities) {
+            List<User> users = new ArrayList<>(userManager.users);
+            for (User user : users) {
+                boolean isNetworkPlayer = Minecraft.getMinecraft().getNetHandler().getPlayerInfo(user.getPlayer().getUniqueID()) != null;
 
-                boolean hasPlayer = userManager.hasPlayer(player);
-                boolean isNetworkPlayer = Minecraft.getMinecraft().getNetHandler().getPlayerInfo(player.getUniqueID()) != null;
-
-                if(!(isNetworkPlayer && !hasPlayer && player != Minecraft.getMinecraft().thePlayer) || Minecraft.getMinecraft().theWorld.playerEntities.contains(player)) {
-                    userManager.remove(player);
+                if (!(Minecraft.getMinecraft().theWorld.loadedEntityList.contains(user.getPlayer()) || user.getPlayer() == Minecraft.getMinecraft().thePlayer) && userManager.hasPlayer(user.getPlayer())) {
+                    userManager.remove(user);
+                }
+                if (!isNetworkPlayer) {
+                    userManager.remove(user);
                 }
             }
         }
-
     }
 }
