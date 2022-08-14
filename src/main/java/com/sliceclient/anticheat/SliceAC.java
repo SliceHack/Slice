@@ -62,13 +62,13 @@ public enum SliceAC {
 
         @SuppressWarnings("all")
         public UpdateUserList() {
-            for(Entity entity : Minecraft.getMinecraft().theWorld.loadedEntityList) {
-                if(entity instanceof EntityPlayer) {
-                    boolean hasPlayer = userManager.hasPlayer((EntityPlayer) entity);
-                    boolean isNetworkPlayer = Minecraft.getMinecraft().getNetHandler().getPlayerInfo(entity.getUniqueID()) != null;
-                    if ((!hasPlayer && entity != Minecraft.getMinecraft().thePlayer) && isNetworkPlayer) {
-                        userManager.addUser((EntityPlayer) entity);
-                    }
+            for(EntityPlayer player : Minecraft.getMinecraft().theWorld.playerEntities) {
+
+                boolean hasPlayer = userManager.hasPlayer(player);
+                boolean isNetworkPlayer = Minecraft.getMinecraft().getNetHandler().getPlayerInfo(player.getUniqueID()) != null;
+
+                if(isNetworkPlayer && !hasPlayer && player != Minecraft.getMinecraft().thePlayer) {
+                    userManager.addUser(player);
                 }
             }
         }
@@ -79,22 +79,15 @@ public enum SliceAC {
     public class UpdateRemoveUserList {
 
         public UpdateRemoveUserList() {
-            List<User> users = new ArrayList<>(userManager.users);
-            for(User user : users) {
-                boolean isNetworkPlayer = Minecraft.getMinecraft().getNetHandler().getPlayerInfo(user.getPlayer().getUniqueID()) != null;
+            for(EntityPlayer player : Minecraft.getMinecraft().theWorld.playerEntities) {
 
-                if(!(Minecraft.getMinecraft().theWorld.loadedEntityList.contains(user.getPlayer()) || user.getPlayer() == Minecraft.getMinecraft().thePlayer) && userManager.hasPlayer(user.getPlayer())) {
-                    userManager.remove(user);
-                }
+                boolean hasPlayer = userManager.hasPlayer(player);
+                boolean isNetworkPlayer = Minecraft.getMinecraft().getNetHandler().getPlayerInfo(player.getUniqueID()) != null;
 
-                if(!isNetworkPlayer) {
-                    userManager.remove(user);
+                if(!(isNetworkPlayer && !hasPlayer && player != Minecraft.getMinecraft().thePlayer) || Minecraft.getMinecraft().theWorld.playerEntities.contains(player)) {
+                    userManager.remove(player);
                 }
             }
-
-            try {
-                finalize();
-            } catch (Throwable ignored){}
         }
 
     }

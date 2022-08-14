@@ -5,6 +5,7 @@ import com.sliceclient.anticheat.check.data.CheckInfo;
 import com.sliceclient.anticheat.check.util.AntiCheatUtil;
 import com.sliceclient.anticheat.event.events.PlayerAntiCheatUpdateEvent;
 import com.sliceclient.anticheat.event.manager.AntiCheatEventInfo;
+import slice.util.LoggerUtil;
 
 @CheckInfo(name = "Speed", description = "Detects strafe speed.")
 public class SpeedA extends Check {
@@ -30,6 +31,7 @@ public class SpeedA extends Check {
         if(!onGround && !lastOnGround) {
             if(scaledEqualNess >= 0.3) {
                 flag();
+                LoggerUtil.addMessage("flag " + user.getPlayer().getName());
             }
         }
     }
