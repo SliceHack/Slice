@@ -39,12 +39,6 @@ public class RequestHandler {
         this.setupSessionHUD();
         SessionHudShown = true;
         RequestHandler.hideSessionHUD();
-
-        for(Module module : Slice.INSTANCE.getModuleManager().getModules()) {
-            if(module.isEnabled()) {
-                addToArrayList(module.getMode() != null ? module.getName() + " " + module.getMode().getValue() : module.getName());
-            }
-        }
     }
 
     public static void addToArrayList(String text) {

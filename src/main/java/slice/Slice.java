@@ -42,11 +42,12 @@ import java.util.Date;
 import java.util.List;
 
 /**
-* Main Class for the Client
-*
-* @author Nick & Dylan
-*/
-@Getter @SuppressWarnings("unused")
+ * Main Class for the Client
+ *
+ * @author Nick & Dylan
+ */
+@Getter
+@SuppressWarnings("unused")
 public enum Slice {
     INSTANCE;
 
@@ -67,38 +68,58 @@ public enum Slice {
     private final Saver saver;
     private final StartDiscordRPC discordRPC;
 
-    /** Alt Manager */
+    /**
+     * Alt Manager
+     */
     private AltManager altManager;
 
-    /** Server */
+    /**
+     * Server
+     */
     public IRC irc;
 
-    /** discord */
+    /**
+     * discord
+     */
     public String discordName, discordID, discordDiscriminator;
 
-    /** server */
+    /**
+     * server
+     */
     public float serverYaw, serverPitch, serverLastYaw, serverLastPitch;
     public double serverX, serverLastX, serverY, serverLastY, serverZ, serverLastZ;
 
-    /** MainMenu */
+    /**
+     * MainMenu
+     */
     public int mainIndex;
 
-    /** for irc reconnecting */
+    /**
+     * for irc reconnecting
+     */
     public boolean connecting;
 
-    /** KillAura target for target hud */
+    /**
+     * KillAura target for target hud
+     */
     public EntityLivingBase target;
 
-    /** anticheat */
+    /**
+     * anticheat
+     */
     public SliceAC anticheat;
 
     private HUD hud;
 
-    /** html */
+    /**
+     * html
+     */
     private final CefRenderManager cefRenderManager;
     private final List<ViewNoGui> html = new ArrayList<>();
 
-    /** other things */
+    /**
+     * other things
+     */
     public int ping = 0, players = 0, seconds = 0, minutes = 0, hours = 0;
     public final long startTime;
     public long totalTime;
@@ -133,7 +154,7 @@ public enum Slice {
 
     /**
      * Calls when minecraft is initialized and ready to be used.
-     * */
+     */
     public void init() {
         notificationManager = new NotificationManager();
         anticheat = SliceAC.INSTANCE;
@@ -157,21 +178,21 @@ public enum Slice {
                 sliceHTML = new File(sliceDir, "html"),
                 sliceHUD = new File(sliceHTML, "hud");
 
-        if(!sliceHTML.exists()) sliceHTML.mkdirs();
+        if (!sliceHTML.exists()) sliceHTML.mkdirs();
 
         File html = new File(computerPath, "index.html"), css = new File(computerPath, "styles.css");
 
-        if(!html.exists() || !css.exists()) {
+        if (!html.exists() || !css.exists()) {
             ResourceUtil.extractResource(path + "/index.html", html.toPath());
             ResourceUtil.extractResource(path + "/styles.css", css.toPath());
 
-            if(sliceHUD.getParentFile().exists()) sliceHUD.mkdirs();
+            if (sliceHUD.getParentFile().exists()) sliceHUD.mkdirs();
         }
     }
 
     /**
      * Called when the client is stopped
-     * */
+     */
     public void stop() {
         irc.getSocket().disconnect();
         connecting = false;
@@ -183,14 +204,18 @@ public enum Slice {
     @EventInfo
     public void onUpdate(EventUpdate e) {
         html.forEach((html) -> html.onResize(Minecraft.getMinecraft(), Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight));
-        for(Module module : moduleManager.getModules()) {
+        for (Module module : moduleManager.getModules()) {
 
-            if(!module.isEnabled() && eventManager.isRegistered(module)) {
+            if (!module.isEnabled() && eventManager.isRegistered(module)) {
                 eventManager.unregister(module);
             }
 
-            if(module.isEnabled() && !eventManager.isRegistered(module)) {
+            if (module.isEnabled() && !eventManager.isRegistered(module)) {
                 eventManager.register(module);
+            }
+
+            if (module.isEnabled() && eventManager.isRegistered(module)) {
+                RequestHandler.addToArrayList(module.getMode() != null ? module.getName() + " " + module.getMode().getValue() : module.getName());
             }
         }
         players = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap().size();
@@ -208,9 +233,10 @@ public enum Slice {
         serverZ = e.getZ();
 
 
-        if(Minecraft.getMinecraft().currentScreen != null) {
+        if (Minecraft.getMinecraft().currentScreen != null) {
 
-            if(Minecraft.getMinecraft().currentScreen instanceof AltManager) this.altManager = (AltManager) Minecraft.getMinecraft().currentScreen;
+            if (Minecraft.getMinecraft().currentScreen instanceof AltManager)
+                this.altManager = (AltManager) Minecraft.getMinecraft().currentScreen;
             else this.altManager = null;
         }
 
@@ -225,12 +251,12 @@ public enum Slice {
         Packet<?> packet = e.getPacket();
 
         CommandPlugins plugins = ((CommandPlugins) commandManager.getCommand("plugins"));
-        if(plugins.searching) {
+        if (plugins.searching) {
             plugins.onPacketReceive(e);
         }
 
 
-        if(packet instanceof S02PacketChat) {
+        if (packet instanceof S02PacketChat) {
             S02PacketChat s02 = (S02PacketChat) packet;
 
             irc.onMessage(e, s02);
@@ -242,11 +268,11 @@ public enum Slice {
         String message = e.getMessage();
         commandManager.handleChat(e);
 
-        if(irc == null)
+        if (irc == null)
             return;
 
-        if(message.startsWith("#")) {
-            message = message.substring(1).replaceFirst(" ","");
+        if (message.startsWith("#")) {
+            message = message.substring(1).replaceFirst(" ", "");
             irc.sendMessage(message);
             e.setCancelled(true);
         }
@@ -254,17 +280,17 @@ public enum Slice {
 
     @EventInfo
     public void onGuiRender(EventGuiRender e) {
-        if(Minecraft.getMinecraft().gameSettings.showDebugInfo) return;
+        if (Minecraft.getMinecraft().gameSettings.showDebugInfo) return;
 
         html.forEach((html) -> {
-            if(html.isInit()) html.draw(e);
+            if (html.isInit()) html.draw(e);
             else html.init();
         });
     }
 
     @EventInfo
     public void switchAccount(EventSwitchAccount e) {
-        if(irc == null)
+        if (irc == null)
             return;
 
         irc.accountSwitch(e);
@@ -272,32 +298,33 @@ public enum Slice {
 
     @EventInfo
     public void onKey(EventKey e) {
-        if(e.getKey() == Keyboard.KEY_RSHIFT) Minecraft.getMinecraft().displayGuiScreen(clickGui);
+        if (e.getKey() == Keyboard.KEY_RSHIFT) Minecraft.getMinecraft().displayGuiScreen(clickGui);
         if (e.getKey() == Keyboard.KEY_PERIOD) Minecraft.getMinecraft().displayGuiScreen(new GuiChat("."));
         moduleManager.getModules().stream().filter(module -> module.getKey() == e.getKey()).forEach(Module::toggle); // key event
     }
 
     /**
      * Replaces the username in the message with the username of the players discord account
+     *
      * @param message - the message to be replaced
      **/
     public String replaceUsername(String username, String discordName, String message) {
-        if(discordName == null)
+        if (discordName == null)
             return message;
 
         String lastColor = "";
-        for(int i = message.length() - 1; i >= 0; i--) {
-            if(message.charAt(i) == '§') {
+        for (int i = message.length() - 1; i >= 0; i--) {
+            if (message.charAt(i) == '§') {
                 lastColor = message.substring(i, i + 2);
                 break;
             }
         }
-        return message.replaceAll(username,  username + " §c(§b" + discordName + "§c)" + lastColor);
+        return message.replaceAll(username, username + " §c(§b" + discordName + "§c)" + lastColor);
     }
 
     public long loadTotalTime() {
         File file = new File(Minecraft.getMinecraft().mcDataDir, "Slice/totalTime.txt");
-        if(file.exists()) {
+        if (file.exists()) {
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(file));
                 String line = reader.readLine();

@@ -173,11 +173,14 @@ import org.lwjgl.opengl.OpenGLException;
 import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
 import slice.Slice;
+import slice.cef.RequestHandler;
 import slice.event.events.*;
 import slice.gui.alt.manager.AltManager;
 import slice.gui.hud.legacy.HUD;
 import slice.gui.main.MainMenu;
 import slice.gui.main.NewMainMenu;
+import slice.module.Module;
+import slice.util.LoggerUtil;
 import viamcp.ViaMCP;
 import viamcp.gui.GuiProtocolSelector;
 
