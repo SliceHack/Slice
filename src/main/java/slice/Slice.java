@@ -244,11 +244,6 @@ public enum Slice {
         plugins.onUpdate();
 
         moduleManager.getModules().forEach(module -> module.onUpdateNoToggle(e));
-
-        if (Minecraft.getMinecraft().getCurrentServerData() != null || Minecraft.getMinecraft().isSingleplayer()) {
-            Minecraft.getMinecraft().thePlayer.distanceWalkedModified =0.0F;
-        }
-
     }
 
     @EventInfo

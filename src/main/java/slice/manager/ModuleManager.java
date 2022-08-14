@@ -67,6 +67,7 @@ public class ModuleManager {
         register(new AntiVanish());
         register(new DavidZarCookieClicker());
         register(new AntiCheat());
+        register(new NoBob());
     }
 
     /**

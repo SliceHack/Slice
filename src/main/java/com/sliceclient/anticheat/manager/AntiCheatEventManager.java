@@ -34,9 +34,7 @@ public class AntiCheatEventManager {
             if(event.getPlayer() == player) {
                 try {
                     for(Method method : object.getClass().getMethods()) {
-                        if(Slice.INSTANCE.getModuleManager().getModule(AntiCheat.class).isEnabled()) {
-                            new AntiCheatEventSender(event, method, object);
-                        }
+                        new AntiCheatEventSender(event, method, object);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
