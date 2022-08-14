@@ -54,4 +54,8 @@ public class UserManager {
         user.getCheckManager().getChecks().forEach(check -> SliceAC.INSTANCE.getEventManager().unregister(check));
         users.remove(user);
     }
+
+    public void remove(EntityPlayer player) {
+        users.remove(getUser(player));
+    }
 }
