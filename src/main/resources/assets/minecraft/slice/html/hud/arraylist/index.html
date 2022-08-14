@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="styles.css">
+    <title>ArrayList</title>
+</head>
+<body>
+    <div class="rightSide"></div>
+
+    <script>
+        let array = {};
+
+        window.onmessage = function (e) {
+            const type = e.data.type;
+            const value = e.data.value;
+
+            switch (type) {
+                case "add":
+                    add(value);
+                    break;
+                case "remove":
+                    remove(value);
+                    break;
+                case "rename":
+                    rename(value, e.data.newValue);
+                    break;
+            }
+        }
+
+        function add(name) {
+            if(name.startsWith("HUD")) return;
+
+            let text = document.createElement("p");
+
+            if(array[name] !== undefined) return;
+
+            text.innerHTML = name;
+            text.className = "text";
+            document.querySelector(".rightSide").appendChild(text);
+
+            text.style.animation = "slideInRight 0.5s";
+            array[name] = {
+                text: text,
+                justAdded: true
+            };
+
+            setTimeout(() => {
+                if(array[name] !== undefined) {
+                    array[name].justAdded = false;
+                }
+                clearInterval();
+            }, 500);
+            sort(true, name, false);
+        }
+
+        function rename(value, newValue) {
+            if(array[value] === undefined) return;
+            array[value].text.innerHTML = newValue;
+            array[newValue] = array[value];
+            delete array[value];
+            sort(false, undefined, false);
+        }
+
+        function remove(value) {
+            if(array[value] === undefined) return;
+
+            let text = array[value].text;
+            text.style.animation = "slideOutRight 0.5s";
+            setTimeout(() => {
+                text.remove();
+                clearInterval();
+            }, 200);
+
+            sort(true, value, true);
+            delete array[value];
+        }
+
+        function sort(animate, animate1, out) {
+            let array = document.querySelectorAll(".rightSide p");
+            array = Object.values(array).sort((a, b) => {
+                return -((a.offsetWidth+1) - (b.offsetWidth+1));
+            });
+            array.forEach(element => {
+                if(animate) {
+                    if(animate1 === undefined) element.style.animation = !out ? "slideInRight 0.4s" : "slideOutRight 0.9s";
+                    else {
+                        if(element.innerHTML === animate1) element.style.animation = !out ? "slideInRight 0.4s" : "slideOutRight 0.9s";
+                        else element.style.animation = "";
+                    }
+                } else {
+                    element.style.animation = "";
+                }
+                document.querySelector(".rightSide").appendChild(element);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -5,6 +5,7 @@ import lombok.Setter;
 import net.minecraft.client.Minecraft;
 import org.json.JSONObject;
 import slice.Slice;
+import slice.cef.RequestHandler;
 import slice.manager.ModuleManager;
 import slice.module.Module;
 import slice.setting.Setting;

@@ -2,11 +2,13 @@ package slice.setting;
 
 import lombok.Getter;
 import lombok.Setter;
+import slice.module.Module;
 
 @Getter @Setter
 public class Setting {
     private String name;
     private boolean hidden;
+    private Module module;
 
     public Setting(String name) {
         this.name = name;

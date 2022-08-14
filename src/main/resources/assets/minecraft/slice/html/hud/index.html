@@ -53,6 +53,7 @@
 
         function updateSessionHUD(date, players, ping, totalPlayTime, playTime) {
             let iframe = document.querySelector("iframe[src='SessionHUD/index.html']");
+
             iframe.contentWindow.postMessage({
                 date: date,
                 players: players,
@@ -63,6 +64,33 @@
             }, "*");
         }
 
+        function renameFromArrayList(value, newValue) {
+            let iframe = document.querySelector("iframe[src='ArrayList/index.html']");
+
+            iframe.contentWindow.postMessage({
+                type: "rename",
+                value: value,
+                newValue: newValue
+            }, "*");
+        }
+
+        function removeFromArrayList(value) {
+            let iframe = document.querySelector("iframe[src='ArrayList/index.html']");
+
+            iframe.contentWindow.postMessage({
+                type: "remove",
+                value: value
+            }, "*");
+        }
+
+        function addToArrayList(value) {
+            let iframe = document.querySelector("iframe[src='ArrayList/index.html']");
+
+            iframe.contentWindow.postMessage({
+                type: "add",
+                value: value
+            }, "*");
+        }
     </script>
 </body>
 

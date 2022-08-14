@@ -20,6 +20,7 @@ public class SettingsManager {
                         try {
                             field.setAccessible(true);
                             Setting setting = (Setting) field.get(module);
+                            setting.setModule(module);
                             module.getSettings().add(setting);
                         } catch (IllegalAccessException e) {
                             e.printStackTrace();

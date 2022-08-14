@@ -7,6 +7,7 @@ import lombok.Setter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import slice.Slice;
+import slice.cef.RequestHandler;
 import slice.event.events.EventUpdate;
 import slice.gui.hud.legacy.HUD;
 import slice.module.data.Category;
@@ -78,6 +79,9 @@ public class Module {
         if(interfaceModule.getToggleNotifications().getValue()) {
             NotificationManager.queue(new Notification(Type.INFO, enabled ? "Enabled " + name : "Disabled " + name, 2));
         }
+
+        if(enabled) RequestHandler.addToArrayList(getMode() != null ? name + " " + getMode().getValue() : name);
+        else RequestHandler.removeFromArrayList(getMode() != null ? name + " " + getMode().getValue() : name);
     }
 
     public void startOnEnable() {
@@ -157,5 +161,10 @@ public class Module {
         animate.setReversed(reversed);
     }
 
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
 
+        if(enabled) RequestHandler.addToArrayList(getMode() != null ? name + " " + getMode().getValue() : name);
+        else RequestHandler.removeFromArrayList(getMode() != null ? name + " " + getMode().getValue() : name);
+    }
 }

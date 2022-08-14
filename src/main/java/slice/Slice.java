@@ -13,6 +13,7 @@ import org.cef.ccbluex.Page;
 import org.lwjgl.input.Keyboard;
 import slice.api.API;
 import slice.api.IRC;
+import slice.cef.RequestHandler;
 import slice.cef.ViewNoGui;
 import slice.clickgui.ClickGui;
 import slice.command.commands.CommandPlugins;
@@ -145,6 +146,7 @@ public enum Slice {
         extractHTML(new File(sliceHUD, "TargetHUD"), "slice/html/hud/targethud");
         extractHTML(new File(sliceHUD, "SessionHUD"), "/slice/html/hud/sessionhud");
         extractHTML(new File(sliceHUD, "Notification"), "/slice/html/hud/notification");
+        extractHTML(new File(sliceHUD, "ArrayList"), "/slice/html/hud/arraylist");
 
         this.html.add(new ViewNoGui(new Page("file:///" + html.getAbsolutePath() + "?name=" + NAME + "&version=" + VERSION + "&discord=" + discordName)));
     }
@@ -315,7 +317,6 @@ public enum Slice {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             writer.write(totalTime + "");
             writer.close();
-            System.out.println("Saved total time: " + totalTime);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -5,7 +5,14 @@ import lombok.Setter;
 import net.minecraft.entity.EntityLivingBase;
 import org.cef.browser.CefBrowser;
 import slice.Slice;
+import slice.event.data.EventInfo;
+import slice.event.events.EventUpdate;
+import slice.module.Module;
 import slice.notification.Notification;
+import slice.util.LoggerUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter @Setter
 public class RequestHandler {
@@ -16,17 +23,45 @@ public class RequestHandler {
     private boolean TargetHudShown;
     private boolean SessionHudShown;
 
+
     public RequestHandler(CefBrowser browser) {
         INSTANCE = this;
         this.browser = browser;
         this.setupInfo();
         sendJavascript("let iframe;");
         this.setupTargetHUD();
+        sendJavascript("let arraylist;");
+        this.setupArrayList();
+
         TargetHudShown = true;
         RequestHandler.hideTargetHUD();
         this.setupSessionHUD();
         SessionHudShown = true;
         RequestHandler.hideSessionHUD();
+
+        for(Module module : Slice.INSTANCE.getModuleManager().getModules()) {
+            if(module.isEnabled()) {
+                addToArrayList(module.getMode() != null ? module.getName() + " " + module.getMode().getValue() : module.getName());
+            }
+        }
+    }
+
+    public static void addToArrayList(String text) {
+        if(INSTANCE == null) return;
+
+        INSTANCE.sendJavascript("addToArrayList(\"" + text + "\");");
+    }
+
+    public static void removeFromArrayList(String text) {
+        if(INSTANCE == null) return;
+
+        INSTANCE.sendJavascript("removeFromArrayList(\"" + text + "\");");
+    }
+
+    public static void renameFromArrayList(String value, String newValue) {
+        if(INSTANCE == null) return;
+
+        INSTANCE.sendJavascript("renameFromArrayList(\"" + value + "\", \"" + newValue + "\");");
     }
 
     public void sendJavascript(String js) {
@@ -69,6 +104,9 @@ public class RequestHandler {
 
     public void setupSessionHUD() {
         createIframe("SessionHUD/index.html");
+    }
+    public void setupArrayList() {
+        createIframe("ArrayList/index.html");
     }
 
     public static void hideSessionHUD() {

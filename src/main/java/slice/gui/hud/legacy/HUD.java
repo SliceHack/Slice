@@ -71,14 +71,7 @@ public class HUD {
 
         int widthHeight = ((sr.getScaledHeight() + sr.getScaledWidth()) / 18);
 
-        switch (mode.getValue()) {
-            case "Standard":
-                drawStandard(sr, widthHeight);
-                break;
-            case "Smooth":
-                drawSmooth(sr, widthHeight);
-                break;
-        }
+
 
 
         BooleanValue bpsCounter = (BooleanValue) Slice.INSTANCE.getModuleManager().getModule(hudClass).getSetting("BPS");
@@ -89,43 +82,5 @@ public class HUD {
         }
     }
 
-    public static void drawStandard(ScaledResolution sr, int widthHeight) {
-//        RenderUtil.drawRoundedRect(5, 5, 10 + (widthHeight + 5), 10 + (widthHeight + 5), 10, Integer.MIN_VALUE);
-
-        int fontHeight2 = sr.getScaledHeight() / 18;
-
-//        RenderUtil.drawImage("icons/Slice.png", 10, 10, widthHeight, widthHeight);
-
-        ArrayListHUD arrayListHUD = new ArrayListHUD();
-        arrayListHUD.draw(fontHeight2);
-    }
-
-    public static void drawSmooth(ScaledResolution sr, int widthHeight) {
-        try {
-//            RenderUtil.drawRoundedRect(5, 5, 10 + (widthHeight + 5), 10 + (widthHeight + 5), 10, Integer.MIN_VALUE);
-
-//            GlStateManager.pushMatrix();
-//            GlStateManager.enableTexture2D();
-//            GlStateManager.enableBlend();
-//            GlStateManager.enableAlpha();
-//            RenderUtil.drawImage("icons/Slice.png", 10, 10, widthHeight, widthHeight);
-//            GlStateManager.popMatrix();
-//            GlStateManager.disableBlend();
-//            GlStateManager.disableAlpha();
-
-            int fontHeight2 = sr.getScaledHeight() / 18;
-
-            if (smoothArrayListHUD == null)
-                smoothArrayListHUD = new SmoothArrayListHUD();
-            smoothArrayListHUD.draw(fontHeight2);
-        } catch (Exception ignored){}
-    }
-
-    public static void onTick() {
-        if(Minecraft.getMinecraft().theWorld == null || smoothArrayListHUD == null || mode.getValue().equalsIgnoreCase("Standard"))
-            return;
-
-        smoothArrayListHUD.tick();
-    }
-
+    public static void onTick() {}
 }
