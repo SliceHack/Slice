@@ -4,6 +4,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.*;
+import net.minecraft.network.play.server.S32PacketConfirmTransaction;
 import slice.event.Event;
 import slice.event.data.EventInfo;
 import slice.event.data.PacketEvent;
@@ -23,7 +24,7 @@ import java.util.List;
 @SuppressWarnings("all")
 public class Disabler extends Module {
 
-     ModeValue mode = new ModeValue("Mode", "WarzoneMC", "WarzoneMC");
+     ModeValue mode = new ModeValue("Mode", "WarzoneMC", "WarzoneMC", "Dev");
 
      public final List<C00PacketKeepAlive> packets = new ArrayList<>();
 
@@ -61,7 +62,12 @@ public class Disabler extends Module {
 
     @EventInfo
     public void onEvent(EventPacket e) {
-        if(e.isOutgoing()) {
+        if(e.getPacket() instanceof C0FPacketConfirmTransaction
+                || e.getPacket() instanceof S32PacketConfirmTransaction
+                || e.getPacket() instanceof C00PacketKeepAlive
+                || e.getPacket() instanceof C17PacketCustomPayload) {
+            e.setCancelled(true);
+            LoggerUtil.addMessage("Cancelled packet: " + e.getPacket().getClass().getSimpleName());
         }
     }
 }

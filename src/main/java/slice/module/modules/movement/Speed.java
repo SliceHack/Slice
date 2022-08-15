@@ -4,6 +4,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
+import net.minecraft.network.play.server.S18PacketEntityTeleport;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.MathHelper;
 import org.lwjgl.input.Keyboard;
@@ -93,7 +94,6 @@ public class Speed extends Module {
                 mc.thePlayer.motionX *= 0.5;
                 mc.thePlayer.motionZ *= 0.5;
                 break;
-            case "Hycraft":
             case "Bhop":
                 if(!MoveUtil.isMoving()) break;
 
@@ -126,12 +126,14 @@ public class Speed extends Module {
                 }
                 break;
             case "UwUGuard":
-                if (!MoveUtil.isMoving()) break;
-
                 if(mc.thePlayer.onGround) {
-                    mc.thePlayer.motionY = 0F;
-                    MoveUtil.strafe(0.5D);
+                    MoveUtil.jump();
+                    MoveUtil.strafe(0.43D);
                 }
+                if(offGroundTicks > 2) {
+                    mc.thePlayer.motionY = -2F;
+                }
+                mc.timer.timerSpeed = 2.0F;
                 break;
             case "Legit":
                 mc.thePlayer.setSprinting(true);
@@ -177,11 +179,8 @@ public class Speed extends Module {
         if(mc.theWorld == null) return;
 
         if(mode.getValue().equalsIgnoreCase("Hycraft")) {
-            if(p instanceof C03PacketPlayer.C06PacketPlayerPosLook
-                    || p instanceof C03PacketPlayer.C04PacketPlayerPosition
-                    || p instanceof C03PacketPlayer.C05PacketPlayerLook) {
-
-                e.setCancelled(mc.thePlayer.ticksExisted % 5 != 0);
+            if(p instanceof S18PacketEntityTeleport) {
+                e.setCancelled(true);
             }
         }
 

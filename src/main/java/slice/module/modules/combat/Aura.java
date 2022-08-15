@@ -347,7 +347,7 @@ public class Aura extends Module {
         float yaw = getBypassRotate(e)[0];
         float pitch = getBypassRotate(e)[1];
 
-        int smooth = 4;
+        int smooth = 2;
 
         if (deltaPitch < pitch) deltaPitch += Math.abs(pitch - deltaPitch) / smooth;
         if(deltaPitch > pitch) deltaPitch -= Math.abs(pitch - deltaPitch) / smooth;

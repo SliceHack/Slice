@@ -32,12 +32,14 @@ public class AntiCheatEventManager {
     public void runEvent(AntiCheatEvent event) {
         registeredObjects.forEach((object, player) -> {
             if(event.getPlayer() == player) {
-                try {
-                    for(Method method : object.getClass().getMethods()) {
-                        new AntiCheatEventSender(event, method, object);
+                if(Slice.INSTANCE.getModuleManager().getModule(AntiCheat.class).isEnabled()) {
+                    try {
+                        for (Method method : object.getClass().getMethods()) {
+                            new AntiCheatEventSender(event, method, object);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
             }
         });

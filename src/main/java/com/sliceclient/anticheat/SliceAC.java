@@ -50,7 +50,6 @@ public enum SliceAC {
             boolean checkManagerNull = user.getCheckManager() == null;
             if(checkManagerNull) {
                 user.setCheckManager(new CheckManager(user));
-                LoggerUtil.addMessage("Created new CheckManager for " + user.getPlayer().getName());
             }
         }
     }
