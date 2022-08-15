@@ -4,6 +4,7 @@ import com.sliceclient.anticheat.check.data.CheckInfo;
 import com.sliceclient.anticheat.user.User;
 import lombok.Getter;
 import lombok.Setter;
+import slice.Slice;
 import slice.util.LoggerUtil;
 
 /**
@@ -38,6 +39,7 @@ public class Check {
      * Flags the check as failed.
      * */
     public void flag() {
+        if (!Slice.INSTANCE.getModuleManager().getModule("AntiCheat").isEnabled()) return;
         LoggerUtil.addMessage("&c" + user.getPlayer().getName() + " &7has failed &c" + name + " &7(&cType " + type + "&7)");
     }
 
