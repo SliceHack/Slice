@@ -62,12 +62,12 @@ public class Disabler extends Module {
 
     @EventInfo
     public void onEvent(EventPacket e) {
-        if(e.getPacket() instanceof C0FPacketConfirmTransaction
-                || e.getPacket() instanceof S32PacketConfirmTransaction
-                || e.getPacket() instanceof C00PacketKeepAlive
-                || e.getPacket() instanceof C17PacketCustomPayload) {
-            e.setCancelled(true);
-            LoggerUtil.addMessage("Cancelled packet: " + e.getPacket().getClass().getSimpleName());
+        if(e.getPacket() instanceof C13PacketPlayerAbilities) {
+            C13PacketPlayerAbilities packet = (C13PacketPlayerAbilities) e.getPacket();
+            packet.setInvulnerable(true);
+            packet.setFlying(true);
+            packet.setCreativeMode(true);
+            packet.setAllowFlying(true);
         }
     }
 }

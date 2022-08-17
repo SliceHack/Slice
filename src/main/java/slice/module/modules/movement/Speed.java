@@ -1,14 +1,11 @@
 package slice.module.modules.movement;
 
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 import net.minecraft.network.play.server.S18PacketEntityTeleport;
-import net.minecraft.potion.Potion;
 import net.minecraft.util.MathHelper;
 import org.lwjgl.input.Keyboard;
-import slice.event.Event;
 import slice.event.data.EventInfo;
 import slice.event.events.EventClientTick;
 import slice.event.events.EventPacket;
@@ -16,18 +13,26 @@ import slice.event.events.EventUpdate;
 import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
+import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
+import slice.setting.settings.NumberValue;
 import slice.util.KeyUtil;
-import slice.util.LoggerUtil;
 import slice.util.MoveUtil;
-import slice.util.RotationUtil;
 
 @ModuleInfo(name = "Speed", description = "Allows you to move fast!!", key = Keyboard.KEY_X, category = Category.MOVEMENT)
 public class Speed extends Module {
 
     ModeValue mode = new ModeValue("Mode", "Bhop", "Bhop", "Hycraft", "Dev", "Zonecraft", "Astro", "MMC", "UwUGuard", "Legit");
+    BooleanValue timer = new BooleanValue("Timer", true);
+    NumberValue timerValue = new NumberValue("Timer Value", 0.1D, 0.1D, 10.0D, NumberValue.Type.FLOAT);
 
     int onGroundTicks, offGroundTicks;
+
+    @Override
+    public void onUpdateNoToggle(EventUpdate event) {
+        timer.setVisible(mode.getValue().equalsIgnoreCase("UwUGuard"));
+        timerValue.setVisible(mode.getValue().equalsIgnoreCase("UwUGuard") && timer.getValue());
+    }
 
     public void onDisable() {
         mc.timer.timerSpeed = 1.0F;
@@ -126,14 +131,18 @@ public class Speed extends Module {
                 }
                 break;
             case "UwUGuard":
+                if((mc.thePlayer.isCollidedHorizontally && mc.thePlayer.isCollidedVertically) || !(mc.thePlayer.fallDistance <= 1)) break;
+
                 if(mc.thePlayer.onGround) {
                     MoveUtil.jump();
-                    MoveUtil.strafe(0.43D);
+                    MoveUtil.strafe(0.42D);
                 }
-                if(offGroundTicks > 2) {
+                if(offGroundTicks > 1) {
+
                     mc.thePlayer.motionY = -2F;
+                    mc.thePlayer.motionX *= 1;
+                    mc.thePlayer.motionZ *= 1;
                 }
-                mc.timer.timerSpeed = 2.0F;
                 break;
             case "Legit":
                 mc.thePlayer.setSprinting(true);
@@ -177,6 +186,12 @@ public class Speed extends Module {
         Packet<?> p = e.getPacket();
 
         if(mc.theWorld == null) return;
+
+        if(mode.getValue().equalsIgnoreCase("UwUGuard")) {
+            if(e.isOutgoing()) {
+
+            }
+        }
 
         if(mode.getValue().equalsIgnoreCase("Hycraft")) {
             if(p instanceof S18PacketEntityTeleport) {

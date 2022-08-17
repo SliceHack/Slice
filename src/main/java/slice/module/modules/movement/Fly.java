@@ -1,5 +1,8 @@
 package slice.module.modules.movement;
 
+import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
@@ -7,6 +10,8 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.*;
 import net.minecraft.network.play.server.S02PacketChat;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
+import net.minecraft.network.play.server.S18PacketEntityTeleport;
+import net.minecraft.util.BlockPos;
 import org.lwjgl.input.Keyboard;
 import slice.event.data.EventInfo;
 import slice.event.data.PacketEvent;
@@ -66,6 +71,8 @@ public class Fly extends Module {
         stage = 0;
         mc.timer.timerSpeed = 1.0F;
         posY = (int) mc.thePlayer.posY;
+        mc.thePlayer.jumpMovementFactor = 0.02F;
+        mc.thePlayer.speedInAir = 0.02F;
     }
 
     public void onUpdateNoToggle(EventUpdate event) {
@@ -179,9 +186,6 @@ public class Fly extends Module {
                 if(mc.thePlayer.ticksExisted % 20 == 9) MoveUtil.strafe(MoveUtil.getSpeed() * 1.125f);
                 if(mc.thePlayer.ticksExisted % 20 == 1) MoveUtil.strafe((float)(0.2783*1.2));
                 break;
-            case "Dev":
-                if(mc.thePlayer.onGround) { mc.thePlayer.jump(); break; }
-                break;
         }
     }
 
@@ -198,6 +202,10 @@ public class Fly extends Module {
                     e.setCancelled(true);
                 }
             }
+        }
+
+        if(mode.getValue().equalsIgnoreCase("Dev")) {
+
         }
     }
 

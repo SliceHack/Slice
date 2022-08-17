@@ -95,7 +95,7 @@ public class Aura extends Module {
             deltaYaw = mc.thePlayer.rotationYaw;
             deltaPitch = mc.thePlayer.rotationPitch;
         }
-        if(rotateTarget != null) {
+        if(rotateTarget != null && !mode.getValue().equalsIgnoreCase("None")) {
             e.setYaw(yaw);
             e.setPitch(pitch);
         }
@@ -111,6 +111,9 @@ public class Aura extends Module {
                     yaw = getRotationsFixedSens(rotateTarget)[0];
                     pitch = getRotationsFixedSens(rotateTarget)[1];
                     break;
+                case "None":
+                    yaw = mc.thePlayer.rotationYaw;
+                    pitch = mc.thePlayer.rotationPitch;
                 default:
                     yaw = getRotationsFixedSens(rotateTarget)[0];
                     pitch = getRotationsFixedSens(rotateTarget)[1];

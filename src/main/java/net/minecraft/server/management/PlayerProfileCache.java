@@ -214,14 +214,7 @@ public class PlayerProfileCache
                 }
             }
         }
-        catch (FileNotFoundException var9)
-        {
-            ;
-        }
-        catch (JsonParseException var10)
-        {
-            ;
-        }
+        catch (Exception ignored) {}
         finally
         {
             IOUtils.closeQuietly((Reader)bufferedreader);
