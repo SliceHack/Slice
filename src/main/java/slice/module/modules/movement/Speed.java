@@ -137,7 +137,7 @@ public class Speed extends Module {
                     MoveUtil.jump();
                     MoveUtil.strafe(0.44D);
                 }
-                if(offGroundTicks > 1) {
+                if(offGroundTicks > 0.1) {
                     mc.thePlayer.motionY = -2F;
                 }
                 break;
