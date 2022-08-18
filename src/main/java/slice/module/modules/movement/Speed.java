@@ -135,7 +135,7 @@ public class Speed extends Module {
 
                 if(mc.thePlayer.onGround) {
                     MoveUtil.jump();
-                    MoveUtil.strafe(0.44D);
+                    MoveUtil.strafe(0.49);
                 }
                 if(offGroundTicks > 0.1) {
                     mc.thePlayer.motionY = -2F;
@@ -175,6 +175,16 @@ public class Speed extends Module {
                 }
 
                 break;
+            case "Dev":
+                if(mc.thePlayer.onGround) {
+                    MoveUtil.jump();
+                }
+                if(offGroundTicks >= 19) {
+                    MoveUtil.jump();
+                    offGroundTicks = 0;
+                }
+                MoveUtil.resetMotion(false);
+                break;
         }
     }
 
@@ -184,9 +194,16 @@ public class Speed extends Module {
 
         if(mc.theWorld == null) return;
 
-        if(mode.getValue().equalsIgnoreCase("UwUGuard")) {
+        if(mode.getValue().equalsIgnoreCase("UwUGuard") || mode.getValue().equalsIgnoreCase("Dev")) {
             if(e.isOutgoing()) {
-
+                if(p instanceof C03PacketPlayer) {
+                    C03PacketPlayer c03 = (C03PacketPlayer) p;
+                    if(c03.isMoving()) {
+                        c03.setMoving(false);
+                        e.setCancelled(true);
+                        mc.thePlayer.sendQueue.addToSendQueue(c03);
+                    }
+                }
             }
         }
 

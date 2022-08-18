@@ -186,6 +186,16 @@ public class Fly extends Module {
                 if(mc.thePlayer.ticksExisted % 20 == 9) MoveUtil.strafe(MoveUtil.getSpeed() * 1.125f);
                 if(mc.thePlayer.ticksExisted % 20 == 1) MoveUtil.strafe((float)(0.2783*1.2));
                 break;
+            case "Dev":
+                if(stage == 0) {
+                    stage = 1;
+                    MoveUtil.jump();
+                }
+                if(stage == 1) {
+                    mc.thePlayer.onGround = false;
+                    mc.thePlayer.motionY = 0;
+                }
+                break;
         }
     }
 
