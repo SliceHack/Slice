@@ -12,7 +12,7 @@ public class FullBright extends Module {
 
     @EventInfo
     public void onUpdate(EventUpdate e) {
-        mc.gameSettings.saturation = 1000F;
+        mc.gameSettings.gammaSetting = 1000F;
     }
 
 }
