@@ -138,10 +138,7 @@ public class Speed extends Module {
                     MoveUtil.strafe(0.42D);
                 }
                 if(offGroundTicks > 1) {
-
                     mc.thePlayer.motionY = -2F;
-                    mc.thePlayer.motionX *= 1;
-                    mc.thePlayer.motionZ *= 1;
                 }
                 break;
             case "Legit":
