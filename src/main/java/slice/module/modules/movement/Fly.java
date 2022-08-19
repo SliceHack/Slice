@@ -186,16 +186,6 @@ public class Fly extends Module {
                 if(mc.thePlayer.ticksExisted % 20 == 9) MoveUtil.strafe(MoveUtil.getSpeed() * 1.125f);
                 if(mc.thePlayer.ticksExisted % 20 == 1) MoveUtil.strafe((float)(0.2783*1.2));
                 break;
-            case "Dev":
-                if(stage == 0) {
-                    stage = 1;
-                    MoveUtil.jump();
-                }
-                if(stage == 1) {
-                    mc.thePlayer.onGround = false;
-                    mc.thePlayer.motionY = 0;
-                }
-                break;
         }
     }
 
@@ -214,8 +204,15 @@ public class Fly extends Module {
             }
         }
 
-        if(mode.getValue().equalsIgnoreCase("Dev")) {
-
+        if(mode.getValue().equalsIgnoreCase("Matrix")) {
+            Packet<?> packet = e.getPacket();
+            if(mc.currentScreen == null && packet instanceof S08PacketPlayerPosLook) {
+                S08PacketPlayerPosLook pos = (S08PacketPlayerPosLook) packet;
+                mc.thePlayer.setPosition(pos.x, pos.y, pos.z);
+                mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(pos.x, pos.y, pos.z, pos.yaw, pos.pitch, false));
+                if (stage == 1) stage = 2;
+                e.setCancelled(true);
+            }
         }
     }
 
