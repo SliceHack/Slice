@@ -203,17 +203,6 @@ public class Fly extends Module {
                 }
             }
         }
-
-        if(mode.getValue().equalsIgnoreCase("Matrix")) {
-            Packet<?> packet = e.getPacket();
-            if(mc.currentScreen == null && packet instanceof S08PacketPlayerPosLook) {
-                S08PacketPlayerPosLook pos = (S08PacketPlayerPosLook) packet;
-                mc.thePlayer.setPosition(pos.x, pos.y, pos.z);
-                mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(pos.x, pos.y, pos.z, pos.yaw, pos.pitch, false));
-                if (stage == 1) stage = 2;
-                e.setCancelled(true);
-            }
-        }
     }
 
     public void useBow() {
