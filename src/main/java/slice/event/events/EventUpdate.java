@@ -16,6 +16,8 @@ public class EventUpdate extends Event {
     public void setYaw(float yaw) {
         this.yaw = yaw;
 
+        Minecraft.getMinecraft().thePlayer.prevRotationYawHead = Minecraft.getMinecraft().thePlayer.rotationYawHead;
+        Minecraft.getMinecraft().thePlayer.prevRenderYawOffset = Minecraft.getMinecraft().thePlayer.renderYawOffset;
         Minecraft.getMinecraft().thePlayer.rotationYawHead = yaw;
         Minecraft.getMinecraft().thePlayer.renderYawOffset = yaw;
     }
