@@ -244,6 +244,12 @@ public enum Slice {
         plugins.onUpdate();
 
         moduleManager.getModules().forEach(module -> module.onUpdateNoToggle(e));
+        moduleManager.getModules().forEach(module -> module.onUpdateNoToggle(e));
+
+        if(!e.isPre()) {
+            Minecraft.getMinecraft().thePlayer.prevRotationYawHead = Minecraft.getMinecraft().thePlayer.rotationYawHead;
+            Minecraft.getMinecraft().thePlayer.prevRenderYawOffset = Minecraft.getMinecraft().thePlayer.renderYawOffset;
+        }
     }
 
     @EventInfo

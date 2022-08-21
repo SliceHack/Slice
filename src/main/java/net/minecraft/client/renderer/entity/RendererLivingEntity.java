@@ -281,6 +281,8 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
             {
                 super.doRender(entity, x, y, z, entityYaw, partialTicks);
             }
+            em.setPre(false);
+            em.call();
 
             if (Reflector.RenderLivingEvent_Post_Constructor.exists())
             {

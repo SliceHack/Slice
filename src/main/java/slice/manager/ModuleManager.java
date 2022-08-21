@@ -8,6 +8,7 @@ import slice.module.modules.combat.*;
 import slice.module.modules.misc.*;
 import slice.module.modules.movement.*;
 import slice.module.modules.player.Derp;
+import slice.module.modules.player.Scaffold;
 import slice.module.modules.render.*;
 import slice.module.modules.world.Phase;
 import slice.module.modules.world.SumoFences;
@@ -64,6 +65,7 @@ public class ModuleManager {
         register(new DavidZarCookieClicker());
         register(new AntiCheat());
         register(new NoBob());
+        register(new Scaffold());
     }
 
     /**
