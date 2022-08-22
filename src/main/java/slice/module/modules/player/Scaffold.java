@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.network.play.client.C0APacketAnimation;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Vec3;
@@ -27,37 +28,38 @@ public class Scaffold extends Module {
     @EventInfo
     public void onUpdate(EventUpdate e) {
         if(e.isPre()) {
-            BlockPos under = mc.thePlayer.getPosition().add(0, -1, 0);
-            IBlockState state = state(under);
+            BlockPos pos = new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1.0D, mc.thePlayer.posZ);
+            IBlockState state = mc.theWorld.getBlockState(pos);
+            Block block = state.getBlock();
 
-            if(state.getBlock() instanceof BlockAir) {
-                data = getData(under);
+            if(block instanceof BlockAir) {
+                data = getData(pos);
+
             }
             return;
         }
-
-        if(data == null) return;
-
-        if(mc.thePlayer.getHeldItem() == null) return;
-        place();
+        if(mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getCurrentEquippedItem(), data.pos, data.facing, new Vec3(data.pos.x, data.pos.y, data.pos.z))) {
+            mc.thePlayer.sendQueue.addToSendNoEvent(new C0APacketAnimation());
+        }
     }
 
     public void place() {
         if(data == null || data.pos == null) return;
 
-        mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem(), data.getPos(), data.getFacing(), new Vec3(data.getPos().getX(), data.getPos().getY(), data.getPos().getZ()));
+        mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem(), data.pos, data.facing, new Vec3(data.pos.x, data.pos.y, data.pos.z));
     }
 
     public BlockData getData(BlockPos pos) {
-        EnumFacing facing = null;
+        EnumFacing facing;
 
-        if(block(pos) != Blocks.air) return null;
-        if(block(pos = pos.add(-1, 0, 0)) != Blocks.air) facing = EAST;
-        if(block(pos = pos.add(1, 0, 0)) != Blocks.air) facing = WEST;
-        if(block(pos = pos.add(0, 0, -1)) != Blocks.air) facing = SOUTH;
-        if(block(pos = pos.add(0, 0, 1)) != Blocks.air) facing = NORTH;
-        if(block(pos = pos.add(0, -1, 0)) != Blocks.air) facing = UP;
-        if(block(pos = pos.add(0, 1, 0)) != Blocks.air) facing = DOWN;
+        if(block(pos = pos.add(0, -1, 0)) != Blocks.air) facing = EnumFacing.UP;
+        else if(block(pos = pos.add(-1, 0, 0)) != Blocks.air) facing = EnumFacing.EAST;
+        else if(block(pos = pos.add(1, 0, 0)) != Blocks.air) facing = EnumFacing.WEST;
+        else if(block(pos = pos.add(0, 0, -1)) != Blocks.air) facing = EnumFacing.SOUTH;
+        else if(block(pos = pos.add(0, 0, 1)) != Blocks.air) facing = EnumFacing.NORTH;
+        else if(block(pos = pos.add(0, 1, 0)) != Blocks.air) facing = EnumFacing.DOWN;
+        else return null;
+
         return new BlockData(pos, facing);
     }
 

@@ -15,6 +15,7 @@ import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
 import slice.setting.settings.ModeValue;
 import slice.util.LoggerUtil;
+import slice.util.PacketUtil;
 
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
@@ -44,30 +45,21 @@ public class Disabler extends Module {
         if(mc.isSingleplayer())
             return;
 
-        if(timer.hasReached(swap ? 5000 : 0)) {
-            if(packets.isEmpty())
-                return;
-
-            try {
-                packets.forEach(mc.thePlayer.sendQueue::addToSendNoEvent);
-            } catch (ConcurrentModificationException ignored){}
-
-            timer.reset();
-            if(index > 2) {
-                swap = !swap;
-                index = 0;
-            }
+        if(timer.hasTimeReached(300 + (swap ? 50 : 0))) {
+            packets.forEach(PacketUtil::sendPacketNoEvent);
+            packets.clear();
+            swap = !swap;
         }
     }
 
     @EventInfo
     public void onEvent(EventPacket e) {
-        if(e.getPacket() instanceof C13PacketPlayerAbilities) {
-            C13PacketPlayerAbilities packet = (C13PacketPlayerAbilities) e.getPacket();
-            packet.setInvulnerable(true);
-            packet.setFlying(true);
-            packet.setCreativeMode(true);
-            packet.setAllowFlying(true);
+        Packet p = e.getPacket();
+
+        if(p instanceof C00PacketKeepAlive) {
+            e.setCancelled(true);
+            packets.add((C00PacketKeepAlive) p);
+            timer.reset();
         }
     }
 }
