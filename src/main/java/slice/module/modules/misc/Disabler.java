@@ -52,14 +52,10 @@ public class Disabler extends Module {
         }
     }
 
-    @EventInfo
-    public void onEvent(EventPacket e) {
-        Packet p = e.getPacket();
-
-        if(p instanceof C00PacketKeepAlive) {
-            e.setCancelled(true);
-            packets.add((C00PacketKeepAlive) p);
-            timer.reset();
-        }
+    @PacketEvent
+    public void onPacket(C00PacketKeepAlive c00, EventPacket e) {
+        e.setCancelled(true);
+        packets.add(c00);
+        timer.reset();
     }
 }

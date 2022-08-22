@@ -23,7 +23,7 @@ public class TargetStrafe extends Module {
     BooleanValue onMove = new BooleanValue("On Move", true);
     BooleanValue autojump = new BooleanValue("Auto Jump", true);
 
-    boolean strafing = false;
+    public boolean strafing = false;
     int direction = 1;
 
     @EventInfo

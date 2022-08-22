@@ -7,6 +7,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
 import slice.Slice;
+import slice.module.modules.movement.TargetStrafe;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -55,6 +56,10 @@ public class MoveUtil {
      * @parma speed - the speed and friction to apply to the player
      **/
     public void strafe(final double speed) {
+        TargetStrafe targetStrafe = (TargetStrafe) Slice.INSTANCE.getModuleManager().getModule(TargetStrafe.class);
+
+        if((Slice.INSTANCE.target != null && targetStrafe.strafing) && targetStrafe.isEnabled()) return;
+
         if (!isMoving())
             return;
 
