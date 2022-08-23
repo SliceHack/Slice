@@ -330,8 +330,8 @@
                     };
                     break;
                 case "NumberValue":
-                    let min = args[3];
-                    let max = args[4];
+                    let min = args[2];
+                    let max = args[3];
                     ModuleLocation[name].settings[settingName] = {
                         type: "NumberValue",
                         value: defaultValue,
@@ -358,6 +358,7 @@
                         request: name + " " + setting + " " + e.target.checked,
                         persistent: false,
                     });
+                    showModule(name);
                     break;
                 case "NumberValue":
                     ModuleLocation[name].settings[setting].value = parseFloat(e.target.value);
@@ -365,6 +366,7 @@
                         request: name + " " + setting + " " + e.target.value,
                         persistent: false,
                     });
+                    showModule(name);
                     break;
                 case "ModeValue":
                     ModuleLocation[name].settings[setting].value = e.target.options[e.target.selectedIndex].text;
@@ -372,6 +374,7 @@
                         request: name + " " + setting + " " + e.target.options[e.target.selectedIndex].text,
                         persistent: false,
                     });
+                    showModule(name);
                     break;
             }
         });
