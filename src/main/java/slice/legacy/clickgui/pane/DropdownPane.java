@@ -1,15 +1,14 @@
-package slice.clickgui.pane;
+package slice.legacy.clickgui.pane;
 
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import slice.Slice;
-import slice.clickgui.module.ModuleButton;
+import slice.legacy.clickgui.module.ModuleButton;
 import slice.font.TTFFontRenderer;
 import slice.module.Module;
 import slice.module.data.Category;
-import slice.util.LoggerUtil;
 import slice.util.RenderUtil;
 
 import java.awt.*;

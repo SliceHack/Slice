@@ -1,10 +1,10 @@
-package slice.clickgui.module;
+package slice.legacy.clickgui.module;
 
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.renderer.GlStateManager;
 import slice.Slice;
-import slice.clickgui.pane.SettingPane;
+import slice.legacy.clickgui.pane.SettingPane;
 import slice.font.TTFFontRenderer;
 import slice.module.Module;
 
@@ -36,8 +36,8 @@ public class ModuleButton {
     }
 
     public void drawButton(int mouseX, int mouseY) {
-        pane = new SettingPane(module, x + Slice.INSTANCE.getClickGui().getPane(module.getCategory()).getWidth(), y, width);
-        open = Slice.INSTANCE.getClickGui().isVisible(module);
+        pane = new SettingPane(module, x + Slice.INSTANCE.getLegacyClickGui().getPane(module.getCategory()).getWidth(), y, width);
+        open = Slice.INSTANCE.getLegacyClickGui().isVisible(module);
 
         TTFFontRenderer font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 20);
         GlStateManager.pushMatrix();
@@ -60,7 +60,7 @@ public class ModuleButton {
                 module.toggle();
 
             if(mouseButton == 1) {
-                Slice.INSTANCE.getClickGui().setVisible(module, !Slice.INSTANCE.getClickGui().isVisible(module));
+                Slice.INSTANCE.getLegacyClickGui().setVisible(module, !Slice.INSTANCE.getLegacyClickGui().isVisible(module));
             }
 
         }

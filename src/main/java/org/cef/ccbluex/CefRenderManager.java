@@ -30,6 +30,11 @@ import slice.event.events.EventUpdateLWJGL;
 import slice.event.manager.EventManager;
 import slice.gui.main.MainMenu;
 import slice.gui.main.NewMainMenu;
+import slice.module.Module;
+import slice.setting.Setting;
+import slice.setting.settings.BooleanValue;
+import slice.setting.settings.ModeValue;
+import slice.setting.settings.NumberValue;
 import slice.util.LoggerUtil;
 
 import java.io.File;
@@ -76,13 +81,7 @@ public class CefRenderManager {
 
             builder.setInstallDir(dataDir);
 //            progressHandler.let { builder.setProgressHandler(it) };
-            String[] args = cefArgs.toArray(new String[]{});
-            int index = 0;
-            for (String arg : cefArgs) {
-                args[index] = arg;
-                index++;
-            }
-            builder.addJcefArgs(args);
+            builder.addJcefArgs("--disable-web-security", "--allow-file-access-from-files");
             builder.getCefSettings().windowless_rendering_enabled = true;
             builder.getCefSettings().locale = gameSettings.language;
             builder.getCefSettings().cache_path = cacheDir.getAbsolutePath();
@@ -116,9 +115,32 @@ public class CefRenderManager {
                         case "Exit":
                             Minecraft.getMinecraft().shutdownMinecraftApplet();
                             break;
+                        case "Init":
+                            Slice.INSTANCE.getClickGui().queryInit();
+                            break;
+                        case "CloseGui":
+                            Minecraft.getMinecraft().displayGuiScreen(null);
+                            break;
 
                     }
 
+                    String[] r = request.split(" ");
+                    if(Slice.INSTANCE.getModuleManager().getModule(r[0]) != null) {
+                        Module module = Slice.INSTANCE.getModuleManager().getModule(r[0]);
+
+                        if(r.length >= 3) {
+                            Setting setting = module.getSetting(r[1]);
+
+                            if (setting != null) {
+                                if (setting instanceof ModeValue) ((ModeValue) setting).setValue(r[2]);
+                                if (setting instanceof BooleanValue) ((BooleanValue) setting).setValue(Boolean.parseBoolean(r[2]));
+                                if (setting instanceof NumberValue) ((NumberValue) setting).setValue(Double.parseDouble(r[2]));
+                            }
+                        }
+                        if(r.length == 2) {
+                            module.setEnabled(Boolean.parseBoolean(r[1]));
+                        }
+                    }
                     return super.onQuery(browser, frame, queryId, request, persistent, callback);
                 }
             }, true);

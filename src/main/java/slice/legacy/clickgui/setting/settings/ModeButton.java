@@ -1,10 +1,10 @@
-package slice.clickgui.setting.settings;
+package slice.legacy.clickgui.setting.settings;
 
 import lombok.Getter;
 import lombok.Setter;
 import slice.Slice;
-import slice.clickgui.pane.SettingPane;
-import slice.clickgui.setting.SettingComponent;
+import slice.legacy.clickgui.pane.SettingPane;
+import slice.legacy.clickgui.setting.SettingComponent;
 import slice.font.TTFFontRenderer;
 import slice.setting.settings.ModeValue;
 

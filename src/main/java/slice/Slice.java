@@ -15,7 +15,8 @@ import slice.api.API;
 import slice.api.IRC;
 import slice.cef.RequestHandler;
 import slice.cef.ViewNoGui;
-import slice.clickgui.ClickGui;
+import slice.clickgui.HTMLGui;
+import slice.legacy.clickgui.ClickGui;
 import slice.command.commands.CommandPlugins;
 import slice.discord.StartDiscordRPC;
 import slice.event.data.EventInfo;
@@ -25,14 +26,12 @@ import slice.file.Saver;
 import slice.font.FontManager;
 import slice.gui.alt.manager.AltManager;
 import slice.gui.hud.slice.HUD;
-import slice.gui.main.NewMainMenu;
 import slice.manager.CommandManager;
 import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
 import slice.module.Module;
 import slice.notification.NotificationManager;
 import slice.script.manager.ScriptManager;
-import slice.util.LoggerUtil;
 import slice.util.ResourceUtil;
 
 import java.io.*;
@@ -64,7 +63,9 @@ public enum Slice {
     private NotificationManager notificationManager;
 
     /* data */
-    private final ClickGui clickGui;
+    public HTMLGui clickGui;
+    private final ClickGui legacyClickGui;
+
     private final Saver saver;
     private final StartDiscordRPC discordRPC;
 
@@ -137,7 +138,7 @@ public enum Slice {
         scriptManager = new ScriptManager(moduleManager, fontManager);
         commandManager = new CommandManager(moduleManager);
         settingsManager = new SettingsManager(moduleManager);
-        clickGui = new ClickGui();
+        legacyClickGui = new ClickGui();
         saver = new Saver(moduleManager);
         discordRPC = new StartDiscordRPC();
         discordRPC.start();
@@ -168,6 +169,7 @@ public enum Slice {
         extractHTML(new File(sliceHUD, "SessionHUD"), "/slice/html/hud/sessionhud");
         extractHTML(new File(sliceHUD, "Notification"), "/slice/html/hud/notification");
         extractHTML(new File(sliceHUD, "ArrayList"), "/slice/html/hud/arraylist");
+        extractClickGui();
 
         this.html.add(new ViewNoGui(new Page("file:///" + html.getAbsolutePath() + "?name=" + NAME + "&version=" + VERSION + "&discord=" + discordName)));
     }
@@ -187,6 +189,20 @@ public enum Slice {
             ResourceUtil.extractResource(path + "/styles.css", css.toPath());
 
             if (sliceHUD.getParentFile().exists()) sliceHUD.mkdirs();
+        }
+    }
+
+    @SuppressWarnings("all")
+    public void extractClickGui() {
+        File path = new File(Minecraft.getMinecraft().mcDataDir, "Slice\\html\\gui\\clickgui"), html = new File(path, "index.html"), iframe = new File(path, "iframe.html");
+
+        if(!path.getParentFile().exists()) path.getParentFile().mkdirs();
+
+        if(!html.exists() || iframe.exists()) {
+            if(!path.exists()) path.mkdirs();
+
+            ResourceUtil.extractResource("slice/html/gui/clickgui/index.html", html.toPath());
+            ResourceUtil.extractResource("slice/html/gui/clickgui/iframe.html", iframe.toPath());
         }
     }
 
@@ -299,7 +315,11 @@ public enum Slice {
 
     @EventInfo
     public void onKey(EventKey e) {
-        if (e.getKey() == Keyboard.KEY_RSHIFT) Minecraft.getMinecraft().displayGuiScreen(clickGui);
+        if (e.getKey() == Keyboard.KEY_RSHIFT) {
+            if(clickGui == null) clickGui = new HTMLGui();
+
+            Minecraft.getMinecraft().displayGuiScreen(clickGui);
+        }
         if (e.getKey() == Keyboard.KEY_PERIOD) Minecraft.getMinecraft().displayGuiScreen(new GuiChat("."));
         moduleManager.getModules().stream().filter(module -> module.getKey() == e.getKey()).forEach(Module::toggle); // key event
     }

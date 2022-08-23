@@ -1,8 +1,8 @@
-package slice.clickgui.setting;
+package slice.legacy.clickgui.setting;
 
 import lombok.Getter;
 import lombok.Setter;
-import slice.clickgui.pane.SettingPane;
+import slice.legacy.clickgui.pane.SettingPane;
 import slice.setting.Setting;
 
 /**

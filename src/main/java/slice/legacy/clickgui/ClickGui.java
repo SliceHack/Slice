@@ -1,15 +1,11 @@
-package slice.clickgui;
+package slice.legacy.clickgui;
 
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.gui.GuiScreen;
-import slice.clickgui.module.ModuleButton;
-import slice.clickgui.pane.DropdownPane;
-import slice.clickgui.pane.SettingPane;
-import slice.clickgui.setting.settings.SliderButton;
+import slice.legacy.clickgui.pane.DropdownPane;
 import slice.module.Module;
 import slice.module.data.Category;
-import slice.setting.Setting;
 import slice.setting.settings.NumberValue;
 
 import java.io.IOException;

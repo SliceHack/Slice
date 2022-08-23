@@ -5,6 +5,7 @@ import lombok.Setter;
 import net.minecraft.entity.EntityLivingBase;
 import org.cef.browser.CefBrowser;
 import slice.Slice;
+import slice.clickgui.HTMLGui;
 import slice.event.data.EventInfo;
 import slice.event.events.EventUpdate;
 import slice.module.Module;
@@ -26,6 +27,8 @@ public class RequestHandler {
 
 
     public RequestHandler(CefBrowser browser) {
+        if(INSTANCE != null) return;
+
         INSTANCE = this;
         this.browser = browser;
         this.setupInfo();

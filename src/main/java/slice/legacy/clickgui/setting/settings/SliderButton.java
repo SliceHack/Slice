@@ -1,13 +1,12 @@
-package slice.clickgui.setting.settings;
+package slice.legacy.clickgui.setting.settings;
 
 import lombok.Getter;
 import lombok.Setter;
 import slice.Slice;
-import slice.clickgui.pane.SettingPane;
-import slice.clickgui.setting.SettingComponent;
+import slice.legacy.clickgui.pane.SettingPane;
+import slice.legacy.clickgui.setting.SettingComponent;
 import slice.font.TTFFontRenderer;
 import slice.setting.settings.NumberValue;
-import slice.util.LoggerUtil;
 import slice.util.RenderUtil;
 
 import java.awt.*;
@@ -27,7 +26,7 @@ public class SliderButton extends SettingComponent {
         this.value = setting;
         this.x = x;
         this.y = y;
-        this.dragging = Slice.INSTANCE.getClickGui().isDragging(setting);
+        this.dragging = Slice.INSTANCE.getLegacyClickGui().isDragging(setting);
     }
 
     public void draw(int mouseX, int mouseY) {
@@ -60,7 +59,7 @@ public class SliderButton extends SettingComponent {
         int yAdd = ((int) font.getHeight(value.getName() + " " + value.getValue()));
 
         if(mouseX >= x && mouseX <= x + width && mouseY >= (y+3) && mouseY <= (y+3) + height) {
-            Slice.INSTANCE.getClickGui().setDragging(value, true);
+            Slice.INSTANCE.getLegacyClickGui().setDragging(value, true);
             dragX = mouseX;
             dragY = mouseY;
         }
@@ -71,6 +70,6 @@ public class SliderButton extends SettingComponent {
     }
 
     public void mouseReleased(int mouseX, int mouseY, int mouseButton) {
-        Slice.INSTANCE.getClickGui().setDragging(value, false);
+        Slice.INSTANCE.getLegacyClickGui().setDragging(value, false);
     }
 }
