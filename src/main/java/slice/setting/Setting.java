@@ -17,4 +17,8 @@ public class Setting {
     public void setVisible(boolean visible) {
         setHidden(!visible);
     }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
+    }
 }
