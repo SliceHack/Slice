@@ -15,6 +15,7 @@ import slice.setting.Setting;
 import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
+import slice.util.LoggerUtil;
 
 import java.io.File;
 
@@ -121,6 +122,11 @@ public class HTMLGui extends AllTimeGuiView {
 
     public void setEnabled(String module, Boolean enabled) {
         runOnIFrame("setEnabled(\"" + module + "\", " + enabled + ")");
+    }
+
+    public void setHidden(String module, String setting, Boolean hidden) {
+        runOnIFrame(String.format("ModuleLocation[%s].settings[%s].hidden = %s", module, setting, hidden));
+        LoggerUtil.addTerminalMessage(String.format("ModuleLocation[%s].settings[%s].hidden = %s", module, setting, hidden));
     }
 
 }
