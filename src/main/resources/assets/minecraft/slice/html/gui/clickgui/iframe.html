@@ -210,6 +210,12 @@
             `;
             document.querySelector(`.${category.toLowerCase()}`).appendChild(module);
             module.onclick = function () { showModule(name) };
+            module.querySelector("input").onchange = function() {
+                window.cefQuery({
+                    request: `${name} ${this.checked ? "true" : "false"}`,
+                    persistent: false,
+                });
+            }
             Modules[category][name] = {
                 enabled: false,
                 querySelector: document.querySelector(`#${name}`),

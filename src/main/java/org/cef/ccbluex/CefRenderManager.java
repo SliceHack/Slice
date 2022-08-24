@@ -138,7 +138,7 @@ public class CefRenderManager {
                             }
                         }
                         if(r.length == 2) {
-                            module.setEnabled(Boolean.parseBoolean(r[1]));
+                            module.toggle();
                         }
                     }
                     return super.onQuery(browser, frame, queryId, request, persistent, callback);

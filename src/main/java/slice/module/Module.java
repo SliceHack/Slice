@@ -75,6 +75,7 @@ public class Module {
             Slice.INSTANCE.getSaver().save();
         } catch (Exception ignored){}
 
+        Slice.INSTANCE.clickGui.setEnabled(name, enabled);
         Interface interfaceModule = (Interface) Slice.INSTANCE.getModuleManager().getModule(Interface.class);
         if(interfaceModule.getToggleNotifications().getValue()) {
             NotificationManager.queue(new Notification(Type.INFO, enabled ? "Enabled " + name : "Disabled " + name, 2));

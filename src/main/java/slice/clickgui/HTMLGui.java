@@ -79,6 +79,9 @@ public class HTMLGui extends AllTimeGuiView {
                 }
                 runOnIFrame("addSettingToModule(" + args + ")");
             }
+            if (module.isEnabled()) {
+                setEnabled(module.getName(), true);
+            }
         }
     }
 
@@ -114,6 +117,10 @@ public class HTMLGui extends AllTimeGuiView {
      * */
     public void queryInit() {
         for(Module module : Slice.INSTANCE.getModuleManager().getModules()) addModule(module);
+    }
+
+    public void setEnabled(String module, Boolean enabled) {
+        runOnIFrame("setEnabled(\"" + module + "\", " + enabled + ")");
     }
 
 }
