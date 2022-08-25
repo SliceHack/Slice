@@ -25,7 +25,7 @@ import java.util.List;
 @SuppressWarnings("all")
 public class Disabler extends Module {
 
-     ModeValue mode = new ModeValue("Mode", "WarzoneMC", "WarzoneMC", "Dev");
+     ModeValue mode = new ModeValue("Mode", "WarzoneMC", "WarzoneMC", "Hypixel", "Dev");
 
      public final List<C00PacketKeepAlive> packets = new ArrayList<>();
 
@@ -39,23 +39,38 @@ public class Disabler extends Module {
 
     @EventInfo
     public void onUpdate(EventUpdate e) {
-        if(!mode.getValue().equalsIgnoreCase("WarzoneMC"))
-            return;
-
-        if(mc.isSingleplayer())
-            return;
-
-        if(timer.hasTimeReached(300 + (swap ? 50 : 0))) {
-            packets.forEach(PacketUtil::sendPacketNoEvent);
-            packets.clear();
-            swap = !swap;
+        switch (mode.getValue()) {
+             case "WarzoneMC":
+                  if(mc.isSingleplayer())
+                      return;
+                  if(timer.hasTimeReached(300 + (swap ? 50 : 0))) {
+                      packets.forEach(PacketUtil::sendPacketNoEvent);
+                      packets.clear();
+                      swap = !swap;
+                  } 
+                  break;
         }
     }
 
     @PacketEvent
-    public void onPacket(C00PacketKeepAlive c00, EventPacket e) {
-        e.setCancelled(true);
-        packets.add(c00);
-        timer.reset();
+    public void onPacket(EventPacket e) {
+        switch (mode.getValue()) {
+             case "WarzoneMC":
+                  if(mc.isSingleplayer() || !(e.getPacket() instanceof C00PacketKeepAlive))
+                      return;
+                  e.setCancelled(true);
+                  packets.add(c00);
+                  timer.reset();
+                  break;
+             case "Hypixel":
+                  // strafe xd
+                  Packet packet = e.getPacket();
+                  if(packet instanceof S08PacketPlayerPosLook) {
+                      final S08PacketPlayerPosLook wrapper = (S08PacketPlayerPosLook) packet;
+                      PacketUtil.sendPacketNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(wrapper.getX(), wrapper.getY(), wrapper.getZ(), true));
+                      mc.thePlayer.setPosition(wrapper.getX(), wrapper.getY(), wrapper.getZ());
+                  }
+                  break;
+        }
     }
 }
