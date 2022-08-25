@@ -242,6 +242,7 @@
             </h1>`;
 
             Object.entries(ModuleLocation[name].settings).forEach(([key, value]) => {
+                if(value.hidden) return;
                 switch (value.type) {
                     case "BooleanValue":
                         const booleanDiv = document.createElement("div");
@@ -322,6 +323,7 @@
             switch (type) {
                 case "BooleanValue":
                     ModuleLocation[name].settings[settingName] = {
+                        hidden: false,
                         type: "BooleanValue",
                         value: defaultValue,
                     };
@@ -330,6 +332,7 @@
                     args.splice(0, 2);
                     let options = [...args];
                     ModuleLocation[name].settings[settingName] = {
+                        hidden: false,
                         type: "ModeValue",
                         value: defaultValue,
                         options: options,
@@ -339,6 +342,7 @@
                     let min = args[2];
                     let max = args[3];
                     ModuleLocation[name].settings[settingName] = {
+                        hidden: false,
                         type: "NumberValue",
                         value: defaultValue,
                         min: min,
