@@ -1,16 +1,11 @@
 package slice.clickgui;
 
 import net.minecraft.client.Minecraft;
-import org.cef.browser.CefBrowser;
-import org.cef.browser.CefFrame;
-import org.cef.callback.CefQueryCallback;
 import org.cef.ccbluex.AllTimeGuiView;
-import org.cef.ccbluex.DynamicGuiView;
 import org.cef.ccbluex.GuiView;
 import org.cef.ccbluex.Page;
 import slice.Slice;
 import slice.module.Module;
-import slice.module.data.Category;
 import slice.setting.Setting;
 import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;

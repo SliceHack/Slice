@@ -155,7 +155,7 @@ public class Speed extends Module {
 
         if(mc.theWorld == null) return;
 
-        if(mode.getValue().equalsIgnoreCase("UwUGuard") || mode.getValue().equalsIgnoreCase("Dev")) {
+        if(mode.getValue().equalsIgnoreCase("UwUGuard")) {
             if(e.isOutgoing()) {
                 if(p instanceof C03PacketPlayer) {
                     C03PacketPlayer c03 = (C03PacketPlayer) p;

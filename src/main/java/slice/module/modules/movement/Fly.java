@@ -51,18 +51,22 @@ public class Fly extends Module {
 
     public void onEnable() {
         stage = 0;
-        if(mode.getValue().equalsIgnoreCase("Vulcan")) {
-            LoggerUtil.addMessage("You must have a bow in your hotbar");
-        }
-        if(mode.getValue().equalsIgnoreCase("UwUGuard") && mc.thePlayer.onGround) {
-            MoveUtil.jump();
-        }
-        if(mode.getValue().equalsIgnoreCase("PixelEdge")) {
-            for(double i = 0; i < 3.52F; i += 0.1F) {
-                mc.thePlayer.sendQueue.addToSendNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY - i, mc.thePlayer.posZ, false));
-            }
-            mc.thePlayer.sendQueue.addToSendNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, false));
-            mc.thePlayer.sendQueue.addToSendNoEvent(new C03PacketPlayer(true));
+        switch (mode.getValue()) {
+            case "Vulcan":
+                LoggerUtil.addMessage("You must have a bow in your hotbar");
+                break;
+            case "UwUGuard":
+                if(!mc.thePlayer.onGround) break;
+                MoveUtil.jump();
+                break;
+            case "PixelEdge":
+                for(double i = 0; i < 3.52F; i += 0.1F) {
+                    mc.thePlayer.sendQueue.addToSendNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY - i, mc.thePlayer.posZ, false));
+                }
+                mc.thePlayer.sendQueue.addToSendNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, false));
+                mc.thePlayer.sendQueue.addToSendNoEvent(new C03PacketPlayer(true));
+                break;
+
         }
     }
 
