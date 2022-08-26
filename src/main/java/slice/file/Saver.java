@@ -51,12 +51,13 @@ public class Saver {
             reader.close();
             JSONObject json = new JSONObject(builder.toString());
             for(Module module : moduleManager.getModules()) {
-                JSONObject moduleJson;
+                JSONObject moduleJson = null;
                 try {
                     moduleJson = json.getJSONObject(module.getName());
-                } catch (Exception e) {
-                    return;
-                }
+                } catch (Exception ignored) {}
+
+                if(moduleJson != null) continue;
+
                 module.setEnabled(moduleJson.getBoolean("enabled"));
                 module.setKey(moduleJson.getInt("key"));
 
