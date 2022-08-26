@@ -46,20 +46,20 @@ public class Disabler extends Module {
     }
 
     @PacketEvent
-    public void onPacket(EventPacket e) {
-        if(warzone.getValue()) {
-            if(mc.isSingleplayer() || !(e.getPacket() instanceof C00PacketKeepAlive)) return;
-            e.setCancelled(true);
-            packets.add((C00PacketKeepAlive) e.getPacket());
-            timer.reset();
-        }
-        if(hypixel.getValue()) {
-            Packet packet = e.getPacket();
-            if(packet instanceof S08PacketPlayerPosLook) {
-                final S08PacketPlayerPosLook wrapper = (S08PacketPlayerPosLook) packet;
-                PacketUtil.sendPacketNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(wrapper.getX(), wrapper.getY(), wrapper.getZ(), true));
-                mc.thePlayer.setPosition(wrapper.getX(), wrapper.getY(), wrapper.getZ());
-            }
-        }
+    public void onC00(C00PacketKeepAlive c00, EventPacket e) {
+        if(!warzone.getValue()) return;
+        if(mc.isSingleplayer() || !(e.getPacket() instanceof C00PacketKeepAlive)) return;
+
+        e.setCancelled(true);
+        packets.add(c00);
+        timer.reset();
     }
+
+    @PacketEvent
+    public void onS08(S08PacketPlayerPosLook s08, EventPacket e) {
+        if(!hypixel.getValue()) return;
+        PacketUtil.sendPacketNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(s08.getX(), s08.getY(), s08.getZ(), true));
+        mc.thePlayer.setPosition(s08.getX(), s08.getY(), s08.getZ());
+    }
+
 }
