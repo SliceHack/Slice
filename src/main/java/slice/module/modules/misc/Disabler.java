@@ -1,6 +1,5 @@
 package slice.module.modules.misc;
 
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.*;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import slice.event.data.EventInfo;

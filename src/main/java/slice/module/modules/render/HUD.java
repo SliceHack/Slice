@@ -1,10 +1,13 @@
 package slice.module.modules.render;
 
 import lombok.Setter;
+import slice.Slice;
 import slice.event.Event;
+import slice.event.events.EventUpdate;
 import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
+import slice.setting.Setting;
 import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 
@@ -20,5 +23,17 @@ public class HUD extends Module {
 
     public void init() {
         setEnabled(true);
+    }
+
+    @Override
+    public void onUpdateNoToggle(EventUpdate event) {
+        for(Module module : Slice.INSTANCE.getModuleManager().getModules()) {
+            for(Setting setting : module.getSettings()) {
+                if(setting instanceof BooleanValue) {
+                    BooleanValue bv = (BooleanValue) setting;
+                    Slice.INSTANCE.getClickGui().updateBooleanValue(module, bv, bv.getValue());
+                }
+            }
+        }
     }
 }

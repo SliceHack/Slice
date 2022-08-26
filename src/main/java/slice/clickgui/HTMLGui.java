@@ -119,9 +119,11 @@ public class HTMLGui extends AllTimeGuiView {
         runOnIFrame("setEnabled(\"" + module + "\", " + enabled + ")");
     }
 
-    public void setHidden(String module, String setting, Boolean hidden) {
-        runOnIFrame(String.format("ModuleLocation[%s].settings[%s].hidden = %s", module, setting, hidden));
-        LoggerUtil.addTerminalMessage(String.format("ModuleLocation[%s].settings[%s].hidden = %s", module, setting, hidden));
+    public void setHidden(Module module, Setting setting, boolean hidden) {
+        /*runOnIFrame("hideSetting(\"" + module.getName() + "\", \"" + setting.getName() + "\", " + !hidden + ")");*/
     }
 
+    public void updateBooleanValue(Module module, BooleanValue booleanValue, boolean value) {
+        runOnIFrame("updateBooleanValue(\"" + module.getName() + "\", \"" + booleanValue.getName() + "\", " + value + ")");
+    }
 }

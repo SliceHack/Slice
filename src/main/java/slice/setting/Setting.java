@@ -21,6 +21,6 @@ public class Setting {
 
     public void setHidden(boolean hidden) {
         this.hidden = hidden;
-        Slice.INSTANCE.clickGui.setHidden(module.getName(), name, hidden);
+        Slice.INSTANCE.clickGui.setHidden(module, this, hidden);
     }
 }

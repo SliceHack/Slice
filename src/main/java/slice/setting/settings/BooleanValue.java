@@ -23,7 +23,7 @@ public class BooleanValue extends Setting {
     }
 
     /**
-     * Lombock's Getters made booleans is a bit annoying, so this is a workaround
+     * LomBock's Getters made booleans is a bit annoying, so this is a workaround
      */
     public boolean getValue() {
         return value;

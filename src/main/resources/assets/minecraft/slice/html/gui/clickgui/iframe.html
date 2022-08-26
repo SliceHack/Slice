@@ -316,6 +316,20 @@
             }
         });
 
+        function hideSetting(module, setting, hide) {
+            ModuleLocation[module].settings[setting].hidden = hide;
+        }
+
+        function getModule(module, state) {
+            return ModuleLocation[module].checked = state;
+        }
+
+        function updateBooleanValue(module, setting, value) {
+            if(ModuleLocation[module].settings[setting].type !== "BooleanValue") return;
+
+            ModuleLocation[module].settings[setting].value = value;
+        }
+
         function addSettingToModule(name, type, ...args) {
             if (!ModuleLocation[name]) return;
             const settingName = args[0];
