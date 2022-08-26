@@ -20,28 +20,25 @@ import java.util.List;
 public class Disabler extends Module {
 
      BooleanValue warzone = new BooleanValue("WarzoneMC", false);
-     BooleanValue hypixel = new BooleanValue("Hypixel", false);
+     BooleanValue hypixel = new BooleanValue("Hypixel Strafe", false);
 
      public final List<C00PacketKeepAlive> packets = new ArrayList<>();
 
-     private long index, index2;
+     private long index;
      private boolean swap;
 
     public void onEnable() {
         index = 0;
-        index2 = 0;
     }
 
     @EventInfo
     public void onUpdate(EventUpdate e) {
-        if(warzone.getValue()) {
-            if(mc.isSingleplayer()) return;
-            if(timer.hasTimeReached(300 + (swap ? 50 : 0))) {
-                packets.forEach(PacketUtil::sendPacketNoEvent);
-                packets.clear();
-                swap = !swap;
-            }
-        }
+        if((!warzone.getValue()) || mc.isSingleplayer()) return;
+        if(!(timer.hasTimeReached(300 + (swap ? 50 : 0)))) return;
+
+        packets.forEach(PacketUtil::sendPacketNoEvent);
+        packets.clear();
+        swap = !swap;
     }
 
     @PacketEvent
