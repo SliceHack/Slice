@@ -190,6 +190,8 @@ public enum Slice {
 
             if (sliceHUD.getParentFile().exists()) sliceHUD.mkdirs();
         }
+        removeLinesFromFile(html);
+        removeLinesFromFile(css);
     }
 
     @SuppressWarnings("all")
@@ -198,11 +200,43 @@ public enum Slice {
 
         if(!path.getParentFile().exists()) path.getParentFile().mkdirs();
 
-        if(!html.exists() || iframe.exists()) {
+        if(!html.exists() || !iframe.exists()) {
             if(!path.exists()) path.mkdirs();
 
             ResourceUtil.extractResource("slice/html/gui/clickgui/index.html", html.toPath());
             ResourceUtil.extractResource("slice/html/gui/clickgui/iframe.html", iframe.toPath());
+            removeLinesFromFile(html);
+            removeLinesFromFile(iframe);
+        }
+    }
+
+    public void removeLinesFromFile(File file) {
+        try {
+            StringBuilder noLines = new StringBuilder();
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            boolean finishedScript = true, finishedStyle = true;
+            for(String line = reader.readLine(); line != null; line = reader.readLine()) {
+                if(file.getName().endsWith(".html")) {
+                    boolean isScript = line.contains("<script>"), isCss = line.contains("<style>");
+
+                    if (!isScript && line.contains("</script>")) finishedScript = true;
+                    else if (isScript) finishedScript = false;
+
+                    if (!isCss && line.contains("</style>")) finishedStyle = true;
+                    else if (isCss) finishedStyle = false;
+
+                    if(!line.isEmpty()) {
+                        if (!(finishedScript && finishedStyle)) noLines.append(line).append("\n");
+                        else noLines.append(line.replace("    ", " "));
+                    }
+                } else noLines.append(line);
+            }
+
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+            writer.write(noLines.toString());
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -232,6 +266,8 @@ public enum Slice {
 
             if (module.isEnabled() && eventManager.isRegistered(module)) {
                 RequestHandler.addToArrayList(module.getMode() != null ? module.getName() + " " + module.getMode().getValue() : module.getName());
+            } else if(!module.isEnabled() && !eventManager.isRegistered(module)) {
+                RequestHandler.removeFromArrayList(module.getMode() != null ? module.getName() + " " + module.getMode().getValue() : module.getName());
             }
         }
         players = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap().size();
@@ -271,7 +307,6 @@ public enum Slice {
         if (plugins.searching) {
             plugins.onPacketReceive(e);
         }
-
 
         if (packet instanceof S02PacketChat) {
             S02PacketChat s02 = (S02PacketChat) packet;

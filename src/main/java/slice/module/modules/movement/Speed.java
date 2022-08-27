@@ -8,6 +8,7 @@ import net.minecraft.network.play.server.S18PacketEntityTeleport;
 import net.minecraft.util.MathHelper;
 import org.lwjgl.input.Keyboard;
 import slice.event.data.EventInfo;
+import slice.event.events.EventAttack;
 import slice.event.events.EventClientTick;
 import slice.event.events.EventPacket;
 import slice.event.events.EventUpdate;
@@ -25,10 +26,8 @@ import slice.util.MoveUtil;
 public class Speed extends Module {
 
     ModeValue mode = new ModeValue("Mode", "Bhop", "Bhop", "Hycraft", "Dev", "Zonecraft", "Astro", "MMC", "UwUGuard", "Legit");
-
-    int onGroundTicks, offGroundTicks;
-    double recX = 0.0, recY = 0.0, recZ = 0.0, dist = 0.0;
-    private boolean jumped = false;
+    private boolean wait;
+    private int onGroundTicks, offGroundTicks, waitTicks, ticks;
 
     public void onDisable() {
         mc.timer.timerSpeed = 1.0F;
@@ -39,7 +38,6 @@ public class Speed extends Module {
         KeyUtil.moveKeys()[0].pressed = false;
         KeyUtil.moveKeys()[2].pressed = false;
         KeyUtil.moveKeys()[4].pressed = false;
-        jumped = false;
         mc.timer.timerSpeed = 1f;
         mc.gameSettings.keyBindJump.pressed = mc.gameSettings.keyBindJump.isKeyDown();
     }
@@ -56,6 +54,10 @@ public class Speed extends Module {
         } else {
             onGroundTicks = 0;
             offGroundTicks++;
+        }
+        if(wait) {
+            ticks++;
+            if(ticks >= waitTicks) ticks = 0; waitTicks = 0;
         }
     }
 
@@ -145,8 +147,17 @@ public class Speed extends Module {
                 }
                 break;
             case "Dev":
+                if(mc.thePlayer.onGround) MoveUtil.jump();
+
+                MoveUtil.strafe(Math.PI / 12.5);
                 break;
         }
+    }
+
+    @EventInfo
+    public void onAttack(EventAttack e) {
+        wait = true;
+        waitTicks = 5;
     }
 
     @EventInfo

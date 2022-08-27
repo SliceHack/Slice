@@ -242,12 +242,12 @@
             </h1>`;
 
             Object.entries(ModuleLocation[name].settings).forEach(([key, value]) => {
-                if(value.hidden) return;
-                switch (value.type) {
-                    case "BooleanValue":
-                        const booleanDiv = document.createElement("div");
-                        booleanDiv.classList.add(key.replace(/ /g, "-"), "settings-row");
-                        booleanDiv.innerHTML = `
+                if(!value.hidden) {
+                    switch (value.type) {
+                        case "BooleanValue":
+                            const booleanDiv = document.createElement("div");
+                            booleanDiv.classList.add(key.replace(/ /g, "-"), "settings-row");
+                            booleanDiv.innerHTML = `
                         <div>
                         <h3>${key}</h3>
                         <label class="mdui-checkbox" style="position: relative; margin-left: auto; margin-right: 0; float: right;">
@@ -256,38 +256,39 @@
                         </label>
                         </div>
                         `;
-                        moduleSettings.appendChild(booleanDiv);
+                            moduleSettings.appendChild(booleanDiv);
 
-                        break;
-                    case "NumberValue":
-                        const numberDiv = document.createElement("div");
-                        numberDiv.classList.add(key.replace(/ /g, "-"), "settings-row");
-                        numberDiv.innerHTML = `
+                            break;
+                        case "NumberValue":
+                            const numberDiv = document.createElement("div");
+                            numberDiv.classList.add(key.replace(/ /g, "-"), "settings-row");
+                            numberDiv.innerHTML = `
                         <h3>${key}</h3>
                         <label class="mdui-slider mdui-slider-discrete">
                             <input id="${name}-${key}-${value.type}" type="range" value="${value.value}" step="0.01" min="${value.min}" max="${value.max}" onchange="function change() {console.log(this)}"/>
                         </label>
                         `;
-                        moduleSettings.appendChild(numberDiv);
-                        break;
-                    case "ModeValue":
-                        const modeDiv = document.createElement("div");
-                        modeDiv.classList.add(key.replace(/ /g, "-"), "settings-row");
-                        const select = document.createElement("select");
-                        select.classList.add("mdui-select");
-                        select.setAttribute("mdui-select", "{position: 'bottom'}");
-                        select.style = "position: relative; margin-left: auto; margin-right: 0px; float: right; display: none;"
-                        select.id = `${name}-${key}-${value.type}`;
-                        const h3 = document.createElement("h3");
-                        h3.innerText = key;
-                        modeDiv.appendChild(h3);
+                            moduleSettings.appendChild(numberDiv);
+                            break;
+                        case "ModeValue":
+                            const modeDiv = document.createElement("div");
+                            modeDiv.classList.add(key.replace(/ /g, "-"), "settings-row");
+                            const select = document.createElement("select");
+                            select.classList.add("mdui-select");
+                            select.setAttribute("mdui-select", "{position: 'bottom'}");
+                            select.style = "position: relative; margin-left: auto; margin-right: 0px; float: right; display: none;"
+                            select.id = `${name}-${key}-${value.type}`;
+                            const h3 = document.createElement("h3");
+                            h3.innerText = key;
+                            modeDiv.appendChild(h3);
 
-                        for (const option of value.options) {
-                            select.innerHTML += `<option ${value.value == option ? "selected" : ""} value="${value.options.indexOf(option)}">${option}</option>`;
-                        }
+                            for (const option of value.options) {
+                                select.innerHTML += `<option ${value.value == option ? "selected" : ""} value="${value.options.indexOf(option)}">${option}</option>`;
+                            }
 
-                        modeDiv.appendChild(select);
-                        moduleSettings.appendChild(modeDiv);
+                            modeDiv.appendChild(select);
+                            moduleSettings.appendChild(modeDiv);
+                    }
                 }
             });
             document.querySelector(".shown-module").innerHTML = moduleSettings.outerHTML;

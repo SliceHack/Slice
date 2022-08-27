@@ -56,41 +56,42 @@ public class Saver {
                     moduleJson = json.getJSONObject(module.getName());
                 } catch (Exception ignored) {}
 
-                if(moduleJson != null) continue;
 
-                module.setEnabled(moduleJson.getBoolean("enabled"));
-                module.setKey(moduleJson.getInt("key"));
+                if(moduleJson != null) {
 
-                JSONObject settingsJson = moduleJson.getJSONObject("settings");
-                for(Setting key : module.getSettings()) {
-                    if (settingsJson.has(key.getName())) {
+                    module.setEnabled(moduleJson.getBoolean("enabled"));
+                    module.setKey(moduleJson.getInt("key"));
 
-                        if (key instanceof BooleanValue) {
-                            ((BooleanValue) key).setValue(settingsJson.getBoolean(key.getName()));
-                        }
-                        if (key instanceof ModeValue) {
-                            ((ModeValue) key).setValue(settingsJson.getString(key.getName()));
-                        }
-                        if (key instanceof NumberValue) {
-                            NumberValue value1 = (NumberValue) module.getSetting(key.getName());
-                            Number value;
-                            try {
-                                switch (value1.getType()) {
-                                    case DOUBLE:
-                                        value = settingsJson.getDouble(key.getName());
-                                        break;
-                                    case FLOAT:
-                                        value = settingsJson.getFloat(key.getName());
-                                        break;
-                                    case LONG:
-                                        value = settingsJson.getLong(key.getName());
-                                        break;
-                                    default:
-                                        value = settingsJson.getInt(key.getName());
-                                        break;
-                                }
-                                value1.setValue(value);
-                            } catch (Exception ignored) {
+                    JSONObject settingsJson = moduleJson.getJSONObject("settings");
+                    for (Setting key : module.getSettings()) {
+                        if (settingsJson.has(key.getName())) {
+
+                            if (key instanceof BooleanValue) {
+                                ((BooleanValue) key).setValue(settingsJson.getBoolean(key.getName()));
+                            }
+                            if (key instanceof ModeValue) {
+                                ((ModeValue) key).setValue(settingsJson.getString(key.getName()));
+                            }
+                            if (key instanceof NumberValue) {
+                                NumberValue value1 = (NumberValue) module.getSetting(key.getName());
+                                Number value;
+                                try {
+                                    switch (value1.getType()) {
+                                        case DOUBLE:
+                                            value = settingsJson.getDouble(key.getName());
+                                            break;
+                                        case FLOAT:
+                                            value = settingsJson.getFloat(key.getName());
+                                            break;
+                                        case LONG:
+                                            value = settingsJson.getLong(key.getName());
+                                            break;
+                                        default:
+                                            value = settingsJson.getInt(key.getName());
+                                            break;
+                                    }
+                                    value1.setValue(value);
+                                } catch (Exception ignored) {}
                             }
                         }
                     }

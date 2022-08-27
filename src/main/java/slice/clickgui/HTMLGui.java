@@ -120,7 +120,7 @@ public class HTMLGui extends AllTimeGuiView {
     }
 
     public void setHidden(Module module, Setting setting, boolean hidden) {
-        /*runOnIFrame("hideSetting(\"" + module.getName() + "\", \"" + setting.getName() + "\", " + !hidden + ")");*/
+        runOnIFrame("hideSetting(\"" + module.getName() + "\", \"" + setting.getName() + "\", " + hidden + ")");
     }
 
     public void updateBooleanValue(Module module, BooleanValue booleanValue, boolean value) {
