@@ -7,6 +7,7 @@ import slice.module.data.Category;
 import slice.module.modules.combat.*;
 import slice.module.modules.misc.*;
 import slice.module.modules.movement.*;
+import slice.module.modules.player.AutoPlace;
 import slice.module.modules.player.Derp;
 import slice.module.modules.player.Scaffold;
 import slice.module.modules.render.*;
@@ -65,6 +66,9 @@ public class ModuleManager {
         register(new DavidZarCookieClicker());
         register(new AntiCheat());
         register(new NoBob());
+        register(new Hat());
+        register(new Scaffold());
+        register(new AutoPlace());
     }
 
     /**
