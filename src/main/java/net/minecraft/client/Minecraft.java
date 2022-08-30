@@ -35,6 +35,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 import javax.imageio.ImageIO;
+
+import com.sliceclient.ultralight.UltraLightEngine;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.audio.MusicTicker;
@@ -284,6 +286,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     long prevFrameTime = -1L;
     private String debugProfilerName = "root";
 
+    public UltraLightEngine ultraLight;
+
     public Minecraft(GameConfiguration gameConfig)
     {
         theMinecraft = this;
@@ -307,6 +311,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         this.fullscreen = gameConfig.displayInfo.fullscreen;
         this.jvm64bit = isJvm64bit();
         this.theIntegratedServer = new IntegratedServer(this);
+        UltraLightEngine instance = new UltraLightEngine();
+        ultraLight = instance;
 
         if (gameConfig.serverInfo.serverName != null)
         {
@@ -390,6 +396,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
     private void startGame() throws LWJGLException, IOException
     {
+        ultraLight.init();
         this.gameSettings = new GameSettings(this, this.mcDataDir);
         this.defaultResourcePacks.add(this.mcDefaultResourcePack);
         this.startTimerHackThread();

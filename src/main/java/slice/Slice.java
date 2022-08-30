@@ -1,6 +1,8 @@
 package slice;
 
 import com.sliceclient.anticheat.SliceAC;
+import com.sliceclient.ultralight.view.DynamicGuiView;
+import com.sliceclient.ultralight.view.GuiView;
 import lombok.Getter;
 import me.friwi.jcefmaven.impl.progress.ConsoleProgressHandler;
 import net.minecraft.client.Minecraft;
@@ -32,6 +34,7 @@ import slice.manager.SettingsManager;
 import slice.module.Module;
 import slice.notification.NotificationManager;
 import slice.script.manager.ScriptManager;
+import slice.util.LoggerUtil;
 import slice.util.ResourceUtil;
 
 import java.io.*;
@@ -351,9 +354,7 @@ public enum Slice {
     @EventInfo
     public void onKey(EventKey e) {
         if (e.getKey() == Keyboard.KEY_RSHIFT) {
-            if(clickGui == null) clickGui = new HTMLGui();
-
-            Minecraft.getMinecraft().displayGuiScreen(clickGui);
+//            if(clickGui == null) clickGui = new HTMLGui();
         }
         if (e.getKey() == Keyboard.KEY_PERIOD) Minecraft.getMinecraft().displayGuiScreen(new GuiChat("."));
         moduleManager.getModules().stream().filter(module -> module.getKey() == e.getKey()).forEach(Module::toggle); // key event

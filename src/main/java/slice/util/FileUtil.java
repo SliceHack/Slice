@@ -1,12 +1,13 @@
 package slice.util;
 
 import lombok.experimental.UtilityClass;
+import org.apache.commons.io.FileUtils;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.zip.ZipInputStream;
 
 /**
@@ -44,5 +45,17 @@ public class FileUtil {
             return new ZipInputStream(Files.newInputStream(file.toPath()));
         } catch (Exception ignored) {}
         return null;
+    }
+
+    public static void downloadFile(String url, Path toPath) {
+        try {
+            URL website = new URL(url);
+            HttpURLConnection connection = (HttpURLConnection) website.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+            connection.connect();
+            InputStream inputStream = connection.getInputStream();
+            Files.copy(inputStream, toPath);
+        } catch (Exception ignored){}
     }
 }

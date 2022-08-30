@@ -5,11 +5,11 @@ import net.minecraft.util.MathHelper;
 
 public class ScaledResolution
 {
-    private final double scaledWidthD;
-    private final double scaledHeightD;
-    private int scaledWidth;
-    private int scaledHeight;
-    private int scaleFactor;
+    public final double scaledWidthD;
+    public final double scaledHeightD;
+    public int scaledWidth;
+    public int scaledHeight;
+    public int scaleFactor;
 
     public ScaledResolution(Minecraft p_i46445_1_)
     {
