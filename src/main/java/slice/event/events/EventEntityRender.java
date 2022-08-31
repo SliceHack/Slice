@@ -11,5 +11,6 @@ import slice.event.Event;
 @AllArgsConstructor
 public class EventEntityRender extends Event {
     private EntityLivingBase entity;
+    private float partialTicks;
     private boolean pre;
 }

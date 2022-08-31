@@ -1,6 +1,7 @@
 package slice;
 
 import com.sliceclient.anticheat.SliceAC;
+import com.sliceclient.ultralight.UltraLightEngine;
 import com.sliceclient.ultralight.view.DynamicGuiView;
 import com.sliceclient.ultralight.view.GuiView;
 import lombok.Getter;
@@ -154,6 +155,7 @@ public enum Slice {
         eventManager.register(this);
 
         Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
+        eventManager.register(UltraLightEngine.INSTANCE);
     }
 
     /**
@@ -354,7 +356,9 @@ public enum Slice {
     @EventInfo
     public void onKey(EventKey e) {
         if (e.getKey() == Keyboard.KEY_RSHIFT) {
-//            if(clickGui == null) clickGui = new HTMLGui();
+            if(clickGui == null) clickGui = new HTMLGui();
+
+            Minecraft.getMinecraft().displayGuiScreen(clickGui);
         }
         if (e.getKey() == Keyboard.KEY_PERIOD) Minecraft.getMinecraft().displayGuiScreen(new GuiChat("."));
         moduleManager.getModules().stream().filter(module -> module.getKey() == e.getKey()).forEach(Module::toggle); // key event

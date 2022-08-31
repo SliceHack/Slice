@@ -115,13 +115,33 @@ public class RenderUtil {
      * */
     public void drawBoundingBox(AxisAlignedBB axisAlignedBB, Color color) {
         worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
-        GL11.glColor4d(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
-        worldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.minZ).endVertex();
-        worldRenderer.pos(axisAlignedBB.maxX, axisAlignedBB.minY, axisAlignedBB.minZ).endVertex();
-        worldRenderer.pos(axisAlignedBB.maxX, axisAlignedBB.minY, axisAlignedBB.maxZ).endVertex();
-        worldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.maxZ).endVertex();
-        worldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.minZ).endVertex();
-        tessellator.draw();
+        glColor(color.getRGB());
+        boundingPox(axisAlignedBB);
     }
 
+    /***
+     * Outlines a bounding box
+     *
+     * @param axisAlignedBB the axis
+     * @param color the color
+     *
+     * */
+    public void outlineBoundingBox(AxisAlignedBB axisAlignedBB, Color color) {
+        worldRenderer.begin(GL11.GL_LINE_LOOP, DefaultVertexFormats.POSITION);
+        glColor(color.getRGB());
+        boundingPox(axisAlignedBB);
+    }
+
+    private static void boundingPox(AxisAlignedBB axisAlignedBB) {
+        RenderUtil.worldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.minZ).endVertex();
+        RenderUtil.worldRenderer.pos(axisAlignedBB.maxX, axisAlignedBB.minY, axisAlignedBB.minZ).endVertex();
+        RenderUtil.worldRenderer.pos(axisAlignedBB.maxX, axisAlignedBB.minY, axisAlignedBB.maxZ).endVertex();
+        RenderUtil.worldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.maxZ).endVertex();
+        RenderUtil.worldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.minZ).endVertex();
+        RenderUtil.tessellator.draw();
+    }
+
+    public void glColor(Color color) {
+        GL11.glColor4d(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
+    }
 }

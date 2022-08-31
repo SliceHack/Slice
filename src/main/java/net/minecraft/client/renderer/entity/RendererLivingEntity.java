@@ -103,7 +103,7 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
     {
         if (!Reflector.RenderLivingEvent_Pre_Constructor.exists() || !Reflector.postForgeBusEvent(Reflector.RenderLivingEvent_Pre_Constructor, new Object[] {entity, this, Double.valueOf(x), Double.valueOf(y), Double.valueOf(z)}))
         {
-            EventEntityRender em = new EventEntityRender(entity, true);
+            EventEntityRender em = new EventEntityRender(entity, partialTicks, true);
             em.call();
             if (em.isCancelled())
                 return;
@@ -281,6 +281,7 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
             {
                 super.doRender(entity, x, y, z, entityYaw, partialTicks);
             }
+            em.setPartialTicks(partialTicks);
             em.setPre(false);
             em.call();
 

@@ -5,12 +5,14 @@ import com.sliceclient.ultralight.UltraLightEngine;
 import com.sliceclient.ultralight.support.UltraLightUtils;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import org.cef.ccbluex.Page;
 import org.lwjgl.input.Mouse;
+import slice.Slice;
+import slice.util.LoggerUtil;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.File;
 import java.io.IOException;
 
 @Getter @Setter
@@ -19,10 +21,12 @@ public class GuiView extends GuiScreen {
     public Page page;
     public View view;
 
+    private Page pageToLoad;
+
     public GuiView(Page page) {
         this.page = page;
         this.view = new View();
-        view.loadURL("https://www.google.com");
+        this.pageToLoad = page;
     }
 
     @Override
@@ -33,6 +37,11 @@ public class GuiView extends GuiScreen {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         if(view == null) return;
+
+        if(pageToLoad != null) {
+            view.loadURL(pageToLoad.getUrl());
+            pageToLoad = null;
+        }
 
         if(Mouse.hasWheel()) {
             int wheel = Mouse.getDWheel();

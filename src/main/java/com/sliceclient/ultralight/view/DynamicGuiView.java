@@ -1,12 +1,18 @@
 package com.sliceclient.ultralight.view;
 
+import com.sliceclient.ultralight.UltraLightEngine;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
 import org.cef.ccbluex.Page;
 
-public class DynamicGuiView extends GuiView {
+public class DynamicGuiView extends GuiScreen {
+
+    public View view;
 
     public DynamicGuiView(Page page) {
-        super(page);
+        view = new View();
+        view.loadURL(page.getUrl());
+        UltraLightEngine.INSTANCE.registerView(view);
     }
 
     @Override
@@ -21,7 +27,6 @@ public class DynamicGuiView extends GuiView {
 
     @Override
     public void onGuiClosed() {
-        destroy();
     }
 
     @Override

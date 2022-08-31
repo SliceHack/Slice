@@ -14,4 +14,4 @@ ViaMCP/ViaRewind/config.yml
 ViaMCP/ViaVersion/viaversion.yml
 eula.txt
 server.properties
-debug.log
+*.log

@@ -69,6 +69,7 @@ public class ModuleManager {
         register(new Hat());
         register(new Scaffold());
         register(new AutoPlace());
+        register(new ESP());
     }
 
     /**

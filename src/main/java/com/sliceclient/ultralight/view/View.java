@@ -10,6 +10,7 @@ import com.labymedia.ultralight.input.UltralightMouseEvent;
 import com.labymedia.ultralight.input.UltralightScrollEvent;
 import com.labymedia.ultralight.javascript.JavascriptContextLock;
 import com.labymedia.ultralight.math.IntRect;
+import com.labymedia.ultralight.plugin.loading.UltralightLoadListener;
 import com.sliceclient.ultralight.UltraLightEngine;
 import com.sliceclient.ultralight.listener.TheLoadListener;
 import lombok.Getter;
@@ -21,6 +22,9 @@ import org.lwjgl.opengl.Display;
 import slice.Slice;
 import slice.util.LoggerUtil;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.nio.ByteBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -35,12 +39,14 @@ public class View {
     private int glTexture = -1;
 
     public void init() {
-        view = UltralightRenderer.create().createView(UltraLightEngine.INSTANCE.getWidth(), UltraLightEngine.INSTANCE.getHeight(), new UltralightViewConfig());
-        loadListener = new TheLoadListener(view);
-        view.setLoadListener(loadListener);
+        if(view == null) {
+            view = UltraLightEngine.INSTANCE.ultraLight();
+            view.setLoadListener(loadListener = new TheLoadListener(view));
+        }
     }
 
     public void loadURL(String url) {
+        if(view == null) { view = UltraLightEngine.INSTANCE.ultraLight(); view.setLoadListener(loadListener = new TheLoadListener(view)); }
         view.loadURL(url);
     }
 
@@ -133,7 +139,9 @@ public class View {
         glBindTexture(GL_TEXTURE_2D, 0);
     }
 
-    public void gc(){
+    public void gc() {
+        if(view == null) return;
+
         JavascriptContextLock lock = view.lockJavascriptContext();
         try {
             lock.getContext().garbageCollect();
@@ -147,14 +155,20 @@ public class View {
     }
 
     public void fireScrollEvent(UltralightScrollEvent event) {
+        if(view == null) return;
+
         view.fireScrollEvent(event);
     }
 
     public void fireMouseEvent(UltralightMouseEvent event) {
+        if(view == null) return;
+
         view.fireMouseEvent(event);
     }
 
     public void fireKeyEvent(UltralightKeyEvent event) {
+        if(view == null) return;
+
         view.fireKeyEvent(event);
     }
 }

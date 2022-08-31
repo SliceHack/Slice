@@ -37,6 +37,7 @@ public class GuiView extends GuiScreen {
         this.page = page;
 
         init();
+
     }
 
     public void init() {

@@ -81,7 +81,21 @@ public class CefRenderManager {
 
             builder.setInstallDir(dataDir);
 //            progressHandler.let { builder.setProgressHandler(it) };
-            builder.addJcefArgs("--disable-web-security", "--allow-file-access-from-files");
+            builder.addJcefArgs(
+                    "--disable-web-security",
+                    "--allow-file-access-from-files",
+                    "--enable-gpu-memory-buffer-compositor-resources",
+                    "--enable-begin-frame-scheduling",
+                    "--enable-system-flash",
+                    "--enable-gpu-rasterization",
+                    "--enable-gpu-vsync",
+                    "--enable-webgl-lose-context-on-error",
+                    "--disable-gpu-compositing",
+                    "--disable-gpu-vsync",
+                    "--disable-gpu-rasterization",
+                    "--disable-gpu-memory-buffer-compositor-resources",
+                    "--disable-gpu"
+            );
             builder.getCefSettings().windowless_rendering_enabled = true;
             builder.getCefSettings().locale = gameSettings.language;
             builder.getCefSettings().cache_path = cacheDir.getAbsolutePath();

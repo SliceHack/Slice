@@ -3,8 +3,11 @@ package com.sliceclient.ultralight;
 import com.labymedia.ultralight.UltralightJava;
 import com.labymedia.ultralight.UltralightPlatform;
 import com.labymedia.ultralight.UltralightRenderer;
+import com.labymedia.ultralight.UltralightView;
 import com.labymedia.ultralight.config.FontHinting;
 import com.labymedia.ultralight.config.UltralightConfig;
+import com.labymedia.ultralight.config.UltralightViewConfig;
+import com.labymedia.ultralight.gpu.UltralightGPUDriverNativeUtil;
 import com.sliceclient.ultralight.support.ClipboardAdapter;
 import com.sliceclient.ultralight.support.FileSystemAdapter;
 import com.sliceclient.ultralight.view.View;
@@ -23,8 +26,6 @@ import slice.util.LoggerUtil;
 import slice.util.Timer;
 
 import java.io.*;
-import java.net.URL;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class UltraLightEngine {
     public static UltraLightEngine INSTANCE;
 
     private final Logger logger = LogManager.getLogger("Ultralight");
-    private final String ULTRALIGHT_NATIVE_VERSION = "0.412";
+    private final String ULTRALIGHT_NATIVE_VERSION = "0.46";
 
     private UltralightPlatform platform;
     private UltralightRenderer renderer;
@@ -61,6 +62,7 @@ public class UltraLightEngine {
 
     public void init() {
         try {
+            // download ultralight natives and resources from web
             checkResources();
 
             // then load it
@@ -77,23 +79,16 @@ public class UltraLightEngine {
             platform.usePlatformFontLoader();
             platform.setFileSystem(new FileSystemAdapter());
             platform.setClipboard(new ClipboardAdapter());
-            platform.setLogger((level, message) -> {
-                switch (level) {
-                    case INFO: logger.debug("[Ultralight/ERR] " + message); break;
-                    case WARNING: logger.debug("[Ultralight/WARN] " + message); break;
-                    case ERROR: logger.debug("[Ultralight/INFO] " + message); break;
-                }
-            });
-
+            platform.setLogger((level, message) -> logger.info(message));
             renderer = UltralightRenderer.create();
             renderer.logMemoryUsage();
-
-            Slice.INSTANCE.getEventManager().register(this);
         } catch (Exception ignored){}
     }
 
     private void checkResources() {
         try {
+            UltralightJava.extractNativeLibrary(resourcePath.toPath());
+            UltralightGPUDriverNativeUtil.extractNativeLibrary(resourcePath.toPath());
             File resourcesZip = new File(resourcePath, "resources.zip");
             if (!resourcePath.exists()) resourcePath.mkdirs();
             if (resourcePath.listFiles().length >= 4) return;
@@ -119,6 +114,16 @@ public class UltraLightEngine {
     public void unregisterView(View view) {
         views.remove(view);
         view.close();
+    }
+
+    public UltralightView ultraLight() {
+        if(renderer == null) renderer.create();
+
+        return renderer.createView(width, height,
+                new UltralightViewConfig()
+                        .initialDeviceScale(1.0)
+                        .isTransparent(true)
+        );
     }
 
     @EventInfo
