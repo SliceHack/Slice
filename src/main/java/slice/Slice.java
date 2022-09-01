@@ -1,9 +1,6 @@
 package slice;
 
 import com.sliceclient.anticheat.SliceAC;
-import com.sliceclient.ultralight.UltraLightEngine;
-import com.sliceclient.ultralight.view.DynamicGuiView;
-import com.sliceclient.ultralight.view.GuiView;
 import lombok.Getter;
 import me.friwi.jcefmaven.impl.progress.ConsoleProgressHandler;
 import net.minecraft.client.Minecraft;
@@ -155,7 +152,6 @@ public enum Slice {
         eventManager.register(this);
 
         Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
-        eventManager.register(UltraLightEngine.INSTANCE);
     }
 
     /**
@@ -177,6 +173,7 @@ public enum Slice {
         extractClickGui();
 
         this.html.add(new ViewNoGui(new Page("file:///" + html.getAbsolutePath() + "?name=" + NAME + "&version=" + VERSION + "&discord=" + discordName)));
+        clickGui = new HTMLGui();
     }
 
     @SuppressWarnings("all")
@@ -356,8 +353,6 @@ public enum Slice {
     @EventInfo
     public void onKey(EventKey e) {
         if (e.getKey() == Keyboard.KEY_RSHIFT) {
-            if(clickGui == null) clickGui = new HTMLGui();
-
             Minecraft.getMinecraft().displayGuiScreen(clickGui);
         }
         if (e.getKey() == Keyboard.KEY_PERIOD) Minecraft.getMinecraft().displayGuiScreen(new GuiChat("."));

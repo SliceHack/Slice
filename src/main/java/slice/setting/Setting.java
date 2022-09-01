@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import slice.Slice;
 import slice.module.Module;
+import slice.util.LoggerUtil;
 
 @Getter @Setter
 public class Setting {

@@ -2,10 +2,7 @@ package org.cef.ccbluex;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.friwi.jcefmaven.CefAppBuilder;
-import me.friwi.jcefmaven.CefInitializationException;
-import me.friwi.jcefmaven.IProgressHandler;
-import me.friwi.jcefmaven.UnsupportedPlatformException;
+import me.friwi.jcefmaven.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiOptions;
@@ -20,16 +17,12 @@ import org.cef.browser.CefMessageRouter;
 import org.cef.browser.scheme.SchemeResourceHandler;
 import org.cef.callback.CefQueryCallback;
 import org.cef.handler.CefMessageRouterHandlerAdapter;
-import ru.vidtu.ias.utils.Request;
 import slice.Slice;
 import slice.cef.RequestHandler;
 import slice.event.data.EventInfo;
 import slice.event.events.Event2D;
-import slice.event.events.EventUpdate;
 import slice.event.events.EventUpdateLWJGL;
 import slice.event.manager.EventManager;
-import slice.gui.main.MainMenu;
-import slice.gui.main.NewMainMenu;
 import slice.module.Module;
 import slice.setting.Setting;
 import slice.setting.settings.BooleanValue;
@@ -68,32 +61,28 @@ public class CefRenderManager {
 
     public void initialize(IProgressHandler progressHandler) {
         try {
-            System.out.println("Initializing CefRenderManager...");
-            // data dir will create by CefAppBuilder
             if (!cacheDir.exists()) {
                 cacheDir.mkdirs();
             }
-
             GameSettings gameSettings = Minecraft.getMinecraft().gameSettings;
 
-            // use jcef maven CefAppBuilder, it can download resources automatically
             CefAppBuilder builder = new CefAppBuilder();
 
             builder.setInstallDir(dataDir);
-//            progressHandler.let { builder.setProgressHandler(it) };
+            progressHandler.handleProgress(EnumProgress.INITIALIZED, 1f);
             builder.addJcefArgs(
                     "--disable-web-security",
                     "--allow-file-access-from-files",
-                    "--enable-gpu-memory-buffer-compositor-resources",
-                    "--enable-begin-frame-scheduling",
-                    "--enable-system-flash",
-                    "--enable-gpu-rasterization",
-                    "--enable-gpu-vsync",
-                    "--enable-webgl-lose-context-on-error",
+                    "--disable-gpu",
                     "--disable-gpu-compositing",
                     "--disable-gpu-vsync",
+                    "--disable-gpu-sandbox",
+                    "--disable-gpu-driver-bug-workarounds",
+                    "--disable-gpu-program-cache",
+                    "--disable-gpu-raster",
                     "--disable-gpu-rasterization",
-                    "--disable-gpu-memory-buffer-compositor-resources",
+                    "--disable-gpu-rasterization-msaa",
+                    "--disable-gpu-rasterization-multisample",
                     "--disable-gpu"
             );
             builder.getCefSettings().windowless_rendering_enabled = true;
