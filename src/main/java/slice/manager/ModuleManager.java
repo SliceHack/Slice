@@ -72,11 +72,8 @@ public class ModuleManager {
         register(new Scaffold());
         register(new AutoPlace());
         register(new ESP());
-<<<<<<< HEAD
         register(new AutoArmor());
-=======
         register(new AutoTool());
->>>>>>> 75946e2b4b4d273d8ac8589a6eaf84f0dbe327a4
     }
 
     /**
