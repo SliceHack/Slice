@@ -1,8 +1,12 @@
 package slice.module.modules.render;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.glu.Cylinder;
+import org.lwjgl.util.glu.Sphere;
 import slice.event.data.EventInfo;
 import slice.event.events.EventEntityRender;
 import slice.module.Module;
@@ -16,23 +20,18 @@ import java.awt.*;
 public class ESP extends Module {
 
     @EventInfo
-    public void onEntityRender(EventEntityRender event) {
-        BlockPos pos = event.getEntity().getPosition();
+    public void onEntityRender(EventEntityRender e) {
 
-        GL11.glPushMatrix();
-        GL11.glEnable(3042);
-        GL11.glBlendFunc(770, 771);
-        GL11.glDisable(3553);
-        GL11.glEnable(2848);
-        GL11.glDisable(2929);
-        GL11.glDepthMask(false);
-        GL11.glLineWidth(1);
-        RenderUtil.drawBoundingBox(new AxisAlignedBB(pos.x, pos.y, pos.z, pos.x + 1.0, pos.y + 1.0, pos.z + 1.0), Color.WHITE);
-        GL11.glDisable(2848);
-        GL11.glEnable(3553);
-        GL11.glEnable(2929);
-        GL11.glDepthMask(true);
-        GL11.glDisable(3042);
-        GL11.glPopMatrix();
+        double x = e.getEntity().lastTickPosX + (e.getEntity().posX - e.getEntity().lastTickPosX) * (double)e.getPartialTicks() - (mc.getRenderManager()).viewerPosX;
+        double y = e.getEntity().lastTickPosY + (e.getEntity().posY - e.getEntity().lastTickPosY) * (double)e.getPartialTicks() - (mc.getRenderManager()).viewerPosY;
+        double z = e.getEntity().lastTickPosZ + (e.getEntity().posZ - e.getEntity().lastTickPosZ) * (double)e.getPartialTicks() - (mc.getRenderManager()).viewerPosZ;
+        float width = e.getEntity().width;
+        float height = e.getEntity().height;
+
+
+    }
+
+    public void renderBox(int x, int y, int z, float width, float height, float lineRed, float lineGreen, float lineBlue, float lineAlpha, float lineWdith) {
+
     }
 }
