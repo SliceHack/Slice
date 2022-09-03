@@ -7,6 +7,7 @@ import slice.module.data.Category;
 import slice.module.modules.combat.*;
 import slice.module.modules.misc.*;
 import slice.module.modules.movement.*;
+import slice.module.modules.player.AutoArmor;
 import slice.module.modules.player.AutoPlace;
 import slice.module.modules.player.Derp;
 import slice.module.modules.player.Scaffold;
@@ -70,6 +71,7 @@ public class ModuleManager {
         register(new Scaffold());
         register(new AutoPlace());
         register(new ESP());
+        register(new AutoArmor());
     }
 
     /**

@@ -21,6 +21,7 @@ import slice.setting.settings.NumberValue;
 import slice.util.KeyUtil;
 import slice.util.LoggerUtil;
 import slice.util.MoveUtil;
+import slice.util.Timer;
 
 @ModuleInfo(name = "Speed", description = "Allows you to move fast!!", key = Keyboard.KEY_X, category = Category.MOVEMENT)
 public class Speed extends Module {
@@ -147,6 +148,7 @@ public class Speed extends Module {
                 }
                 break;
             case "Dev":
+                if(!MoveUtil.isMoving()) break;
                 if(mc.thePlayer.onGround) MoveUtil.jump();
 
                 MoveUtil.strafe(Math.PI / 12.5);
