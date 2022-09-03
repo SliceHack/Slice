@@ -9,6 +9,7 @@ import slice.module.modules.misc.*;
 import slice.module.modules.movement.*;
 import slice.module.modules.player.AutoArmor;
 import slice.module.modules.player.AutoPlace;
+import slice.module.modules.player.AutoTool;
 import slice.module.modules.player.Derp;
 import slice.module.modules.player.Scaffold;
 import slice.module.modules.render.*;
@@ -71,7 +72,11 @@ public class ModuleManager {
         register(new Scaffold());
         register(new AutoPlace());
         register(new ESP());
+<<<<<<< HEAD
         register(new AutoArmor());
+=======
+        register(new AutoTool());
+>>>>>>> 75946e2b4b4d273d8ac8589a6eaf84f0dbe327a4
     }
 
     /**
