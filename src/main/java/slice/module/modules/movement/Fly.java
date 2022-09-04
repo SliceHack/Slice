@@ -26,6 +26,7 @@ import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
 import slice.util.LoggerUtil;
 import slice.util.MoveUtil;
+import slice.util.PacketUtil;
 import slice.util.RotationUtil;
 
 @ModuleInfo(name = "Fly", key = Keyboard.KEY_G, description = "Allows you to fly like a bird", category = Category.MOVEMENT)
@@ -121,17 +122,7 @@ public class Fly extends Module {
                 }
                 break;
             case "Vulcan":
-                if(stage < 2) {
-                    stage = 3;
-                }
-
-                if(stage == 2 && mc.thePlayer.hurtResistantTime <= 0) {
-                    stage = 3;
-                }
-
-                if(stage == 3) {
-                    if (mc.thePlayer.ticksExisted % 5 == 0) mc.thePlayer.motionY = -0.1F;
-                }
+                if (mc.thePlayer.ticksExisted % 5 == 0) mc.thePlayer.motionY = -0.1F;
                 break;
             case "Vanilla":
                 if(mc.gameSettings.keyBindJump.isKeyDown()) {
@@ -190,6 +181,14 @@ public class Fly extends Module {
                 if(mc.thePlayer.ticksExisted % 20 == 9) MoveUtil.strafe(MoveUtil.getSpeed() * 1.125f);
                 if(mc.thePlayer.ticksExisted % 20 == 1) MoveUtil.strafe((float)(0.2783*1.2));
                 break;
+            case "Dev":
+                mc.thePlayer.motionY = mc.thePlayer.ticksExisted % 3 == 0 ? 0.001 : 0;
+                mc.thePlayer.onGround = true;
+                for(int i = 0; i < 42; i += 1) {
+                    PacketUtil.sendPacketNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, false));
+                }
+                PacketUtil.sendPacket(new C03PacketPlayer(false));
+                break;
         }
     }
 
@@ -200,12 +199,22 @@ public class Fly extends Module {
         if(mc.theWorld == null)
             return;
 
-        if(mode.getValue().equalsIgnoreCase("Vulcan")) {
-            if(stage == 2) {
-                if(e.isOutgoing() && !(p instanceof C03PacketPlayer)) {
-                    e.setCancelled(true);
+        switch (mode.getValue()) {
+            case "Vulcan":
+                if(stage == 2) {
+                    if(e.isOutgoing() && !(p instanceof C03PacketPlayer)) {
+                        e.setCancelled(true);
+                    }
                 }
-            }
+                break;
+            case "Dev":
+                if(p instanceof S18PacketEntityTeleport) {
+                    if(((S18PacketEntityTeleport) p).getEntityId() == mc.thePlayer.getEntityId()) e.setCancelled(true);
+                }
+                if(p instanceof S08PacketPlayerPosLook) {
+                    mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ);
+                }
+                break;
         }
     }
 

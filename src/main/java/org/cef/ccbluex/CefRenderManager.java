@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.gui.GuiSelectWorld;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.settings.GameSettings;
 import org.cef.CefApp;
 import org.cef.CefClient;
@@ -73,16 +74,6 @@ public class CefRenderManager {
             builder.addJcefArgs(
                     "--disable-web-security",
                     "--allow-file-access-from-files",
-                    "--disable-gpu",
-                    "--disable-gpu-compositing",
-                    "--disable-gpu-vsync",
-                    "--disable-gpu-sandbox",
-                    "--disable-gpu-driver-bug-workarounds",
-                    "--disable-gpu-program-cache",
-                    "--disable-gpu-raster",
-                    "--disable-gpu-rasterization",
-                    "--disable-gpu-rasterization-msaa",
-                    "--disable-gpu-rasterization-multisample",
                     "--disable-gpu"
             );
             builder.getCefSettings().windowless_rendering_enabled = true;

@@ -32,6 +32,7 @@ import slice.manager.SettingsManager;
 import slice.module.Module;
 import slice.notification.NotificationManager;
 import slice.script.manager.ScriptManager;
+import slice.setting.settings.ModeValue;
 import slice.util.LoggerUtil;
 import slice.util.ResourceUtil;
 
@@ -258,19 +259,20 @@ public enum Slice {
         html.forEach((html) -> html.onResize(Minecraft.getMinecraft(), Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight));
         for (Module module : moduleManager.getModules()) {
 
-            if (!module.isEnabled() && eventManager.isRegistered(module)) {
-                eventManager.unregister(module);
+            if (!module.isEnabled() && eventManager.isRegistered(module)) eventManager.unregister(module);
+            if (module.isEnabled() && !eventManager.isRegistered(module)) eventManager.register(module);
+
+            if(module.getMode() != null) {
+                ModeValue mode = module.getMode();
+
+                for(String s : mode.getValues()) {
+                    if(s.equalsIgnoreCase(mode.getValue())) continue;
+                    RequestHandler.renameFromArrayList(module.getName() + " " + s, module.getName() + " " + mode.getValue());
+                }
             }
 
-            if (module.isEnabled() && !eventManager.isRegistered(module)) {
-                eventManager.register(module);
-            }
-
-            if (module.isEnabled() && eventManager.isRegistered(module)) {
-                RequestHandler.addToArrayList(module.getMode() != null ? module.getName() + " " + module.getMode().getValue() : module.getName());
-            } else if(!module.isEnabled() && !eventManager.isRegistered(module)) {
-                RequestHandler.removeFromArrayList(module.getMode() != null ? module.getName() + " " + module.getMode().getValue() : module.getName());
-            }
+            if (module.isEnabled() && eventManager.isRegistered(module)) RequestHandler.addToArrayList(module.getMode() != null ? module.getName() + " " + module.getMode().getValue() : module.getName());
+            else if(!module.isEnabled() && !eventManager.isRegistered(module)) RequestHandler.removeFromArrayList(module.getMode() != null ? module.getName() + " " + module.getMode().getValue() : module.getName());
         }
         players = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap().size();
 
