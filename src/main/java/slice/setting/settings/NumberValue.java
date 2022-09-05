@@ -27,6 +27,7 @@ public class NumberValue extends Setting {
             if (Slice.INSTANCE.getSaver() != null)
                 Slice.INSTANCE.getSaver().save();
         }catch (Exception ignored){}
+        updateSetting("NumberValue", this.value);
     }
 
     public enum Type {

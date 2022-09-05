@@ -20,6 +20,7 @@ public class BooleanValue extends Setting {
             if (Slice.INSTANCE.getSaver() != null)
                 Slice.INSTANCE.getSaver().save();
         }catch (Exception ignored){}
+        updateSetting("BooleanValue", value);
     }
 
     /**

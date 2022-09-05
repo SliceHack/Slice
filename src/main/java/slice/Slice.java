@@ -68,7 +68,7 @@ public enum Slice {
     public HTMLGui clickGui;
     private final ClickGui legacyClickGui;
 
-    private final Saver saver;
+    private Saver saver;
     private final StartDiscordRPC discordRPC;
 
     /**
@@ -141,7 +141,6 @@ public enum Slice {
         commandManager = new CommandManager(moduleManager);
         settingsManager = new SettingsManager(moduleManager);
         legacyClickGui = new ClickGui();
-        saver = new Saver(moduleManager);
         discordRPC = new StartDiscordRPC();
         discordRPC.start();
         API.sendAuthRequest(irc);
@@ -175,6 +174,7 @@ public enum Slice {
 
         this.html.add(new ViewNoGui(new Page("file:///" + html.getAbsolutePath() + "?name=" + NAME + "&version=" + VERSION + "&discord=" + discordName)));
         clickGui = new HTMLGui();
+        saver = new Saver(moduleManager);
     }
 
     @SuppressWarnings("all")

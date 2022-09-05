@@ -224,6 +224,22 @@
             ModuleLocation[name] = Modules[category][name];
         }
 
+        function updateSetting(module, setting, type, value) {
+            if(!ModuleLocation[module].settings[setting]) return;
+
+            switch (type) {
+                case "NumberValue":
+                    ModuleLocation[module].settings.value = parseFloat(value);
+                    break;
+                case "BooleanValue":
+                    ModuleLocation[module].settings.value = value;
+                    break;
+                case "ModeValue":
+                    ModuleLocation[module].settings.value = value;
+                    break;
+            }
+        }
+
         function setEnabled(name, enabled) {
             if (!ModuleLocation[name]) return;
             ModuleLocation[name].enabled = enabled;

@@ -32,7 +32,7 @@ public class ModeValue extends Setting {
         if(getModule().isEnabled()) {
             RequestHandler.renameFromArrayList(e, getModule().getName() + " " + getValue());
         }
-
+        updateSetting("ModeValue", this.value);
     }
 
     public void cycle() {

@@ -182,12 +182,6 @@ public class Fly extends Module {
                 if(mc.thePlayer.ticksExisted % 20 == 1) MoveUtil.strafe((float)(0.2783*1.2));
                 break;
             case "Dev":
-                mc.thePlayer.motionY = mc.thePlayer.ticksExisted % 3 == 0 ? 0.001 : 0;
-                mc.thePlayer.onGround = true;
-                for(int i = 0; i < 42; i += 1) {
-                    PacketUtil.sendPacketNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, false));
-                }
-                PacketUtil.sendPacket(new C03PacketPlayer(false));
                 break;
         }
     }
