@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
@@ -18,6 +19,8 @@ import slice.event.events.EventRenderEntityModel;
 import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
+import slice.setting.settings.BooleanValue;
+import slice.setting.settings.NumberValue;
 import slice.util.RenderUtil;
 
 import java.awt.*;
@@ -25,12 +28,20 @@ import java.awt.*;
 @ModuleInfo(name = "ESP", description = "Allows you to see entities through walls", category = Category.MISC)
 public class ESP extends Module {
 
+    NumberValue r = new NumberValue("Red", 0, 0, 255, NumberValue.Type.INTEGER);
+    NumberValue g = new NumberValue("Green", 255, 0, 255, NumberValue.Type.INTEGER);
+    NumberValue b = new NumberValue("Blue", 255, 0, 255, NumberValue.Type.INTEGER);
+    BooleanValue players = new BooleanValue("Players", true);
+    BooleanValue mobs = new BooleanValue("Mobs", true);
+
     @EventInfo
     public void onEventRenderModel(EventRenderEntityModel e) {
         if(e.getEntity() == mc.thePlayer) return;
         if(e.getEntity().getDistanceToEntity(mc.thePlayer) > e.getMaxRenderDistance()) return;
+        if(e.getEntity() instanceof EntityPlayer && !players.getValue()) return;
+        if(e.getEntity() instanceof EntityMob && !mobs.getValue()) return;
 
-        RenderUtil.glColor(Color.WHITE);
+        RenderUtil.glColor(new Color(r.getValue().intValue(), g.getValue().intValue(), b.getValue().intValue()));
 
         RenderUtil.setupFBO();
 
@@ -60,7 +71,7 @@ public class ESP extends Module {
         GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
         e.model.render(e.getEntity(), e.p_77036_2_, e.p_77036_3_, e.p_77036_4_, e.p_77036_5_, e.p_77036_6_, e.scaleFactor);
 
-        RenderUtil.glColor(Color.white);
+        RenderUtil.glColor(new Color(r.getValue().intValue(), g.getValue().intValue(), b.getValue().intValue()));
 
         GL11.glDepthMask(false);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
@@ -83,6 +94,6 @@ public class ESP extends Module {
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glEnable(GL11.GL_ALPHA_TEST);
         GL11.glPopAttrib();
-        RenderUtil.glColor(Color.WHITE);
+        RenderUtil.glColor(new Color(r.getValue().intValue(), g.getValue().intValue(), b.getValue().intValue()));
     }
 }
