@@ -1,6 +1,7 @@
 package slice.clickgui;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import org.cef.ccbluex.AllTimeGuiView;
 import org.cef.ccbluex.GuiView;
 import org.cef.ccbluex.Page;
@@ -30,6 +31,12 @@ public class HTMLGui extends AllTimeGuiView {
         setVisible(false);
     }
 
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+        onResize(Minecraft.getMinecraft(), scaledResolution.scaledWidth, scaledResolution.scaledHeight);
+        super.drawScreen(mouseX, mouseY, partialTicks);
+    }
 
     /**
      * When the gui is opened

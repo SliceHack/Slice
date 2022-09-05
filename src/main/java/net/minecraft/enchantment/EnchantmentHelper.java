@@ -441,6 +441,25 @@ public class EnchantmentHelper
         return map;
     }
 
+    public static boolean hasProtection(ItemStack stack) {
+        return getProtection(stack) <= 0;
+    }
+
+    public boolean hasEnchantment(ItemStack stack, Enchantment enchantment) {
+        return getEnchantmentLevel(enchantment.effectId, stack) > 0;
+    }
+
+    public static ItemStack betterEnchants(ItemStack stack, ItemStack stack2) {
+        return getProtection(stack) > getProtection(stack2) ? stack : stack2;
+    }
+
+    public static int getProtection(ItemStack stack) {
+        if(getEnchantmentLevel(Enchantment.protection.effectId, stack) > 0) return getEnchantmentLevel(Enchantment.protection.effectId, stack);
+        if(getEnchantmentLevel(Enchantment.fireProtection.effectId, stack) > 0) return getEnchantmentLevel(Enchantment.fireProtection.effectId, stack);
+        if(getEnchantmentLevel(Enchantment.blastProtection.effectId, stack) > 0) return getEnchantmentLevel(Enchantment.blastProtection.effectId, stack);
+        return Math.max(getEnchantmentLevel(Enchantment.projectileProtection.effectId, stack), 0);
+    }
+
     static final class DamageIterator implements EnchantmentHelper.IModifier
     {
         public EntityLivingBase user;

@@ -18,6 +18,7 @@ import org.lwjgl.opengl.Display;
 import slice.Slice;
 import slice.event.events.Event2D;
 import slice.event.events.EventGuiRender;
+import slice.gui.hud.legacy.HUD;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -64,6 +65,7 @@ public class ViewNoGui {
     }
 
     public void draw(EventGuiRender e2d) {
+        if(!Slice.INSTANCE.getModuleManager().getModule(HUD.hudClass).isEnabled()) return;
         if(Minecraft.getMinecraft() == null) return;
         if(Minecraft.getMinecraft().theWorld == null) return;
         if(Minecraft.getMinecraft().thePlayer == null) return;
