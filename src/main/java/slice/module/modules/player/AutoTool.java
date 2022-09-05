@@ -41,9 +41,9 @@ public class AutoTool extends Module {
         double bestDamage = 0;
 
         for (int hotbarSlots = 36; hotbarSlots < 45; hotbarSlots++) {
-            if (mc.thePlayer.inventoryContainer.inventorySlots.toArray()[hotbarSlots] == null) break;
+            if (mc.thePlayer.inventoryContainer.inventorySlots.toArray()[hotbarSlots] == null) continue;
             ItemStack slot = mc.thePlayer.inventoryContainer.getSlot(hotbarSlots).getStack();
-            if (slot == null || !(slot.getItem() instanceof ItemSword)) break;
+            if (slot == null || !(slot.getItem() instanceof ItemSword)) continue;
             double damage = ((AttributeModifier) slot.getAttributeModifiers().get("generic.attackDamage").toArray()[0]).getAmount() + (double) this.getEnchantment(slot, Enchantment.sharpness) * 1.25 + (double) this.getEnchantment(slot, Enchantment.fireAspect);
             if (damage > bestDamage) {
                 bestSlot = hotbarSlots - 36;

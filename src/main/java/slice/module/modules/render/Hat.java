@@ -13,6 +13,7 @@ import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
 import slice.setting.settings.ModeValue;
+import slice.setting.settings.NumberValue;
 import slice.util.ColorUtil;
 import slice.util.RenderUtil;
 
@@ -21,8 +22,11 @@ import java.awt.*;
 
 @ModuleInfo(name = "Hat", description = "Draws a hat above your head", category = Category.RENDER)
 public class Hat extends Module {
+    ModeValue mode = new ModeValue("Mode", "Hanabi", "Hanabi");
 
-    public ModeValue mode = new ModeValue("Mode", "Hanabi", "Hanabi");
+    NumberValue r = new NumberValue("Red", 0, 0, 255, NumberValue.Type.INTEGER);
+    NumberValue g = new NumberValue("Green", 255, 0, 255, NumberValue.Type.INTEGER);
+    NumberValue b = new NumberValue("Blue", 255, 0, 255, NumberValue.Type.INTEGER);
 
     @EventInfo
     public void onEventEntityRender(EventEntityRender e) {
@@ -42,7 +46,7 @@ public class Hat extends Module {
         GL11.glTranslated(x, y + (mc.thePlayer.isSneaking() ? 2.0 : 2.2), z);
         GL11.glRotatef(-mc.thePlayer.width, 0.0F, 1.0F, 0.0F);
 //      set the color using GLStateManager to rainbow
-        RenderUtil.glColor(new Color(0, 255, 255));
+        RenderUtil.glColor(new Color(r.getValue().intValue(), g.getValue().intValue(), b.getValue().intValue()));
         GL11.glDisable(3008);
         GL11.glEnable(3042);
         GL11.glBlendFunc(770, 771);

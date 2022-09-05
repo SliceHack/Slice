@@ -7,7 +7,7 @@
     width: 300px;
     border-radius: 10px;
     text-align: center;
-    background: rgba(60, 60, 60, 0.3);
+    background: rgba(60, 60, 60, 0.65);
     box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
@@ -25,13 +25,8 @@ hr {
     width: 80%;
     height: 1px;
     border-color: transparent;
+    background: white;
     border-radius: 3px;
-    background-image: -webkit-linear-gradient(318deg, #c31432, #009fff, #ff416c, #8a2387, #ed213a);
-    background-image: -o-linear-gradient(318deg, #b92b27, #c31432, #009fff, #ff416c, #8a2387, #ed213a);
-    background-image: linear-gradient(132deg, #b92b27, #c31432, #009fff, #ff416c);
-    background-size: 400% 400%;
-    -webkit-animation: textcolorchange 15s linear infinite;
-    animation: textcolorchange 15s linear infinite;
 }
 
 @-webkit-keyframes textcolorchange {

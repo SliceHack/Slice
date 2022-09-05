@@ -9,11 +9,11 @@
     left: 79%;
     right: 10px;
     border-radius: 5px;
-    background: rgba(60, 60, 60, 0.3);
+    background: rgba(60, 60, 60, 0.65);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(100px);
     mask: linear-gradient(transparent, black 60%);
-    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.75);
     text-align: center;
     animation: slideInRight 1s;
 }
