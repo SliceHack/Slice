@@ -100,6 +100,7 @@ public class Script {
             engine.put("FLOAT", NumberValue.Type.FLOAT);
             engine.put("INTEGER", NumberValue.Type.INTEGER);
             engine.put("LONG", NumberValue.Type.LONG);
+            engine.put("ModuleManager", Slice.INSTANCE.getModuleManager());
             engine.put("script", this);
 
             if(reader == null && path != null) reader = Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8);

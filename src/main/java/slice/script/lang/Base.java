@@ -2,6 +2,7 @@ package slice.script.lang;
 
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.Minecraft;
+import slice.Slice;
 import slice.script.lang.logger.Console;
 import slice.util.LoggerUtil;
 

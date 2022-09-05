@@ -23,6 +23,7 @@ public class CommandManager {
         register(new CommandHelp());
         register(new CommandConnect());
         register(new CommandReload());
+        register(new CommandJS());
     }
 
     public void register(Command command) {

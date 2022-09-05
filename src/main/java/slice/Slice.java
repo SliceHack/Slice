@@ -16,6 +16,7 @@ import slice.api.IRC;
 import slice.cef.RequestHandler;
 import slice.cef.ViewNoGui;
 import slice.clickgui.HTMLGui;
+import slice.command.Command;
 import slice.legacy.clickgui.ClickGui;
 import slice.command.commands.CommandPlugins;
 import slice.discord.StartDiscordRPC;
@@ -175,6 +176,7 @@ public enum Slice {
         this.html.add(new ViewNoGui(new Page("file:///" + html.getAbsolutePath() + "?name=" + NAME + "&version=" + VERSION + "&discord=" + discordName)));
         clickGui = new HTMLGui();
         saver = new Saver(moduleManager);
+        commandManager.commands.forEach(Command::init);
     }
 
     @SuppressWarnings("all")

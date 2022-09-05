@@ -272,6 +272,8 @@ public class GuiNewChat extends Gui
                         ChatLine chatline = (ChatLine)this.drawnChatLines.get(i1);
                         int j1 = 0;
 
+                        if(chatline.getChatComponent() == null) return null;
+
                         for (IChatComponent ichatcomponent : chatline.getChatComponent())
                         {
                             if (ichatcomponent instanceof ChatComponentText)

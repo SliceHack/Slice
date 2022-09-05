@@ -33,6 +33,8 @@ public abstract class Command {
         this.aliases = info.aliases();
     }
 
+    public void init() {}
+
     public void addMessage(String message) {
         LoggerUtil.addMessage(message);
     }
