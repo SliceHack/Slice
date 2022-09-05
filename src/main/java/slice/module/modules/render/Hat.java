@@ -12,6 +12,7 @@ import slice.event.events.EventUpdate;
 import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
+import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
 import slice.util.ColorUtil;
@@ -27,6 +28,8 @@ public class Hat extends Module {
     NumberValue r = new NumberValue("Red", 0, 0, 255, NumberValue.Type.INTEGER);
     NumberValue g = new NumberValue("Green", 255, 0, 255, NumberValue.Type.INTEGER);
     NumberValue b = new NumberValue("Blue", 255, 0, 255, NumberValue.Type.INTEGER);
+
+    BooleanValue spin = new BooleanValue("Spin", false);
 
     @EventInfo
     public void onEventEntityRender(EventEntityRender e) {
@@ -60,7 +63,7 @@ public class Hat extends Module {
         GL11.glLineWidth(1.0F);
         Cylinder c = new Cylinder();
         GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
-        GL11.glRotatef(System.currentTimeMillis() % 360, 0.0F, 0.0F, 1.0F);
+        if(spin.getValue()) GL11.glRotatef(System.currentTimeMillis() % 360, 0.0F, 0.0F, 1.0F);
         c.setDrawStyle(100011);
         c.draw(0.0F, 0.8F, 0.4F, side, stack);
         GL11.glEnable(3553);
