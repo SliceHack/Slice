@@ -25,7 +25,7 @@ import slice.util.RenderUtil;
 
 import java.awt.*;
 
-@ModuleInfo(name = "ESP", description = "Allows you to see entities through walls", category = Category.MISC)
+@ModuleInfo(name = "ESP", description = "Allows you to see entities through walls", category = Category.RENDER)
 public class ESP extends Module {
 
     NumberValue r = new NumberValue("Red", 0, 0, 255, NumberValue.Type.INTEGER);
@@ -94,6 +94,6 @@ public class ESP extends Module {
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glEnable(GL11.GL_ALPHA_TEST);
         GL11.glPopAttrib();
-        RenderUtil.glColor(new Color(r.getValue().intValue(), g.getValue().intValue(), b.getValue().intValue()));
+        RenderUtil.glColor(Color.white);
     }
 }
