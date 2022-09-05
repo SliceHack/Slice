@@ -27,7 +27,8 @@ public class ESP extends Module {
 
     @EventInfo
     public void onEventRenderModel(EventRenderEntityModel e) {
-        if (!(e.getEntity() instanceof EntityPlayer) && e.getEntity() == mc.thePlayer && mc.thePlayer.getDistanceToEntity(e.getEntity()) > e.getMaxRenderDistance()) return;
+        if(e.getEntity() == mc.thePlayer) return;
+        if(e.getEntity().getDistanceToEntity(mc.thePlayer) > e.getMaxRenderDistance()) return;
 
         RenderUtil.glColor(Color.WHITE);
 
