@@ -32,6 +32,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL11;
 import slice.event.events.EventEntityRender;
+import slice.event.events.EventRenderEntityModel;
 
 public abstract class RendererLivingEntity<T extends EntityLivingBase> extends Render<T>
 {
@@ -345,6 +346,14 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
             {
                 return;
             }
+
+
+            Minecraft mc = Minecraft.getMinecraft();
+            float maxDistance = (mc.gameSettings.renderDistanceChunks - 3) * 16;
+            if (mc.gameSettings.renderDistanceChunks < 4) maxDistance = (mc.gameSettings.renderDistanceChunks - 1) * 16;
+
+            EventRenderEntityModel event = new EventRenderEntityModel(this, mainModel, entitylivingbaseIn, renderPartialTicks, maxDistance, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, scaleFactor);
+            event.call();
 
             if (flag1)
             {

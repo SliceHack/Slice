@@ -22,6 +22,7 @@ import slice.Slice;
 import slice.cef.RequestHandler;
 import slice.event.data.EventInfo;
 import slice.event.events.Event2D;
+import slice.event.events.EventUpdate;
 import slice.event.events.EventUpdateLWJGL;
 import slice.event.manager.EventManager;
 import slice.module.Module;
@@ -74,9 +75,9 @@ public class CefRenderManager {
             builder.addJcefArgs(
                     "--disable-web-security",
                     "--allow-file-access-from-files",
+                    "--ignore-gpu-blacklist",
                     "--disable-gpu"
             );
-            builder.getCefSettings().windowless_rendering_enabled = true;
             builder.getCefSettings().locale = gameSettings.language;
             builder.getCefSettings().cache_path = cacheDir.getAbsolutePath();
             builder.getCefSettings().user_agent = "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.7113.93 Safari/537.36 Java/1.8.0_191";
@@ -145,6 +146,7 @@ public class CefRenderManager {
 
             CefApp.CefVersion version = cefApp.getVersion();
             LoggerUtil.addTerminalMessage("Cef Loaded (jcefVersion=" + version.getJcefVersion() + ", cefVersion=" + version.getCefVersion() + ", chromeVersion=" + version.getChromeVersion() + ")");
+
         } catch (UnsupportedPlatformException | IOException | InterruptedException | CefInitializationException e){
             e.printStackTrace();
         }
@@ -157,12 +159,11 @@ public class CefRenderManager {
     @EventInfo
     public void on2D(Event2D e) {
         cefApp.doMessageLoopWork(0L);
-        browsers.forEach(CefBrowserCustom::mcefUpdate);
     }
 
     @EventInfo
-    public void onUpdateDisplay(EventUpdateLWJGL e) {
-        cefApp.doMessageLoopWork(0L);
+    public void onUpdate(EventUpdate e) {
         browsers.forEach(CefBrowserCustom::mcefUpdate);
     }
+
 }
