@@ -3,6 +3,7 @@ package slice.module.modules.misc;
 import net.minecraft.network.play.client.*;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import net.minecraft.network.play.server.S18PacketEntityTeleport;
+import slice.Slice;
 import slice.event.data.EventInfo;
 import slice.event.data.PacketEvent;
 import slice.event.events.EventPacket;
@@ -23,6 +24,7 @@ public class Disabler extends Module {
 
      BooleanValue warzone = new BooleanValue("WarzoneMC", false);
      BooleanValue hypixel = new BooleanValue("Hypixel Strafe", false);
+     BooleanValue verus = new BooleanValue("Verus", false);
 
      public final List<C00PacketKeepAlive> packets = new ArrayList<>();
 
@@ -43,6 +45,13 @@ public class Disabler extends Module {
         swap = !swap;
     }
 
+    @EventInfo
+    public void onPacket(EventPacket e) {
+        if(e.getPacket() instanceof C0FPacketConfirmTransaction) {
+            e.setCancelled(true);
+        }
+    }
+
     @PacketEvent
     public void onC00(C00PacketKeepAlive c00, EventPacket e) {
         e.setCancelled(true);
@@ -56,10 +65,6 @@ public class Disabler extends Module {
 
     @PacketEvent
     public void onS08(S08PacketPlayerPosLook s08, EventPacket e) {
-        PacketUtil.sendPacket(new C03PacketPlayer());
-        PacketUtil.sendPacketNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(s08.getX(), s08.getY(), s08.getZ(), mc.thePlayer.onGround));
-        PacketUtil.sendPacket(new C03PacketPlayer());
-
         if(!hypixel.getValue()) return;
         PacketUtil.sendPacketNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(s08.getX(), s08.getY(), s08.getZ(), true));
         mc.thePlayer.setPosition(s08.getX(), s08.getY(), s08.getZ());
@@ -75,9 +80,6 @@ public class Disabler extends Module {
 
     @PacketEvent
     public void onC0F(C0FPacketConfirmTransaction c0f, EventPacket e) {
-        LoggerUtil.addMessageNoPrefix("");
-        LoggerUtil.addMessage("C0F | " + c0f.uid + " | " + c0f.accepted + " | " + c0f.windowId);
-        PacketUtil.sendPacketNoEvent(new C0FPacketConfirmTransaction(0, (short) 0, false));
     }
 
 }

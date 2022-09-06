@@ -16,6 +16,7 @@ import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.MathHelper;
 import org.lwjgl.input.Keyboard;
 import slice.Slice;
 import slice.event.Event;
@@ -68,16 +69,15 @@ public class Aura extends Module {
 
 
     public void onUpdateNoToggle(EventUpdate event) {
-        if(!this.isEnabled() || (rotateTarget == null && target == null)) {
-            deltaPitch = mc.thePlayer.rotationPitch;
-            deltaYaw = mc.thePlayer.rotationYaw;
-        }
+        if(isEnabled()) return;
+
+        deltaPitch = mc.thePlayer.rotationPitch;
+        deltaYaw = mc.thePlayer.rotationYaw;
+        hasRotated = false;
     }
 
     public void onDisable() {
-        deltaPitch = 0;
         ran = false;
-        deltaYaw = 0;
         fakeBlock = false;
         Slice.INSTANCE.target = null;
         rotateTarget = null;
@@ -350,19 +350,20 @@ public class Aura extends Module {
         float yaw = getBypassRotate(e)[0];
         float pitch = getBypassRotate(e)[1];
 
-        int smooth = 2;
+        float sens = 9F;
+        float newYaw = MathHelper.wrapAngleTo180_float(deltaYaw - yaw);
+        float newPitch = MathHelper.wrapAngleTo180_float(deltaPitch - pitch);
+        if (newYaw > sens) newYaw = sens;
+        if (newYaw < -sens) newYaw = -sens;
+        if (newPitch > sens) newPitch = sens;
+        if (newPitch < -sens) newPitch = -sens;
+        if (deltaPitch > 90) deltaPitch = 90;
 
-        if (deltaPitch < pitch) deltaPitch += Math.abs(pitch - deltaPitch) / smooth;
-        if(deltaPitch > pitch) deltaPitch -= Math.abs(pitch - deltaPitch) / smooth;
+        deltaYaw -= newYaw;
+        deltaPitch -= newPitch;
+        hasRotated = Math.abs(newYaw) < 0.1 && Math.abs(newPitch) < 0.1;
 
-        if (deltaYaw < yaw) deltaYaw += Math.abs(yaw - deltaYaw) / smooth;
-        if(deltaYaw > yaw) deltaYaw -= Math.abs(yaw - deltaYaw) / smooth;
-
-        ran = (((int)deltaPitch - (int)pitch) < 2) && (((int)deltaYaw - (int)yaw) < 2);
-        hasRotated = ran;
-
-
-        return new float[] { deltaYaw+(float) Math.random(), deltaPitch };
+        return new float[] { deltaYaw, deltaPitch };
     }
 
     public boolean canAttack(EntityLivingBase entity) {
