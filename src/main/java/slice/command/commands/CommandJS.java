@@ -15,7 +15,7 @@ import javax.script.ScriptEngine;
 @CommandInfo(name = "js", description = "Executes JavaScript code")
 public class CommandJS extends Command {
 
-    private final ScriptEngine engine;
+    public final ScriptEngine engine;
 
     public CommandJS() {
         super();

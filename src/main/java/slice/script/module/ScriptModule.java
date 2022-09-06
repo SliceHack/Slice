@@ -42,7 +42,6 @@ public class ScriptModule extends Module {
         this.description = description;
         this.category = category;
         this.engine = engine;
-        init();
     }
 
     @Override
@@ -55,6 +54,9 @@ public class ScriptModule extends Module {
     @Override
     public void init() {
         Base.callFunction(engine, "init");
+        Base.putInEngine(engine, "module", this);
+        Base.putInEngine(engine, "ModuleManager", Slice.INSTANCE.getModuleManager());
+        Base.putInEngine(engine, "CommandManager", Slice.INSTANCE.getCommandManager());
         super.init();
     }
 

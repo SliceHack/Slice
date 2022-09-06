@@ -1,5 +1,7 @@
 package slice.script.lang.logger;
 
+import slice.util.LoggerUtil;
+
 /**
  * Console logger for the scripting language.
  *
@@ -16,7 +18,7 @@ public class Console {
      * @param message The message to log.
      */
     public void log(Object message) {
-        System.out.println(message);
+        LoggerUtil.addMessage(message + "");
     }
 
     /**
@@ -25,7 +27,7 @@ public class Console {
      * @param message The message to log.
      */
     public void error(Object message) {
-        System.err.println(message);
+        LoggerUtil.addMessage(message + "");
     }
 
     /**
@@ -34,7 +36,7 @@ public class Console {
      * @param message The message to log.
      */
     public void warn(Object message) {
-        System.out.println("[WARNING] " + message);
+        LoggerUtil.addMessage("[WARNING] " + message);
     }
 
 }

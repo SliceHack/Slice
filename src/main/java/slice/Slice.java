@@ -33,11 +33,13 @@ import slice.manager.SettingsManager;
 import slice.module.Module;
 import slice.notification.NotificationManager;
 import slice.script.manager.ScriptManager;
+import slice.script.module.ScriptModule;
 import slice.setting.settings.ModeValue;
 import slice.util.LoggerUtil;
 import slice.util.ResourceUtil;
 
 import java.io.*;
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -130,7 +132,6 @@ public enum Slice {
     public String playTime, totalPlayTime;
 
     private final String date;
-
     Slice() {
         connecting = true;
         eventManager = new EventManager();
@@ -177,6 +178,7 @@ public enum Slice {
         clickGui = new HTMLGui();
         saver = new Saver(moduleManager);
         commandManager.commands.forEach(Command::init);
+        moduleManager.getModules().stream().filter(module -> module instanceof ScriptModule).forEach(Module::init);
     }
 
     @SuppressWarnings("all")

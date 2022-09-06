@@ -1,6 +1,7 @@
 package slice.module.modules.render;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.entity.Entity;
@@ -94,6 +95,6 @@ public class ESP extends Module {
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glEnable(GL11.GL_ALPHA_TEST);
         GL11.glPopAttrib();
-        RenderUtil.glColor(Color.white);
+        RenderUtil.glColor(Color.WHITE);
     }
 }
