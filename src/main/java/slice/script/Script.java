@@ -1,6 +1,7 @@
 package slice.script;
 
 import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
+import jdk.nashorn.api.scripting.ScriptUtils;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
@@ -109,11 +110,6 @@ public class Script {
 
             if(!Base.hasVariable(engine, "name") || !Base.hasVariable(engine, "category")) {
                 System.err.println("Missing required variables");
-                return;
-            }
-
-            if(!(Base.getVariable(engine, "category") instanceof Category)) {
-                System.out.println("Category is invalid type");
                 return;
             }
 

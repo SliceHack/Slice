@@ -1,7 +1,10 @@
 package slice.script.lang;
 
+import jdk.nashorn.api.scripting.JSObject;
+import jdk.nashorn.api.scripting.ScriptUtils;
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.Minecraft;
+import org.json.JSONObject;
 import slice.Slice;
 import slice.script.lang.logger.Console;
 import slice.util.LoggerUtil;
@@ -52,7 +55,11 @@ public class Base {
      * @return The variable.
      * */
     public static Object getVariable(ScriptEngine engine, String name) {
-        return engine.get(name);
+        try {
+            return engine.eval(name);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**
@@ -106,11 +113,11 @@ public class Base {
             Bindings bind = engine.getBindings(ScriptContext.ENGINE_SCOPE);
             Set<String> allAttributes = bind.keySet();
             for (String attr : allAttributes) {
-                if ("function".equals(engine.eval("typeof " + attr))) {
-                    if (attr.equals(name)) {
-                        return true;
-                    }
-                }
+                if (!("function".equals(engine.eval("typeof " + attr)))) continue;
+
+                if (!attr.equals(name)) continue;
+
+                return true;
             }
         } catch (Exception e) {
             return false;
@@ -146,18 +153,10 @@ public class Base {
      */
     public boolean hasVariable(ScriptEngine engine, String name) {
         try {
-            Bindings bind = engine.getBindings(ScriptContext.ENGINE_SCOPE);
-            Set<String> allAttributes = bind.keySet();
-            for (String attr : allAttributes) {
-                if (!("function".equals(engine.eval("typeof " + attr)))) {
-                    if (attr.equals(name)) {
-                        return true;
-                    }
-                }
-            }
+            return engine.eval(name) != null;
         } catch (Exception e) {
             return false;
         }
-        return false;
     }
+
 }
