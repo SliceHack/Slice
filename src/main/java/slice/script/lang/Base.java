@@ -34,6 +34,25 @@ public class Base {
         engine.put("mc", Minecraft.getMinecraft());
         engine.put("Math", slice.script.lang.math.Math.INSTANCE);
         engine.put("sys_out", System.out);
+
+        try {
+            engine.eval("function fetch(url) { " +
+                    "var URL = Java.type('java.net.URL');" +
+                    "var BufferedReader = Java.type('java.io.BufferedReader');" +
+                    "var InputStreamReader = Java.type('java.io.InputStreamReader');" +
+                    "var url = new URL(url);" +
+                    "var con = url.openConnection();" +
+                    "con.setRequestProperty('User-Agent', 'Mozilla/5.0');" +
+                    "con.setRequestProperty('Connection', 'keep-alive');" +
+                    "var reader = new BufferedReader(new InputStreamReader(con.getInputStream()));" +
+                    "var line = '';" +
+                    "var content = '';" +
+                    "while ((line = reader.readLine()) != null) {" +
+                    "content += line;" +
+                    "}" +
+                    "return content;" +
+                    "}");
+        } catch (Exception ignored){}
     }
 
     /**

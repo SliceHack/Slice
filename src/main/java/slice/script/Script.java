@@ -29,6 +29,7 @@ import javax.script.ScriptEngineManager;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.Buffer;
 import java.nio.charset.StandardCharsets;
@@ -97,11 +98,10 @@ public class Script {
 
             Base.setup(engine);
             addCategories(engine);
-            engine.put("DOUBLE", NumberValue.Type.DOUBLE);
-            engine.put("FLOAT", NumberValue.Type.FLOAT);
-            engine.put("INTEGER", NumberValue.Type.INTEGER);
-            engine.put("LONG", NumberValue.Type.LONG);
-            engine.put("script", this);
+            Base.putInEngine(engine, "DOUBLE", NumberValue.Type.DOUBLE);
+            Base.putInEngine(engine, "FLOAT", NumberValue.Type.FLOAT);
+            Base.putInEngine(engine, "INTEGER", NumberValue.Type.INTEGER);
+            Base.putInEngine(engine, "LONG", NumberValue.Type.LONG);
 
             if(reader == null && path != null) reader = Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8);
             if(reader == null) { System.err.println("Reader is null"); return; }
@@ -120,6 +120,7 @@ public class Script {
             module = new ScriptModule(name, description, category, engine, fontManager);
             module.setSettings(settings);
             moduleManager.register(module);
+            Base.putInEngine(engine, "module", module);
             Base.callFunction(engine, "onLoad");
         } catch (Exception e) {
             LoggerUtil.addTerminalMessage(e.getMessage());
