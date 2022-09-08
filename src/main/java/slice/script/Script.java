@@ -1,11 +1,8 @@
 package slice.script;
 
 import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
-import jdk.nashorn.api.scripting.ScriptUtils;
 import lombok.Getter;
 import lombok.Setter;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.BlockPos;
 import slice.Slice;
@@ -13,25 +10,19 @@ import slice.font.FontManager;
 import slice.manager.ModuleManager;
 import slice.module.Module;
 import slice.module.data.Category;
-import slice.module.modules.combat.Aura;
 import slice.script.lang.Base;
 import slice.script.module.ScriptModule;
 import slice.setting.Setting;
-import slice.setting.settings.BooleanValue;
-import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
 import slice.util.LoggerUtil;
 
 import javax.script.Bindings;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
-import java.lang.reflect.Method;
 import java.net.URL;
-import java.nio.Buffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -67,13 +58,6 @@ public class Script {
         this.startScript();
     }
 
-    public Script(BufferedReader reader, ModuleManager moduleManager, FontManager fontManager) {
-        this.reader = reader;
-        this.moduleManager = moduleManager;
-        this.fontManager = fontManager;
-        this.startScript();
-    }
-
     public void reloadScript() {
         this.stopScript();
         Base.setup(engine);
@@ -102,12 +86,13 @@ public class Script {
             Base.putInEngine(engine, "FLOAT", NumberValue.Type.FLOAT);
             Base.putInEngine(engine, "INTEGER", NumberValue.Type.INTEGER);
             Base.putInEngine(engine, "LONG", NumberValue.Type.LONG);
+            Base.putInEngine(engine, "script", this);
 
             if(reader == null && path != null) reader = Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8);
             if(reader == null) { System.err.println("Reader is null"); return; }
 
             engine.eval(reader);
-
+            engine.eval("function require(url) {script.require(url);};");
             if(!Base.hasVariable(engine, "name") || !Base.hasVariable(engine, "category")) {
                 System.err.println("Missing required variables");
                 return;
@@ -158,24 +143,24 @@ public class Script {
         }
     }
 
-    public BooleanValue registerSettingBoolean(String name, boolean value) {
-        BooleanValue setting = new BooleanValue(name, value);
-        getSettings().add(setting);
-        return setting;
-    }
-
-    public ModeValue registerSettingMode(String name, String... modes) {
-        if(modes.length == 0) return null;
-        ModeValue mode = new ModeValue(name, modes[0], modes);
-        settings.add(mode);
-        return mode;
-    }
-
-    public NumberValue registerSettingNumber(String name, double min, double max, double value, NumberValue.Type type) {
-        NumberValue setting = new NumberValue(name, value, min, max, type);
-        settings.add(setting);
-        return setting;
-    }
+//    public BooleanValue registerSettingBoolean(String name, boolean value) {
+//        BooleanValue setting = new BooleanValue(name, value);
+//        getSettings().add(setting);
+//        return setting;
+//    }
+//
+//    public ModeValue registerSettingMode(String name, String... modes) {
+//        if(modes.length == 0) return null;
+//        ModeValue mode = new ModeValue(name, modes[0], modes);
+//        settings.add(mode);
+//        return mode;
+//    }
+//
+//    public NumberValue registerSettingNumber(String name, double min, double max, double value, NumberValue.Type type) {
+//        NumberValue setting = new NumberValue(name, value, min, max, type);
+//        settings.add(setting);
+//        return setting;
+//    }
 
     public BlockPos blockPos(int x, int y, int z) {
         return new BlockPos(x, y, z);
