@@ -87,12 +87,12 @@ public class Script {
             Base.putInEngine(engine, "INTEGER", NumberValue.Type.INTEGER);
             Base.putInEngine(engine, "LONG", NumberValue.Type.LONG);
             Base.putInEngine(engine, "script", this);
+            engine.eval("function require(url) {script.require(url);};");
 
             if(reader == null && path != null) reader = Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8);
             if(reader == null) { System.err.println("Reader is null"); return; }
 
             engine.eval(reader);
-            engine.eval("function require(url) {script.require(url);};");
             if(!Base.hasVariable(engine, "name") || !Base.hasVariable(engine, "category")) {
                 System.err.println("Missing required variables");
                 return;
