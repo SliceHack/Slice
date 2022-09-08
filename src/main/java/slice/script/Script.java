@@ -59,9 +59,6 @@ public class Script {
     }
 
     public void reloadScript() {
-        this.stopScript();
-        Base.setup(engine);
-        this.addCategories(engine);
         this.startScript();
     }
 
@@ -89,8 +86,7 @@ public class Script {
             Base.putInEngine(engine, "script", this);
             engine.eval("function require(url) {script.require(url);};");
 
-            if(reader == null && path != null) reader = Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8);
-            if(reader == null) { System.err.println("Reader is null"); return; }
+            if(path != null) reader = Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8);
 
             engine.eval(reader);
             if(!Base.hasVariable(engine, "name") || !Base.hasVariable(engine, "category")) {
@@ -103,8 +99,11 @@ public class Script {
             String description = Base.hasVariable(engine,"description") ? (String)Base.getVariable(engine, "description") : "No description provided.";
 
             module = new ScriptModule(name, description, category, engine, fontManager);
-            module.setSettings(settings);
+            if(moduleManager.getModule(name) != null && moduleManager.getModule(name) instanceof ScriptModule) { moduleManager.unregister(moduleManager.getModule(name)); }
+            else if(moduleManager.getModule(name) != null) { System.err.println("A module with the name " + name + " already exists."); return; }
+
             moduleManager.register(module);
+            module.setSettings(settings);
             Base.putInEngine(engine, "module", module);
             Base.callFunction(engine, "onLoad");
         } catch (Exception e) {
