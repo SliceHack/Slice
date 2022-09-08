@@ -13,6 +13,8 @@ import slice.module.data.Category;
 import slice.script.lang.Base;
 import slice.script.module.ScriptModule;
 import slice.setting.Setting;
+import slice.setting.settings.BooleanValue;
+import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
 import slice.util.LoggerUtil;
 
@@ -142,24 +144,24 @@ public class Script {
         }
     }
 
-//    public BooleanValue registerSettingBoolean(String name, boolean value) {
-//        BooleanValue setting = new BooleanValue(name, value);
-//        getSettings().add(setting);
-//        return setting;
-//    }
-//
-//    public ModeValue registerSettingMode(String name, String... modes) {
-//        if(modes.length == 0) return null;
-//        ModeValue mode = new ModeValue(name, modes[0], modes);
-//        settings.add(mode);
-//        return mode;
-//    }
-//
-//    public NumberValue registerSettingNumber(String name, double min, double max, double value, NumberValue.Type type) {
-//        NumberValue setting = new NumberValue(name, value, min, max, type);
-//        settings.add(setting);
-//        return setting;
-//    }
+    public BooleanValue registerBoolean(String name, boolean value) {
+        BooleanValue setting = new BooleanValue(name, value);
+        getSettings().add(setting);
+        return setting;
+    }
+
+    public ModeValue registerMode(String name, String... modes) {
+        if(modes.length == 0) return null;
+        ModeValue mode = new ModeValue(name, modes[0], modes);
+        settings.add(mode);
+        return mode;
+    }
+
+    public NumberValue registerNumber(String name, double min, double max, double value, NumberValue.Type type) {
+        NumberValue setting = new NumberValue(name, value, min, max, type);
+        settings.add(setting);
+        return setting;
+    }
 
     public BlockPos blockPos(int x, int y, int z) {
         return new BlockPos(x, y, z);
