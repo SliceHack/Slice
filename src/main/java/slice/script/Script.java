@@ -1,6 +1,5 @@
 package slice.script;
 
-import jdk.internal.dynalink.beans.StaticClass;
 import jdk.nashorn.api.scripting.JSObject;
 import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
 import lombok.Getter;
@@ -31,8 +30,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
-
-import static slice.module.data.Category.*;
 
 /**
  * The Script class
@@ -106,7 +103,6 @@ public class Script {
             moduleManager.register(module);
             module.setSettings(settings);
             Base.putInEngine(engine, "module", module);
-            Base.callFunction(engine, "onLoad");
         } catch (Exception e) {
             LoggerUtil.addTerminalMessage(e.getMessage());
             e.printStackTrace();
