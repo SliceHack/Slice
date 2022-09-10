@@ -150,40 +150,36 @@ public class GuiNewChat extends Gui
     private void setChatLine(IChatComponent chatComponent, int chatLineId, int updateCounter, boolean displayOnly)
     {
         new Thread(() -> {
-            if (chatLineId != 0)
-            {
-                this.deleteChatLine(chatLineId);
-            }
-
-            int i = MathHelper.floor_float((float)this.getChatWidth() / this.getChatScale());
-            List<IChatComponent> list = GuiUtilRenderComponents.splitText(chatComponent, i, this.mc.fontRendererObj, false, false);
-            boolean flag = this.getChatOpen();
-
-            for (IChatComponent ichatcomponent : list)
-            {
-                if (flag && this.scrollPos > 0)
-                {
-                    this.isScrolled = true;
-                    this.scroll(1);
+            try {
+                if (chatLineId != 0) {
+                    this.deleteChatLine(chatLineId);
                 }
 
-                this.drawnChatLines.add(0, new ChatLine(updateCounter, ichatcomponent, chatLineId));
-            }
+                int i = MathHelper.floor_float((float) this.getChatWidth() / this.getChatScale());
+                List<IChatComponent> list = GuiUtilRenderComponents.splitText(chatComponent, i, this.mc.fontRendererObj, false, false);
+                boolean flag = this.getChatOpen();
 
-            while (this.drawnChatLines.size() > 100)
-            {
-                this.drawnChatLines.remove(this.drawnChatLines.size() - 1);
-            }
+                for (IChatComponent ichatcomponent : list) {
+                    if (flag && this.scrollPos > 0) {
+                        this.isScrolled = true;
+                        this.scroll(1);
+                    }
 
-            if (!displayOnly)
-            {
-                this.chatLines.add(0, new ChatLine(updateCounter, chatComponent, chatLineId));
-
-                while (this.chatLines.size() > 100)
-                {
-                    this.chatLines.remove(this.chatLines.size() - 1);
+                    this.drawnChatLines.add(0, new ChatLine(updateCounter, ichatcomponent, chatLineId));
                 }
-            }
+
+                while (this.drawnChatLines.size() > 100) {
+                    this.drawnChatLines.remove(this.drawnChatLines.size() - 1);
+                }
+
+                if (!displayOnly) {
+                    this.chatLines.add(0, new ChatLine(updateCounter, chatComponent, chatLineId));
+
+                    while (this.chatLines.size() > 100) {
+                        this.chatLines.remove(this.chatLines.size() - 1);
+                    }
+                }
+            } catch (Exception ignored){} // prevent jvm error
         }).start();
     }
 
