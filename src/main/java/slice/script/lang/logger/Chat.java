@@ -15,4 +15,11 @@ public class Chat {
     public static void addMessage(String message) {
         LoggerUtil.addMessage(message);
     }
+
+    /**
+     * @see #addMessage(String)
+     * */
+    public static void print(String message) {
+        addMessage(message);
+    }
 }
