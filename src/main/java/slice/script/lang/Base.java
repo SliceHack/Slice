@@ -1,12 +1,15 @@
 package slice.script.lang;
 
+import jdk.internal.dynalink.beans.StaticClass;
 import jdk.nashorn.api.scripting.JSObject;
 import jdk.nashorn.api.scripting.ScriptUtils;
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.Minecraft;
 import org.json.JSONObject;
 import slice.Slice;
+import slice.module.data.Category;
 import slice.script.lang.logger.Console;
+import slice.setting.settings.NumberValue;
 import slice.util.LoggerUtil;
 
 import javax.script.Bindings;
@@ -30,10 +33,12 @@ public class Base {
      * */
     public static void setup(ScriptEngine engine) {
         engine.setBindings(engine.createBindings(), ScriptContext.ENGINE_SCOPE);
-        engine.put("console", Console.INSTANCE);
         engine.put("mc", Minecraft.getMinecraft());
-        engine.put("Math", slice.script.lang.math.Math.INSTANCE);
-        engine.put("sys_out", System.out);
+        putClassInEngine(engine, "console", Console.class);
+        putClassInEngine(engine,"System", System.class);
+        putClassInEngine(engine,"Category", Category.class);
+        putClassInEngine(engine, "Type", NumberValue.Type.class);
+        putClassInEngine(engine, "Math", Math.class);
 
         try {
             engine.eval("function fetch(url) { " +
@@ -66,6 +71,9 @@ public class Base {
         engine.put(name, value);
     }
 
+    public static void putClassInEngine(ScriptEngine engine, String name, Class<?> clazz) {
+        engine.put(name, StaticClass.forClass(clazz));
+    }
     /**
      * Gets a variable from the script engine.
      *

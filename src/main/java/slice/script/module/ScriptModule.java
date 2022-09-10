@@ -8,19 +8,12 @@ import slice.module.Module;
 import slice.module.data.Category;
 import slice.script.lang.Base;
 import slice.script.lang.logger.Chat;
-import slice.script.module.setting.SettingEnum;
-import slice.script.module.util.ScriptKeyUtil;
-import slice.script.module.util.ScriptMoveUtil;
-import slice.script.module.util.ScriptRenderUtil;
-import slice.script.module.util.ScriptRotationUtil;
 import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
-import slice.util.LoggerUtil;
+import slice.util.*;
 
 import javax.script.ScriptEngine;
-
-import static slice.script.module.setting.SettingEnum.*;
 
 @SuppressWarnings("unused")
 public class ScriptModule extends Module {
@@ -28,15 +21,13 @@ public class ScriptModule extends Module {
     private final ScriptEngine engine;
 
     public ScriptModule(String name, String description, Category category, ScriptEngine engine, FontManager fontManager) {
-        engine.put("MODE_VALUE", MODE_VALUE);
-        engine.put("BOOLEAN_VALUE", BOOLEAN_VALUE);
-        engine.put("NUMBER_VALUE", NUMBER_VALUE);
-        engine.put("chat", Chat.INSTANCE);
-        engine.put("MoveUtil", ScriptMoveUtil.INSTANCE);
-        engine.put("KeyUtil", ScriptKeyUtil.INSTANCE);
-        engine.put("RenderUtil", ScriptRenderUtil.INSTANCE);
-        engine.put("RotationUtil", ScriptRotationUtil.INSTANCE);
-        engine.put("timer", timer);
+        Base.putClassInEngine(engine, "Chat", Chat.class);
+        Base.putClassInEngine(engine, "MoveUtil", MoveUtil.class);
+        Base.putClassInEngine(engine, "KeyUtil", KeyUtil.class);
+        Base.putClassInEngine(engine, "RenderUtil", RenderUtil.class);
+        Base.putClassInEngine(engine, "RotationUtil", RotationUtil.class);
+        Base.putClassInEngine(engine, "LoggerUtil", LoggerUtil.class);
+        Base.putInEngine(engine,"timer", timer);
 
         this.name = name;
         this.description = description;

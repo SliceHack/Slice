@@ -5,10 +5,8 @@ import slice.Slice;
 import slice.command.Command;
 import slice.command.data.CommandInfo;
 import slice.script.lang.Base;
-import slice.script.module.util.ScriptLoggerUtil;
-import slice.script.module.util.ScriptMoveUtil;
-import slice.script.module.util.ScriptRotationUtil;
-import slice.util.LoggerUtil;
+import slice.script.lang.logger.Chat;
+import slice.util.*;
 
 import javax.script.ScriptEngine;
 
@@ -25,9 +23,12 @@ public class CommandJS extends Command {
 
     @Override
     public void init() {
-        Base.putInEngine(engine, "LoggerUtil", ScriptLoggerUtil.INSTANCE);
-        Base.putInEngine(engine, "MoveUtil", ScriptMoveUtil.INSTANCE);
-        Base.putInEngine(engine, "RotationUtil", ScriptRotationUtil.INSTANCE);
+        Base.putClassInEngine(engine, "Chat", Chat.class);
+        Base.putClassInEngine(engine, "MoveUtil", MoveUtil.class);
+        Base.putClassInEngine(engine, "KeyUtil", KeyUtil.class);
+        Base.putClassInEngine(engine, "RenderUtil", RenderUtil.class);
+        Base.putClassInEngine(engine, "RotationUtil", RotationUtil.class);
+        Base.putClassInEngine(engine, "LoggerUtil", LoggerUtil.class);
         Base.putInEngine(engine, "ModuleManager", Slice.INSTANCE.getModuleManager());
     }
 

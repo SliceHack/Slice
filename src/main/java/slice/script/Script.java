@@ -79,8 +79,8 @@ public class Script {
             engine = new NashornScriptEngineFactory().getScriptEngine(args);
 
             Base.setup(engine);
-            Base.putInEngine(engine, "Category", StaticClass.forClass(NumberValue.Type.class));
-            Base.putInEngine(engine,"Type", StaticClass.forClass(NumberValue.Type.class));
+            Base.putClassInEngine(engine, "Category", Category.class);
+            Base.putClassInEngine(engine,"Type", NumberValue.Type.class);
             Base.putInEngine(engine, "script", this);
             engine.eval("function require(url) {script.require(url);};");
 

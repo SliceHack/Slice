@@ -9,15 +9,12 @@ import slice.util.LoggerUtil;
  * */
 public class Console {
 
-    /** The logger instance */
-    public static Console INSTANCE = new Console();
-
     /**
      * Logs a message to the chat.
      *
      * @param message The message to log.
      */
-    public void log(Object message) {
+    public static void log(Object message) {
         LoggerUtil.addMessage(message + "");
     }
 
@@ -26,7 +23,7 @@ public class Console {
      *
      * @param message The message to log.
      */
-    public void error(Object message) {
+    public static void error(Object message) {
         LoggerUtil.addMessage(message + "");
     }
 
@@ -35,7 +32,7 @@ public class Console {
      *
      * @param message The message to log.
      */
-    public void warn(Object message) {
+    public static void warn(Object message) {
         LoggerUtil.addMessage("[WARNING] " + message);
     }
 
