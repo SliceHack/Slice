@@ -30,6 +30,8 @@ import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
 import slice.util.LoggerUtil;
 
+import java.util.Random;
+
 @ModuleInfo(name = "Aura", description = "Kills players around you!", key = Keyboard.KEY_R, category = Category.COMBAT)
 @SuppressWarnings("all")
 public class Aura extends Module {
@@ -45,7 +47,7 @@ public class Aura extends Module {
     BooleanValue delay9 = new BooleanValue("1.9 Delay", false);
     BooleanValue throughWalls = new BooleanValue("Through Walls", false);
 
-    BooleanValue keepSprint = new BooleanValue("KeepSprint", true);
+    public BooleanValue keepSprint = new BooleanValue("KeepSprint", true);
     BooleanValue noSwing = new BooleanValue("NoSwing", false);
     BooleanValue invis = new BooleanValue("Invisible", true);
     BooleanValue players = new BooleanValue("Players", true);
@@ -262,8 +264,7 @@ public class Aura extends Module {
 
 
     private void attack() {
-        if (keepSprint.getValue()) mc.getNetHandler().addToSendQueue(new C02PacketUseEntity(target, C02PacketUseEntity.Action.ATTACK));
-        else mc.playerController.attackEntity(mc.thePlayer, target);
+        mc.playerController.attackEntity(mc.thePlayer, target);
     }
 
     public float[] getBypassRotate(Entity e) {
@@ -363,7 +364,7 @@ public class Aura extends Module {
         deltaPitch -= newPitch;
         hasRotated = Math.abs(newYaw) < 0.1 && Math.abs(newPitch) < 0.1;
 
-        return new float[] { deltaYaw, deltaPitch };
+        return new float[] { deltaYaw + new Random().nextInt(1), deltaPitch };
     }
 
     public boolean canAttack(EntityLivingBase entity) {

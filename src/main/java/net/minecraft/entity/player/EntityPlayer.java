@@ -77,7 +77,10 @@ import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.LockCode;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSettings;
+import slice.Slice;
 import slice.event.events.EventJump;
+import slice.module.modules.combat.Aura;
+import slice.util.LoggerUtil;
 
 @SuppressWarnings("all")
 public abstract class EntityPlayer extends EntityLivingBase
@@ -1193,9 +1196,14 @@ public abstract class EntityPlayer extends EntityLivingBase
                         if (i > 0)
                         {
                             targetEntity.addVelocity((double)(-MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F) * (float)i * 0.5F), 0.1D, (double)(MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F) * (float)i * 0.5F));
-                            this.motionX *= 0.6D;
-                            this.motionZ *= 0.6D;
-                            this.setSprinting(false);
+                            Aura aura = (Aura) Slice.INSTANCE.getModuleManager().getModule(Aura.class);
+                            boolean keepSprint = aura.isEnabled() && aura.keepSprint.getValue() && aura.getTarget() != null;
+
+                            if(!keepSprint) {
+                                this.motionX *= 0.6D;
+                                this.motionZ *= 0.6D;
+                                this.setSprinting(false);
+                            }
                         }
 
                         if (targetEntity instanceof EntityPlayerMP && targetEntity.velocityChanged)

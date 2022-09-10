@@ -1,5 +1,6 @@
 package slice.script;
 
+import jdk.internal.dynalink.beans.StaticClass;
 import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,9 +29,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static slice.module.data.Category.*;
 
@@ -80,11 +79,8 @@ public class Script {
             engine = new NashornScriptEngineFactory().getScriptEngine(args);
 
             Base.setup(engine);
-            addCategories(engine);
-            Base.putInEngine(engine, "DOUBLE", NumberValue.Type.DOUBLE);
-            Base.putInEngine(engine, "FLOAT", NumberValue.Type.FLOAT);
-            Base.putInEngine(engine, "INTEGER", NumberValue.Type.INTEGER);
-            Base.putInEngine(engine, "LONG", NumberValue.Type.LONG);
+            Base.putInEngine(engine, "Category", StaticClass.forClass(NumberValue.Type.class));
+            Base.putInEngine(engine,"Type", StaticClass.forClass(NumberValue.Type.class));
             Base.putInEngine(engine, "script", this);
             engine.eval("function require(url) {script.require(url);};");
 
@@ -112,15 +108,6 @@ public class Script {
             LoggerUtil.addTerminalMessage(e.getMessage());
             e.printStackTrace();
         }
-    }
-
-    public void addCategories(ScriptEngine engine) {
-        Base.putInEngine(engine, "COMBAT", COMBAT);
-        Base.putInEngine(engine, "MOVEMENT", MOVEMENT);
-        Base.putInEngine(engine, "MISC", MISC);
-        Base.putInEngine(engine, "RENDER", RENDER);
-        Base.putInEngine(engine, "PLAYER", PLAYER);
-        Base.putInEngine(engine, "WORLD", WORLD);
     }
 
     public void require(String url) {
