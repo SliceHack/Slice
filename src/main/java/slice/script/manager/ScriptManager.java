@@ -63,4 +63,8 @@ public class ScriptManager {
         }
     }
 
+    public void callEvent(String name, Object... args) {
+        scripts.forEach(script -> script.call(name, args));
+    }
+
 }

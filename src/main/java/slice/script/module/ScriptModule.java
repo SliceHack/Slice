@@ -6,6 +6,7 @@ import slice.event.events.*;
 import slice.font.FontManager;
 import slice.module.Module;
 import slice.module.data.Category;
+import slice.script.Script;
 import slice.script.lang.Base;
 import slice.script.lang.logger.Chat;
 import slice.setting.settings.BooleanValue;
@@ -19,8 +20,9 @@ import javax.script.ScriptEngine;
 public class ScriptModule extends Module {
 
     private final ScriptEngine engine;
+    private final Script script;
 
-    public ScriptModule(String name, String description, Category category, ScriptEngine engine, FontManager fontManager) {
+    public ScriptModule(Script script, String name, String description, Category category, ScriptEngine engine, FontManager fontManager) {
         Base.putClassInEngine(engine, "Chat", Chat.class);
         Base.putClassInEngine(engine, "MoveUtil", MoveUtil.class);
         Base.putClassInEngine(engine, "KeyUtil", KeyUtil.class);
@@ -29,6 +31,7 @@ public class ScriptModule extends Module {
         Base.putClassInEngine(engine, "LoggerUtil", LoggerUtil.class);
         Base.putInEngine(engine,"timer", timer);
 
+        this.script = script;
         this.name = name;
         this.description = description;
         this.category = category;
@@ -44,7 +47,7 @@ public class ScriptModule extends Module {
 
     @Override
     public void init() {
-        Base.callFunction(engine, "init");
+        script.call("init");
         Base.putInEngine(engine, "module", this);
         Base.putInEngine(engine, "ModuleManager", Slice.INSTANCE.getModuleManager());
         Base.putInEngine(engine, "CommandManager", Slice.INSTANCE.getCommandManager());
@@ -53,94 +56,19 @@ public class ScriptModule extends Module {
 
     @Override
     public void onEnable() {
-        Base.callFunction(engine, "onEnable");
+        script.call("enable");
         super.onEnable();
     }
 
     @Override
     public void onDisable() {
-        Base.callFunction(engine, "onDisable");
+        script.call("disable");
         super.onDisable();
     }
 
     @EventInfo
     public void onUpdate(EventUpdate e) {
         Base.callFunction(engine, "onUpdate", e);
-    }
-
-    @EventInfo
-    public void onEvent3D(Event3D e) {
-        Base.callFunction(engine, "onEvent3D", e);
-    }
-
-    @EventInfo
-    public void onEventAttack(EventAttack e) {
-        Base.callFunction(engine, "onEventAttack", e);
-    }
-
-    @EventInfo
-    public void onEventChat(EventChat e) {
-        Base.callFunction(engine, "onEventChat", e);
-    }
-
-    @EventInfo
-    public void onEventChatMessage(EventChatMessage e) {
-        Base.callFunction(engine, "onEventChatMessage", e);
-    }
-
-    @EventInfo
-    public void onEventClientBrand(EventClientBrand e) {
-        Base.callFunction(engine, "onEventClientBrand", e);
-    }
-
-    @EventInfo
-    public void onEventClientTick(EventClientTick e) {
-        Base.callFunction(engine, "onEventClientTick", e);
-    }
-
-    @EventInfo
-    public void onEventEntityRender(EventEntityRender e) {
-        Base.callFunction(engine, "onEventEntityRender", e);
-    }
-
-    @EventInfo
-    public void onEventJump(EventJump e) {
-        Base.callFunction(engine, "onEventJump", e);
-    }
-
-    @EventInfo
-    public void onEventKey(EventKey e) {
-        Base.callFunction(engine, "onEventKey", e);
-    }
-
-    @EventInfo
-    public void onEventMouse(EventMouse e) {
-        Base.callFunction(engine, "onEventMouse", e);
-    }
-
-    @EventInfo
-    public void onEventPacket(EventPacket e) {
-        Base.callFunction(engine, "onEventPacket", e);
-    }
-
-    @EventInfo
-    public void onEventPlayerReach(EventPlayerReach e) {
-        Base.callFunction(engine, "onEventPlayerReach", e);
-    }
-
-    @EventInfo
-    public void onEventSafeWalk(EventSafeWalk e) {
-        Base.callFunction(engine, "onEventSafeWalk", e);
-    }
-
-    @EventInfo
-    public void onEventSlowDown(EventSlowDown e) {
-        Base.callFunction(engine, "onEventSlowDown", e);
-    }
-
-    @EventInfo
-    public void onEvent2D(Event2D e) {
-        Base.callFunction(engine, "onEvent2D", e);
     }
 
     public BooleanValue registerSettingBoolean(String name, boolean value) {

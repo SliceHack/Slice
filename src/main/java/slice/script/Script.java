@@ -1,6 +1,7 @@
 package slice.script;
 
 import jdk.internal.dynalink.beans.StaticClass;
+import jdk.nashorn.api.scripting.JSObject;
 import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
 import lombok.Getter;
 import lombok.Setter;
@@ -52,6 +53,8 @@ public class Script {
 
     private BufferedReader reader;
 
+    private HashMap<String, JSObject> events = new HashMap<>();
+
     public Script(String path, ModuleManager moduleManager, FontManager fontManager) {
         this.path = path;
         this.moduleManager = moduleManager;
@@ -96,7 +99,7 @@ public class Script {
             Category category = (Category)Base.getVariable(engine, "category");
             String description = Base.hasVariable(engine,"description") ? (String)Base.getVariable(engine, "description") : "No description provided.";
 
-            module = new ScriptModule(name, description, category, engine, fontManager);
+            module = new ScriptModule(this, name, description, category, engine, fontManager);
             if(moduleManager.getModule(name) != null && moduleManager.getModule(name) instanceof ScriptModule) { moduleManager.unregister(moduleManager.getModule(name)); }
             else if(moduleManager.getModule(name) != null) { System.err.println("A module with the name " + name + " already exists."); return; }
 
@@ -107,6 +110,19 @@ public class Script {
         } catch (Exception e) {
             LoggerUtil.addTerminalMessage(e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    public void on(String event, JSObject function) {
+        events.put(event, function);
+    }
+
+    public void call(String name, Object... args) {
+        for(Map.Entry<String, JSObject> entry : events.entrySet()) {
+            if(!entry.getKey().equalsIgnoreCase(name)) continue;
+            if(!module.isEnabled()) continue;
+
+            entry.getValue().call(null, args);
         }
     }
 
@@ -157,4 +173,5 @@ public class Script {
     public EntityLivingBase getTarget() {
         return Slice.INSTANCE.target;
     }
+
 }
