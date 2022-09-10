@@ -15,7 +15,7 @@ public class Console {
      * @param message The message to log.
      */
     public static void log(Object message) {
-        LoggerUtil.addMessage(message + "");
+        System.out.println(message);
     }
 
     /**
@@ -24,7 +24,7 @@ public class Console {
      * @param message The message to log.
      */
     public static void error(Object message) {
-        LoggerUtil.addMessage(message + "");
+        System.err.println(message);
     }
 
     /**
@@ -33,7 +33,7 @@ public class Console {
      * @param message The message to log.
      */
     public static void warn(Object message) {
-        LoggerUtil.addMessage("[WARNING] " + message);
+        System.out.println("[WARNING] " + message);
     }
 
 }
