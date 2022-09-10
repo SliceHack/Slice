@@ -3,8 +3,11 @@ package slice.file;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
+import org.cef.ccbluex.Page;
 import org.json.JSONObject;
 import slice.Slice;
+import slice.cef.RequestHandler;
+import slice.cef.ViewNoGui;
 import slice.manager.ModuleManager;
 import slice.module.Module;
 import slice.setting.Setting;
@@ -86,6 +89,8 @@ public class ConfigSaver {
                     }
                 }
             }
+            RequestHandler.INSTANCE.removeArrayList();
+            RequestHandler.INSTANCE.setupArrayList();
         } catch (IOException e) {
             e.printStackTrace();
         }

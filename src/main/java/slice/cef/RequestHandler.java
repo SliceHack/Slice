@@ -105,6 +105,9 @@ public class RequestHandler {
     public void setupArrayList() {
         createIframe("ArrayList/index.html");
     }
+    public void removeArrayList() {
+        INSTANCE.sendJavascript("document.querySelector(\"iframe[src='ArrayList/index.html']\").remove();");
+    }
 
     public static void hideSessionHUD() {
         if (!INSTANCE.SessionHudShown) return;
