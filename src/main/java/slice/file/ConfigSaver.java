@@ -31,7 +31,6 @@ public class ConfigSaver {
     }
 
     public void load() {
-        RequestHandler.INSTANCE.removeArrayList();
         try {
             BufferedReader reader;
             try {
@@ -93,7 +92,6 @@ public class ConfigSaver {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        RequestHandler.INSTANCE.setupArrayList();
     }
 
     public void save() {

@@ -58,6 +58,8 @@
 
         function rename(value, newValue) {
             if(array[value] === undefined) return;
+            if(array[newValue] !== undefined) return;
+
             array[value].text.innerHTML = newValue;
             array[newValue] = array[value];
             delete array[value];
