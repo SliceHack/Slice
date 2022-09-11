@@ -420,6 +420,13 @@
             }
         });
 
+        document.querySelector("#boxheader > div > span:nth-child(5)").addEventListener("click", () => {
+            window.cefQuery({
+                request: "CloseGui",
+                persistent: false,
+            });
+        });
+
         window.cefQuery({
             request: 'Init',
             persistent: false,
