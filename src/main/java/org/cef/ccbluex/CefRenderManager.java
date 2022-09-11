@@ -6,8 +6,8 @@ import me.friwi.jcefmaven.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiOptions;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiSelectWorld;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.settings.GameSettings;
 import org.cef.CefApp;
 import org.cef.CefClient;
@@ -22,9 +22,9 @@ import slice.Slice;
 import slice.cef.RequestHandler;
 import slice.event.data.EventInfo;
 import slice.event.events.Event2D;
-import slice.event.events.EventUpdate;
 import slice.event.events.EventUpdateLWJGL;
 import slice.event.manager.EventManager;
+import slice.gui.alt.GuiAlt;
 import slice.module.Module;
 import slice.setting.Setting;
 import slice.setting.settings.BooleanValue;
@@ -96,28 +96,35 @@ public class CefRenderManager {
                 public boolean onQuery(CefBrowser browser, CefFrame frame, long queryId, String request, boolean persistent, CefQueryCallback callback) {
                     callback.success("OK");
 
+                    GuiScreen screen = Minecraft.getMinecraft().currentScreen;
+                    Minecraft mc = Minecraft.getMinecraft();
+                    GameSettings gameSettings = mc.gameSettings;
+
                     switch (request) {
                         case "READY":
                             new RequestHandler(browser);
                             LoggerUtil.addTerminalMessage("Browser Ready!");
                             break;
                         case "SinglePlayerScreen":
-                            Minecraft.getMinecraft().displayGuiScreen(new GuiSelectWorld(null));
+                            mc.displayGuiScreen(new GuiSelectWorld(screen));
                             break;
                         case "MultiPlayerScreen":
-                            Minecraft.getMinecraft().displayGuiScreen(new GuiMultiplayer(null));
+                            mc.displayGuiScreen(new GuiMultiplayer(screen));
                             break;
                         case "OptionsScreen":
-                            Minecraft.getMinecraft().displayGuiScreen(new GuiOptions(null, Minecraft.getMinecraft().gameSettings));
+                            mc.displayGuiScreen(new GuiOptions(screen, gameSettings));
+                            break;
+                        case "AltManagerScreen":
+                            mc.displayGuiScreen(new GuiAlt(screen));
                             break;
                         case "Exit":
-                            Minecraft.getMinecraft().shutdownMinecraftApplet();
+                            mc.shutdownMinecraftApplet();
                             break;
                         case "Init":
                             Slice.INSTANCE.getClickGui().queryInit();
                             break;
                         case "CloseGui":
-                            Minecraft.getMinecraft().displayGuiScreen(null);
+                            mc.displayGuiScreen(null);
                             break;
 
                     }
@@ -149,7 +156,6 @@ public class CefRenderManager {
 
             CefApp.CefVersion version = cefApp.getVersion();
             LoggerUtil.addTerminalMessage("Cef Loaded (jcefVersion=" + version.getJcefVersion() + ", cefVersion=" + version.getCefVersion() + ", chromeVersion=" + version.getChromeVersion() + ")");
-
         } catch (UnsupportedPlatformException | IOException | InterruptedException | CefInitializationException e){
             e.printStackTrace();
         }
