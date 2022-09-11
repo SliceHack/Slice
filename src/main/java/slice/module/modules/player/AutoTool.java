@@ -28,6 +28,7 @@ public class AutoTool extends Module {
 
     @EventInfo
     public void onUpdate(EventUpdate e) {
+        if (mc.playerController.getCurrentGameType().isCreative()) return;
         if (!Mouse.isButtonDown(0)) return;
         if (!(mc.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)) return;
         BlockPos blockPos = mc.objectMouseOver.getBlockPos();
