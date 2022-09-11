@@ -76,7 +76,10 @@ public class CefRenderManager {
                     "--disable-web-security",
                     "--allow-file-access-from-files",
                     "--ignore-gpu-blacklist",
-                    "--disable-gpu"
+                    "--disable-gpu-compositing",
+                    "--disable-logging",
+                    "--disable-plugins",
+                    "--disable-frame-rate-limit"
             );
             builder.getCefSettings().locale = gameSettings.language;
             builder.getCefSettings().cache_path = cacheDir.getAbsolutePath();
@@ -158,12 +161,12 @@ public class CefRenderManager {
 
     @EventInfo
     public void on2D(Event2D e) {
-        cefApp.doMessageLoopWork(0L);
+        browsers.forEach(CefBrowserCustom::mcefUpdate);
     }
 
     @EventInfo
-    public void onUpdate(EventUpdate e) {
-        browsers.forEach(CefBrowserCustom::mcefUpdate);
+    public void onUpdate(EventUpdateLWJGL e) {
+        cefApp.doMessageLoopWork(0L);
     }
 
 }

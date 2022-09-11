@@ -1,20 +1,14 @@
 package slice.module.modules.movement;
 
-import net.minecraft.block.state.BlockState;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.*;
-import net.minecraft.network.play.server.S02PacketChat;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import net.minecraft.network.play.server.S18PacketEntityTeleport;
-import net.minecraft.util.BlockPos;
 import org.lwjgl.input.Keyboard;
 import slice.event.data.EventInfo;
-import slice.event.data.PacketEvent;
 import slice.event.events.EventClientTick;
 import slice.event.events.EventPacket;
 import slice.event.events.EventUpdate;
@@ -24,10 +18,7 @@ import slice.module.data.ModuleInfo;
 import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
-import slice.util.LoggerUtil;
 import slice.util.MoveUtil;
-import slice.util.PacketUtil;
-import slice.util.RotationUtil;
 
 @ModuleInfo(name = "Fly", key = Keyboard.KEY_G, description = "Allows you to fly like a bird", category = Category.MOVEMENT)
 @SuppressWarnings("all")
@@ -53,9 +44,6 @@ public class Fly extends Module {
     public void onEnable() {
         stage = 0;
         switch (mode.getValue()) {
-            case "Vulcan":
-                LoggerUtil.addMessage("You must have a bow in your hotbar");
-                break;
             case "UwUGuard":
                 if(!mc.thePlayer.onGround) break;
                 MoveUtil.jump();

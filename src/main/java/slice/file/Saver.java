@@ -100,6 +100,10 @@ public class Saver {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if(RequestHandler.INSTANCE == null) return;
+
+        RequestHandler.INSTANCE.removeArrayList();
+        RequestHandler.INSTANCE.setupArrayList();
     }
 
     public void save() {
