@@ -8,9 +8,10 @@ import net.minecraft.client.Minecraft;
 import org.json.JSONObject;
 import slice.Slice;
 import slice.module.data.Category;
+import slice.script.lang.logger.Chat;
 import slice.script.lang.logger.Console;
 import slice.setting.settings.NumberValue;
-import slice.util.LoggerUtil;
+import slice.util.*;
 
 import javax.script.Bindings;
 import javax.script.Invocable;
@@ -39,6 +40,13 @@ public class Base {
         putClassInEngine(engine,"Category", Category.class);
         putClassInEngine(engine, "Type", NumberValue.Type.class);
         putClassInEngine(engine, "Math", Math.class);
+        putClassInEngine(engine, "Chat", Chat.class);
+        putClassInEngine(engine, "MoveUtil", MoveUtil.class);
+        putClassInEngine(engine, "KeyUtil", KeyUtil.class);
+        putClassInEngine(engine, "RenderUtil", RenderUtil.class);
+        putClassInEngine(engine, "RotationUtil", RotationUtil.class);
+        putClassInEngine(engine, "LoggerUtil", LoggerUtil.class);
+        putClassInEngine(engine, "PacketUtil", PacketUtil.class);
 
         try {
             engine.eval("function fetch(url) { " +
