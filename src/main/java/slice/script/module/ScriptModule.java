@@ -29,6 +29,7 @@ public class ScriptModule extends Module {
         Base.putClassInEngine(engine, "RenderUtil", RenderUtil.class);
         Base.putClassInEngine(engine, "RotationUtil", RotationUtil.class);
         Base.putClassInEngine(engine, "LoggerUtil", LoggerUtil.class);
+        Base.putClassInEngine(engine, "PacketUtil", PacketUtil.class);
         Base.putInEngine(engine,"timer", timer);
 
         this.script = script;
