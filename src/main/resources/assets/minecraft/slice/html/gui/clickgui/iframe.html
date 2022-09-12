@@ -311,7 +311,7 @@
             mdui.mutation();
         }
 
-        document.querySelector("#search").addEventListener('keyup', (e) => {
+        document.querySelector("#search").addEventListener('keydown', (e) => {
             document.querySelector(".shown-module").innerHTML = "<h1>No module found.</h1>";
             for (const module in ModuleLocation) {
                 if (module.toLowerCase().includes(e.target.value.toLowerCase())) {
@@ -382,7 +382,6 @@
                     break;
             }
         }
-
 
         document.addEventListener("change", (e) => {
             if (!e.target.id) return;

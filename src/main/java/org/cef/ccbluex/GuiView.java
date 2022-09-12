@@ -37,7 +37,6 @@ public class GuiView extends GuiScreen {
         this.page = page;
 
         init();
-
     }
 
     public void init() {
@@ -126,15 +125,8 @@ public class GuiView extends GuiScreen {
             cefBrowser.keyEventByKeyCode(key, charr, mod, true);
             pressedKeyMap.put(key, charr);
 
-            if (ChatAllowedCharacters.isAllowedCharacter(charr) || key == Keyboard.KEY_RETURN || (int)key == Keyboard.KEY_BACK) {
-                switch (key) {
-                    case Keyboard.KEY_BACK:
-                        cefBrowser.keyTyped((char) 8, mod);
-                        break;
-                    default:
-                        cefBrowser.keyTyped(charr, mod);
-                        break;
-                }
+            if (ChatAllowedCharacters.isAllowedCharacter(charr)) {
+                cefBrowser.keyTyped(charr, mod);
             }
             keyTyped(charr, key);
         }
