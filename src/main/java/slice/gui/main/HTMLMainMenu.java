@@ -3,13 +3,12 @@ package slice.gui.main;
 import net.minecraft.client.Minecraft;
 import org.cef.ccbluex.GuiView;
 import org.cef.ccbluex.Page;
-import slice.util.LoggerUtil;
 
 import java.io.File;
 
-public class NewMainMenu extends GuiView {
+public class HTMLMainMenu extends GuiView {
 
-    public NewMainMenu() {
+    public HTMLMainMenu() {
         super(new Page(Minecraft.getMinecraft().mcDataDir + File.separator +  "Slice" + File.separator +  "html" + File.separator +  "gui" + File.separator + "MainMenu" + File.separator + "index.html"));
     }
 

@@ -174,16 +174,11 @@ import org.lwjgl.opengl.OpenGLException;
 import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
 import slice.Slice;
-import slice.cef.RequestHandler;
 import slice.event.events.*;
 import slice.gui.alt.manager.AltManager;
 import slice.gui.hud.legacy.HUD;
-import slice.gui.main.MainMenu;
-import slice.gui.main.NewMainMenu;
-import slice.module.Module;
-import slice.util.LoggerUtil;
+import slice.gui.main.HTMLMainMenu;
 import viamcp.ViaMCP;
-import viamcp.gui.GuiProtocolSelector;
 
 @SuppressWarnings("all")
 public class Minecraft implements IThreadListener, IPlayerUsage
@@ -502,11 +497,11 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
         if (this.serverName != null)
         {
-            this.displayGuiScreen(new GuiConnecting(new MainMenu(), this, this.serverName, this.serverPort));
+            this.displayGuiScreen(new GuiConnecting(new HTMLMainMenu(), this, this.serverName, this.serverPort));
         }
         else
         {
-            this.displayGuiScreen(new MainMenu());
+            this.displayGuiScreen(new HTMLMainMenu());
         }
 
         this.renderEngine.deleteTexture(this.mojangLogo);
@@ -901,14 +896,14 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
         if (guiScreenIn == null && this.theWorld == null)
         {
-            guiScreenIn = new MainMenu();
+            guiScreenIn = new HTMLMainMenu();
         }
         else if (guiScreenIn == null && this.thePlayer.getHealth() <= 0.0F)
         {
             guiScreenIn = new GuiGameOver();
         }
 
-        if (guiScreenIn instanceof MainMenu)
+        if (guiScreenIn instanceof HTMLMainMenu)
         {
             this.gameSettings.showDebugInfo = false;
             this.ingameGUI.getChatGUI().clearChatMessages();
@@ -1018,25 +1013,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         {
             this.runTick();
         }
-
-        for (int j = 0; j < this.timer.elapsedTicks + 1; ++j) {
-            if (this.currentScreen instanceof MainMenu) {
-                MainMenu mainMenu = (MainMenu) this.currentScreen;
-                mainMenu.onTick();
-            }
-            if (this.currentScreen instanceof GuiMultiplayer) {
-                GuiMultiplayer guiMultiplayer = (GuiMultiplayer) this.currentScreen;
-                guiMultiplayer.onTick();
-            }
-            if (this.currentScreen instanceof GuiSelectWorld) {
-                GuiSelectWorld guiSelectWorld = (GuiSelectWorld) this.currentScreen;
-                guiSelectWorld.onTick();
-            }
-            if (this.currentScreen instanceof AltManager) {
-                AltManager altManager = (AltManager) this.currentScreen;
-                altManager.onTick();
-            }
-         }
 
         this.mcProfiler.endStartSection("preRenderErrors");
         long i1 = System.nanoTime() - l;

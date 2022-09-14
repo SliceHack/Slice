@@ -210,7 +210,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.storage.MapData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import slice.gui.main.MainMenu;
+import slice.gui.main.HTMLMainMenu;
 
 @SuppressWarnings("all")
 public class NetHandlerPlayClient implements INetHandlerPlayClient
@@ -709,7 +709,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         }
         else
         {
-            this.gameController.displayGuiScreen(new GuiDisconnected(new GuiMultiplayer(new MainMenu()), "disconnect.lost", reason));
+            this.gameController.displayGuiScreen(new GuiDisconnected(new GuiMultiplayer(new HTMLMainMenu()), "disconnect.lost", reason));
         }
     }
 
