@@ -9,7 +9,7 @@ import java.io.File;
 public class HTMLMainMenu extends GuiView {
 
     public HTMLMainMenu() {
-        super(new Page(Minecraft.getMinecraft().mcDataDir + File.separator +  "Slice" + File.separator +  "html" + File.separator +  "gui" + File.separator + "MainMenu" + File.separator + "index.html"));
+        super(new Page(Minecraft.getMinecraft().mcDataDir + File.separator +  "Slice" + File.separator +  "html" + File.separator +  "gui" + File.separator + "main" + File.separator + "index.html"));
     }
 
     @Override
