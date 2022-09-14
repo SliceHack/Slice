@@ -14,6 +14,7 @@ public class HTMLMainMenu extends GuiView {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        drawRect(0, 0, width, height, 0xFFFFFFFF);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
