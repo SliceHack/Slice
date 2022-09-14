@@ -14,7 +14,6 @@ public class HTMLMainMenu extends GuiView {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        drawRect(0, 0, width, height, 0xFFFFFFFF);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
@@ -22,4 +21,10 @@ public class HTMLMainMenu extends GuiView {
     public void mouseClicked(int mouseX, int mouseY, int key) {
         super.mouseClicked(mouseX, mouseY, key);
     }
+
+    /**
+     * Prevents cef from destroying the gui
+     * */
+    @Override
+    public void onGuiClosed() {}
 }
