@@ -108,20 +108,26 @@ public class Saver {
             JSONObject moduleJson = new JSONObject();
             moduleJson.put("enabled", module.isEnabled());
             moduleJson.put("key", module.getKey());
+            moduleJson.put("category", module.getCategory().name());
 
             JSONObject settingsJson = new JSONObject();
+            JSONObject settingsKeyJson = new JSONObject();
             for(Setting key : module.getSettings()) {
                 if(key instanceof BooleanValue) {
                     settingsJson.put(key.getName(), ((BooleanValue) key).getValue());
+                    settingsKeyJson.put(key.getName() + "+" + "BooleanValue", ((BooleanValue) key).getValue());
                 }
                 if(key instanceof ModeValue) {
                     settingsJson.put(key.getName(), ((ModeValue) key).getValue());
+                    settingsKeyJson.put(key.getName() + "+" + "ModeValue", ((ModeValue) key).getValues());
                 }
                 if(key instanceof NumberValue) {
                     settingsJson.put(key.getName(), ((NumberValue) key).getValue());
+                    settingsKeyJson.put(key.getName() + "+" + "NumberValue", ((NumberValue) key).getMin() + "+" + ((NumberValue) key).getMax() + "+" + ((NumberValue) key).getType().name());
                 }
             }
             moduleJson.put("settings", settingsJson);
+            moduleJson.put("settingsKey", settingsKeyJson);
             json.put(module.getName(), moduleJson);
 
             json.put("build", Slice.VERSION);
