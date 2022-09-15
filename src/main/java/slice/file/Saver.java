@@ -108,6 +108,7 @@ public class Saver {
             JSONObject moduleJson = new JSONObject();
             moduleJson.put("enabled", module.isEnabled());
             moduleJson.put("key", module.getKey());
+            moduleJson.put("category", module.getCategory().name());
 
             JSONObject settingsJson = new JSONObject();
             for(Setting key : module.getSettings()) {
