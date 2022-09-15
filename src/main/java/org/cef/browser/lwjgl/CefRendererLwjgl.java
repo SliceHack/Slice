@@ -32,7 +32,7 @@ public class CefRendererLwjgl implements ICefRenderer {
         initialize();
     }
 
-    protected void initialize() {
+    public void initialize() {
         GlStateManager.enableTexture2D();
         texture_id_ = glGenTextures();
 

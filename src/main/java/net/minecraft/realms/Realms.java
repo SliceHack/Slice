@@ -9,6 +9,7 @@ import net.minecraft.client.settings.GameSettings;
 import net.minecraft.util.Session;
 import net.minecraft.world.WorldSettings;
 import slice.gui.main.HTMLMainMenu;
+import slice.gui.main.MainMenu;
 
 @SuppressWarnings("all")
 public class Realms
@@ -113,6 +114,6 @@ public class Realms
 
     public static boolean inTitleScreen()
     {
-        return Minecraft.getMinecraft().currentScreen != null && Minecraft.getMinecraft().currentScreen instanceof HTMLMainMenu;
+        return Minecraft.getMinecraft().currentScreen != null && Minecraft.getMinecraft().currentScreen instanceof MainMenu;
     }
 }

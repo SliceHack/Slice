@@ -1,10 +1,19 @@
 package slice.gui.main;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
+import org.cef.browser.CefBrowserCustom;
+import org.cef.browser.lwjgl.CefRendererLwjgl;
 import org.cef.ccbluex.GuiView;
 import org.cef.ccbluex.Page;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
+import slice.Slice;
 
+import java.awt.*;
 import java.io.File;
+import java.util.HashMap;
 
 public class HTMLMainMenu extends GuiView {
 
@@ -13,8 +22,12 @@ public class HTMLMainMenu extends GuiView {
     }
 
     @Override
+    public void updateScreen() {
+        getCefBrowser().wasResized_(Display.getWidth(), Display.getHeight());
+    }
+
+    @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        drawRect(0, 0, width, height, 0xFFFFFFFF);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 

@@ -111,6 +111,10 @@ public class GuiView extends GuiScreen {
         cefBrowser.mouseInteracted(Mouse.getX(), Display.getHeight() - Mouse.getY(), mouseModifiers(keyModifiers(0)), clickedMouseButton, true, 1);
     }
 
+    public void callMouseInteracted(int mouseX, int mouseY, int key, long timeSinceLastClick) {
+        mouseClickMove(mouseX, mouseY, key, timeSinceLastClick);
+    }
+
     @Override
     public void mouseReleased(int mouseX, int mouseY, int key) {
         cefBrowser.mouseInteracted(Mouse.getX(), Display.getHeight() - Mouse.getY(), mouseModifiers(keyModifiers(0)), key, false, 1);

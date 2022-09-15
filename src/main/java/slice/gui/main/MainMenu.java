@@ -14,10 +14,8 @@ import java.io.IOException;
 
 public class MainMenu extends GuiScreen {
 
+    @Override
     public void initGui() {
-        if(mc.currentScreen != this)
-            return;
-
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
 
         int x = 305;
@@ -29,10 +27,8 @@ public class MainMenu extends GuiScreen {
         super.initGui();
     }
 
+    @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        if(mc.currentScreen != this)
-            return;
-
         drawBackground();
 
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
@@ -43,16 +39,14 @@ public class MainMenu extends GuiScreen {
         Gui.drawCenteredString(font, "Slice", (sr.getScaledWidth() / 2f)+3, 25, -1);
         GlStateManager.popMatrix();
 
-        this.buttonList.forEach(button -> button.drawButton(Minecraft.getMinecraft(), mouseX, mouseY));
+        super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
     /**
      * Button pressed events
      * */
+    @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
-        if(mc.currentScreen != this)
-            return;
-
         this.buttonList.forEach(button -> {
             if(button instanceof MainButton) {
                 MainButton b = (MainButton) button;
@@ -62,6 +56,7 @@ public class MainMenu extends GuiScreen {
                 }
             }
         });
+        super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
     private void drawBackground() {
