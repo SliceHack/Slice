@@ -84,6 +84,10 @@ public class Base {
             line = line.replaceAll("import\\s+([a-zA-Z0-9_]+)\\s+from\\s+'([a-zA-Z0-9_.]+)'", "const $1 = Java.type(\"$2\");");
             line = line.replaceAll("import\\s+([a-zA-Z0-9_]+)\\s+from\\s+\"([a-zA-Z0-9_.]+)\"", "const $1 = Java.type(\"$2\");");
             line = line.replaceAll("import\\s+([a-zA-Z0-9_]+)\\s+from\\s+([a-zA-Z0-9_.]+)", "const $1 = Java.type(\"$2\");");
+
+            line = line.replaceAll("import\\s*\\(\\s*\"([a-zA-Z0-9_.]+)\"\\s*\\)", "Java.type(\"$1\")");
+            line = line.replaceAll("import\\s*\\(\\s*'([a-zA-Z0-9_.]+)'\\s*\\)", "Java.type(\"$1\")");
+            line = line.replaceAll("import\\s*\\(\\s*([a-zA-Z0-9_.]+)\\s*\\)", "Java.type(\"$1\")");
         }
 
         return line;
