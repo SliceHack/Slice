@@ -148,7 +148,10 @@ public enum Slice {
         discordRPC.start();
         API.sendAuthRequest(irc);
 
-        date = (new SimpleDateFormat("dd/MM/yyyy")).format(new Date());
+        date = (new SimpleDateFormat("MM/dd/yyyy")).format(new Date());
+
+        File totalTimeFile = new File(Minecraft.getMinecraft().mcDataDir, "Slice/totalTime.txt");
+        if (!totalTimeFile.exists()) saveTotalTime(0L);
         totalTime = loadTotalTime();
         startTime = System.currentTimeMillis();
 
@@ -402,10 +405,18 @@ public enum Slice {
     }
 
     public void saveTotalTime() {
+        saveTotalTimeValue(totalTime);
+    }
+
+    public void saveTotalTime(long value) {
+        saveTotalTimeValue(value);
+    }
+
+    private void saveTotalTimeValue(long value) {
         File file = new File(Minecraft.getMinecraft().mcDataDir, "Slice/totalTime.txt");
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-            writer.write(totalTime + "");
+            writer.write(value + "");
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
