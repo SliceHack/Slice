@@ -36,10 +36,11 @@ public class Interface extends Module {
                 minutes = seconds / 60,
                 hours = minutes / 60,
                 days = hours / 24,
-                seconds1 = (int) ((Slice.INSTANCE.totalTime + milliseconds) / 1000),
-                minutes1 = seconds / 60,
-                hours1 = minutes / 60,
-                days1 = hours / 24;
+
+                seconds1 = (int) ((milliseconds + Slice.INSTANCE.totalTime) / 1000),
+                minutes1 = seconds1 / 60,
+                hours1 = minutes1 / 60,
+                days1 = hours1 / 24;
 
         seconds %= 60;
         minutes %= 60;

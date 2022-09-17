@@ -255,6 +255,7 @@ public enum Slice {
      * Called when the client is stopped
      */
     public void stop() {
+        totalTime += System.currentTimeMillis() - startTime;
         irc.getSocket().disconnect();
         connecting = false;
         saver.save();
