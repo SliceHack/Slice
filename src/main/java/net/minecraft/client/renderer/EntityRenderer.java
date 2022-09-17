@@ -95,6 +95,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
+import slice.event.events.Event2DIgnoreGUI;
 import slice.event.events.Event3D;
 import slice.event.events.EventGuiRender;
 import slice.event.events.EventPlayerReach;
@@ -1277,6 +1278,9 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
                 this.renderEndNanoTime = System.nanoTime();
                 this.mc.mcProfiler.endStartSection("gui");
+
+                Event2DIgnoreGUI event2DIgnoreGUI = new Event2DIgnoreGUI(partialTicks, scaledresolution.scaledWidth, scaledresolution.scaledHeight, scaledresolution);
+                event2DIgnoreGUI.call();
 
                 if (!this.mc.gameSettings.hideGUI || this.mc.currentScreen != null)
                 {
