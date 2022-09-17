@@ -3,7 +3,6 @@ package net.minecraft.client.gui;
 import java.io.IOException;
 import net.minecraft.client.resources.I18n;
 import slice.gui.main.HTMLMainMenu;
-import slice.gui.main.MainMenu;
 
 @SuppressWarnings("all")
 public class GuiMemoryErrorScreen extends GuiScreen
@@ -19,7 +18,7 @@ public class GuiMemoryErrorScreen extends GuiScreen
     {
         if (button.id == 0)
         {
-            this.mc.displayGuiScreen(new MainMenu());
+            this.mc.displayGuiScreen(new HTMLMainMenu());
         }
         else if (button.id == 1)
         {

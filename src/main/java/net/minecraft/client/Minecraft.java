@@ -175,10 +175,8 @@ import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
 import slice.Slice;
 import slice.event.events.*;
-import slice.gui.alt.manager.AltManager;
 import slice.gui.hud.legacy.HUD;
 import slice.gui.main.HTMLMainMenu;
-import slice.gui.main.MainMenu;
 import viamcp.ViaMCP;
 
 @SuppressWarnings("all")
@@ -498,11 +496,11 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
         if (this.serverName != null)
         {
-            this.displayGuiScreen(new GuiConnecting(new MainMenu(), this, this.serverName, this.serverPort));
+            this.displayGuiScreen(new GuiConnecting(new HTMLMainMenu(), this, this.serverName, this.serverPort));
         }
         else
         {
-            this.displayGuiScreen(new MainMenu());
+            this.displayGuiScreen(new HTMLMainMenu());
         }
 
         this.renderEngine.deleteTexture(this.mojangLogo);
@@ -897,14 +895,14 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
         if (guiScreenIn == null && this.theWorld == null)
         {
-            guiScreenIn = new MainMenu();
+            guiScreenIn = new HTMLMainMenu();
         }
         else if (guiScreenIn == null && this.thePlayer.getHealth() <= 0.0F)
         {
-            guiScreenIn = new GuiGameOver();
+            guiScreenIn = new HTMLMainMenu();
         }
 
-        if (guiScreenIn instanceof MainMenu)
+        if (guiScreenIn instanceof HTMLMainMenu)
         {
             this.gameSettings.showDebugInfo = false;
             this.ingameGUI.getChatGUI().clearChatMessages();
@@ -1015,12 +1013,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             this.runTick();
         }
 
-        if(currentScreen instanceof MainMenu) {
-            for (int j = 0; j < this.timer.elapsedTicks + 1; ++j) {
-                MainMenu mainMenu = (MainMenu) this.currentScreen;
-                mainMenu.onTick();
-            }
-        }
+        Slice.INSTANCE.getCefRenderManager().getCefApp().doMessageLoopWork(0L);
 
         this.mcProfiler.endStartSection("preRenderErrors");
         long i1 = System.nanoTime() - l;

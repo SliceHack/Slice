@@ -2,11 +2,13 @@ package slice.cef;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import org.cef.browser.CefBrowser;
 import slice.Slice;
 import slice.event.data.EventInfo;
 import slice.event.events.EventUpdate;
+import slice.gui.main.HTMLMainMenu;
 import slice.module.Module;
 import slice.notification.Notification;
 import slice.util.LoggerUtil;
@@ -17,13 +19,12 @@ import java.util.TimerTask;
 
 @Getter @Setter
 public class RequestHandler {
+
     public static RequestHandler INSTANCE;
 
     public CefBrowser browser;
 
-    private boolean TargetHudShown;
-    private boolean SessionHudShown;
-
+    private boolean targetHUDShown, sessionHUDShown;
 
     public RequestHandler(CefBrowser browser) {
         if(INSTANCE != null) return;
@@ -36,11 +37,12 @@ public class RequestHandler {
         sendJavascript("let arraylist;");
         this.setupArrayList();
 
-        TargetHudShown = true;
+        targetHUDShown = true;
         RequestHandler.hideTargetHUD();
         this.setupSessionHUD();
-        SessionHudShown = true;
+        sessionHUDShown = true;
         RequestHandler.hideSessionHUD();
+
     }
 
     public static void addToArrayList(String text) {
@@ -91,7 +93,7 @@ public class RequestHandler {
     }
 
     public static void updateTargetHUD(EntityLivingBase target) {
-        if (!INSTANCE.TargetHudShown) return;
+        if (!INSTANCE.targetHUDShown) return;
         double health = target.getHealth();
         double max = target.getMaxHealth();
         String name = target.getName();
@@ -100,14 +102,15 @@ public class RequestHandler {
     }
 
     public static void hideTargetHUD() {
-        if (!INSTANCE.TargetHudShown) return;
-        INSTANCE.TargetHudShown = false;
+        if (!INSTANCE.targetHUDShown) return;
+
+        INSTANCE.targetHUDShown = false;
         INSTANCE.sendJavascript("document.querySelector(\"iframe[src='TargetHUD/index.html']\").style.visibility = \"hidden\";");
     }
 
     public static void showTargetHUD() {
-        if (INSTANCE.TargetHudShown) return;
-        INSTANCE.TargetHudShown = true;
+        if (INSTANCE.targetHUDShown) return;
+        INSTANCE.targetHUDShown = true;
         INSTANCE.sendJavascript("document.querySelector(\"iframe[src='TargetHUD/index.html']\").style.visibility = \"visible\";");
     }
 
@@ -122,19 +125,19 @@ public class RequestHandler {
     }
 
     public static void hideSessionHUD() {
-        if (!INSTANCE.SessionHudShown) return;
-        INSTANCE.SessionHudShown = false;
+        if (!INSTANCE.sessionHUDShown) return;
+        INSTANCE.sessionHUDShown = false;
         INSTANCE.sendJavascript("document.querySelector(\"iframe[src='SessionHUD/index.html']\").style.visibility = \"hidden\";");
     }
 
     public static void showSessionHUD() {
-        if (INSTANCE.SessionHudShown) return;
-        INSTANCE.SessionHudShown = true;
+        if (INSTANCE.sessionHUDShown) return;
+        INSTANCE.sessionHUDShown = true;
         INSTANCE.sendJavascript("document.querySelector(\"iframe[src='SessionHUD/index.html']\").style.visibility = \"visible\";");
     }
 
     public static void updateSessionHUD() {
-        if (!INSTANCE.SessionHudShown) return;
+        if (!INSTANCE.sessionHUDShown) return;
         INSTANCE.sendJavascript("updateSessionHUD(\"" + Slice.INSTANCE.getDate() + "\", " + Slice.INSTANCE.getPlayers() + ", " + Slice.INSTANCE.getPing() + ", \"" + Slice.INSTANCE.getTotalPlayTime() + "\", \"" + Slice.INSTANCE.getPlayTime() + "\");");
     }
 

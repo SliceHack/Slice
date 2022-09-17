@@ -17,6 +17,7 @@ import slice.cef.RequestHandler;
 import slice.cef.ViewNoGui;
 import slice.clickgui.HTMLGui;
 import slice.command.Command;
+import slice.gui.main.HTMLMainMenu;
 import slice.legacy.clickgui.ClickGui;
 import slice.command.commands.CommandPlugins;
 import slice.discord.StartDiscordRPC;
@@ -32,14 +33,11 @@ import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
 import slice.module.Module;
 import slice.notification.NotificationManager;
-import slice.script.lang.logger.Chat;
 import slice.script.manager.ScriptManager;
 import slice.script.module.ScriptModule;
 import slice.setting.settings.ModeValue;
-import slice.util.RenderUtil;
 import slice.util.ResourceUtil;
 
-import java.awt.*;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -133,6 +131,7 @@ public enum Slice {
     public String playTime, totalPlayTime;
 
     private final String date;
+
     Slice() {
         connecting = true;
         eventManager = new EventManager();
@@ -346,6 +345,7 @@ public enum Slice {
     @EventInfo
     public void onGuiRender(EventGuiRender e) {
         if (Minecraft.getMinecraft().gameSettings.showDebugInfo) return;
+        if (Minecraft.getMinecraft().theWorld == null) return;
 
         html.forEach((html) -> {
             if (html.isInit()) html.draw(e);
@@ -363,6 +363,8 @@ public enum Slice {
 
     @EventInfo
     public void onKey(EventKey e) {
+        if(e.getKey() == Keyboard.KEY_V) Minecraft.getMinecraft().displayGuiScreen(new HTMLMainMenu());
+
         if (e.getKey() == Keyboard.KEY_RSHIFT) {
             Minecraft.getMinecraft().displayGuiScreen(clickGui);
         }

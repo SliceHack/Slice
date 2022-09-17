@@ -38,13 +38,14 @@ public class GuiView extends GuiScreen {
     public GuiView(Page page, boolean transparent) {
         this.page = page;
         this.transparent = transparent;
-
-        init();
     }
 
     public GuiView(Page page) {
         this.page = page;
+    }
 
+    @Override
+    public void initGui() {
         init();
     }
 

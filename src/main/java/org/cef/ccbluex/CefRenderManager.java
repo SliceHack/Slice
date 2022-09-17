@@ -23,6 +23,7 @@ import slice.event.events.EventGuiRender;
 import slice.event.events.EventUpdateLWJGL;
 import slice.event.manager.EventManager;
 import slice.gui.alt.GuiAlt;
+import slice.gui.main.HTMLMainMenu;
 import slice.module.Module;
 import slice.setting.Setting;
 import slice.setting.settings.BooleanValue;
@@ -101,7 +102,6 @@ public class CefRenderManager {
                     switch (request) {
                         case "READY":
                             new RequestHandler(browser);
-                            LoggerUtil.addTerminalMessage("Browser Ready!");
                             break;
                         case "SinglePlayerScreen":
                             mc.displayGuiScreen(new GuiSelectWorld(screen));
@@ -169,8 +169,8 @@ public class CefRenderManager {
     }
 
     @EventInfo
-    public void onUpdate(EventUpdateLWJGL e) {
-        cefApp.doMessageLoopWork(0L);
+    public void onGuiRender(EventUpdateLWJGL e) {
+//        cefApp.doMessageLoopWork(0L);
     }
 
 }
