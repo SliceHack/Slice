@@ -1015,22 +1015,10 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             this.runTick();
         }
 
-        for (int j = 0; j < this.timer.elapsedTicks + 1; ++j) {
-            if (this.currentScreen instanceof MainMenu) {
+        if(currentScreen instanceof MainMenu) {
+            for (int j = 0; j < this.timer.elapsedTicks + 1; ++j) {
                 MainMenu mainMenu = (MainMenu) this.currentScreen;
                 mainMenu.onTick();
-            }
-            if (this.currentScreen instanceof GuiMultiplayer) {
-                GuiMultiplayer guiMultiplayer = (GuiMultiplayer) this.currentScreen;
-                guiMultiplayer.onTick();
-            }
-            if (this.currentScreen instanceof GuiSelectWorld) {
-                GuiSelectWorld guiSelectWorld = (GuiSelectWorld) this.currentScreen;
-                guiSelectWorld.onTick();
-            }
-            if (this.currentScreen instanceof AltManager) {
-                AltManager altManager = (AltManager) this.currentScreen;
-                altManager.onTick();
             }
         }
 
