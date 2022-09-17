@@ -160,6 +160,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.cef.browser.CefBrowserCustom;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
@@ -975,6 +976,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
     private void runGameLoop() throws IOException
     {
+        Slice.INSTANCE.getCefRenderManager().getCefApp().doMessageLoopWork(0L);
+        Slice.INSTANCE.getCefRenderManager().getBrowsers().forEach(CefBrowserCustom::mcefUpdate);
+
         long i = System.nanoTime();
         this.mcProfiler.startSection("root");
 
@@ -1012,8 +1016,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         {
             this.runTick();
         }
-
-        Slice.INSTANCE.getCefRenderManager().getCefApp().doMessageLoopWork(0L);
 
         this.mcProfiler.endStartSection("preRenderErrors");
         long i1 = System.nanoTime() - l;

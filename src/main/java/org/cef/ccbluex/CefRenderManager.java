@@ -166,11 +166,8 @@ public class CefRenderManager {
     @EventInfo
     public void on2D(Event2D e) {
         browsers.forEach(CefBrowserCustom::mcefUpdate);
+        cefApp.doMessageLoopWork(0L);
     }
 
-    @EventInfo
-    public void onGuiRender(EventUpdateLWJGL e) {
-//        cefApp.doMessageLoopWork(0L);
-    }
 
 }
