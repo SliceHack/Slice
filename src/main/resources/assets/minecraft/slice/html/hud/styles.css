@@ -19,6 +19,25 @@
     text-align: center;
 }
 
+.bps {
+    /* badd blur background on box */
+    display: inline-block;
+    position: absolute;
+    height: 40px;
+    width: 5%;
+    border-radius: 5px;
+    background: rgba(60, 60, 60, 0.65);
+    text-align: center;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(100px);
+    box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.75);
+    bottom: 10px;
+    left: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    color: #ffffff;
+}
+
 /* center .text vertically */
 
 .text {

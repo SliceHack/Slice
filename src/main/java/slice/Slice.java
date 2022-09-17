@@ -19,7 +19,6 @@ import slice.cef.RequestHandler;
 import slice.cef.ViewNoGui;
 import slice.clickgui.HTMLGui;
 import slice.command.Command;
-import slice.gui.browser.GuiBrowser;
 import slice.legacy.clickgui.ClickGui;
 import slice.command.commands.CommandPlugins;
 import slice.discord.StartDiscordRPC;
@@ -359,9 +358,6 @@ public enum Slice {
 
     @EventInfo
     public void onKey(EventKey e) {
-        if(e.getKey() == Keyboard.KEY_V) {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiView(new Page("https://google.com")));
-        }
         if (e.getKey() == Keyboard.KEY_RSHIFT) {
             Minecraft.getMinecraft().displayGuiScreen(clickGui);
         }

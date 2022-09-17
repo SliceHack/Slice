@@ -3,6 +3,9 @@ package slice.gui.main;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.GlStateManager;
+import org.cef.ccbluex.GuiView;
+import org.cef.ccbluex.Page;
+import org.lwjgl.input.Keyboard;
 import slice.Slice;
 import slice.font.TTFFontRenderer;
 import slice.gui.alt.GuiAlt;
@@ -57,6 +60,11 @@ public class MainMenu extends GuiScreen {
             }
         });
         super.mouseClicked(mouseX, mouseY, mouseButton);
+    }
+
+    @Override
+    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+        super.keyTyped(typedChar, keyCode);
     }
 
     private void drawBackground() {

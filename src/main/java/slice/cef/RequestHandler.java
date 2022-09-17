@@ -61,6 +61,18 @@ public class RequestHandler {
         INSTANCE.sendJavascript("renameFromArrayList(\"" + value + "\", \"" + newValue + "\");");
     }
 
+    public static void setBPSVisible(boolean show) {
+        if(INSTANCE == null) return;
+
+        INSTANCE.sendJavascript("setBPSVisible(" + show + ");");
+    }
+
+    public static void setBPS(double bps) {
+        if(INSTANCE == null) return;
+
+        INSTANCE.sendJavascript("setBPS(\"" + bps + "\");");
+    }
+
     public void sendJavascript(String js) {
         browser.executeJavaScript(js, null, 0);
     }
