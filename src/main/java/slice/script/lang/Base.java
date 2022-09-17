@@ -81,7 +81,9 @@ public class Base {
 
         // import statements
         if(line.contains("import")) {
-            line = line.replaceFirst("import\\s+([a-zA-Z0-9_]+)\\s+from\\s+\"([a-zA-Z0-9_]+)\";", "var $1 = Java.type(\"$2\");");
+            line = line.replaceAll("import\\s+([a-zA-Z0-9_]+)\\s+from\\s+'([a-zA-Z0-9_.]+)'", "var $1 = Java.type(\"$2\");");
+            line = line.replaceAll("import\\s+([a-zA-Z0-9_]+)\\s+from\\s+\"([a-zA-Z0-9_.]+)\"", "var $1 = Java.type(\"$2\");");
+            line = line.replaceAll("import\\s+([a-zA-Z0-9_]+)\\s+from\\s+([a-zA-Z0-9_.]+)", "var $1 = Java.type(\"$2\");");
         }
 
         return line;

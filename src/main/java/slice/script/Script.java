@@ -97,7 +97,6 @@ public class Script {
                 }
             }
 
-            LoggerUtil.addMessage(builder.toString());
             engine.eval(builder.toString());
 
             if(!Base.hasVariable(engine, "name") || !Base.hasVariable(engine, "category")) {
