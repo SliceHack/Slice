@@ -95,11 +95,9 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
-import slice.event.events.Event2DIgnoreGUI;
 import slice.event.events.Event3D;
 import slice.event.events.EventGuiRender;
 import slice.event.events.EventPlayerReach;
-import slice.gui.main.HTMLMainMenu;
 import slice.gui.main.MainMenu;
 
 @SuppressWarnings("all")
