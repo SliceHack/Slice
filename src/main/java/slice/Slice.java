@@ -32,11 +32,14 @@ import slice.manager.ModuleManager;
 import slice.manager.SettingsManager;
 import slice.module.Module;
 import slice.notification.NotificationManager;
+import slice.script.lang.logger.Chat;
 import slice.script.manager.ScriptManager;
 import slice.script.module.ScriptModule;
 import slice.setting.settings.ModeValue;
+import slice.util.RenderUtil;
 import slice.util.ResourceUtil;
 
+import java.awt.*;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

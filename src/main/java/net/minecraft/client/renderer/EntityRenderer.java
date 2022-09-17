@@ -1279,9 +1279,6 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 this.renderEndNanoTime = System.nanoTime();
                 this.mc.mcProfiler.endStartSection("gui");
 
-                Event2DIgnoreGUI event2DIgnoreGUI = new Event2DIgnoreGUI(partialTicks, scaledresolution.scaledWidth, scaledresolution.scaledHeight, scaledresolution);
-                event2DIgnoreGUI.call();
-
                 if (!this.mc.gameSettings.hideGUI || this.mc.currentScreen != null)
                 {
                     GlStateManager.alphaFunc(516, 0.1F);
