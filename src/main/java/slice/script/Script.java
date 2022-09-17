@@ -24,12 +24,14 @@ import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * The Script class
@@ -84,9 +86,20 @@ public class Script {
             Base.putInEngine(engine, "script", this);
             engine.eval("function require(url) {script.require(url);};");
 
-            if(path != null) reader = Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8);
 
-            engine.eval(reader);
+            StringBuilder builder = new StringBuilder();
+            if(path != null) {
+                reader = new BufferedReader(new InputStreamReader(Files.newInputStream(Paths.get(path)), StandardCharsets.UTF_8));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    line = Base.formatJavaScriptLine(line);
+                    builder.append(line);
+                }
+            }
+
+            LoggerUtil.addMessage(builder.toString());
+            engine.eval(builder.toString());
+
             if(!Base.hasVariable(engine, "name") || !Base.hasVariable(engine, "category")) {
                 System.err.println("Missing required variables");
                 return;

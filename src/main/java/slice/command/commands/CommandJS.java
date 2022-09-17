@@ -36,6 +36,8 @@ public class CommandJS extends Command {
     public boolean handle(String name, String[] args) {
         String message = String.join(" ", args);
 
+        message = Base.formatJavaScriptLine(message);
+
         if(message.isEmpty()) {
             addMessage("Please enter some JavaScript code to execute");
             return true;

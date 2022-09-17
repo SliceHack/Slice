@@ -68,6 +68,25 @@ public class Base {
         } catch (Exception ignored){}
     }
 
+    public static String formatJavaScriptLine(String line) {
+        // arrow functions
+        if(line.contains("=>")) {
+            line = line.replaceFirst("\\(\\s*\\)\\s*=>\\s*\\{", "function() {");
+            line = line.replaceFirst("\\(\\s*([a-zA-Z0-9_]+)\\s*\\)\\s*=>\\s*\\{", "function($1) {");
+            line = line.replaceFirst("\\(\\s*([a-zA-Z0-9_]+)\\s*(,\\s*[a-zA-Z0-9_]+\\s*)*\\)\\s*=>\\s*\\{", "function($1) {");
+            line = line.replaceFirst("\\(\\s*\\)\\s*=>\\s*([a-zA-Z0-9_]+)", "function() { $1; }");
+            line = line.replaceFirst("\\(\\s*([a-zA-Z0-9_]+)\\s*\\)\\s*=>\\s*([a-zA-Z0-9_]+)", "function($1) { $2; }");
+            line = line.replaceFirst("\\(\\s*([a-zA-Z0-9_]+)\\s*(,\\s*[a-zA-Z0-9_]+\\s*)*\\)\\s*=>\\s*([a-zA-Z0-9_]+)", "function($1) { $3; }");
+        }
+
+        // import statements
+        if(line.contains("import")) {
+            line = line.replaceFirst("import\\s+([a-zA-Z0-9_]+)\\s+from\\s+\"([a-zA-Z0-9_]+)\";", "var $1 = Java.type(\"$2\");");
+        }
+
+        return line;
+    }
+
     /**
      * Sets a variable in the script engine.
      *
