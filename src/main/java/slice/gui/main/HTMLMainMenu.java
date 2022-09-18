@@ -14,6 +14,12 @@ public class HTMLMainMenu extends GuiView {
     }
 
     @Override
+    public void init() {
+        mc.displayGuiScreen(new MainMenu());
+        super.init();
+    }
+
+    @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         getCefBrowser().mcefUpdate();
         super.drawScreen(mouseX, mouseY, partialTicks);

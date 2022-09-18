@@ -89,7 +89,7 @@ public class RequestHandler {
     }
 
     public void setupTargetHUD() {
-        createIframe("TargetHUD/index.html");
+        createIframe("targethud/index.html");
     }
 
     public static void updateTargetHUD(EntityLivingBase target) {
@@ -102,38 +102,41 @@ public class RequestHandler {
     }
 
     public static void hideTargetHUD() {
+        if(INSTANCE == null) return;
         if (!INSTANCE.targetHUDShown) return;
 
         INSTANCE.targetHUDShown = false;
-        INSTANCE.sendJavascript("document.querySelector(\"iframe[src='TargetHUD/index.html']\").style.visibility = \"hidden\";");
+        INSTANCE.sendJavascript("document.querySelector(\"iframe[src='targethud/index.html']\").style.visibility = \"hidden\";");
     }
 
     public static void showTargetHUD() {
+        if(INSTANCE == null) return;
         if (INSTANCE.targetHUDShown) return;
+
         INSTANCE.targetHUDShown = true;
-        INSTANCE.sendJavascript("document.querySelector(\"iframe[src='TargetHUD/index.html']\").style.visibility = \"visible\";");
+        INSTANCE.sendJavascript("document.querySelector(\"iframe[src='targethud/index.html']\").style.visibility = \"visible\";");
     }
 
     public void setupSessionHUD() {
-        createIframe("SessionHUD/index.html");
+        createIframe("sessionhud/index.html");
     }
     public void setupArrayList() {
-        createIframe("ArrayList/index.html");
+        createIframe("arraylist/index.html");
     }
     public void removeArrayList() {
-        INSTANCE.sendJavascript("document.querySelector(\"iframe[src='ArrayList/index.html']\").remove();");
+        INSTANCE.sendJavascript("document.querySelector(\"iframe[src='arraylist/index.html']\").remove();");
     }
 
     public static void hideSessionHUD() {
         if (!INSTANCE.sessionHUDShown) return;
         INSTANCE.sessionHUDShown = false;
-        INSTANCE.sendJavascript("document.querySelector(\"iframe[src='SessionHUD/index.html']\").style.visibility = \"hidden\";");
+        INSTANCE.sendJavascript("document.querySelector(\"iframe[src='sessionhud/index.html']\").style.visibility = \"hidden\";");
     }
 
     public static void showSessionHUD() {
         if (INSTANCE.sessionHUDShown) return;
         INSTANCE.sessionHUDShown = true;
-        INSTANCE.sendJavascript("document.querySelector(\"iframe[src='SessionHUD/index.html']\").style.visibility = \"visible\";");
+        INSTANCE.sendJavascript("document.querySelector(\"iframe[src='sessionhud/index.html']\").style.visibility = \"visible\";");
     }
 
     public static void updateSessionHUD() {

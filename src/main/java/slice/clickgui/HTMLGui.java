@@ -18,7 +18,7 @@ import java.io.File;
 public class HTMLGui extends AllTimeGuiView {
 
     public HTMLGui() {
-        super(new Page(new File(Minecraft.getMinecraft().mcDataDir, "Slice\\html\\gui\\clickgui\\index.html")));
+        super(new Page("https://assets.sliceclient.com/clickgui/"));
     }
 
     /**
