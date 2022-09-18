@@ -15,7 +15,6 @@ public class HTMLMainMenu extends GuiView {
 
     @Override
     public void init() {
-        mc.displayGuiScreen(new MainMenu());
         super.init();
     }
 
