@@ -128,6 +128,7 @@ public class RequestHandler {
     }
 
     public static void hideSessionHUD() {
+        if(INSTANCE == null) return;
         if (!INSTANCE.sessionHUDShown) return;
         INSTANCE.sessionHUDShown = false;
         INSTANCE.sendJavascript("document.querySelector(\"iframe[src='sessionhud/index.html']\").style.visibility = \"hidden\";");
