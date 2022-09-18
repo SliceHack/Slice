@@ -78,7 +78,8 @@ public class CefRenderManager {
                     "--disable-gpu-compositing",
                     "--disable-logging",
                     "--disable-plugins",
-                    "--disable-frame-rate-limit"
+                    "--disable-frame-rate-limit",
+                    "--disable-gpu" // VRAM
             );
             builder.getCefSettings().locale = gameSettings.language;
             builder.getCefSettings().cache_path = cacheDir.getAbsolutePath();

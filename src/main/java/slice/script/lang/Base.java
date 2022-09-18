@@ -68,6 +68,11 @@ public class Base {
         } catch (Exception ignored){}
     }
 
+    /***
+     * Formats a javascript line to be more modern.
+     *
+     * @param line The line to format.
+     * */
     public static String formatJavaScriptLine(String line) {
         // arrow functions
         if(line.contains("=>")) {
@@ -214,6 +219,52 @@ public class Base {
     public boolean hasVariable(ScriptEngine engine, String name) {
         try {
             return engine.eval(name) != null;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Checks if a script has exports.
+     *
+     * @param engine The script engine.
+     */
+    public boolean hasExports(ScriptEngine engine) {
+        return hasVariable(engine, "script.exports") && getVariable(engine, "script.exports") instanceof JSObject;
+    }
+
+    /**
+     * Gets the exports from a script.
+     *
+     * @param engine The script engine.
+     */
+    public JSObject getExports(ScriptEngine engine) {
+        try {
+            return engine.eval("script.exports") instanceof JSObject ? (JSObject) engine.eval("script.exports") : null;
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Gets a export from a script.
+     *
+     * @param engine The script engine.
+     * @param name The name of the export.
+     */
+    public Object getExport(ScriptEngine engine, String name) {
+        try {
+            return engine.eval("script.exports." + name);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean hasExport(ScriptEngine engine, String name) {
+        try {
+            return engine.eval("script.exports." + name) != null;
         } catch (Exception e) {
             return false;
         }
