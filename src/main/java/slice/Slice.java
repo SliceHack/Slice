@@ -285,8 +285,6 @@ public enum Slice {
 
     @EventInfo
     public void onKey(EventKey e) {
-        if(e.getKey() == Keyboard.KEY_V) Minecraft.getMinecraft().displayGuiScreen(new HTMLMainMenu());
-
         if (e.getKey() == Keyboard.KEY_RSHIFT) {
             Minecraft.getMinecraft().displayGuiScreen(clickGui);
         }

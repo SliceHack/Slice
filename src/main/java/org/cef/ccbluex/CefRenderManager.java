@@ -30,6 +30,7 @@ import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
 import slice.util.LoggerUtil;
+import viamcp.gui.GuiProtocolSelector;
 
 import java.io.File;
 import java.io.IOException;
@@ -115,6 +116,9 @@ public class CefRenderManager {
                             break;
                         case "AltManagerScreen":
                             mc.displayGuiScreen(new GuiAlt(screen));
+                            break;
+                        case "VersionScreen":
+                            mc.displayGuiScreen(new GuiProtocolSelector(screen));
                             break;
                         case "Exit":
                             mc.shutdownMinecraftApplet();
