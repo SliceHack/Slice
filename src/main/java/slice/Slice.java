@@ -19,7 +19,7 @@ import slice.cef.RequestHandler;
 import slice.cef.ViewNoGui;
 import slice.clickgui.HTMLGui;
 import slice.command.Command;
-import slice.gui.browser.GuiBrowser;
+//import slice.gui.browser.GuiBrowser;
 import slice.legacy.clickgui.ClickGui;
 import slice.command.commands.CommandPlugins;
 import slice.discord.StartDiscordRPC;
