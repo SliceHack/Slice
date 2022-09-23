@@ -4,13 +4,14 @@ import net.minecraft.client.Minecraft;
 import org.cef.ccbluex.DynamicGuiView;
 import org.cef.ccbluex.GuiView;
 import org.cef.ccbluex.Page;
+import slice.Slice;
 
 import java.io.File;
 
 public class HTMLMainMenu extends GuiView {
 
     public HTMLMainMenu() {
-        super(new Page(new File(Minecraft.getMinecraft().mcDataDir, "Slice/html/gui/main/index.html")), false);
+        super(new Page("https://assets.sliceclient.com/mainmenu/?name=God_Mode"), false);
     }
 
     @Override
