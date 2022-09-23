@@ -31,18 +31,24 @@ public class Interface extends Module {
     public void onUpdateNoToggle(EventUpdate event) {
         fontChatMode.setHidden(!fontChat.getValue());
 
-        double milliseconds = System.currentTimeMillis() - Slice.INSTANCE.startTime, milliseconds1 = (System.currentTimeMillis() - Slice.INSTANCE.startTime)+Slice.INSTANCE.totalTime;
-        int seconds = (int) (milliseconds / 1000), seconds1 = (int) (milliseconds1 / 1000);
-        int minutes = seconds / 60, minutes1 = seconds1 / 60;
-        int hours = minutes / 60, hours1 = minutes1 / 60;
-        int days = hours / 24, days1 = hours1 / 24;
+        double milliseconds = System.currentTimeMillis() - Slice.INSTANCE.startTime;
+        int seconds = (int) (milliseconds / 1000),
+                minutes = seconds / 60,
+                hours = minutes / 60,
+                days = hours / 24,
 
-        seconds = seconds % 60;
-        minutes = minutes % 60;
-        hours = hours % 24;
-        seconds1 = seconds % 60;
-        minutes1 = minutes % 60;
-        hours1 = hours % 24;
+                seconds1 = (int) ((milliseconds + Slice.INSTANCE.totalTime) / 1000),
+                minutes1 = seconds1 / 60,
+                hours1 = minutes1 / 60,
+                days1 = hours1 / 24;
+
+        seconds %= 60;
+        minutes %= 60;
+        hours %= 24;
+
+        seconds1 %= 60;
+        minutes1 %= 60;
+        hours1 %= 24;
 
         Slice.INSTANCE.playTime = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
         Slice.INSTANCE.totalPlayTime = days1 + "d " + hours1 + "h " + minutes1 + "m " + seconds1 + "s";

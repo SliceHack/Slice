@@ -33,9 +33,19 @@ public class GuiView extends GuiScreen {
 
     private Page page;
 
+    private boolean transparent = true;
+
+    public GuiView(Page page, boolean transparent) {
+        this.page = page;
+        this.transparent = transparent;
+    }
+
     public GuiView(Page page) {
         this.page = page;
+    }
 
+    @Override
+    public void initGui() {
         init();
     }
 
@@ -43,8 +53,8 @@ public class GuiView extends GuiScreen {
         if(cefBrowser != null || cefRenderer != null) {
             destroy();
         }
-        cefRenderer = new CefRendererLwjgl(true);
-        cefBrowser = new CefBrowserCustom(Slice.INSTANCE.getCefRenderManager().getCefClient(), page.getUrl(), true, null, cefRenderer);
+        cefRenderer = new CefRendererLwjgl(transparent);
+        cefBrowser = new CefBrowserCustom(Slice.INSTANCE.getCefRenderManager().getCefClient(), page.getUrl(), transparent, null, cefRenderer);
         cefBrowser.setCloseAllowed();
         cefBrowser.createImmediately();
         cefBrowser.setFocus(true);
@@ -108,11 +118,7 @@ public class GuiView extends GuiScreen {
 
     @Override
     protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
-        cefBrowser.mouseInteracted(Mouse.getX(), Display.getHeight() - Mouse.getY(), mouseModifiers(keyModifiers(0)), clickedMouseButton, true, 1);
-    }
-
-    public void callMouseInteracted(int mouseX, int mouseY, int key, long timeSinceLastClick) {
-        mouseClickMove(mouseX, mouseY, key, timeSinceLastClick);
+        cefBrowser.mouseInteracted(Mouse.getX(), Display.getHeight() - Mouse.getY(), mouseModifiers(keyModifiers(0)), clickedMouseButton, true, (int)timeSinceLastClick);
     }
 
     @Override

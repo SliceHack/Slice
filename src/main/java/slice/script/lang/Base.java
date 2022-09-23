@@ -68,6 +68,36 @@ public class Base {
         } catch (Exception ignored){}
     }
 
+    /***
+     * Formats a javascript line to be more modern.
+     *
+     * @param line The line to format.
+     * */
+    public static String formatJavaScriptLine(String line) {
+        // arrow functions
+        if(line.contains("=>")) {
+            line = line.replaceFirst("\\(\\s*\\)\\s*=>\\s*\\{", "function() {");
+            line = line.replaceFirst("\\(\\s*([a-zA-Z0-9_]+)\\s*\\)\\s*=>\\s*\\{", "function($1) {");
+            line = line.replaceFirst("\\(\\s*([a-zA-Z0-9_]+)\\s*(,\\s*[a-zA-Z0-9_]+\\s*)*\\)\\s*=>\\s*\\{", "function($1) {");
+            line = line.replaceFirst("\\(\\s*\\)\\s*=>\\s*([a-zA-Z0-9_]+)", "function() { $1; }");
+            line = line.replaceFirst("\\(\\s*([a-zA-Z0-9_]+)\\s*\\)\\s*=>\\s*([a-zA-Z0-9_]+)", "function($1) { $2; }");
+            line = line.replaceFirst("\\(\\s*([a-zA-Z0-9_]+)\\s*(,\\s*[a-zA-Z0-9_]+\\s*)*\\)\\s*=>\\s*([a-zA-Z0-9_]+)", "function($1) { $3; }");
+        }
+
+        // import statements
+        if(line.contains("import")) {
+            line = line.replaceAll("import\\s+([a-zA-Z0-9_]+)\\s+from\\s+'([a-zA-Z0-9_.]+)'", "const $1 = Java.type(\"$2\");");
+            line = line.replaceAll("import\\s+([a-zA-Z0-9_]+)\\s+from\\s+\"([a-zA-Z0-9_.]+)\"", "const $1 = Java.type(\"$2\");");
+            line = line.replaceAll("import\\s+([a-zA-Z0-9_]+)\\s+from\\s+([a-zA-Z0-9_.]+)", "const $1 = Java.type(\"$2\");");
+
+            line = line.replaceAll("import\\s*\\(\\s*\"([a-zA-Z0-9_.]+)\"\\s*\\)", "Java.type(\"$1\")");
+            line = line.replaceAll("import\\s*\\(\\s*'([a-zA-Z0-9_.]+)'\\s*\\)", "Java.type(\"$1\")");
+            line = line.replaceAll("import\\s*\\(\\s*([a-zA-Z0-9_.]+)\\s*\\)", "Java.type(\"$1\")");
+        }
+
+        return line;
+    }
+
     /**
      * Sets a variable in the script engine.
      *
@@ -189,6 +219,52 @@ public class Base {
     public boolean hasVariable(ScriptEngine engine, String name) {
         try {
             return engine.eval(name) != null;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Checks if a script has exports.
+     *
+     * @param engine The script engine.
+     */
+    public boolean hasExports(ScriptEngine engine) {
+        return hasVariable(engine, "script.exports") && getVariable(engine, "script.exports") instanceof JSObject;
+    }
+
+    /**
+     * Gets the exports from a script.
+     *
+     * @param engine The script engine.
+     */
+    public JSObject getExports(ScriptEngine engine) {
+        try {
+            return engine.eval("script.exports") instanceof JSObject ? (JSObject) engine.eval("script.exports") : null;
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Gets a export from a script.
+     *
+     * @param engine The script engine.
+     * @param name The name of the export.
+     */
+    public Object getExport(ScriptEngine engine, String name) {
+        try {
+            return engine.eval("script.exports." + name);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean hasExport(ScriptEngine engine, String name) {
+        try {
+            return engine.eval("script.exports." + name) != null;
         } catch (Exception e) {
             return false;
         }

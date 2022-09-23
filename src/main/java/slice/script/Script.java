@@ -24,12 +24,14 @@ import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * The Script class
@@ -51,6 +53,8 @@ public class Script {
     private BufferedReader reader;
 
     private HashMap<String, JSObject> events = new HashMap<>();
+
+    public JSObject exports;
 
     public Script(String path, ModuleManager moduleManager, FontManager fontManager) {
         this.path = path;
@@ -75,7 +79,7 @@ public class Script {
 
     private void startScript() {
         try {
-            String[] args = new String[] { "--language=javascript", "--language=es6" };
+            String[] args = new String[] { "--language=es6" };
             engine = new NashornScriptEngineFactory().getScriptEngine(args);
 
             Base.setup(engine);
@@ -84,17 +88,39 @@ public class Script {
             Base.putInEngine(engine, "script", this);
             engine.eval("function require(url) {script.require(url);};");
 
-            if(path != null) reader = Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8);
 
-            engine.eval(reader);
-            if(!Base.hasVariable(engine, "name") || !Base.hasVariable(engine, "category")) {
+            StringBuilder builder = new StringBuilder();
+            if(path != null) {
+                reader = new BufferedReader(new InputStreamReader(Files.newInputStream(Paths.get(path)), StandardCharsets.UTF_8));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    line = Base.formatJavaScriptLine(line);
+                    builder.append(line);
+                }
+            }
+
+            engine.eval(builder.toString());
+
+            if(exports == null) {
+                System.err.println("exports was not defined");
+                return;
+            }
+
+            JSObject exports = Base.getExports(engine);
+
+            if(exports == null) {
+                System.err.println("Could not get exports");
+                return;
+            }
+
+            if(!Base.hasExport(engine, "name") || !Base.hasExport(engine, "category")) {
                 System.err.println("Missing required variables");
                 return;
             }
 
-            String name = (String)Base.getVariable(engine, "name");
-            Category category = (Category)Base.getVariable(engine, "category");
-            String description = Base.hasVariable(engine,"description") ? (String)Base.getVariable(engine, "description") : "No description provided.";
+            String name = (String)Base.getExport(engine, "name");
+            Category category = (Category)Base.getExport(engine, "category");
+            String description = Base.hasExport(engine,"description") ? (String)Base.getExport(engine, "description") : "No description provided.";
 
             module = new ScriptModule(this, name, description, category, engine, fontManager);
             if(moduleManager.getModule(name) != null && moduleManager.getModule(name) instanceof ScriptModule) { moduleManager.unregister(moduleManager.getModule(name)); }

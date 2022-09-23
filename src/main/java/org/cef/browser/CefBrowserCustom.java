@@ -12,6 +12,7 @@ import java.util.concurrent.CompletableFuture;
 
 import org.cef.CefClient;
 import org.cef.callback.CefDragData;
+import org.cef.ccbluex.CefRenderManager;
 import org.cef.handler.CefRenderHandler;
 import org.cef.handler.CefScreenInfo;
 import org.lwjgl.BufferUtils;

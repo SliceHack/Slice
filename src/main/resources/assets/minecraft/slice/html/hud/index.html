@@ -15,6 +15,11 @@
             Slice | Version 1.0 | God_Mode
         </div>
     </div>
+    <div class="bps">
+        <div class="text">
+            BPS: 0.00
+        </div>
+    </div>
 
     <script>
         window.cefQuery({
@@ -33,6 +38,16 @@
             }, "*");
         }
 
+        function setBPS(bps) {
+            let bpsElement = document.querySelector(".bps .text");
+            bpsElement.innerText = "BPS: " + bps;
+        }
+
+        function setBPSVisible(visible) {
+            let bpsElement = document.querySelector(".bps");
+            bpsElement.style.visibility = visible ? "visible" : "hidden";
+        }
+
         function addNotification(name, message, seconds) {
             let iframe = document.createElement("iframe");
             iframe.src = "Notification/index.html?name=" + name + "&message=" + message + "&seconds=" + seconds;
@@ -47,7 +62,7 @@
         }
 
         function getFormattedTime() {
-            var d = new Date();
+            const d = new Date();
             return d.toLocaleTimeString();
         }
 

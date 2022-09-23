@@ -99,7 +99,6 @@ import slice.event.events.Event3D;
 import slice.event.events.EventGuiRender;
 import slice.event.events.EventPlayerReach;
 import slice.gui.main.HTMLMainMenu;
-import slice.gui.main.MainMenu;
 
 @SuppressWarnings("all")
 public class EntityRenderer implements IResourceManagerReloadListener
@@ -2617,9 +2616,9 @@ public class EntityRenderer implements IResourceManagerReloadListener
             }
         }
 
-        if (this.mc.currentScreen instanceof MainMenu)
+        if (this.mc.currentScreen instanceof HTMLMainMenu)
         {
-            this.updateMainMenu((MainMenu)this.mc.currentScreen);
+            this.updateMainMenu((HTMLMainMenu)this.mc.currentScreen);
         }
 
         if (this.updatedWorld != world)
@@ -2657,7 +2656,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
         }
     }
 
-    private void updateMainMenu(MainMenu p_updateMainMenu_1_)
+    private void updateMainMenu(HTMLMainMenu p_updateMainMenu_1_)
     {
         try
         {

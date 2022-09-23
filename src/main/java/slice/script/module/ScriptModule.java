@@ -1,5 +1,6 @@
 package slice.script.module;
 
+import jdk.nashorn.api.scripting.JSObject;
 import slice.Slice;
 import slice.font.FontManager;
 import slice.module.Module;

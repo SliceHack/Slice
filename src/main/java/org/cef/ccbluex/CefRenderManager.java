@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.friwi.jcefmaven.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiMultiplayer;
-import net.minecraft.client.gui.GuiOptions;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiSelectWorld;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.settings.GameSettings;
 import org.cef.CefApp;
 import org.cef.CefClient;
@@ -22,15 +19,18 @@ import slice.Slice;
 import slice.cef.RequestHandler;
 import slice.event.data.EventInfo;
 import slice.event.events.Event2D;
+import slice.event.events.EventGuiRender;
 import slice.event.events.EventUpdateLWJGL;
 import slice.event.manager.EventManager;
 import slice.gui.alt.GuiAlt;
+import slice.gui.main.HTMLMainMenu;
 import slice.module.Module;
 import slice.setting.Setting;
 import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
 import slice.util.LoggerUtil;
+import viamcp.gui.GuiProtocolSelector;
 
 import java.io.File;
 import java.io.IOException;
@@ -79,7 +79,8 @@ public class CefRenderManager {
                     "--disable-gpu-compositing",
                     "--disable-logging",
                     "--disable-plugins",
-                    "--disable-frame-rate-limit"
+                    "--disable-frame-rate-limit",
+                    "--disable-gpu" // VRAM
             );
             builder.getCefSettings().locale = gameSettings.language;
             builder.getCefSettings().cache_path = cacheDir.getAbsolutePath();
@@ -103,7 +104,6 @@ public class CefRenderManager {
                     switch (request) {
                         case "READY":
                             new RequestHandler(browser);
-                            LoggerUtil.addTerminalMessage("Browser Ready!");
                             break;
                         case "SinglePlayerScreen":
                             mc.displayGuiScreen(new GuiSelectWorld(screen));
@@ -116,6 +116,9 @@ public class CefRenderManager {
                             break;
                         case "AltManagerScreen":
                             mc.displayGuiScreen(new GuiAlt(screen));
+                            break;
+                        case "VersionScreen":
+                            mc.displayGuiScreen(new GuiProtocolSelector(screen));
                             break;
                         case "Exit":
                             mc.shutdownMinecraftApplet();
@@ -168,11 +171,8 @@ public class CefRenderManager {
     @EventInfo
     public void on2D(Event2D e) {
         browsers.forEach(CefBrowserCustom::mcefUpdate);
-    }
-
-    @EventInfo
-    public void onUpdate(EventUpdateLWJGL e) {
         cefApp.doMessageLoopWork(0L);
     }
+
 
 }

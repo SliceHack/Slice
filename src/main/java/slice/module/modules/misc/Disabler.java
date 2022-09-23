@@ -47,9 +47,6 @@ public class Disabler extends Module {
 
     @EventInfo
     public void onPacket(EventPacket e) {
-        if(e.getPacket() instanceof C0FPacketConfirmTransaction) {
-            e.setCancelled(true);
-        }
     }
 
     @PacketEvent

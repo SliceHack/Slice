@@ -6,8 +6,8 @@ public class DynamicGuiView extends GuiView {
         super(page);
     }
 
-    public void initGui() {
-        init();
+    public DynamicGuiView(Page page, boolean transparent) {
+        super(page, transparent);
     }
 
     public void onGuiClosed() {

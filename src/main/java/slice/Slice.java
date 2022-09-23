@@ -9,9 +9,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S02PacketChat;
 import org.cef.ccbluex.CefRenderManager;
-import org.cef.ccbluex.GuiView;
 import org.cef.ccbluex.Page;
-import org.cef.ccbluex.WindowView;
 import org.lwjgl.input.Keyboard;
 import slice.api.API;
 import slice.api.IRC;
@@ -19,7 +17,7 @@ import slice.cef.RequestHandler;
 import slice.cef.ViewNoGui;
 import slice.clickgui.HTMLGui;
 import slice.command.Command;
-//import slice.gui.browser.GuiBrowser;
+import slice.gui.main.HTMLMainMenu;
 import slice.legacy.clickgui.ClickGui;
 import slice.command.commands.CommandPlugins;
 import slice.discord.StartDiscordRPC;
@@ -133,6 +131,7 @@ public enum Slice {
     public String playTime, totalPlayTime;
 
     private final String date;
+
     Slice() {
         connecting = true;
         eventManager = new EventManager();
@@ -148,7 +147,10 @@ public enum Slice {
         discordRPC.start();
         API.sendAuthRequest(irc);
 
-        date = (new SimpleDateFormat("dd/MM/yyyy")).format(new Date());
+        date = (new SimpleDateFormat("MM/dd/yyyy")).format(new Date());
+
+        File totalTimeFile = new File(Minecraft.getMinecraft().mcDataDir, "Slice/totalTime.txt");
+        if (!totalTimeFile.exists()) saveTotalTime(0L);
         totalTime = loadTotalTime();
         startTime = System.currentTimeMillis();
 
@@ -163,95 +165,18 @@ public enum Slice {
     public void init() {
         notificationManager = new NotificationManager();
         anticheat = SliceAC.INSTANCE;
-
-        File sliceDir = new File(Minecraft.getMinecraft().mcDataDir, "Slice"), sliceHTML = new File(sliceDir, "html"), sliceHUD = new File(sliceHTML, "hud");
-        File html = new File(sliceHUD, "index.html"), css = new File(sliceHUD, "styles.css");
-
-
-        extractHTML(sliceHUD, "/slice/html/hud");
-        extractHTML(new File(sliceHUD, "TargetHUD"), "slice/html/hud/targethud");
-        extractHTML(new File(sliceHUD, "SessionHUD"), "/slice/html/hud/sessionhud");
-        extractHTML(new File(sliceHUD, "Notification"), "/slice/html/hud/notification");
-        extractHTML(new File(sliceHUD, "ArrayList"), "/slice/html/hud/arraylist");
-        extractClickGui();
-
-        this.html.add(new ViewNoGui(new Page("file:///" + html.getAbsolutePath() + "?name=" + NAME + "&version=" + VERSION + "&discord=" + discordName)));
+        this.html.add(new ViewNoGui(new Page("https://assets.sliceclient.com/hud/index.html" + "?name=" + NAME + "&version=" + VERSION + "&discord=" + discordName)));
         clickGui = new HTMLGui();
         saver = new Saver(moduleManager);
         commandManager.commands.forEach(Command::init);
         moduleManager.getModules().stream().filter(module -> module instanceof ScriptModule).forEach(Module::init);
     }
 
-    @SuppressWarnings("all")
-    public void extractHTML(File computerPath, String path) {
-        File sliceDir = new File(Minecraft.getMinecraft().mcDataDir, "Slice"),
-                sliceHTML = new File(sliceDir, "html"),
-                sliceHUD = new File(sliceHTML, "hud");
-
-        if (!sliceHTML.exists()) sliceHTML.mkdirs();
-
-        File html = new File(computerPath, "index.html"), css = new File(computerPath, "styles.css");
-
-        if (!html.exists() || !css.exists()) {
-            ResourceUtil.extractResource(path + "/index.html", html.toPath());
-            ResourceUtil.extractResource(path + "/styles.css", css.toPath());
-
-            if (sliceHUD.getParentFile().exists()) sliceHUD.mkdirs();
-        }
-        removeLinesFromFile(html);
-        removeLinesFromFile(css);
-    }
-
-    @SuppressWarnings("all")
-    public void extractClickGui() {
-        File path = new File(Minecraft.getMinecraft().mcDataDir, "Slice\\html\\gui\\clickgui"), html = new File(path, "index.html"), iframe = new File(path, "iframe.html");
-
-        if(!path.getParentFile().exists()) path.getParentFile().mkdirs();
-
-        if(!html.exists() || !iframe.exists()) {
-            if(!path.exists()) path.mkdirs();
-
-            ResourceUtil.extractResource("slice/html/gui/clickgui/index.html", html.toPath());
-            ResourceUtil.extractResource("slice/html/gui/clickgui/iframe.html", iframe.toPath());
-            removeLinesFromFile(html);
-            removeLinesFromFile(iframe);
-        }
-    }
-
-    public void removeLinesFromFile(File file) {
-        try {
-            StringBuilder noLines = new StringBuilder();
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            boolean finishedScript = true, finishedStyle = true;
-            for(String line = reader.readLine(); line != null; line = reader.readLine()) {
-                if(file.getName().endsWith(".html")) {
-                    boolean isScript = line.contains("<script>"), isCss = line.contains("<style>");
-
-                    if (!isScript && line.contains("</script>")) finishedScript = true;
-                    else if (isScript) finishedScript = false;
-
-                    if (!isCss && line.contains("</style>")) finishedStyle = true;
-                    else if (isCss) finishedStyle = false;
-
-                    if(!line.isEmpty()) {
-                        if (!(finishedScript && finishedStyle)) noLines.append(line).append("\n");
-                        else noLines.append(line.replace("    ", " "));
-                    }
-                } else noLines.append(line);
-            }
-
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-            writer.write(noLines.toString());
-            writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     /**
      * Called when the client is stopped
      */
     public void stop() {
+        totalTime += System.currentTimeMillis() - startTime;
         irc.getSocket().disconnect();
         connecting = false;
         saver.save();
@@ -342,6 +267,7 @@ public enum Slice {
     @EventInfo
     public void onGuiRender(EventGuiRender e) {
         if (Minecraft.getMinecraft().gameSettings.showDebugInfo) return;
+        if (Minecraft.getMinecraft().theWorld == null) return;
 
         html.forEach((html) -> {
             if (html.isInit()) html.draw(e);
@@ -359,9 +285,6 @@ public enum Slice {
 
     @EventInfo
     public void onKey(EventKey e) {
-        if(e.getKey() == Keyboard.KEY_V) {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiView(new Page("https://google.com")));
-        }
         if (e.getKey() == Keyboard.KEY_RSHIFT) {
             Minecraft.getMinecraft().displayGuiScreen(clickGui);
         }
@@ -405,10 +328,18 @@ public enum Slice {
     }
 
     public void saveTotalTime() {
+        saveTotalTimeValue(totalTime);
+    }
+
+    public void saveTotalTime(long value) {
+        saveTotalTimeValue(value);
+    }
+
+    private void saveTotalTimeValue(long value) {
         File file = new File(Minecraft.getMinecraft().mcDataDir, "Slice/totalTime.txt");
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-            writer.write(totalTime + "");
+            writer.write(value + "");
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
