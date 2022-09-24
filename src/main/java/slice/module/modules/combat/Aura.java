@@ -208,7 +208,7 @@ public class Aura extends Module {
                 }
 
                 if (e.isPre()) {
-                    if (timer.hasReached((long) (1000 / cps)) && hasReached(target)) {
+                    if (timer.hasReached((long) (1000 / cps))) {
 
                         if (!noSwing.getValue()) mc.thePlayer.swingItem();
                         timer.reset();
@@ -264,6 +264,8 @@ public class Aura extends Module {
 
 
     private void attack() {
+        if(!hasRotated && mode.getValue().equalsIgnoreCase("Smooth")) return;
+
         mc.playerController.attackEntity(mc.thePlayer, target);
     }
 
@@ -351,9 +353,7 @@ public class Aura extends Module {
         float yaw = getBypassRotate(e)[0];
         float pitch = getBypassRotate(e)[1];
 
-        float sens = 9F;
-        float newYaw = MathHelper.wrapAngleTo180_float(deltaYaw - yaw);
-        float newPitch = MathHelper.wrapAngleTo180_float(deltaPitch - pitch);
+        float sens = 9F, newYaw = MathHelper.wrapAngleTo180_float(deltaYaw - yaw), newPitch = MathHelper.wrapAngleTo180_float(deltaPitch - pitch);
         if (newYaw > sens) newYaw = sens;
         if (newYaw < -sens) newYaw = -sens;
         if (newPitch > sens) newPitch = sens;

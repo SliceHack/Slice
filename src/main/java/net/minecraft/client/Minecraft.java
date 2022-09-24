@@ -900,7 +900,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         }
         else if (guiScreenIn == null && this.thePlayer.getHealth() <= 0.0F)
         {
-            guiScreenIn = new HTMLMainMenu();
+            guiScreenIn = new GuiGameOver();
         }
 
         if (guiScreenIn instanceof HTMLMainMenu)

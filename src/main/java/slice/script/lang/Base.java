@@ -17,6 +17,12 @@ import javax.script.Bindings;
 import javax.script.Invocable;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
+import java.io.File;
+import java.lang.instrument.ClassFileTransformer;
+import java.lang.instrument.Instrumentation;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -34,7 +40,7 @@ public class Base {
      * */
     public static void setup(ScriptEngine engine) {
         engine.setBindings(engine.createBindings(), ScriptContext.ENGINE_SCOPE);
-        engine.put("mc", Minecraft.getMinecraft());
+        putInEngine(engine, "mc", Minecraft.getMinecraft());
         putClassInEngine(engine, "console", Console.class);
         putClassInEngine(engine,"System", System.class);
         putClassInEngine(engine,"Category", Category.class);

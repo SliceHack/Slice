@@ -75,12 +75,10 @@ public class CefRenderManager {
             builder.addJcefArgs(
                     "--disable-web-security",
                     "--allow-file-access-from-files",
-                    "--ignore-gpu-blacklist",
-                    "--disable-gpu-compositing",
-                    "--disable-logging",
                     "--disable-plugins",
-                    "--disable-frame-rate-limit",
-                    "--disable-gpu" // VRAM
+                    "--disable-extensions",
+                    "--disable-gpu",
+                    "--disable-gpu-compositing"
             );
             builder.getCefSettings().locale = gameSettings.language;
             builder.getCefSettings().cache_path = cacheDir.getAbsolutePath();

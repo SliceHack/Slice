@@ -10,12 +10,15 @@ import java.io.File;
 public class HTMLMainMenu extends GuiView {
 
     public HTMLMainMenu() {
-        super(new Page(new File(Minecraft.getMinecraft().mcDataDir, "Slice/html/gui/main/index.html")), false);
+        super(new Page("https://assets.sliceclient.com/mainmenu/index.html?name=" + Minecraft.getMinecraft().getSession().getUsername()));
     }
 
+    /***
+     * To reinitialize the gui to prevent memory leaks
+     */
     @Override
-    public void init() {
-        super.init();
+    public void initGui() {
+        init();
     }
 
     @Override
@@ -23,11 +26,5 @@ public class HTMLMainMenu extends GuiView {
         getCefBrowser().mcefUpdate();
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
-
-    /**
-     * Prevents cef from destroying the gui
-     * */
-    @Override
-    public void onGuiClosed() {}
 
 }
