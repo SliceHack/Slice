@@ -17,7 +17,6 @@ import slice.cef.RequestHandler;
 import slice.cef.ViewNoGui;
 import slice.clickgui.HTMLGui;
 import slice.command.Command;
-import slice.gui.main.HTMLMainMenu;
 import slice.legacy.clickgui.ClickGui;
 import slice.command.commands.CommandPlugins;
 import slice.discord.StartDiscordRPC;
@@ -36,7 +35,6 @@ import slice.notification.NotificationManager;
 import slice.script.manager.ScriptManager;
 import slice.script.module.ScriptModule;
 import slice.setting.settings.ModeValue;
-import slice.util.ResourceUtil;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
