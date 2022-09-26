@@ -1,7 +1,5 @@
 package slice.script.lang.logger;
 
-import slice.util.LoggerUtil;
-
 /**
  * Console logger for the scripting language.
  *
