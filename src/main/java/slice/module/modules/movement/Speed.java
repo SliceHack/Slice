@@ -26,7 +26,7 @@ import slice.util.Timer;
 @ModuleInfo(name = "Speed", description = "Allows you to move fast!!", key = Keyboard.KEY_X, category = Category.MOVEMENT)
 public class Speed extends Module {
 
-    ModeValue mode = new ModeValue("Mode", "Bhop", "Bhop", "Hycraft", "Dev", "Zonecraft", "Astro", "MMC", "UwUGuard", "Legit");
+    ModeValue mode = new ModeValue("Mode", "Bhop", "Bhop", "Hycraft", "Dev", "Zonecraft", "Astro", "MMC", "UwUGuard", "Legit", "Dac");
     private boolean wait;
     private int onGroundTicks, offGroundTicks, waitTicks, ticks;
 
@@ -147,9 +147,14 @@ public class Speed extends Module {
                     KeyUtil.moveKeys()[2].pressed = true;
                 }
                 break;
-            case "Dev":
+            case "Dac":
+                double speed = 0.33;
+                if(!MoveUtil.isMoving()) break;
+                if(mc.thePlayer.moveForward < 0) speed -= 0.1;
                 if(mc.thePlayer.onGround) MoveUtil.jump();
-                MoveUtil.strafe(0.21);
+                if(mc.thePlayer.fallDistance <= 3 && !mc.thePlayer.onGround) mc.thePlayer.motionY = -0.2;
+
+                MoveUtil.strafe(speed);
                 break;
         }
     }

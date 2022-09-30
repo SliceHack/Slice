@@ -3,6 +3,7 @@ package slice.module.modules.misc;
 import net.minecraft.network.play.client.*;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import net.minecraft.network.play.server.S18PacketEntityTeleport;
+import net.minecraft.network.play.server.S32PacketConfirmTransaction;
 import slice.Slice;
 import slice.event.data.EventInfo;
 import slice.event.data.PacketEvent;
