@@ -171,10 +171,6 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
 
     protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, Packet p_channelRead0_2_) throws Exception
     {
-        if(p_channelRead0_1_ instanceof S0BPacketAnimation) {
-            S0BPacketAnimation packet = (S0BPacketAnimation) p_channelRead0_2_;
-        }
-
         EventPacket eventPacket = new EventPacket(p_channelRead0_2_, false);
         eventPacket.call();
         if(eventPacket.isCancelled())

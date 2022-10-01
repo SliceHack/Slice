@@ -1,9 +1,7 @@
 package slice.module.modules.movement;
 
-import net.minecraft.client.settings.GameSettings;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
-import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 import net.minecraft.network.play.server.S18PacketEntityTeleport;
 import net.minecraft.util.MathHelper;
 import org.lwjgl.input.Keyboard;
@@ -15,13 +13,10 @@ import slice.event.events.EventUpdate;
 import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
-import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
-import slice.setting.settings.NumberValue;
 import slice.util.KeyUtil;
 import slice.util.LoggerUtil;
 import slice.util.MoveUtil;
-import slice.util.Timer;
 
 @ModuleInfo(name = "Speed", description = "Allows you to move fast!!", key = Keyboard.KEY_X, category = Category.MOVEMENT)
 public class Speed extends Module {

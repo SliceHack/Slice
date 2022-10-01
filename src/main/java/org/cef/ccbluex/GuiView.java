@@ -8,7 +8,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ChatAllowedCharacters;
-import net.optifine.Log;
 import org.cef.browser.CefBrowserCustom;
 import org.cef.browser.ICefRenderer;
 import org.cef.browser.lwjgl.CefRendererLwjgl;
@@ -16,7 +15,6 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import slice.Slice;
-import slice.util.LoggerUtil;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -34,6 +32,7 @@ public class GuiView extends GuiScreen {
     private Page page;
 
     private boolean transparent = true;
+    private int mouseClickY, mouseClickX;
 
     public GuiView(Page page, boolean transparent) {
         this.page = page;
@@ -84,8 +83,9 @@ public class GuiView extends GuiScreen {
         }
 
         // mouse move
-        cefBrowser.mouseMoved(Mouse.getX(), Display.getHeight() - Mouse.getY(), 0);
-
+        if(mouseClickY == 0 && mouseClickX == 0) {
+            cefBrowser.mouseMoved(Mouse.getX(), Display.getHeight() - Mouse.getY(), 0);
+        }
         // key up
         HashMap<Integer, Character> pressedKeyMap123 = new HashMap<>();
         pressedKeyMap123.forEach((key, chair) -> {
@@ -113,17 +113,21 @@ public class GuiView extends GuiScreen {
 
     @Override
     public void mouseClicked(int mouseX, int mouseY, int key) {
+        mouseClickX = Mouse.getX();
+        mouseClickY = Mouse.getY();
         cefBrowser.mouseInteracted(Mouse.getX(), Display.getHeight() - Mouse.getY(), mouseModifiers(keyModifiers(0)), key, true, 1);
     }
 
     @Override
     protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
-        cefBrowser.mouseInteracted(Mouse.getX(), Display.getHeight() - Mouse.getY(), mouseModifiers(keyModifiers(0)), clickedMouseButton, true, (int)timeSinceLastClick);
+        cefBrowser.mouseMoved(Mouse.getX(), Display.getHeight() - mouseClickY, mouseModifiers(keyModifiers(0)));
     }
 
     @Override
     public void mouseReleased(int mouseX, int mouseY, int key) {
         cefBrowser.mouseInteracted(Mouse.getX(), Display.getHeight() - Mouse.getY(), mouseModifiers(keyModifiers(0)), key, false, 1);
+        mouseClickY = 0;
+        mouseClickX = 0;
     }
 
     @Override
