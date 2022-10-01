@@ -13,7 +13,7 @@ public class Chat {
      * Adds a message to the chat.
      * */
     public static void addMessage(String message) {
-        LoggerUtil.addMessage(message);
+        LoggerUtil.addMessageNoPrefix(message);
     }
 
     /**
