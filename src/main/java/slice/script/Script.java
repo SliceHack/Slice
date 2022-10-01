@@ -95,7 +95,7 @@ public class Script {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     line = Base.formatJavaScriptLine(line);
-                    builder.append(line);
+                    builder.append(line).append("\n");
                 }
             }
 
