@@ -18,6 +18,7 @@ import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
 import slice.util.LoggerUtil;
+import slice.util.Timer;
 
 import javax.script.Bindings;
 import javax.script.ScriptContext;
@@ -55,6 +56,7 @@ public class Script {
     private HashMap<String, JSObject> events = new HashMap<>();
 
     public JSObject exports;
+    private Timer timer = new Timer();
 
     public Script(String path, ModuleManager moduleManager, FontManager fontManager) {
         this.path = path;
@@ -86,6 +88,7 @@ public class Script {
             Base.putClassInEngine(engine, "Category", Category.class);
             Base.putClassInEngine(engine,"Type", NumberValue.Type.class);
             Base.putInEngine(engine, "script", this);
+            Base.putInEngine(engine, "timer", timer);
             engine.eval("function require(url) {script.require(url);};");
 
 
@@ -95,7 +98,7 @@ public class Script {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     line = Base.formatJavaScriptLine(line);
-                    builder.append(line).append("\n");
+                    builder.append(line);
                 }
             }
 
