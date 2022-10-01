@@ -17,6 +17,7 @@ import slice.setting.settings.ModeValue;
 import slice.util.KeyUtil;
 import slice.util.LoggerUtil;
 import slice.util.MoveUtil;
+import slice.util.PacketUtil;
 
 @ModuleInfo(name = "Speed", description = "Allows you to move fast!!", key = Keyboard.KEY_X, category = Category.MOVEMENT)
 public class Speed extends Module {
@@ -147,7 +148,8 @@ public class Speed extends Module {
                 if(!MoveUtil.isMoving()) break;
                 if(mc.thePlayer.moveForward < 0) speed -= 0.1;
                 if(mc.thePlayer.onGround) MoveUtil.jump();
-                if(mc.thePlayer.fallDistance <= 3 && !mc.thePlayer.onGround) mc.thePlayer.motionY = -0.2;
+                else speed += 0.04;
+                if(mc.thePlayer.fallDistance <= 3 && !mc.thePlayer.onGround) mc.thePlayer.motionY = -0.1;
 
                 MoveUtil.strafe(speed);
                 break;
@@ -166,8 +168,10 @@ public class Speed extends Module {
 
         if(mc.theWorld == null) return;
 
-        if(mode.getValue().equalsIgnoreCase("UwUGuard")) {
-            if(e.isOutgoing()) {
+        switch (mode.getValue()) {
+            case "UwUGuard":
+                if(e.isIncomming()) break;
+
                 if(p instanceof C03PacketPlayer) {
                     C03PacketPlayer c03 = (C03PacketPlayer) p;
                     if(c03.isMoving()) {
@@ -176,13 +180,16 @@ public class Speed extends Module {
                         mc.thePlayer.sendQueue.addToSendQueue(c03);
                     }
                 }
-            }
-        }
-
-        if(mode.getValue().equalsIgnoreCase("Hycraft")) {
-            if(p instanceof S18PacketEntityTeleport) {
-                e.setCancelled(true);
-            }
+                break;
+            case "Hycraft":
+                if(p instanceof S18PacketEntityTeleport) {
+                    e.setCancelled(true);
+                }
+                break;
+            case "Dac":
+//                if(timer.hasReached(500L)) timer.reset();
+//                e.setCancelled(PacketUtil.isMovementPacket(p) && !timer.hasTimeReached(500L));
+                break;
         }
     }
 
