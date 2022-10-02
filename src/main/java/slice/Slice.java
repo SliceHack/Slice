@@ -194,7 +194,7 @@ public enum Slice {
                 ModeValue mode = module.getMode();
 
                 for(String s : mode.getValues()) {
-                    if(s.equalsIgnoreCase(mode.getValue())) continue;
+                    if(!s.equalsIgnoreCase(mode.getValue())) continue;
                     RequestHandler.renameFromArrayList(module.getName() + " " + s, module.getName() + " " + mode.getValue());
                 }
             }
