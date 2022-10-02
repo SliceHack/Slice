@@ -1,9 +1,7 @@
 package slice.module.modules.movement;
 
-import net.minecraft.client.settings.GameSettings;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
-import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 import net.minecraft.network.play.server.S18PacketEntityTeleport;
 import net.minecraft.util.MathHelper;
 import org.lwjgl.input.Keyboard;
@@ -15,18 +13,16 @@ import slice.event.events.EventUpdate;
 import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
-import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
-import slice.setting.settings.NumberValue;
 import slice.util.KeyUtil;
 import slice.util.LoggerUtil;
 import slice.util.MoveUtil;
-import slice.util.Timer;
+import slice.util.PacketUtil;
 
 @ModuleInfo(name = "Speed", description = "Allows you to move fast!!", key = Keyboard.KEY_X, category = Category.MOVEMENT)
 public class Speed extends Module {
 
-    ModeValue mode = new ModeValue("Mode", "Bhop", "Bhop", "Hycraft", "Dev", "Zonecraft", "Astro", "MMC", "UwUGuard", "Legit");
+    ModeValue mode = new ModeValue("Mode", "Bhop", "Bhop", "Hycraft", "Dev", "Zonecraft", "Astro", "MMC", "UwUGuard", "Legit", "Dac");
     private boolean wait;
     private int onGroundTicks, offGroundTicks, waitTicks, ticks;
 
@@ -147,9 +143,15 @@ public class Speed extends Module {
                     KeyUtil.moveKeys()[2].pressed = true;
                 }
                 break;
-            case "Dev":
+            case "Dac":
+                double speed = 0.33;
+                if(!MoveUtil.isMoving()) break;
+                if(mc.thePlayer.moveForward < 0) speed -= 0.1;
                 if(mc.thePlayer.onGround) MoveUtil.jump();
-                MoveUtil.strafe(0.21);
+                else speed += 0.04;
+                if(mc.thePlayer.fallDistance <= 3 && !mc.thePlayer.onGround) mc.thePlayer.motionY = -0.1;
+
+                MoveUtil.strafe(speed);
                 break;
         }
     }
@@ -166,8 +168,10 @@ public class Speed extends Module {
 
         if(mc.theWorld == null) return;
 
-        if(mode.getValue().equalsIgnoreCase("UwUGuard")) {
-            if(e.isOutgoing()) {
+        switch (mode.getValue()) {
+            case "UwUGuard":
+                if(e.isIncomming()) break;
+
                 if(p instanceof C03PacketPlayer) {
                     C03PacketPlayer c03 = (C03PacketPlayer) p;
                     if(c03.isMoving()) {
@@ -176,13 +180,16 @@ public class Speed extends Module {
                         mc.thePlayer.sendQueue.addToSendQueue(c03);
                     }
                 }
-            }
-        }
-
-        if(mode.getValue().equalsIgnoreCase("Hycraft")) {
-            if(p instanceof S18PacketEntityTeleport) {
-                e.setCancelled(true);
-            }
+                break;
+            case "Hycraft":
+                if(p instanceof S18PacketEntityTeleport) {
+                    e.setCancelled(true);
+                }
+                break;
+            case "Dac":
+//                if(timer.hasReached(500L)) timer.reset();
+//                e.setCancelled(PacketUtil.isMovementPacket(p) && !timer.hasTimeReached(500L));
+                break;
         }
     }
 

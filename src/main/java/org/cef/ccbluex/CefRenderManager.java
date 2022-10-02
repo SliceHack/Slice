@@ -78,7 +78,17 @@ public class CefRenderManager {
                     "--disable-plugins",
                     "--disable-extensions",
                     "--disable-gpu",
-                    "--disable-gpu-compositing"
+                    "--disable-gpu-compositing",
+                    "--disable-gpu-vsync",
+                    "--disable-gpu-shader-disk-cache",
+                    "--disable-gpu-driver-bug-workarounds",
+                    "--disable-gpu-program-cache",
+                    "--disable-gpu-sandbox",
+                    "--disable-gpu-watchdog",
+                    "--disable-gpu-rasterization",
+                    "--disable-gpu-early-init",
+                    "--disable-gpu-memory-buffer-compositor-resources",
+                    "--disable-gpu-memory-buffer-video-frames"
             );
             builder.getCefSettings().locale = gameSettings.language;
             builder.getCefSettings().cache_path = cacheDir.getAbsolutePath();

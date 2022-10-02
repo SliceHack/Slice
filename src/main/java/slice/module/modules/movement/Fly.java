@@ -18,13 +18,15 @@ import slice.module.data.ModuleInfo;
 import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
+import slice.util.LoggerUtil;
 import slice.util.MoveUtil;
+import slice.util.RotationUtil;
 
 @ModuleInfo(name = "Fly", key = Keyboard.KEY_G, description = "Allows you to fly like a bird", category = Category.MOVEMENT)
 @SuppressWarnings("all")
 public class Fly extends Module {
 
-    ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla", "Dev", "PvPGym", "Zonecraft", "Vulcan", "Vulcan2");
+    ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla", "Dev", "PvPGym", "Zonecraft", "Vulcan", "Vulcan2", "PvPLegacy");
     BooleanValue bobbing = new BooleanValue("Bobbing", true);
     NumberValue speed = new NumberValue("Speed", 3.0D, 0.1D, 6.0D, NumberValue.Type.DOUBLE);
 
@@ -40,9 +42,11 @@ public class Fly extends Module {
     private ItemStack bow;
 
     private int i;
+    private double moveSpeed;
 
     public void onEnable() {
         stage = 0;
+        moveSpeed = 0.18D;
         switch (mode.getValue()) {
             case "UwUGuard":
                 if(!mc.thePlayer.onGround) break;
@@ -169,7 +173,24 @@ public class Fly extends Module {
                 if(mc.thePlayer.ticksExisted % 20 == 9) MoveUtil.strafe(MoveUtil.getSpeed() * 1.125f);
                 if(mc.thePlayer.ticksExisted % 20 == 1) MoveUtil.strafe((float)(0.2783*1.2));
                 break;
-            case "Dev":
+            case "PvPLegacy":
+                if(!e.isPre()) {
+                    mc.thePlayer.motionY = 0F;
+                    return;
+                }
+
+                double speed = 0.6;
+
+                if(MoveUtil.isMoving()) {
+                    MoveUtil.strafe(speed);
+                    moveSpeed += speed;
+                } else {
+                    MoveUtil.stop();
+                }
+
+                mc.thePlayer.motionY = 0 - Math.random() / 100;
+
+                moveSpeed += mc.thePlayer.getDistance(mc.thePlayer.lastTickPosY, mc.thePlayer.lastTickPosY, mc.thePlayer.lastTickPosZ);
                 break;
         }
     }
@@ -189,12 +210,13 @@ public class Fly extends Module {
                     }
                 }
                 break;
-            case "Dev":
-                if(p instanceof S18PacketEntityTeleport) {
-                    if(((S18PacketEntityTeleport) p).getEntityId() == mc.thePlayer.getEntityId()) e.setCancelled(true);
-                }
-                if(p instanceof S08PacketPlayerPosLook) {
-                    mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ);
+            case "PvPLegacy":
+                if(!e.isOutgoing()) return;
+
+                if (moveSpeed < 9.5 - MoveUtil.getSpeed() * 1.1) {
+                    e.setCancelled(true);
+                } else {
+                    moveSpeed = 0;
                 }
                 break;
         }

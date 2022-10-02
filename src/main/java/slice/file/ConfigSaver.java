@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import slice.Slice;
 import slice.cef.RequestHandler;
 import slice.cef.ViewNoGui;
+import slice.clickgui.HTMLGui;
 import slice.manager.ModuleManager;
 import slice.module.Module;
 import slice.setting.Setting;

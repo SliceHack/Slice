@@ -74,6 +74,7 @@ public class ModuleManager {
         register(new ESP());
         register(new AutoArmor());
         register(new AutoTool());
+        register(new WTap());
     }
 
     /**

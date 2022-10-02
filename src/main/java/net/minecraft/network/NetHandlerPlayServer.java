@@ -94,6 +94,9 @@ import net.minecraft.world.WorldServer;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import slice.event.Event;
+import slice.event.events.EventHandleChat;
+import slice.event.events.EventPacket;
 
 public class NetHandlerPlayServer implements INetHandlerPlayServer, ITickable
 {
@@ -693,17 +696,13 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, ITickable
         if (packetIn instanceof S02PacketChat)
         {
             S02PacketChat s02packetchat = (S02PacketChat)packetIn;
-            EntityPlayer.EnumChatVisibility entityplayer$enumchatvisibility = this.playerEntity.getChatVisibility();
+            EntityPlayer.EnumChatVisibility chatvisibility = this.playerEntity.getChatVisibility();
+            EventHandleChat event = new EventHandleChat(chatvisibility, s02packetchat);
+            event.call();
 
-            if (entityplayer$enumchatvisibility == EntityPlayer.EnumChatVisibility.HIDDEN)
-            {
-                return;
-            }
-
-            if (entityplayer$enumchatvisibility == EntityPlayer.EnumChatVisibility.SYSTEM && !s02packetchat.isChat())
-            {
-                return;
-            }
+            if(event.isCancelled()) return;
+            if (chatvisibility == EntityPlayer.EnumChatVisibility.HIDDEN) return;
+            if (chatvisibility == EntityPlayer.EnumChatVisibility.SYSTEM && !s02packetchat.isChat()) return;
         }
 
         try
