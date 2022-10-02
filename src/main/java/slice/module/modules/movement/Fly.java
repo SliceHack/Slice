@@ -26,7 +26,7 @@ import slice.util.RotationUtil;
 @SuppressWarnings("all")
 public class Fly extends Module {
 
-    ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla", "Dev", "PvPGym", "Zonecraft", "Vulcan", "Vulcan2");
+    ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla", "Dev", "PvPGym", "Zonecraft", "Vulcan", "Vulcan2", "PvPLegacy");
     BooleanValue bobbing = new BooleanValue("Bobbing", true);
     NumberValue speed = new NumberValue("Speed", 3.0D, 0.1D, 6.0D, NumberValue.Type.DOUBLE);
 
@@ -173,7 +173,7 @@ public class Fly extends Module {
                 if(mc.thePlayer.ticksExisted % 20 == 9) MoveUtil.strafe(MoveUtil.getSpeed() * 1.125f);
                 if(mc.thePlayer.ticksExisted % 20 == 1) MoveUtil.strafe((float)(0.2783*1.2));
                 break;
-            case "Dev":
+            case "PvPLegacy":
                 if(!e.isPre()) {
                     mc.thePlayer.motionY = 0F;
                     return;
@@ -210,7 +210,7 @@ public class Fly extends Module {
                     }
                 }
                 break;
-            case "Dev":
+            case "PvPLegacy":
                 if(!e.isOutgoing()) return;
 
                 if (moveSpeed < 9.5 - MoveUtil.getSpeed() * 1.1) {
