@@ -30,6 +30,7 @@ import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
 import slice.util.LoggerUtil;
+import slice.util.account.LoginUtil;
 import viamcp.gui.GuiProtocolSelector;
 
 import java.io.File;
@@ -138,6 +139,13 @@ public class CefRenderManager {
                             mc.displayGuiScreen(null);
                             break;
 
+                    }
+
+                    if(request.startsWith("Login ")) {
+                        String[] args = request.substring(6).split(":");
+                        String email = args[0];
+                        String password = args[1];
+                        LoginUtil.loginMicrosoft(email, password);
                     }
 
                     String[] r = request.split(" ");
