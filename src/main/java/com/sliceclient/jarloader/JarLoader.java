@@ -1,5 +1,7 @@
 package com.sliceclient.jarloader;
 
+import lombok.experimental.UtilityClass;
+
 import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -12,6 +14,7 @@ import java.net.URLClassLoader;
  * @version 1.0
  * @since 10/5/2022
  * */
+@UtilityClass
 public class JarLoader {
 
     /**
@@ -19,7 +22,7 @@ public class JarLoader {
      *
      * @param jarPath The path to the jar.
      * */
-    protected void loadJar(String jarPath) {
+    public void loadJar(String jarPath) {
         try {
             File file = new File(jarPath);
             URL url = file.toURI().toURL();
