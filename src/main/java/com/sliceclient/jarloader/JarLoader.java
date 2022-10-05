@@ -8,7 +8,7 @@ import java.net.URLClassLoader;
 /**
  * Loads jars into the classpath runtime.
  *
- * @author SliceClient
+ * @author Nick
  * @version 1.0
  * @since 10/5/2022
  * */
