@@ -18,9 +18,8 @@ public class JarLoader {
      * Loads a jar into the classpath runtime.
      *
      * @param jarPath The path to the jar.
-     * @return true if the jar was loaded successfully, false otherwise.
      * */
-    protected boolean loadJar(String jarPath) {
+    protected void loadJar(String jarPath) {
         try {
             File file = new File(jarPath);
             URL url = file.toURI().toURL();
@@ -28,10 +27,8 @@ public class JarLoader {
             Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
             method.setAccessible(true);
             method.invoke(classLoader, url);
-            return true;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
     }
 }
