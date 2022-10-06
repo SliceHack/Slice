@@ -58,7 +58,7 @@ public enum Slice {
     private final EventManager eventManager;
     private final ModuleManager moduleManager;
     private final CommandManager commandManager;
-    private final SettingsManager settingsManager;
+    private SettingsManager settingsManager;
     private final FontManager fontManager;
     private ScriptManager scriptManager;
 
@@ -138,7 +138,6 @@ public enum Slice {
         moduleManager = new ModuleManager();
         fontManager = new FontManager();
         commandManager = new CommandManager(moduleManager);
-        settingsManager = new SettingsManager(moduleManager);
         legacyClickGui = new ClickGui();
         discordRPC = new StartDiscordRPC();
         discordRPC.start();
@@ -164,6 +163,7 @@ public enum Slice {
         anticheat = SliceAC.INSTANCE;
         this.html.add(new ViewNoGui(new Page("https://assets.sliceclient.com/hud/index.html" + "?name=" + NAME + "&version=" + VERSION + "&discord=" + discordName)));
         scriptManager = new ScriptManager(moduleManager, fontManager);
+        settingsManager = new SettingsManager(moduleManager);
         clickGui = new HTMLGui();
         saver = new Saver(moduleManager);
         commandManager.commands.forEach(Command::init);
