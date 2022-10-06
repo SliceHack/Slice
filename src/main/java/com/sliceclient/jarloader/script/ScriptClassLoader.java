@@ -15,11 +15,11 @@ import java.net.URLClassLoader;
  * @since 2022/10/5
  * */
 @Getter
-final class ScriptClassLoader extends URLClassLoader {
+public final class ScriptClassLoader extends URLClassLoader {
 
     private final SliceScript script;
 
-    ScriptClassLoader(String classToStartFrom, File file, ClassLoader parent) throws MalformedURLException {
+    public ScriptClassLoader(String classToStartFrom, File file, ClassLoader parent) throws MalformedURLException {
         super(new URL[] {file.toURI().toURL()}, parent);
 
         try {

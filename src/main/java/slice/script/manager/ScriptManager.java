@@ -1,14 +1,11 @@
 package slice.script.manager;
 
+import com.sliceclient.script.ScriptLoader;
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
-import slice.Slice;
 import slice.font.FontManager;
 import slice.manager.ModuleManager;
-import slice.module.Module;
 import slice.script.Script;
-import slice.script.module.ScriptModule;
-import slice.util.LoggerUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -59,6 +56,9 @@ public class ScriptManager {
         for(File file : Objects.requireNonNull(scriptDataDir.listFiles())) {
             if(file.getName().endsWith(".js")) {
                 scripts.add(new Script(file.getAbsolutePath(), moduleManager, fontManager));
+            }
+            if(file.getName().endsWith(".jar")) {
+                new ScriptLoader(file);
             }
         }
     }
