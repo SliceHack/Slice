@@ -26,6 +26,7 @@ public class CommandReload extends Command {
                 return false;
             }
 
+            scriptLoader.getScript().onShutdown();
             scriptLoader.reload();
             addMessage("&aScript reloaded.");
             return false;
