@@ -1,4 +1,4 @@
-package com.sliceclient.script;
+package com.sliceclient.script.classloader;
 
 import lombok.Getter;
 import org.json.JSONObject;

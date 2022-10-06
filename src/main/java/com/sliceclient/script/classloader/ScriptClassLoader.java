@@ -1,4 +1,4 @@
-package com.sliceclient.jarloader.script;
+package com.sliceclient.script.classloader;
 
 import com.sliceclient.script.SliceScript;
 import lombok.Getter;

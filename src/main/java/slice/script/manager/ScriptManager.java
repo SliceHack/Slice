@@ -1,6 +1,6 @@
 package slice.script.manager;
 
-import com.sliceclient.script.ScriptLoader;
+import com.sliceclient.script.classloader.ScriptLoader;
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import slice.font.FontManager;

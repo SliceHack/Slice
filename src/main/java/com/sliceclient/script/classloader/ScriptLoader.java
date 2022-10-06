@@ -1,7 +1,6 @@
-package com.sliceclient.script;
+package com.sliceclient.script.classloader;
 
-import com.sliceclient.jarloader.script.ScriptClassLoader;
-import jdk.nashorn.internal.objects.annotations.ScriptClass;
+import com.sliceclient.script.SliceScript;
 import lombok.Getter;
 
 import java.io.File;
