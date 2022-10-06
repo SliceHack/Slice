@@ -6,8 +6,7 @@ package com.sliceclient.script;
  * @author Nick
  * @since 2022/10/5
  * */
-public class JarScript {
-
-
-
+public class SliceScript {
+    public void onEnable(){}
+    public void onDisable(){}
 }
