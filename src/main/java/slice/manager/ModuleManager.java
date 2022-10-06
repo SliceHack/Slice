@@ -83,6 +83,8 @@ public class ModuleManager {
      * @param module The module to register.
      */
     public void register(Module module) {
+        if(getModule(module.getName()) != null) unregister(getModule(module.getName()));
+
         modules.add(module);
     }
 

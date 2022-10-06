@@ -1,14 +1,11 @@
 package slice.script.manager;
 
+import com.sliceclient.script.classloader.ScriptLoader;
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
-import slice.Slice;
 import slice.font.FontManager;
 import slice.manager.ModuleManager;
-import slice.module.Module;
 import slice.script.Script;
-import slice.script.module.ScriptModule;
-import slice.util.LoggerUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -27,6 +24,7 @@ public class ScriptManager {
     public File scriptDataDir = new File(Minecraft.getMinecraft().mcDataDir, "Slice\\Scripts\\");
 
     private final List<Script> scripts = new ArrayList<>();
+    private final List<ScriptLoader> jarScripts = new ArrayList<>();
 
     /** managers */
     private final ModuleManager moduleManager;
@@ -55,10 +53,26 @@ public class ScriptManager {
         return null;
     }
 
+    public ScriptLoader getJarScript(String path) {
+        for(ScriptLoader script : jarScripts) {
+            String lastPath = script.getFile().getPath().substring(script.getFile().getPath().lastIndexOf("\\") + 1);
+
+            if(!path.endsWith(".jar")) path += ".jar";
+
+            if(lastPath.equalsIgnoreCase(path)) {
+                return script;
+            }
+        }
+        return null;
+    }
+
     public void load() {
         for(File file : Objects.requireNonNull(scriptDataDir.listFiles())) {
             if(file.getName().endsWith(".js")) {
                 scripts.add(new Script(file.getAbsolutePath(), moduleManager, fontManager));
+            }
+            if(file.getName().endsWith(".jar")) {
+                jarScripts.add(new ScriptLoader(file));
             }
         }
     }

@@ -24,6 +24,7 @@ public class Event {
         Slice.INSTANCE.getEventManager().runEvent(this);
 
         if(getClass().isAnnotationPresent(ExcludeFromScript.class)) return;
+        if(Slice.INSTANCE.getScriptManager() == null) return;
 
         Slice.INSTANCE.getScriptManager().callEvent(getScriptName(), this);
     }

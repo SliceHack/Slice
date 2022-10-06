@@ -1,5 +1,6 @@
 package slice.command.commands;
 
+import com.sliceclient.script.classloader.ScriptLoader;
 import slice.Slice;
 import slice.command.Command;
 import slice.command.data.CommandInfo;
@@ -18,7 +19,16 @@ public class CommandReload extends Command {
 
         Script script = Slice.INSTANCE.getScriptManager().getScript(path);
         if(script == null) {
-            addMessage("&cScript not found");
+
+            ScriptLoader scriptLoader = Slice.INSTANCE.getScriptManager().getJarScript(path);
+            if(scriptLoader == null) {
+                addMessage("&cScript not found.");
+                return false;
+            }
+
+            scriptLoader.getScript().onShutdown();
+            scriptLoader.reload();
+            addMessage("&aScript reloaded.");
             return false;
         }
         script.reloadScript();

@@ -27,6 +27,8 @@ public class CommandManager {
     }
 
     public void register(Command command) {
+        if(getCommand(command.getName()) != null) commands.remove(getCommand(command.getName()));
+
         commands.add(command);
     }
 
