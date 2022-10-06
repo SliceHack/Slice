@@ -2,6 +2,7 @@ package com.sliceclient.script.classloader;
 
 import com.sliceclient.script.SliceScript;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,16 +17,20 @@ import java.util.jar.JarFile;
  * @author Nick
  * @since 2022/10/5
  * */
-@Getter
+@Getter @Setter
 public class ScriptLoader {
 
-    private final File file;
-    private final ScriptDescriptionFile description;
+    private File file;
+    private ScriptDescriptionFile description;
 
     public ScriptLoader(File file) {
+        this.file = file;
+        load();
+    }
+
+    public void load() {
         if(!file.getName().endsWith(".jar")) throw new RuntimeException("File is not a jar");
 
-        this.file = file;
         this.description = getDescription();
 
         if(description.getVariables().get("main") == null) throw new RuntimeException("main is not defined in script.json");
@@ -68,4 +73,7 @@ public class ScriptLoader {
         }
     }
 
+    public void reload() {
+        load();
+    }
 }
