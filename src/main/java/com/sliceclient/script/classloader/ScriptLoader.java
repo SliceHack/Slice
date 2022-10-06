@@ -33,8 +33,8 @@ public class ScriptLoader {
         try(ScriptClassLoader loader = new ScriptClassLoader(description.getVariables().get("main"), file, getClass().getClassLoader())) {
             Class<?> scriptClass = loader.loadClass(description.getVariables().get("main")).asSubclass(SliceScript.class);
             SliceScript script = (SliceScript) scriptClass.newInstance();
-            script.onEnable();
-            Runtime.getRuntime().addShutdownHook(new Thread(script::onDisable));
+            script.onStartup();
+            Runtime.getRuntime().addShutdownHook(new Thread(script::onShutdown));
         } catch (Exception e) {
             throw new RuntimeException("Failed to load script", e);
         }

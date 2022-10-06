@@ -7,6 +7,14 @@ package com.sliceclient.script;
  * @since 2022/10/5
  * */
 public class SliceScript {
-    public void onEnable(){}
-    public void onDisable(){}
+
+    /**
+     * Called when slice starts up.
+     * */
+    public void onStartup(){}
+
+    /**
+     * Called when slice shuts down.
+     * */
+    public void onShutdown(){}
 }
