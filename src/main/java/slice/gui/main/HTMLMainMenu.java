@@ -11,11 +11,7 @@ import java.io.File;
 public class HTMLMainMenu extends GuiView {
 
     public HTMLMainMenu() {
-<<<<<<< HEAD
-        super(new Page("https://assets.sliceclient.com/mainmenu/?name=God_Mode"), false);
-=======
         super(new Page("https://assets.sliceclient.com/mainmenu/index.html?name=" + Minecraft.getMinecraft().getSession().getUsername()));
->>>>>>> 4b21881937215552a24328a4932532453050266b
     }
 
     /***

@@ -130,7 +130,7 @@ public class CefRenderManager {
                             mc.displayGuiScreen(new GuiProtocolSelector(screen));
                             break;
                         case "Exit":
-                            mc.shutdownMinecraftApplet();
+                            System.exit(0);
                             break;
                         case "Init":
                             Slice.INSTANCE.getClickGui().queryInit();
