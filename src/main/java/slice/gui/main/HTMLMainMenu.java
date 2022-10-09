@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import org.cef.ccbluex.DynamicGuiView;
 import org.cef.ccbluex.GuiView;
 import org.cef.ccbluex.Page;
+import slice.Slice;
 
 import java.io.File;
 
