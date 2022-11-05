@@ -23,6 +23,7 @@ import slice.event.events.EventGuiRender;
 import slice.event.events.EventUpdateLWJGL;
 import slice.event.manager.EventManager;
 import slice.gui.alt.GuiAlt;
+import slice.gui.alt.HTMLAlt;
 import slice.gui.main.HTMLMainMenu;
 import slice.module.Module;
 import slice.setting.Setting;
@@ -124,7 +125,7 @@ public class CefRenderManager {
                             mc.displayGuiScreen(new GuiOptions(screen, gameSettings));
                             break;
                         case "AltManagerScreen":
-                            mc.displayGuiScreen(new GuiAlt(screen));
+                            mc.displayGuiScreen(new HTMLAlt());
                             break;
                         case "VersionScreen":
                             mc.displayGuiScreen(new GuiProtocolSelector(screen));
