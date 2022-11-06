@@ -36,6 +36,8 @@ public class Fly extends Module {
     private int ticks;
 
     private int posY;
+    
+    private int x, y, z;
 
     private int currentSlot;
 
@@ -43,8 +45,13 @@ public class Fly extends Module {
 
     private int i;
     private double moveSpeed;
+    
+    private final List<Packet<?>> packetList = new ArrayList<>();
 
     public void onEnable() {
+        x = mc.thePlayer.posX;
+        y = mc.thePlayer.posY;
+        z = mc.thePlayer.posZ;
         stage = 0;
         moveSpeed = 0.18D;
         switch (mode.getValue()) {
@@ -70,6 +77,8 @@ public class Fly extends Module {
         posY = (int) mc.thePlayer.posY;
         mc.thePlayer.jumpMovementFactor = 0.02F;
         mc.thePlayer.speedInAir = 0.02F;
+        packetList.forEach(mc.thePlayer.sendQueue::addToSendNoEvent);
+        packetList.clear();
     }
 
     public void onUpdateNoToggle(EventUpdate event) {
@@ -162,16 +171,16 @@ public class Fly extends Module {
                 mc.timer.timerSpeed = 0.1f;
                 break;
             case "Zonecraft":
-                if(!MoveUtil.isMoving()) MoveUtil.resetMotion(false);
-                if(mc.thePlayer.onGround) { MoveUtil.jump(); break; }
-
-                mc.thePlayer.motionY = 0.0;
-
-                if(mc.thePlayer.ticksExisted % 20 < 10) mc.timer.timerSpeed = 1.25f;
-                else mc.timer.timerSpeed = 0.8f;
-
-                if(mc.thePlayer.ticksExisted % 20 == 9) MoveUtil.strafe(MoveUtil.getSpeed() * 1.125f);
-                if(mc.thePlayer.ticksExisted % 20 == 1) MoveUtil.strafe((float)(0.2783*1.2));
+                if(mc.thePlayer.posY < y) {
+                    e.setPosY(y);
+                    mc.thePlayer.setPosition(mc.thePlayer.posX, y, mc.thePlayer.posZ);
+                    mc.thePlayer.jump();
+                    mc.thePlayer.onGround = true;
+                    e.setOnGround(true);
+                } else if(mc.thePlayer.onGround) {
+                    y = mc.thePlayer.posY;
+                    mc.thePlayer.jump();
+                }
                 break;
             case "PvPLegacy":
                 if(!e.isPre()) {
@@ -203,6 +212,12 @@ public class Fly extends Module {
             return;
 
         switch (mode.getValue()) {
+            case "Zonecraft":
+                if(e.isOutgoing()) {
+                    e.setCancelled(true);
+                    packetList.add(p);
+                }
+                break;
             case "Vulcan":
                 if(stage == 2) {
                     if(e.isOutgoing() && !(p instanceof C03PacketPlayer)) {
