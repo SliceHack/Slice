@@ -19,6 +19,7 @@ import net.minecraft.block.BlockSnow;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;
@@ -768,6 +769,14 @@ public abstract class World implements IBlockAccess
             Chunk chunk = this.getChunkFromBlockCoords(pos);
             return chunk.getBlockState(pos);
         }
+    }
+
+    public IBlockState getBlockState(int xAdd, int yAdd, int zAdd) {
+        return this.getBlockState(Minecraft.getMinecraft().thePlayer.getPosition().add(xAdd, yAdd, zAdd));
+    }
+
+    public IBlockState getBlockState(int xAdd, int yAdd, int zAdd, BlockPos addFrom) {
+        return this.getBlockState(addFrom.add(xAdd, yAdd, zAdd));
     }
 
     public boolean isDaytime()

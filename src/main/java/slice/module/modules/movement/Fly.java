@@ -22,6 +22,9 @@ import slice.util.LoggerUtil;
 import slice.util.MoveUtil;
 import slice.util.RotationUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @ModuleInfo(name = "Fly", key = Keyboard.KEY_G, description = "Allows you to fly like a bird", category = Category.MOVEMENT)
 @SuppressWarnings("all")
 public class Fly extends Module {
@@ -37,7 +40,7 @@ public class Fly extends Module {
 
     private int posY;
     
-    private int x, y, z;
+    private double x, y, z;
 
     private int currentSlot;
 
@@ -172,7 +175,7 @@ public class Fly extends Module {
                 break;
             case "Zonecraft":
                 if(mc.thePlayer.posY < y) {
-                    e.setPosY(y);
+                    mc.thePlayer.posY = y;
                     mc.thePlayer.setPosition(mc.thePlayer.posX, y, mc.thePlayer.posZ);
                     mc.thePlayer.jump();
                     mc.thePlayer.onGround = true;
