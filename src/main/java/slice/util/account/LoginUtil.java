@@ -91,6 +91,20 @@ public class LoginUtil {
         return null;
     }
 
+    public static MicrosoftAccount loginMicrosoftNoSetSession(String email, String password) {
+        try {
+          serviceSwitch.updateService(AlteningServiceType.MOJANG);
+            MicrosoftAuthenticator authenticator = new MicrosoftAuthenticator();
+            MicrosoftAuthResult result = authenticator.loginWithCredentials(email, password);
+            MinecraftProfile profile = result.getProfile();
+            Session session = new Session(profile.getName(), profile.getId(), result.getAccessToken(), "mojang");
+            return new MicrosoftAccount(profile, session, result.getRefreshToken());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     /**
      * Logs user in as offline. (cracked account)
      */
