@@ -114,21 +114,27 @@ public class AutoPot extends Module {
 
     public boolean shouldNotSplash(ItemStack stack, ItemPotion potion) {
         List<PotionEffect> effects = potion.getEffects(stack);
-        boolean shouldNotSplash = false;
+        boolean shouldSplash = false;
         for(PotionEffect effect : effects) {
             if(!mc.thePlayer.isPotionActive(effect.getPotionID())) {
-                // boolean healing
                 boolean healing = effect.getPotionID() == Potion.heal.id;
+                boolean badEffect = isBadEffect(effect);
+
+                if (badEffect) {
+                    shouldSplash = false;
+                    continue;
+                }
+
                 if(healing) {
-                    shouldNotSplash = mc.thePlayer.getHealth() + effect.getAmplifier() + 1 <= healthValue.getValue().intValue();
+                    shouldSplash = mc.thePlayer.getHealth() + effect.getAmplifier() + 1 <= healthValue.getValue().intValue();
                     continue;
                 }
 
 
-                shouldNotSplash = true;
+                shouldSplash = true;
             }
         }
-        return !shouldNotSplash;
+        return !shouldSplash;
     }
 
     public HashMap<ItemStack, Integer> getAllSplashPotions() {
@@ -142,4 +148,15 @@ public class AutoPot extends Module {
         return potions;
     }
 
+    public boolean isBadEffect(PotionEffect effect) {
+        return effect.getPotionID() == Potion.moveSlowdown.id
+                || effect.getPotionID() == Potion.digSlowdown.id
+                || effect.getPotionID() == Potion.weakness.id
+                || effect.getPotionID() == Potion.hunger.id
+                || effect.getPotionID() == Potion.confusion.id
+                || effect.getPotionID() == Potion.blindness.id
+                || effect.getPotionID() == Potion.poison.id
+                || effect.getPotionID() == Potion.wither.id
+                || effect.getPotionID() == Potion.harm.id;
+    }
 }
