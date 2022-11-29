@@ -175,10 +175,9 @@ public class Fly extends Module {
                 break;
             case "Zonecraft":
                 if(mc.thePlayer.posY < y) {
-                    mc.thePlayer.posY = y;
                     mc.thePlayer.setPosition(mc.thePlayer.posX, y, mc.thePlayer.posZ);
                     mc.thePlayer.jump();
-                    mc.thePlayer.onGround = true;
+//                    mc.thePlayer.onGround = true;
                     e.setOnGround(true);
                 } else if(mc.thePlayer.onGround) {
                     y = mc.thePlayer.posY;
@@ -215,12 +214,6 @@ public class Fly extends Module {
             return;
 
         switch (mode.getValue()) {
-            case "Zonecraft":
-                if(e.isOutgoing()) {
-                    e.setCancelled(true);
-                    packetList.add(p);
-                }
-                break;
             case "Vulcan":
                 if(stage == 2) {
                     if(e.isOutgoing() && !(p instanceof C03PacketPlayer)) {

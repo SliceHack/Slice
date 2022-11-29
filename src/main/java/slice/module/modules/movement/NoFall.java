@@ -19,7 +19,7 @@ public class NoFall extends Module {
     public void onUpdate(EventUpdate e) {
         switch (mode.getValue()) {
             case "onGround":
-                mc.thePlayer.onGround = true;
+                e.setOnGround(true);
                 break;
             case "Vulcan":
                 double mathGround = Math.round(e.getY() / 0.015625) * 0.015625;

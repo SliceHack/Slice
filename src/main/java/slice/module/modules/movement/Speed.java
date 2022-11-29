@@ -68,10 +68,10 @@ public class Speed extends Module {
         switch (mode.getValue()) {
             case "Zonecraft":
                 if(!MoveUtil.isMoving()) break;
-                if(!mc.thePlayer.onGround) break;
 
-                if (mc.thePlayer.ticksExisted % 3 == 0) { MoveUtil.strafe(0.89F); mc.thePlayer.motionY = 0.38F; }
-                else MoveUtil.resetMotion(false);
+                mc.gameSettings.keyBindJump.pressed = false;
+
+                if(mc.thePlayer.onGround) mc.thePlayer.motionY = 0.0784;
                 break;
             case "Bhop":
                 if(!MoveUtil.isMoving()) break;
