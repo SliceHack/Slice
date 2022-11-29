@@ -6,6 +6,8 @@ import me.friwi.jcefmaven.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.settings.GameSettings;
+import net.minecraft.entity.item.EntityMinecart;
+import net.minecraft.util.Session;
 import org.cef.CefApp;
 import org.cef.CefClient;
 import org.cef.browser.CefBrowser;
@@ -32,6 +34,7 @@ import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
 import slice.util.LoggerUtil;
 import slice.util.account.LoginUtil;
+import slice.util.account.microsoft.MicrosoftAccount;
 import viamcp.gui.GuiProtocolSelector;
 
 import java.io.File;
@@ -99,6 +102,8 @@ public class CefRenderManager {
             cefApp = builder.build();
             cefClient = cefApp.createClient();
             cefMessageRouter = CefMessageRouter.create();
+            final String[] currentEmail = new String[1];
+            final String[] currentPassword = new String[1];
             cefMessageRouter.addHandler(new CefMessageRouterHandlerAdapter() {
                 /**
                  * cef query can be used to contact browser and client
@@ -139,6 +144,14 @@ public class CefRenderManager {
                         case "CloseGui":
                             mc.displayGuiScreen(null);
                             break;
+                        case "AltManagerReady":
+                            if (currentEmail != null) {
+                                browser.executeJavaScript(String.format("addAccount(\"%s\", \"%s\", \"%s\")", mc.thePlayer.getName(), currentEmail, currentPassword), null, 0);
+                            } else {
+                                browser.executeJavaScript(String.format("addAccount(\"%s\", \"%s\", \"%s\")", mc.thePlayer.getName(), mc.thePlayer.getName(), mc.thePlayer.getName()), null, 0);
+                            }
+                            browser.executeJavaScript(String.format("setCurrentAccount(\"%s\")", mc.thePlayer.getName()), browser.getURL(), 0);
+                            break;
 
                     }
 
@@ -146,7 +159,28 @@ public class CefRenderManager {
                         String[] args = request.substring(6).split(":");
                         String email = args[0];
                         String password = args[1];
-                        LoginUtil.loginMicrosoft(email, password);
+                        Session currentSession = mc.getSession();
+                        MicrosoftAccount account = LoginUtil.loginMicrosoftNoSetSession(email, password);
+                        if (account != null) {
+                            browser.executeJavaScript(String.format("addAccount(\"%s\",\"%s\", \"%s\")", account.getProfile().getName(), email, password), browser.getURL(), 0);
+                        }
+                    }
+
+                    if(request.startsWith("RealLogin ")) {
+                        String[] args = request.substring(10).split(":");
+                        String email = args[0];
+                        String password = args[1];
+                        if (!email.contains("@")) {
+                            Session account = LoginUtil.loginOffline(email);
+                            browser.executeJavaScript(String.format("setCurrentAccount(\"%s\")", account.getProfile().getName()), browser.getURL(), 0);
+                        } else {
+                            MicrosoftAccount account = LoginUtil.loginMicrosoft(email, password);
+                            if (account != null) {
+                                browser.executeJavaScript("setCurrentAccount(\"" + account.getProfile().getName() + "\")", browser.getURL(), 0);
+                                currentEmail[0] = email;
+                                currentPassword[0] = password;
+                            }
+                        }
                     }
 
                     String[] r = request.split(" ");
