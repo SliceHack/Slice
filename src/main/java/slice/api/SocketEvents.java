@@ -42,6 +42,7 @@ public class SocketEvents {
 
                 for (int i = 0; i < array.length(); i++) {
                     String name = array.getString(i);
+                    if(list.contains(name)) continue;
                     list.add(name);
                 }
                 Slice.INSTANCE.getIrc().setList(list);
@@ -51,6 +52,13 @@ public class SocketEvents {
                 s = s.replace("[", "").replace("]", "").replace("\"", "").replace(",", "\n");
                 String[] lines = s.split("\n");
                 List<String> list = new ArrayList<>(Arrays.asList(lines));
+
+                for (int i = 0; i < list.size(); i++) {
+                    String name = list.get(i);
+                    if(list.contains(name)) continue;
+                    list.add(name);
+                }
+
                 Slice.INSTANCE.getIrc().setList(list);
             }
         });
