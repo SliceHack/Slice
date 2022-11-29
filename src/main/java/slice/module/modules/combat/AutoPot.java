@@ -13,7 +13,6 @@ import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
 import slice.setting.settings.BooleanValue;
 import slice.setting.settings.NumberValue;
-import slice.util.LoggerUtil;
 import slice.util.PacketUtil;
 
 import java.util.HashMap;
