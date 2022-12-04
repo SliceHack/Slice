@@ -127,6 +127,7 @@ public enum Slice {
     public final long startTime;
     public long totalTime;
     public String playTime, totalPlayTime;
+    public String currentEmail, currentPassword;
 
     private final String date;
 
