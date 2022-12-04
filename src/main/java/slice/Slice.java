@@ -134,7 +134,7 @@ public enum Slice {
         connecting = true;
         eventManager = new EventManager();
         cefRenderManager = new CefRenderManager(eventManager);
-        cefRenderManager.initializeAsync(new ConsoleProgressHandler());
+        cefRenderManager.initialize(new ConsoleProgressHandler());
         moduleManager = new ModuleManager();
         fontManager = new FontManager();
         commandManager = new CommandManager(moduleManager);

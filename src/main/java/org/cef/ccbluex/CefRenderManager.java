@@ -17,6 +17,7 @@ import org.cef.browser.CefMessageRouter;
 import org.cef.browser.scheme.SchemeResourceHandler;
 import org.cef.callback.CefQueryCallback;
 import org.cef.handler.CefMessageRouterHandlerAdapter;
+import org.lwjgl.Sys;
 import slice.Slice;
 import slice.cef.RequestHandler;
 import slice.event.data.EventInfo;
@@ -81,19 +82,7 @@ public class CefRenderManager {
                     "--disable-web-security",
                     "--allow-file-access-from-files",
                     "--disable-plugins",
-                    "--disable-extensions",
-                    "--disable-gpu",
-                    "--disable-gpu-compositing",
-                    "--disable-gpu-vsync",
-                    "--disable-gpu-shader-disk-cache",
-                    "--disable-gpu-driver-bug-workarounds",
-                    "--disable-gpu-program-cache",
-                    "--disable-gpu-sandbox",
-                    "--disable-gpu-watchdog",
-                    "--disable-gpu-rasterization",
-                    "--disable-gpu-early-init",
-                    "--disable-gpu-memory-buffer-compositor-resources",
-                    "--disable-gpu-memory-buffer-video-frames"
+                    "--disable-extensions"
             );
             builder.getCefSettings().locale = gameSettings.language;
             builder.getCefSettings().cache_path = cacheDir.getAbsolutePath();
@@ -145,8 +134,8 @@ public class CefRenderManager {
                             mc.displayGuiScreen(null);
                             break;
                         case "AltManagerReady":
-                            if (currentEmail != null) {
-                                browser.executeJavaScript(String.format("addAccount(\"%s\", \"%s\", \"%s\")", mc.thePlayer.getName(), currentEmail, currentPassword), null, 0);
+                            if (currentEmail[0] != null) {
+                                browser.executeJavaScript(String.format("addAccount(\"%s\", \"%s\", \"%s\")", mc.thePlayer.getName(), currentEmail[0], currentPassword[0]), null, 0);
                             } else {
                                 browser.executeJavaScript(String.format("addAccount(\"%s\", \"%s\", \"%s\")", mc.thePlayer.getName(), mc.thePlayer.getName(), mc.thePlayer.getName()), null, 0);
                             }
@@ -159,7 +148,6 @@ public class CefRenderManager {
                         String[] args = request.substring(6).split(":");
                         String email = args[0];
                         String password = args[1];
-                        Session currentSession = mc.getSession();
                         MicrosoftAccount account = LoginUtil.loginMicrosoftNoSetSession(email, password);
                         if (account != null) {
                             browser.executeJavaScript(String.format("addAccount(\"%s\",\"%s\", \"%s\")", account.getProfile().getName(), email, password), browser.getURL(), 0);
