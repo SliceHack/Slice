@@ -91,8 +91,7 @@ public class CefRenderManager {
             cefApp = builder.build();
             cefClient = cefApp.createClient();
             cefMessageRouter = CefMessageRouter.create();
-            final String[] currentEmail = new String[1];
-            final String[] currentPassword = new String[1];
+            final HTMLAlt[] htmlAlt = new HTMLAlt[1];
             cefMessageRouter.addHandler(new CefMessageRouterHandlerAdapter() {
                 /**
                  * cef query can be used to contact browser and client
@@ -119,7 +118,7 @@ public class CefRenderManager {
                             mc.displayGuiScreen(new GuiOptions(screen, gameSettings));
                             break;
                         case "AltManagerScreen":
-                            mc.displayGuiScreen(new HTMLAlt());
+                            mc.displayGuiScreen(htmlAlt[0] = new HTMLAlt());
                             break;
                         case "VersionScreen":
                             mc.displayGuiScreen(new GuiProtocolSelector(screen));
@@ -134,12 +133,12 @@ public class CefRenderManager {
                             mc.displayGuiScreen(null);
                             break;
                         case "AltManagerReady":
-                            if (currentEmail[0] != null) {
-                                browser.executeJavaScript(String.format("addAccount(\"%s\", \"%s\", \"%s\")", mc.thePlayer.getName(), currentEmail[0], currentPassword[0]), null, 0);
+                            if (Slice.INSTANCE.currentEmail != null && Slice.INSTANCE.currentPassword != null) {
+                                htmlAlt[0].runJS(String.format("addAccount(\"%s\", \"%s\", \"%s\")", mc.thePlayer.getName(), Slice.INSTANCE.currentEmail, Slice.INSTANCE.currentPassword));
                             } else {
-                                browser.executeJavaScript(String.format("addAccount(\"%s\", \"%s\", \"%s\")", mc.thePlayer.getName(), mc.thePlayer.getName(), mc.thePlayer.getName()), null, 0);
+                                htmlAlt[0].runJS((String.format("addAccount(\"%s\", \"%s\", \"%s\")", mc.thePlayer.getName(), mc.thePlayer.getName(), mc.thePlayer.getName())));
                             }
-                            browser.executeJavaScript(String.format("setCurrentAccount(\"%s\")", mc.thePlayer.getName()), browser.getURL(), 0);
+                            htmlAlt[0].runJS(String.format("setCurrentAccount(\"%s\")", mc.thePlayer.getName()));
                             break;
 
                     }
@@ -165,8 +164,8 @@ public class CefRenderManager {
                             MicrosoftAccount account = LoginUtil.loginMicrosoft(email, password);
                             if (account != null) {
                                 browser.executeJavaScript("setCurrentAccount(\"" + account.getProfile().getName() + "\")", browser.getURL(), 0);
-                                currentEmail[0] = email;
-                                currentPassword[0] = password;
+                                Slice.INSTANCE.currentEmail = email;
+                                Slice.INSTANCE.currentPassword = password;
                             }
                         }
                     }
