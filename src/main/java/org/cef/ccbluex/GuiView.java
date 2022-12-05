@@ -2,8 +2,6 @@ package org.cef.ccbluex;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.val;
-import lombok.var;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
@@ -15,6 +13,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import slice.Slice;
+import slice.util.LoggerUtil;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -133,9 +132,14 @@ public class GuiView extends GuiScreen {
     @Override
     public void handleKeyboardInput() throws IOException {
         if (Keyboard.getEventKeyState()) {
-            val charr = Keyboard.getEventCharacter();
-            val key = Keyboard.getEventKey();
-            val mod = keyModifiers(0);
+            char charr = Keyboard.getEventCharacter();
+            int key = Keyboard.getEventKey();
+            int mod = keyModifiers(0);
+
+            if(key == Keyboard.KEY_BACK) {
+                cefBrowser.sendBackspace(mod);
+            }
+
             cefBrowser.keyEventByKeyCode(key, charr, mod, true);
             pressedKeyMap.put(key, charr);
 
@@ -147,24 +151,25 @@ public class GuiView extends GuiScreen {
 
         mc.dispatchKeypresses();
     }
+
     @Override
     public boolean doesGuiPauseGame() {
         return false;
     }
 
-    public int keyModifiers(int mod) {
-        var n = mod;
-        if (isCtrlKeyDown()) n = 0x80;
-        if (isShiftKeyDown()) n = 0x40;
-        if (isAltKeyDown()) n = 0x200;
+    public static int keyModifiers(int mod) {
+        int n = mod;
+        if (isCtrlKeyDown()) n = mod | 128;
+        if (isShiftKeyDown()) n |= 64;
+        if (isAltKeyDown()) n |= 512;
         return n;
     }
 
-    public int mouseModifiers(int mod) {
-        var n = mod;
-        if (Mouse.isButtonDown(0)) n = 0x400;
-        if (Mouse.isButtonDown(2)) n = 0x800;
-        if (Mouse.isButtonDown(1)) n = 0x1000;
+    public static int mouseModifiers(int mod) {
+        int n = mod;
+        if (Mouse.isButtonDown(0)) n = mod | 1024;
+        if (Mouse.isButtonDown(2)) n |= 2048;
+        if (Mouse.isButtonDown(1)) n |= 4096;
         return n;
     }
 

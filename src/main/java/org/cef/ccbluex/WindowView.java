@@ -180,7 +180,7 @@ public class WindowView {
                 if (Mouse.hasWheel()) {
                     val wheel = Mouse.getDWheel();
                     if (wheel != 0) {
-                        cefBrowser.mouseScrolled(mouseRX, mouseRY, keyModifiers(0), 1, wheel);
+                        cefBrowser.mouseScrolled(mouseRX, mouseRY, GuiView.keyModifiers(0), 1, wheel);
                     }
                 }
             }
@@ -190,7 +190,7 @@ public class WindowView {
                     if(Mouse.getEventButton() == 0 && inArea(mouseX, mouseY, width - 5f, height - 5f, width, height)) {
                         scale = true;
                     } else {
-                        int mod = mouseModifiers(keyModifiers(0));
+                        int mod = GuiView.mouseModifiers(GuiView.keyModifiers(0));
                         cefBrowser.mouseInteracted(mouseRX, mouseRY, mod, Mouse.getEventButton(), true, 1);
                         cefBrowser.mouseInteracted(mouseRX, mouseRY, mod, Mouse.getEventButton(), false, 1);
                     }
@@ -206,22 +206,6 @@ public class WindowView {
 
     public static boolean inArea(float x, float y, float ax1, float ay1, float ax2, float ay2) {
         return x >= ax1 && x <= ax2 && y >= ay1 && y <= ay2;
-    }
-
-    public int keyModifiers(int mod) {
-        var n = mod;
-        if (isCtrlKeyDown()) n = 0x80;
-        if (isShiftKeyDown()) n = 0x40;
-        if (isAltKeyDown()) n = 0x200;
-        return n;
-    }
-
-    public int mouseModifiers(int mod) {
-        var n = mod;
-        if (Mouse.isButtonDown(0)) n = 0x400;
-        if (Mouse.isButtonDown(2)) n = 0x800;
-        if (Mouse.isButtonDown(1)) n = 0x1000;
-        return n;
     }
 
     public String getText1() {

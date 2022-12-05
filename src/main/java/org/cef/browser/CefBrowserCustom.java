@@ -12,19 +12,17 @@ import java.util.concurrent.CompletableFuture;
 
 import org.cef.CefClient;
 import org.cef.callback.CefDragData;
-import org.cef.ccbluex.CefRenderManager;
 import org.cef.handler.CefRenderHandler;
 import org.cef.handler.CefScreenInfo;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 import slice.Slice;
 import slice.util.LoggerUtil;
 
 /**
  * CefBrowserOsr but with custom rendering
  * @see CefBrowser_N is fucking package private
- * @author montoyo, Feather Client Team, modified by Liulihaocai
+ * @author montoyo, Feather Client Team, modified by (Liulihaocai & NickRest)
  */
 @SuppressWarnings("all")
 public class CefBrowserCustom extends CefBrowser_N implements CefRenderHandler {
@@ -92,12 +90,10 @@ public class CefBrowserCustom extends CefBrowser_N implements CefRenderHandler {
 
     @Override
     public void onPopupShow(CefBrowser browser, boolean show) {
-        new Thread(() -> {
-            if (!show) {
-                this.renderer_.onPopupClosed();
-                this.invalidate();
-            }
-        }).start();
+        if (!show) {
+            this.renderer_.onPopupClosed();
+            this.invalidate();
+        }
     }
 
     @Override
@@ -213,8 +209,6 @@ public class CefBrowserCustom extends CefBrowser_N implements CefRenderHandler {
         super.close(force);
     }
 
-    // these methods are fucking protected in the superclass, we need to wrap it
-
     public void wasResized_(int width, int height) {
         this.browser_rect_.setBounds(0, 0, width, height);
         super.wasResized(width, height);
@@ -248,6 +242,12 @@ public class CefBrowserCustom extends CefBrowser_N implements CefRenderHandler {
         KeyEvent ev = new KeyEvent(dc_, KeyEvent.KEY_TYPED, 0, mods, 0, c);
         sendKeyEvent(ev);
     }
+
+    public void sendBackspace(int mods) {
+        KeyEvent ev = new KeyEvent(dc_, KeyEvent.KEY_PRESSED, 0, mods, KeyEvent.VK_BACK_SPACE, (char) 0);
+        sendKeyEvent(ev);
+    }
+
 
     /**
      * fill the gap between LWJGL and AWT key codes

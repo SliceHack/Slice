@@ -209,10 +209,8 @@ public class CefBrowserCustom extends CefBrowser_N implements CefRenderHandler {
     // these methods are fucking protected in the superclass, we need to wrap it
 
     public void wasResized_(int width, int height) {
-        new Thread(() -> {
-            this.browser_rect_.setBounds(0, 0, width, height);
-            super.wasResized(width, height);
-        }).start();
+        this.browser_rect_.setBounds(0, 0, width, height);
+        super.wasResized(width, height);
     }
 
     public void mouseMoved(int x, int y, int mods) {
@@ -235,17 +233,13 @@ public class CefBrowserCustom extends CefBrowser_N implements CefRenderHandler {
     }
 
     public void mouseScrolled(int x, int y, int mods, int amount, int rot) {
-        new Thread(() -> {
-            MouseWheelEvent ev = new MouseWheelEvent(dc_, MouseEvent.MOUSE_WHEEL, 0, mods, x, y, 0, false, MouseWheelEvent.WHEEL_UNIT_SCROLL, amount, rot);
-            sendMouseWheelEvent(ev);
-        }).start();
+        MouseWheelEvent ev = new MouseWheelEvent(dc_, MouseEvent.MOUSE_WHEEL, 0, mods, x, y, 0, false, MouseWheelEvent.WHEEL_UNIT_SCROLL, amount, rot);
+        sendMouseWheelEvent(ev);
     }
 
     public void keyTyped(char c, int mods) {
-        new Thread(() -> {
-            KeyEvent ev = new KeyEvent(dc_, KeyEvent.KEY_TYPED, 0, mods, 0, c);
-            sendKeyEvent(ev);
-        }).start();
+        KeyEvent ev = new KeyEvent(dc_, KeyEvent.KEY_TYPED, 0, mods, 0, c);
+        sendKeyEvent(ev);
     }
 
     /**
@@ -277,11 +271,8 @@ public class CefBrowserCustom extends CefBrowser_N implements CefRenderHandler {
     }
 
     public void keyEventByKeyCode(int keyCode, char c, int mods, boolean pressed) {
-        new Thread(() -> {
-            // we already processed the char in GuiView, so we don't need to do it again like MCEF does
-            KeyEvent ev = new KeyEvent(dc_, pressed ? KeyEvent.KEY_PRESSED : KeyEvent.KEY_RELEASED, 0, mods, remapKeycode(keyCode, c), c);
-            sendKeyEvent(ev);
-        }).start();
+        KeyEvent ev = new KeyEvent(dc_, pressed ? KeyEvent.KEY_PRESSED : KeyEvent.KEY_RELEASED, 0, mods, remapKeycode(keyCode, c), c);
+        sendKeyEvent(ev);
     }
 
     @Override
