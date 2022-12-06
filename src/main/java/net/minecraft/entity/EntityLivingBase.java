@@ -12,6 +12,7 @@ import java.util.UUID;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.BaseAttributeMap;
@@ -1757,7 +1758,7 @@ public abstract class EntityLivingBase extends Entity
             {
                 this.handleJumpLava();
             }
-            else if ((this.onGround || Slice.INSTANCE.getModuleManager().getModule(AirJump.class).isEnabled()) && this.jumpTicks == 0)
+            else if ((this.onGround || (Slice.INSTANCE.getModuleManager().getModule(AirJump.class).isEnabled() && this instanceof EntityPlayerSP)) && this.jumpTicks == 0)
             {
                 this.jump();
                 this.jumpTicks = 10;
