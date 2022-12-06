@@ -50,6 +50,8 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import slice.Slice;
+import slice.module.modules.movement.AirJump;
 
 public abstract class EntityLivingBase extends Entity
 {
@@ -1755,7 +1757,7 @@ public abstract class EntityLivingBase extends Entity
             {
                 this.handleJumpLava();
             }
-            else if (this.onGround && this.jumpTicks == 0)
+            else if ((this.onGround || Slice.INSTANCE.getModuleManager().getModule(AirJump.class).isEnabled()) && this.jumpTicks == 0)
             {
                 this.jump();
                 this.jumpTicks = 10;
