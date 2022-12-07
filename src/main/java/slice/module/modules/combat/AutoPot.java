@@ -44,6 +44,7 @@ public class AutoPot extends Module {
     @EventInfo
     public void onUpdate(EventUpdate e) {
         if(mc.thePlayer.fallDistance > 3) return;
+        if(mc.currentScreen != null) return;
 
         HashMap<ItemStack, Integer> pots = getAllSplashPotions();
 

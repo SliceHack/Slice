@@ -94,7 +94,10 @@ public class Fly extends Module {
             if (currentSlot != i) {
                 ticks++;
             }
+            return;
         }
+
+        ticks++;
     }
 
     @EventInfo
@@ -176,8 +179,11 @@ public class Fly extends Module {
             case "Zonecraft":
                 if(mc.thePlayer.posY < y) {
                     mc.thePlayer.setPosition(mc.thePlayer.posX, y, mc.thePlayer.posZ);
-                    mc.thePlayer.jump();
-//                    mc.thePlayer.onGround = true;
+
+                    if(mc.thePlayer.jumpTicks == 0) {
+                        mc.thePlayer.jump();
+                    }
+
                     e.setOnGround(true);
                 } else if(mc.thePlayer.onGround) {
                     y = mc.thePlayer.posY;

@@ -136,15 +136,11 @@ public class GuiView extends GuiScreen {
             int key = Keyboard.getEventKey();
             int mod = keyModifiers(0);
 
-            if(key == Keyboard.KEY_BACK) {
-                cefBrowser.sendBackspace(mod);
-            }
-
             cefBrowser.keyEventByKeyCode(key, charr, mod, true);
             pressedKeyMap.put(key, charr);
 
             if (ChatAllowedCharacters.isAllowedCharacter(charr)) {
-                cefBrowser.keyTyped(charr, mod);
+                cefBrowser.keyTyped(charr, mod, key);
             }
             keyTyped(charr, key);
         }
