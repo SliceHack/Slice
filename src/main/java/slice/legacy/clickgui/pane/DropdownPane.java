@@ -21,6 +21,7 @@ import java.util.List;
  * @author Nick
  * */
 @Getter @Setter
+@Deprecated
 public class DropdownPane {
 
     /** data */

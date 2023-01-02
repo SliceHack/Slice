@@ -5,6 +5,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import org.apache.commons.lang3.StringUtils;
 
+@Deprecated
 public class GuiPasswordField extends GuiTextField {
 
     public GuiPasswordField(int id, FontRenderer fontrendererObj, int x, int y, int par5Width, int par6Height) {

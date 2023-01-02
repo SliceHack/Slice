@@ -17,6 +17,7 @@ import java.awt.*;
  * @author Nick
  * */
 @Getter @Setter
+@Deprecated
 public class BooleanButton extends SettingComponent {
 
     private BooleanValue booleanValue;

@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.Proxy;
 
 @Getter @Setter
+@Deprecated
 public class GuiOfflineLogin extends GuiScreen {
 
     private GuiTextField token;

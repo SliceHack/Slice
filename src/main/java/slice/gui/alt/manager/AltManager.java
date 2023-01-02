@@ -13,6 +13,7 @@ import slice.util.RenderUtil;
 
 @Getter @Setter
 @AllArgsConstructor
+@Deprecated
 public class AltManager extends GuiScreen {
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {

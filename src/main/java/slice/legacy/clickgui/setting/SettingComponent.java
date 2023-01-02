@@ -11,6 +11,7 @@ import slice.setting.Setting;
  * @author Nick
  * */
 @Getter @Setter
+@Deprecated
 public abstract class SettingComponent {
 
     private SettingPane parent;

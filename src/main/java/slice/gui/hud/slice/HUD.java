@@ -26,6 +26,7 @@ import java.util.List;
  * @author Nick
  * */
 @SuppressWarnings("unused")
+@Deprecated
 public class HUD {
 
     private int ticks;

@@ -17,6 +17,7 @@ import java.util.*;
  * @author Nick
  * */
 @Getter @Setter
+@Deprecated
 public class ClickGui extends GuiScreen {
 
     private List<DropdownPane> paneList = new ArrayList<>();

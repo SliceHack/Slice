@@ -14,6 +14,7 @@ import slice.setting.settings.ModeValue;
  * @author Nick
  * */
 @Getter @Setter
+@Deprecated
 public class ModeButton extends SettingComponent {
 
     private ModeValue modeValue;

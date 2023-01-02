@@ -12,6 +12,7 @@ import slice.util.RenderUtil;
 import java.awt.*;
 
 @Getter @Setter
+@Deprecated
 public class SliderButton extends SettingComponent {
 
     private NumberValue value;

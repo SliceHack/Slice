@@ -7,6 +7,7 @@ import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.GlStateManager;
 
 @Getter @Setter
+@Deprecated
 public class PlayerOnScreen {
 
     public void draw(int mouseX, int mouseY) {

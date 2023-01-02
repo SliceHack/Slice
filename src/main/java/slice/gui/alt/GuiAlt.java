@@ -7,6 +7,7 @@ import org.lwjgl.input.Keyboard;
 
 import java.io.IOException;
 
+@Deprecated
 public class GuiAlt extends GuiScreen {
 
     private final GuiScreen parent;

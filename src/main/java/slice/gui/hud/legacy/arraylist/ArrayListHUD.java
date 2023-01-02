@@ -10,6 +10,7 @@ import slice.module.Module;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class ArrayListHUD {
 
     Minecraft mc = Minecraft.getMinecraft();

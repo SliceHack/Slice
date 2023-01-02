@@ -25,6 +25,7 @@ import java.util.List;
  * @author Nick
  * */
 @Getter @Setter
+@Deprecated
 public class SettingPane {
 
     private Module module;

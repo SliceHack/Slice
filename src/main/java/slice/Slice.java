@@ -72,11 +72,6 @@ public enum Slice {
     private final StartDiscordRPC discordRPC;
 
     /**
-     * Alt Manager
-     */
-    private AltManager altManager;
-
-    /**
      * Server
      */
     public IRC irc;
@@ -217,13 +212,6 @@ public enum Slice {
         serverY = e.getY();
         serverZ = e.getZ();
 
-
-        if (Minecraft.getMinecraft().currentScreen != null) {
-
-            if (Minecraft.getMinecraft().currentScreen instanceof AltManager)
-                this.altManager = (AltManager) Minecraft.getMinecraft().currentScreen;
-            else this.altManager = null;
-        }
 
         CommandPlugins plugins = ((CommandPlugins) commandManager.getCommand("plugins"));
         plugins.onUpdate();

@@ -15,6 +15,7 @@ import slice.util.account.microsoft.MicrosoftAccount;
 import java.io.IOException;
 
 @Getter @Setter
+@Deprecated
 public class MicrosoftAltLogin extends GuiScreen {
 
     private final GuiScreen parent;

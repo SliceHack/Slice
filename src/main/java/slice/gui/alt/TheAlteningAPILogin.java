@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.net.Proxy;
 
 @Getter @Setter
+@Deprecated
 public class TheAlteningAPILogin extends GuiScreen {
 
     private GuiTextField token;

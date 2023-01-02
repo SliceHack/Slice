@@ -19,6 +19,7 @@ import the_fireplace.ias.gui.GuiPasswordField;
 import java.io.IOException;
 
 @Getter @Setter
+@Deprecated
 public class MojangAltLogin extends GuiScreen {
 
     private GuiTextField username;

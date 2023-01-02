@@ -16,6 +16,7 @@ import java.awt.*;
  * @author Nick
  * */
 @Getter @Setter
+@Deprecated
 public class ModuleButton {
 
     /** The Module */
