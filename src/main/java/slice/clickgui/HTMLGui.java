@@ -2,23 +2,20 @@ package slice.clickgui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import org.cef.ccbluex.AllTimeGuiView;
-import org.cef.ccbluex.GuiView;
-import org.cef.ccbluex.Page;
+import org.cef.mcef.AllTimeGuiView;
+import org.cef.mcef.GuiView;
+import org.cef.mcef.Page;
 import slice.Slice;
 import slice.module.Module;
 import slice.setting.Setting;
 import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
-import slice.util.LoggerUtil;
-
-import java.io.File;
 
 public class HTMLGui extends AllTimeGuiView {
 
     public HTMLGui() {
-        super(new Page("https://assets.sliceclient.com/clickgui/"));
+        super(Page.of("https://assets.sliceclient.com/clickgui/"));
     }
 
     /**

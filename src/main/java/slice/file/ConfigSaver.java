@@ -3,12 +3,8 @@ package slice.file;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
-import org.cef.ccbluex.Page;
 import org.json.JSONObject;
 import slice.Slice;
-import slice.cef.RequestHandler;
-import slice.cef.ViewNoGui;
-import slice.clickgui.HTMLGui;
 import slice.manager.ModuleManager;
 import slice.module.Module;
 import slice.setting.Setting;
@@ -16,7 +12,6 @@ import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
 
-import java.awt.*;
 import java.io.*;
 
 @Getter @Setter

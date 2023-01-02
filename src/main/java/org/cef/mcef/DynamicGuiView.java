@@ -1,4 +1,4 @@
-package org.cef.ccbluex;
+package org.cef.mcef;
 
 public class DynamicGuiView extends GuiView {
 

@@ -1,4 +1,4 @@
-package org.cef.ccbluex;
+package org.cef.mcef;
 
 @SuppressWarnings("all")
 public class AllTimeGuiView extends GuiView {

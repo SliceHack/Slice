@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import org.cef.browser.CefBrowserCustom;
 import org.cef.browser.ICefRenderer;
 import org.cef.browser.lwjgl.CefRendererLwjgl;
-import org.cef.ccbluex.Page;
+import org.cef.mcef.Page;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import slice.Slice;

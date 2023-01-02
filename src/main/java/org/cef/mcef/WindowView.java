@@ -1,9 +1,8 @@
-package org.cef.ccbluex;
+package org.cef.mcef;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.val;
-import lombok.var;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.GlStateManager;
@@ -17,7 +16,6 @@ import slice.util.LoggerUtil;
 
 import java.awt.*;
 
-import static net.minecraft.client.gui.GuiScreen.*;
 import static org.lwjgl.opengl.GL11.*;
 
 @Getter @Setter

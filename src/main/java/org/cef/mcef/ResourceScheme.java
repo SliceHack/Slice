@@ -1,4 +1,4 @@
-package org.cef.ccbluex;
+package org.cef.mcef;
 
 import org.cef.browser.scheme.IScheme;
 import org.cef.browser.scheme.SchemePreResponse;

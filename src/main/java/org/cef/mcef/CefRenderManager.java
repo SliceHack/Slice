@@ -1,4 +1,4 @@
-package org.cef.ccbluex;
+package org.cef.mcef;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,7 +6,6 @@ import me.friwi.jcefmaven.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.settings.GameSettings;
-import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.util.Session;
 import org.cef.CefApp;
 import org.cef.CefClient;
@@ -17,17 +16,12 @@ import org.cef.browser.CefMessageRouter;
 import org.cef.browser.scheme.SchemeResourceHandler;
 import org.cef.callback.CefQueryCallback;
 import org.cef.handler.CefMessageRouterHandlerAdapter;
-import org.lwjgl.Sys;
 import slice.Slice;
 import slice.cef.RequestHandler;
 import slice.event.data.EventInfo;
 import slice.event.events.Event2D;
-import slice.event.events.EventGuiRender;
-import slice.event.events.EventUpdateLWJGL;
 import slice.event.manager.EventManager;
-import slice.gui.alt.GuiAlt;
 import slice.gui.alt.HTMLAlt;
-import slice.gui.main.HTMLMainMenu;
 import slice.module.Module;
 import slice.setting.Setting;
 import slice.setting.settings.BooleanValue;
@@ -133,12 +127,14 @@ public class CefRenderManager {
                             mc.displayGuiScreen(null);
                             break;
                         case "AltManagerReady":
+                            HTMLAlt alt = htmlAlt[0];
                             if (Slice.INSTANCE.currentEmail != null && Slice.INSTANCE.currentPassword != null) {
-                                htmlAlt[0].runJS(String.format("addAccount(\"%s\", \"%s\", \"%s\")", mc.thePlayer.getName(), Slice.INSTANCE.currentEmail, Slice.INSTANCE.currentPassword));
+                                alt.getCefBrowser().executeJavaScript("addAccount(\"" + mc.session.getUsername() + "\", \"" + Slice.INSTANCE.currentEmail + "\", \"" + Slice.INSTANCE.currentPassword + "\")", null, 0);
                             } else {
-                                htmlAlt[0].runJS((String.format("addAccount(\"%s\", \"%s\", \"%s\")", mc.thePlayer.getName(), mc.thePlayer.getName(), mc.thePlayer.getName())));
+                                alt.getCefBrowser().executeJavaScript("addAccount(\"" + mc.session.getUsername() + "\", \"" + mc.session.getUsername() + "\", \"" + mc.session.getUsername() + "\")", null, 0);
                             }
-                            htmlAlt[0].runJS(String.format("setCurrentAccount(\"%s\")", mc.thePlayer.getName()));
+
+                            alt.getCefBrowser().executeJavaScript("addAccount(\"" + mc.session.getUsername() + "\")", null, 0);
                             break;
 
                     }

@@ -8,8 +8,8 @@ import net.minecraft.client.gui.GuiChat;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S02PacketChat;
-import org.cef.ccbluex.CefRenderManager;
-import org.cef.ccbluex.Page;
+import org.cef.mcef.CefRenderManager;
+import org.cef.mcef.Page;
 import org.lwjgl.input.Keyboard;
 import slice.api.API;
 import slice.api.IRC;
@@ -162,7 +162,7 @@ public enum Slice {
     public void init() {
         notificationManager = new NotificationManager();
         anticheat = SliceAC.INSTANCE;
-        this.html.add(new ViewNoGui(new Page("https://assets.sliceclient.com/hud/index.html" + "?name=" + NAME + "&version=" + VERSION + "&discord=" + discordName)));
+        this.html.add(new ViewNoGui(Page.of("https://assets.sliceclient.com/hud/index.html" + "?name=" + NAME + "&version=" + VERSION + "&discord=" + discordName)));
         scriptManager = new ScriptManager(moduleManager, fontManager);
         settingsManager = new SettingsManager(moduleManager);
         clickGui = new HTMLGui();

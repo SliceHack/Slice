@@ -1,17 +1,13 @@
 package slice.gui.main;
 
 import net.minecraft.client.Minecraft;
-import org.cef.ccbluex.DynamicGuiView;
-import org.cef.ccbluex.GuiView;
-import org.cef.ccbluex.Page;
-import slice.Slice;
-
-import java.io.File;
+import org.cef.mcef.GuiView;
+import org.cef.mcef.Page;
 
 public class HTMLMainMenu extends GuiView {
 
     public HTMLMainMenu() {
-        super(new Page("https://assets.sliceclient.com/mainmenu/index.html?name=" + Minecraft.getMinecraft().getSession().getUsername()));
+        super(Page.of("https://assets.sliceclient.com/mainmenu/index.html?name=" + Minecraft.getMinecraft().getSession().getUsername()));
     }
 
     /***

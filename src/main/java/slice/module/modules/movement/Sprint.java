@@ -1,14 +1,11 @@
 package slice.module.modules.movement;
 
-import slice.Slice;
-import slice.event.Event;
 import slice.event.data.EventInfo;
 import slice.event.events.EventUpdate;
 import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
 import slice.setting.settings.BooleanValue;
-import slice.util.KeyUtil;
 import slice.util.MoveUtil;
 
 @ModuleInfo(name = "Sprint", description = "Sprints for you", category = Category.MOVEMENT)
@@ -18,7 +15,16 @@ public class Sprint extends Module {
 
     @EventInfo
     public void onUpdate(EventUpdate e) {
+        if(!MoveUtil.isMoving()) return;
 
+        if(omni.getValue()) {
+            mc.thePlayer.setSprinting(true);
+            return;
+        }
+
+        if(mc.thePlayer.moveForward > 0 && !mc.thePlayer.isUsingItem()) {
+            mc.thePlayer.setSprinting(true);
+        }
     }
 
 }

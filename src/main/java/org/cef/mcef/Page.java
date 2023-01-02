@@ -1,4 +1,4 @@
-package org.cef.ccbluex;
+package org.cef.mcef;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,5 +16,9 @@ public class Page {
 
     public Page(String url) {
         this.url = url;
+    }
+
+    public static Page of(String url) {
+        return new Page(url);
     }
 }

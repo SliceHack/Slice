@@ -3,6 +3,7 @@ package slice.module.modules.movement;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.server.S18PacketEntityTeleport;
+import net.minecraft.network.play.server.S21PacketChunkData;
 import net.minecraft.util.MathHelper;
 import org.lwjgl.input.Keyboard;
 import slice.event.data.EventInfo;
@@ -25,8 +26,10 @@ public class Speed extends Module {
     ModeValue mode = new ModeValue("Mode", "Bhop", "Bhop", "Hycraft", "Dev", "Zonecraft", "Astro", "MMC", "UwUGuard", "Legit", "Dac");
     private boolean wait;
     private int onGroundTicks, offGroundTicks, waitTicks, ticks;
+    private double speed;
 
     public void onDisable() {
+        speed = 0;
         mc.timer.timerSpeed = 1.0F;
         onGroundTicks = 0;
         offGroundTicks = 0;
@@ -67,11 +70,16 @@ public class Speed extends Module {
 
         switch (mode.getValue()) {
             case "Zonecraft":
-                if(!MoveUtil.isMoving()) break;
+                if(!MoveUtil.isMoving()) return;
 
-                mc.gameSettings.keyBindJump.pressed = false;
+                if (mc.thePlayer.onGround && mc.thePlayer.jumpTicks == 0) {
+                    mc.thePlayer.jump();
+                }
 
-                if(mc.thePlayer.onGround) mc.thePlayer.motionY = 0.0784;
+                if (offGroundTicks == 2) {
+                    e.setOnGround(true);
+                    mc.thePlayer.motionY = -0.0784000015258789;
+                }
                 break;
             case "Bhop":
                 if(!MoveUtil.isMoving()) break;
@@ -105,10 +113,11 @@ public class Speed extends Module {
                 }
                 break;
             case "UwUGuard":
-                if(((mc.thePlayer.isCollidedHorizontally && mc.thePlayer.isCollidedVertically) || !(mc.thePlayer.fallDistance <= 1)) || !MoveUtil.isMoving()) break;
+                if(!MoveUtil.isMoving()) break;
 
-                if(mc.thePlayer.onGround) { MoveUtil.jump(); MoveUtil.strafe(0.42); }
-                if(offGroundTicks > 5) { mc.thePlayer.motionY = -2F; }
+                if(mc.thePlayer.onGround) {
+                    break;
+                }
                 break;
             case "Legit":
                 mc.thePlayer.setSprinting(true);
@@ -153,6 +162,23 @@ public class Speed extends Module {
 
                 MoveUtil.strafe(speed);
                 break;
+            case "Dev":
+                if(!MoveUtil.isMoving()) break;
+
+                if(mc.thePlayer.onGround) {
+                    if(mc.thePlayer.jumpTicks == 0) {
+                        mc.thePlayer.jump();
+                    }
+
+                    MoveUtil.strafe(0.42);
+                    mc.thePlayer.speedInAir = 0.02F;
+                    mc.thePlayer.jumpMovementFactor = 0.02F;
+                    break;
+                }
+
+                mc.thePlayer.jumpMovementFactor = 0.033F;
+                mc.thePlayer.speedInAir = 0.5F;
+                break;
         }
     }
 
@@ -169,18 +195,6 @@ public class Speed extends Module {
         if(mc.theWorld == null) return;
 
         switch (mode.getValue()) {
-            case "UwUGuard":
-                if(e.isIncomming()) break;
-
-                if(p instanceof C03PacketPlayer) {
-                    C03PacketPlayer c03 = (C03PacketPlayer) p;
-                    if(c03.isMoving()) {
-                        c03.setMoving(false);
-                        e.setCancelled(true);
-                        mc.thePlayer.sendQueue.addToSendQueue(c03);
-                    }
-                }
-                break;
             case "Hycraft":
                 if(p instanceof S18PacketEntityTeleport) {
                     e.setCancelled(true);
