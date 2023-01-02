@@ -15,6 +15,7 @@ public class SlicePlugin {
      * Override this method
      * */
     public void initialize() {}
+    public void shutdown() {}
 
     /**
      * This is used to register a module.

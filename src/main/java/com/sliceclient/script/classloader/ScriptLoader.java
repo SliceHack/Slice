@@ -1,5 +1,6 @@
 package com.sliceclient.script.classloader;
 
+import com.sliceclient.api.SlicePlugin;
 import com.sliceclient.script.SliceScript;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +23,7 @@ public class ScriptLoader {
 
     private File file;
     private ScriptDescriptionFile description;
-    private SliceScript script;
+    private SlicePlugin script;
 
     public ScriptLoader(File file) {
         this.file = file;
@@ -37,10 +38,10 @@ public class ScriptLoader {
         if(description.getVariables().get("main") == null) throw new RuntimeException("main is not defined in script.json");
 
         try(ScriptClassLoader loader = new ScriptClassLoader(description.getVariables().get("main"), file, getClass().getClassLoader())) {
-            Class<?> scriptClass = loader.loadClass(description.getVariables().get("main")).asSubclass(SliceScript.class);
-            script = (SliceScript) scriptClass.newInstance();
-            script.onStartup();
-            Runtime.getRuntime().addShutdownHook(new Thread(script::onShutdown));
+            Class<?> scriptClass = loader.loadClass(description.getVariables().get("main")).asSubclass(SlicePlugin.class);
+            script = (SlicePlugin) scriptClass.newInstance();
+            script.initialize();
+            Runtime.getRuntime().addShutdownHook(new Thread(script::shutdown));
         } catch (Exception e) {
             throw new RuntimeException("Failed to load script", e);
         }
