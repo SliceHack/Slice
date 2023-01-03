@@ -7,9 +7,6 @@ package org.cef.browser.mac;
 import org.cef.browser.CefBrowserWindow;
 
 import java.awt.Component;
-import java.awt.peer.ComponentPeer;
-
-import sun.awt.AWTAccessor;
 
 public class CefBrowserWindowMac implements CefBrowserWindow {
     @Override

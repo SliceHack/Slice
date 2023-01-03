@@ -25,7 +25,6 @@ import slice.event.events.*;
 import slice.event.manager.EventManager;
 import slice.file.Saver;
 import slice.font.FontManager;
-import slice.gui.alt.manager.AltManager;
 import slice.gui.hud.slice.HUD;
 import slice.manager.CommandManager;
 import slice.manager.ModuleManager;

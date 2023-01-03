@@ -11,22 +11,18 @@ import slice.module.data.Category;
  * @author Nick
  * @since 1/2/2023
  */
-@Getter
 @SuppressWarnings("unused")
 public class Module extends slice.module.Module {
 
-    /** the info of the module */
-    private final ModuleInfo info = getClass().getAnnotation(ModuleInfo.class);
-
     public Module() {
         try {
-            if (info == null) {
+            if (getClass().getAnnotation(ModuleInfo.class) == null) {
                 throw new ModuleInfoNotFoundException("Module " + getClass().getSimpleName() + " is missing the ModuleInfo annotation.");
             }
 
-            name = info.name();
-            description = info.description();
-            category = Category.translate(info.category());
+            name = getClass().getAnnotation(ModuleInfo.class).name();
+            description = getClass().getAnnotation(ModuleInfo.class).description();
+            category = Category.translate(getClass().getAnnotation(ModuleInfo.class).category());
         } catch (ModuleInfoNotFoundException e) {
             throw new RuntimeException(e);
         }

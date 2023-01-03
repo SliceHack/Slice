@@ -1,10 +1,5 @@
 package slice.gui.hud.slice;
 
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import org.lwjgl.opengl.GL11;
 import slice.Slice;
 import slice.event.data.EventInfo;
 import slice.event.events.Event2D;
@@ -17,7 +12,6 @@ import slice.util.LoggerUtil;
 import slice.util.RenderUtil;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

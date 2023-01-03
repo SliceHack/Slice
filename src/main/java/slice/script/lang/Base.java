@@ -2,11 +2,8 @@ package slice.script.lang;
 
 import jdk.internal.dynalink.beans.StaticClass;
 import jdk.nashorn.api.scripting.JSObject;
-import jdk.nashorn.api.scripting.ScriptUtils;
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.Minecraft;
-import org.json.JSONObject;
-import slice.Slice;
 import slice.module.data.Category;
 import slice.script.lang.logger.Chat;
 import slice.script.lang.logger.Console;
@@ -17,12 +14,6 @@ import javax.script.Bindings;
 import javax.script.Invocable;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
-import java.io.File;
-import java.lang.instrument.ClassFileTransformer;
-import java.lang.instrument.Instrumentation;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Set;
 
 /**

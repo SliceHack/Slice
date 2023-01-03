@@ -1,20 +1,10 @@
 package slice.gui.hud.legacy;
 
-import com.labymedia.ultralight.UltralightJava;
-import jdk.nashorn.internal.ir.RuntimeNode;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import slice.Slice;
 import slice.cef.RequestHandler;
-import slice.font.TTFFontRenderer;
-import slice.util.ColorUtil;
-import slice.util.LoggerUtil;
-import slice.util.RenderUtil;
 
 import java.awt.*;
 import java.util.UUID;

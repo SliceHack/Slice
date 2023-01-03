@@ -25,9 +25,8 @@ public abstract class Command {
     private String[] aliases;
 
     public Command() {
-        if(info == null) {
-            throw new IllegalArgumentException("Command class must have @CommandInfo annotation");
-        }
+        if(info == null) return;
+
         this.name = info.name();
         this.description = info.description();
         this.aliases = info.aliases();
