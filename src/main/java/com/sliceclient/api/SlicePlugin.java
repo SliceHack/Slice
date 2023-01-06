@@ -10,7 +10,7 @@ import slice.Slice;
  * @author Nick
  * @since 1/2/2023
  * */
-public class SlicePlugin {
+public abstract class SlicePlugin {
 
     /**
      * Override this method

@@ -96,7 +96,7 @@ public class EntityZombie extends EntityMob
         this.getDataWatcher().addObject(14, Byte.valueOf((byte)0));
     }
 
-    public int getTotalArmorValue()
+        public int getTotalArmorValue()
     {
         int i = super.getTotalArmorValue() + 2;
 
