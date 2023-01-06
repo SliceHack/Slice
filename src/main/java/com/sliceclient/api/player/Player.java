@@ -22,6 +22,7 @@ public class Player {
     public void setOnGround(boolean onGround) {
         mc.thePlayer.onGround = onGround;
     }
+    public boolean isOnGround() { return mc.thePlayer.onGround; }
 
     public void strafe(float speed) {
         MoveUtil.strafe(speed);
