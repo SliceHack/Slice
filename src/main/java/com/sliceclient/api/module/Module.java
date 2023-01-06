@@ -2,6 +2,7 @@ package com.sliceclient.api.module;
 
 import com.sliceclient.api.exceptions.ModuleInfoNotFoundException;
 import com.sliceclient.api.module.data.ModuleInfo;
+import com.sliceclient.api.player.Player;
 import lombok.Getter;
 import slice.module.data.Category;
 
@@ -13,6 +14,8 @@ import slice.module.data.Category;
  */
 @SuppressWarnings("unused")
 public class Module extends slice.module.Module {
+
+    private final Player player = new Player();
 
     public Module() {
         try {
