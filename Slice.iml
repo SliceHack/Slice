@@ -23,5 +23,6 @@
     <orderEntry type="library" name="minecraft" level="project" />
     <orderEntry type="library" name="ViaMCP" level="project" />
     <orderEntry type="library" name="other" level="project" />
+    <orderEntry type="library" name="ultralight" level="project" />
   </component>
 </module>
