@@ -1,5 +1,3 @@
-
-
 package org.cef.browser.lwjgl;
 
 import net.minecraft.client.renderer.GlStateManager;
@@ -8,7 +6,6 @@ import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import org.cef.browser.ICefRenderer;
 import org.lwjgl.opengl.EXTBgra;
-import slice.util.LoggerUtil;
 
 import java.awt.*;
 import java.nio.ByteBuffer;
@@ -18,8 +15,8 @@ import static org.lwjgl.opengl.GL11.*;
 /**
  * @author montoyo
  */
-@SuppressWarnings("all")
 public class CefRendererLwjgl implements ICefRenderer {
+
     private final boolean transparent_;
     public int texture_id_ = 0;
     private int view_width_ = 0;
@@ -32,7 +29,7 @@ public class CefRendererLwjgl implements ICefRenderer {
         initialize();
     }
 
-    public void initialize() {
+    protected void initialize() {
         GlStateManager.enableTexture2D();
         texture_id_ = glGenTextures();
 
@@ -45,12 +42,10 @@ public class CefRendererLwjgl implements ICefRenderer {
 
     @Override
     public void destroy() {
-        try {
-            if (texture_id_ != 0) {
-                glDeleteTextures(texture_id_);
-                texture_id_ = 0;
-            }
-        } catch (Exception ignored){}
+        if(texture_id_ != 0) {
+            glDeleteTextures(texture_id_);
+            texture_id_ = 0;
+        }
     }
 
     @Override
@@ -117,7 +112,7 @@ public class CefRendererLwjgl implements ICefRenderer {
 
         final int size = (width * height) << 2;
         if(size > buffer.limit()) {
-            LoggerUtil.addTerminalMessage("Bad data passed to CefRenderer.onPaint() triggered safe guards... (1)");
+            System.out.println("(WARN) Bad data passed to CefRenderer.onPaint() triggered safe guards... (1)");
             return;
         }
 
@@ -140,7 +135,7 @@ public class CefRendererLwjgl implements ICefRenderer {
                 // Update just the dirty rectangles.
                 for(Rectangle rect: dirtyRects) {
                     if(rect.x < 0 || rect.y < 0 || rect.x + rect.width > view_width_ || rect.y + rect.height > view_height_)
-                        LoggerUtil.addTerminalMessage("Bad data passed to CefRenderer.onPaint() triggered safe guards... (2)");
+                        System.out.println("(WARN) Bad data passed to CefRenderer.onPaint() triggered safe guards... (2)");
                     else {
                         glPixelStorei(GL_UNPACK_SKIP_PIXELS, rect.x);
                         glPixelStorei(GL_UNPACK_SKIP_ROWS, rect.y);

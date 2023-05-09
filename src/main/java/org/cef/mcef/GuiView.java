@@ -139,11 +139,12 @@ public class GuiView extends GuiScreen {
             pressedKeyMap.put(key, charr);
 
             if (ChatAllowedCharacters.isAllowedCharacter(charr)) {
-                cefBrowser.keyTyped(charr, mod, key);
+                cefBrowser.keyTyped(charr, mod);
             }
+            cefBrowser.keyEventByKeyCode(key, charr, mod, false);
+
             keyTyped(charr, key);
         }
-
         mc.dispatchKeypresses();
     }
 

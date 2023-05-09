@@ -162,6 +162,7 @@ import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.cef.browser.CefBrowserCustom;
+import org.cef.mcef.CefRenderManager;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
@@ -180,6 +181,7 @@ import slice.event.events.*;
 import slice.gui.hud.legacy.HUD;
 import slice.gui.main.HTMLMainMenu;
 import viamcp.ViaMCP;
+import viamcp.utils.AttackOrder;
 
 @SuppressWarnings("all")
 public class Minecraft implements IThreadListener, IPlayerUsage {
@@ -850,8 +852,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     }
 
     private void runGameLoop() throws IOException {
-        Slice.INSTANCE.getCefRenderManager().getCefApp().doMessageLoopWork(0L);
-        Slice.INSTANCE.getCefRenderManager().getBrowsers().forEach(CefBrowserCustom::mcefUpdate);
+        CefRenderManager cefRenderManager = Slice.INSTANCE.getCefRenderManager();
+        cefRenderManager.getCefApp().doMessageLoopWork(0L);
+        cefRenderManager.getBrowsers().forEach(CefBrowserCustom::mcefUpdate);
 
         long i = System.nanoTime();
         this.mcProfiler.startSection("root");
@@ -1219,7 +1222,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
 
         if (this.leftClickCounter <= 0) {
-            this.thePlayer.swingItem();
+//            this.thePlayer.swingItem();
+            AttackOrder.sendConditionalSwing(this.objectMouseOver);
 
             if (this.objectMouseOver == null) {
                 logger.error("Null returned as \'hitResult\', this shouldn\'t happen!");
@@ -1230,7 +1234,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             } else {
                 switch (this.objectMouseOver.typeOfHit) {
                     case ENTITY:
-                        this.playerController.attackEntity(this.thePlayer, this.objectMouseOver.entityHit);
+                        AttackOrder.sendFixedAttack(this.thePlayer, this.objectMouseOver.entityHit);
+//                        this.playerController.attackEntity(this.thePlayer, this.objectMouseOver.entityHit);
                         break;
 
                     case BLOCK:

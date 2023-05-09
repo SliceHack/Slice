@@ -9,8 +9,8 @@ import io.netty.channel.local.LocalEventLoopGroup;
 import org.apache.logging.log4j.LogManager;
 import viamcp.gui.AsyncVersionSlider;
 import viamcp.loader.MCPBackwardsLoader;
-import viamcp.loader.MCPViaLoader;
 import viamcp.loader.MCPRewindLoader;
+import viamcp.loader.MCPViaLoader;
 import viamcp.platform.MCPViaInjector;
 import viamcp.platform.MCPViaPlatform;
 import viamcp.utils.JLoggerToLog4j;
@@ -44,7 +44,7 @@ public class ViaMCP
 
     /**
      * Version Slider that works Asynchronously with the Version GUI
-     * Please initialize this before usage with initAsyncSlider() or initAsyncSlider(x, y, width (min. 110), height)
+     * Please initialize this before usage, with initAsyncSlider() or initAsyncSlider(x, y, width (min. 110), height)
      */
     public AsyncVersionSlider asyncSlider;
 
@@ -76,7 +76,7 @@ public class ViaMCP
 
     public void initAsyncSlider()
     {
-        asyncSlider = new AsyncVersionSlider(-1, 5, 5, 110, 20);
+        this.initAsyncSlider(5, 5, 110, 20);
     }
 
     public void initAsyncSlider(int x, int y, int width, int height)

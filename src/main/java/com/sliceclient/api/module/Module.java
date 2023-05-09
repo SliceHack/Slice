@@ -15,7 +15,7 @@ import slice.module.data.Category;
 @SuppressWarnings("unused")
 public class Module extends slice.module.Module {
 
-    private final Player player = new Player();
+    protected final Player player = new Player();
 
     public Module() {
         try {

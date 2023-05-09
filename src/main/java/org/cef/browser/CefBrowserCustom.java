@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
-import java.security.KeyRep;
 import java.util.concurrent.CompletableFuture;
 
 import org.cef.CefClient;
@@ -18,16 +17,12 @@ import org.cef.handler.CefScreenInfo;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.input.Keyboard;
 import slice.Slice;
-import slice.util.LoggerUtil;
-
-import static org.lwjgl.input.Keyboard.*;
 
 /**
  * CefBrowserOsr but with custom rendering
- * @see CefBrowser_N is fucking package private
- * @author montoyo, Feather Client Team, modified by (Liulihaocai & NickRest)
+ * @see org.cef.browser.CefBrowser_N is fucking package private
+ * @author montoyo, Feather Client Team, modified by Liulihaocai
  */
-@SuppressWarnings("all")
 public class CefBrowserCustom extends CefBrowser_N implements CefRenderHandler {
     private final ICefRenderer renderer_;
     private boolean justCreated_ = false;
@@ -41,13 +36,6 @@ public class CefBrowserCustom extends CefBrowser_N implements CefRenderHandler {
     }
 
     public CefBrowserCustom(CefClient client, String url, boolean transparent, CefRequestContext context, ICefRenderer renderer, CefBrowserCustom parent, Point inspectAt) {
-        super(client, url, context, parent, inspectAt);
-        this.isTransparent_ = transparent;
-        this.renderer_ = renderer;
-        Slice.INSTANCE.getCefRenderManager().getBrowsers().add(this);
-    }
-
-    public CefBrowserCustom(CefClient client, String url, boolean transparent, CefRequestContext context, ICefRenderer renderer, CefBrowserCustom parent, Point inspectAt, boolean runRequestHandler) {
         super(client, url, context, parent, inspectAt);
         this.isTransparent_ = transparent;
         this.renderer_ = renderer;
@@ -125,7 +113,7 @@ public class CefBrowserCustom extends CefBrowser_N implements CefRenderHandler {
 
         synchronized(paintData) {
             if(buffer.limit() > size)
-                LoggerUtil.addTerminalMessage("Skipping MCEF browser frame, data is too heavy"); //TODO: Don't spam
+                System.out.println("(WARN) Skipping MCEF browser frame, data is too heavy"); //TODO: Don't spam
             else {
                 if(paintData.hasFrame) //The previous frame was not uploaded to GL texture, so we skip it and render this on instead
                     paintData.fullReRender = true;
@@ -148,10 +136,12 @@ public class CefBrowserCustom extends CefBrowser_N implements CefRenderHandler {
     }
 
     public void mcefUpdate() {
-        if(paintData.hasFrame) {
-            renderer_.onPaint(false, paintData.dirtyRects, paintData.buffer, paintData.width, paintData.height, paintData.fullReRender);
-            paintData.hasFrame = false;
-            paintData.fullReRender = false;
+        synchronized(paintData) {
+            if(paintData.hasFrame) {
+                renderer_.onPaint(false, paintData.dirtyRects, paintData.buffer, paintData.width, paintData.height, paintData.fullReRender);
+                paintData.hasFrame = false;
+                paintData.fullReRender = false;
+            }
         }
     }
 
@@ -212,18 +202,20 @@ public class CefBrowserCustom extends CefBrowser_N implements CefRenderHandler {
         super.close(force);
     }
 
+    // these methods are fucking protected in the superclass, we need to wrap it
+
     public void wasResized_(int width, int height) {
         this.browser_rect_.setBounds(0, 0, width, height);
         super.wasResized(width, height);
     }
 
     public void mouseMoved(int x, int y, int mods) {
-        MouseEvent ev = new MouseEvent(dc_, MouseEvent.MOUSE_MOVED, System.currentTimeMillis(), mods, x, y, 0, false);
+        MouseEvent ev = new MouseEvent(dc_, MouseEvent.MOUSE_MOVED, 0, mods, x, y, 0, false);
         sendMouseEvent(ev);
     }
 
     public void mouseInteracted(int x, int y, int mods, int btn, boolean pressed, int ccnt) {
-        MouseEvent ev = new MouseEvent(dc_, pressed ? MouseEvent.MOUSE_PRESSED : MouseEvent.MOUSE_RELEASED, System.currentTimeMillis(), mods, x, y, ccnt, false, remapMouseCode(btn));
+        MouseEvent ev = new MouseEvent(dc_, pressed ? MouseEvent.MOUSE_PRESSED : MouseEvent.MOUSE_RELEASED, 0, mods, x, y, ccnt, false, remapMouseCode(btn));
         sendMouseEvent(ev);
     }
 
@@ -237,12 +229,12 @@ public class CefBrowserCustom extends CefBrowser_N implements CefRenderHandler {
     }
 
     public void mouseScrolled(int x, int y, int mods, int amount, int rot) {
-        MouseWheelEvent ev = new MouseWheelEvent(dc_, MouseEvent.MOUSE_WHEEL, System.currentTimeMillis(), mods, x, y, 0, false, MouseWheelEvent.WHEEL_UNIT_SCROLL, amount, rot);
+        MouseWheelEvent ev = new MouseWheelEvent(dc_, MouseEvent.MOUSE_WHEEL, 0, mods, x, y, 0, false, MouseWheelEvent.WHEEL_UNIT_SCROLL, amount, rot);
         sendMouseWheelEvent(ev);
     }
 
-    public void keyTyped(char c, int mods, int key) {
-        KeyEvent ev = new KeyEvent(dc_, KeyEvent.KEY_TYPED, System.currentTimeMillis(), mods, lwjlToAWT(key), c);
+    public void keyTyped(char c, int mods) {
+        KeyEvent ev = new KeyEvent(dc_, KeyEvent.KEY_TYPED, 0, mods, 0, c);
         sendKeyEvent(ev);
     }
 
@@ -252,29 +244,30 @@ public class CefBrowserCustom extends CefBrowser_N implements CefRenderHandler {
      */
     private static int remapKeycode(int kc, char c) {
         switch(kc) {
-            case KEY_BACK:   return 8;
-            case KEY_DELETE: return 127;
-            case KEY_RETURN: return 10;
-            case KEY_ESCAPE: return 27;
-            case KEY_LEFT:   return 37;
-            case KEY_UP:     return 38;
-            case KEY_RIGHT:  return 39;
-            case KEY_DOWN:   return 40;
-            case KEY_TAB:    return 9;
-            case KEY_END:    return 35;
-            case KEY_HOME:   return 36;
-            case KEY_LSHIFT:
-            case KEY_RSHIFT:   return 16;
-            case KEY_LCONTROL:
-            case KEY_RCONTROL:   return 17;
-            case KEY_LMENU: // 其实是alt
-            case KEY_RMENU:   return 18;
+            case Keyboard.KEY_BACK:   return 8;
+            case Keyboard.KEY_DELETE: return 127;
+            case Keyboard.KEY_RETURN: return 10;
+            case Keyboard.KEY_ESCAPE: return 27;
+            case Keyboard.KEY_LEFT:   return 37;
+            case Keyboard.KEY_UP:     return 38;
+            case Keyboard.KEY_RIGHT:  return 39;
+            case Keyboard.KEY_DOWN:   return 40;
+            case Keyboard.KEY_TAB:    return 9;
+            case Keyboard.KEY_END:    return 35;
+            case Keyboard.KEY_HOME:   return 36;
+            case Keyboard.KEY_LSHIFT:
+            case Keyboard.KEY_RSHIFT:   return 16;
+            case Keyboard.KEY_LCONTROL:
+            case Keyboard.KEY_RCONTROL:   return 17;
+            case Keyboard.KEY_LMENU: // 其实是alt
+            case Keyboard.KEY_RMENU:   return 18;
 
-            default: return kc;
+            default: return c;
         }
     }
 
     public void keyEventByKeyCode(int keyCode, char c, int mods, boolean pressed) {
+        // we already processed the char in GuiView, so we don't need to do it again like MCEF does
         KeyEvent ev = new KeyEvent(dc_, pressed ? KeyEvent.KEY_PRESSED : KeyEvent.KEY_RELEASED, 0, mods, remapKeycode(keyCode, c), c);
         sendKeyEvent(ev);
     }
@@ -285,44 +278,5 @@ public class CefBrowserCustom extends CefBrowser_N implements CefRenderHandler {
             close(true); // NO FUCKING MEMORY LEAKS
         }
         super.finalize();
-    }
-
-    private static int lwjlToAWT(int key) {
-        switch (key) {
-            case KEY_BACK: return 0x08;
-            case KEY_TAB: return 0x09;
-            case KEY_RETURN: return 0x0A;
-            case KEY_ESCAPE: return 0x1B;
-            case KEY_DELETE: return 0x7F;
-            case KEY_LEFT: return 0x25;
-            case KEY_UP: return 0x26;
-            case KEY_RIGHT: return 0x27;
-            case KEY_DOWN: return 0x28;
-            case KEY_PRIOR: return 0x21;
-            case KEY_NEXT: return 0x22;
-            case KEY_END: return 0x23;
-            case KEY_HOME: return 0x24;
-            case KEY_INSERT: return 0x2D;
-            case KEY_F1: return 0x70;
-            case KEY_F2: return 0x71;
-            case KEY_F3: return 0x72;
-            case KEY_F4: return 0x73;
-            case KEY_F5: return 0x74;
-            case KEY_F6: return 0x75;
-            case KEY_F7: return 0x76;
-            case KEY_F8: return 0x77;
-            case KEY_F9: return 0x78;
-            case KEY_F10: return 0x79;
-            case KEY_F11: return 0x7A;
-            case KEY_F12: return 0x7B;
-            case KEY_F13: return 0xF000;
-            case KEY_F14: return 0xF001;
-            case KEY_F15: return 0xF002;
-            case KEY_F16: return 0xF003;
-            case KEY_F17: return 0xF004;
-            case KEY_F18: return 0xF005;
-            case KEY_F19: return 0xF006;
-        }
-        return 0;
     }
 }

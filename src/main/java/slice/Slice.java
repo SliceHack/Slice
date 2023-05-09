@@ -34,6 +34,7 @@ import slice.notification.NotificationManager;
 import slice.script.manager.ScriptManager;
 import slice.script.module.ScriptModule;
 import slice.setting.settings.ModeValue;
+import slice.spotify.Spotify;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -147,6 +148,7 @@ public enum Slice {
 
         eventManager.register(this);
 
+        new Spotify();
         Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
     }
 
