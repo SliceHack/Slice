@@ -3,8 +3,6 @@ package slice.api;
 import net.minecraft.client.Minecraft;
 import net.minecraft.crash.CrashReport;
 import org.json.JSONObject;
-import slice.Slice;
-import slice.api.IRC;
 import slice.util.HardwareUtil;
 import slice.util.LoggerUtil;
 
@@ -12,7 +10,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Objects;
 
 /**
  * Client API communication

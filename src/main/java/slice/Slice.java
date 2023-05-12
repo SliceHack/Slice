@@ -261,6 +261,7 @@ public enum Slice {
         if (Minecraft.getMinecraft().gameSettings.showDebugInfo) return;
         if (Minecraft.getMinecraft().theWorld == null) return;
 
+        ultraLightEngine.getUltraLightEvents().onGuiRender(e);
         html.forEach((html) -> {
             if (html.isInit()) html.draw(e);
             else html.init();

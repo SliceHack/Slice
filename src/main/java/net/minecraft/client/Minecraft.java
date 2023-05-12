@@ -863,9 +863,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     }
 
     private void runGameLoop() throws IOException {
-        CefRenderManager cefRenderManager = Slice.INSTANCE.getCefRenderManager();
-        cefRenderManager.getCefApp().doMessageLoopWork(0L);
-        cefRenderManager.getBrowsers().forEach(CefBrowserCustom::mcefUpdate);
+//        CefRenderManager cefRenderManager = Slice.INSTANCE.getCefRenderManager();
+//        cefRenderManager.getCefApp().doMessageLoopWork(0L);
+//        cefRenderManager.getBrowsers().forEach(CefBrowserCustom::mcefUpdate);
 
         long i = System.nanoTime();
         this.mcProfiler.startSection("root");
