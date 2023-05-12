@@ -70,13 +70,13 @@ public class UltraLightEngine {
             throw new RuntimeException(e);
         }
 
-        platform = UltralightPlatform.instance();
-        platform.setConfig(
-                new UltralightConfig()
-                        .fontHinting(FontHinting.NORMAL)
-                        .resourcePath(ULResourceManager.resourceDir.getAbsolutePath())
-        );
-
+//        platform = UltralightPlatform.instance();
+//        platform.setConfig(
+//                new UltralightConfig()
+//                        .fontHinting(FontHinting.NORMAL)
+//                        .resourcePath(ULResourceManager.resourceDir.getAbsolutePath())
+//        );
+//
         renderer = UltralightRenderer.create();
         renderer.logMemoryUsage();
         this.ultraLightEvents = new UltraLightEvents(this);

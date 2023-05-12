@@ -20,7 +20,7 @@ import java.nio.file.*;
 @UtilityClass
 public class ULResourceManager {
 
-    private static final String  LIBRARY_VERSION = "b8daecd";
+    private static final String LIBRARY_VERSION = "b8daecd";
 
     public static final File ultraLightDir = new File(Minecraft.getMinecraft().mcDataDir, "Slice\\ultralight");
     public static final File binDir = new File(ultraLightDir, "bin");
@@ -30,19 +30,19 @@ public class ULResourceManager {
     public static void loadUltralight() throws URISyntaxException, UltralightLoadException, IOException {
         try {
             File VERSION = new File(ultraLightDir, "VERSION");
-            if(VERSION.exists() && VERSION.isFile()){
+            if (VERSION.exists() && VERSION.isFile()) {
                 String version = new String(Files.readAllBytes(VERSION.toPath()));
-                if(version.equals(LIBRARY_VERSION)){
+                if (version.equals(LIBRARY_VERSION)) {
                     return;
                 }
             }
-            if(binDir.exists() && binDir.isDirectory()){
+            if (binDir.exists() && binDir.isDirectory()) {
                 FileUtils.deleteDirectory(binDir);
             }
 
             binDir.mkdirs();
 
-            if(resourceDir.exists() && resourceDir.isDirectory()){
+            if (resourceDir.exists() && resourceDir.isDirectory()) {
                 FileUtils.deleteDirectory(resourceDir);
             }
 
@@ -61,15 +61,15 @@ public class ULResourceManager {
             System.out.println(file.getAbsolutePath());
             System.out.println(url);
 
-            if(file.exists() && file.isFile()) file.delete();
-            if(file.getParentFile().exists()) file.getParentFile().mkdirs();
+            if (file.exists() && file.isFile()) file.delete();
+            if (file.getParentFile().exists()) file.getParentFile().mkdirs();
             file.createNewFile();
 
             HttpURLConnection httpConnection = (HttpURLConnection) (url.openConnection());
             long completeFileSize = httpConnection.getContentLength();
-            try(InputStream inputStream = url.openStream();
-                FileOutputStream fos = new FileOutputStream(file);
-                CountingInputStream cis = new CountingInputStream(inputStream)){
+            try (InputStream inputStream = url.openStream();
+                 FileOutputStream fos = new FileOutputStream(file);
+                 CountingInputStream cis = new CountingInputStream(inputStream)) {
 
                 byte[] buffer = new byte[4096];
                 int len;
@@ -81,50 +81,60 @@ public class ULResourceManager {
                 }
             }
 
-            try(SevenZFile sevenZFile = new SevenZFile(file)){
+            try (SevenZFile sevenZFile = new SevenZFile(file)) {
                 SevenZArchiveEntry entry;
-                while ((entry = sevenZFile.getNextEntry()) != null){
-                    if(entry.getName().startsWith("bin/")){
+                while ((entry = sevenZFile.getNextEntry()) != null) {
+                    if (entry.getName().startsWith("bin/")) {
                         File dest = new File(binDir, entry.getName().substring(4));
-
-                        if(dest.exists() && dest.isFile()) dest.delete();
-
-                        if(dest.getParentFile().exists())
-                            dest.getParentFile().mkdirs();
-                        dest.createNewFile();
-                        try(FileOutputStream fos = new FileOutputStream(dest)){
-                            byte[] buffer = new byte[4096];
-                            int len;
-                            while ((len = sevenZFile.read(buffer)) > 0) {
-                                fos.write(buffer, 0, len);
+                        if (dest.exists() && dest.isFile()) {
+                            dest.delete();
+                        }
+                        if (dest.getParentFile().exists() || dest.getParentFile().mkdirs()) {
+                            try (FileOutputStream fos = new FileOutputStream(dest);
+                                 BufferedOutputStream bos = new BufferedOutputStream(fos)) {
+                                byte[] buffer = new byte[1024];
+                                int len;
+                                while ((len = sevenZFile.read(buffer)) > 0) {
+                                    bos.write(buffer, 0, len);
+                                }
                             }
                         }
-
-                    }
-
-                    if (entry.getName().startsWith("resources/")) {
+                    } else if (entry.getName().startsWith("resources/")) {
                         File dest = new File(resourceDir, entry.getName().substring(10));
-                        if(dest.exists() && dest.isFile()) dest.delete();
-
-                        if(dest.getParentFile().exists())
-                            dest.getParentFile().mkdirs();
-                        dest.createNewFile();
-                        try(FileOutputStream fos = new FileOutputStream(dest)){
-                            byte[] buffer = new byte[4096];
-                            int len;
-                            while ((len = sevenZFile.read(buffer)) > 0) {
-                                fos.write(buffer, 0, len);
+                        if (dest.exists() && dest.isFile()) {
+                            dest.delete();
+                        }
+                        if (dest.getParentFile().exists() || dest.getParentFile().mkdirs()) {
+                            try (FileOutputStream fos = new FileOutputStream(dest);
+                                 BufferedOutputStream bos = new BufferedOutputStream(fos)) {
+                                byte[] buffer = new byte[1024];
+                                int len;
+                                while ((len = sevenZFile.read(buffer)) > 0) {
+                                    bos.write(buffer, 0, len);
+                                }
                             }
                         }
                     }
                 }
             }
+
             file.delete();
+
+// Use ExecutorService to parallelize tasks if needed
+// ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+// while ((entry = sevenZFile.getNextEntry()) != null) {
+//     Runnable task = () -> {
+//         processEntry(entry);
+//     };
+//     executor.submit(task);
+// }
+
             UltralightJava.extractNativeLibrary(binDir.toPath());
             UltralightGPUDriverNativeUtil.extractNativeLibrary(binDir.toPath());
 
             Files.write(VERSION.toPath(), LIBRARY_VERSION.getBytes(), StandardOpenOption.WRITE, StandardOpenOption.CREATE_NEW);
-        }catch (Exception e) {
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

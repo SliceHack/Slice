@@ -13,7 +13,6 @@ import com.labymedia.ultralight.javascript.JavascriptContextLock;
 import com.labymedia.ultralight.math.IntRect;
 import com.sliceclient.ultralight.Page;
 import com.sliceclient.ultralight.UltraLightEngine;
-import com.sun.scenario.effect.ImageData;
 import lombok.Getter;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
