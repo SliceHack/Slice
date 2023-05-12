@@ -1,13 +1,19 @@
 package slice.util;
 
+import com.labymedia.ultralight.UltralightJava;
+import com.labymedia.ultralight.UltralightLoadException;
+import com.labymedia.ultralight.gpu.UltralightGPUDriverNativeUtil;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Collections;
 import java.util.zip.ZipInputStream;
 
 /**
@@ -57,5 +63,25 @@ public class FileUtil {
             InputStream inputStream = connection.getInputStream();
             Files.copy(inputStream, toPath);
         } catch (Exception ignored){}
+    }
+
+    public static void copyFolder(Path source, Path target, CopyOption... options) throws IOException {
+        Files.walkFileTree(source, new SimpleFileVisitor<Path>() {
+
+            @Override
+            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+                Files.createDirectories(target.resolve(source.relativize(dir).toString()));
+                System.out.println("Creating directory " + target.resolve(source.relativize(dir).toString()));
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
+                    throws IOException {
+                Files.copy(file, target.resolve(source.relativize(file).toString()), options);
+                System.out.println("Copying " + file + " to " + target.resolve(source.relativize(file).toString()));
+                return FileVisitResult.CONTINUE;
+            }
+        });
     }
 }

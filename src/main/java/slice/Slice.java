@@ -1,6 +1,7 @@
 package slice;
 
 import com.sliceclient.anticheat.SliceAC;
+import com.sliceclient.ultralight.UltraLightEngine;
 import lombok.Getter;
 import me.friwi.jcefmaven.impl.progress.ConsoleProgressHandler;
 import net.minecraft.client.Minecraft;
@@ -113,6 +114,7 @@ public enum Slice {
      * html
      */
     private final CefRenderManager cefRenderManager;
+    private UltraLightEngine ultraLightEngine;
     private final List<ViewNoGui> html = new ArrayList<>();
 
     /**
@@ -163,7 +165,9 @@ public enum Slice {
         settingsManager = new SettingsManager(moduleManager);
         clickGui = new HTMLGui();
         saver = new Saver(moduleManager);
+
         commandManager.commands.forEach(Command::init);
+
         moduleManager.getModules().stream().filter(module -> module instanceof ScriptModule).forEach(Module::init);
     }
 

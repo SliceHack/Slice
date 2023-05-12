@@ -8,6 +8,8 @@ import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListenableFutureTask;
+import com.labymedia.ultralight.UltralightJava;
+import com.labymedia.ultralight.gpu.UltralightGPUDriverNativeUtil;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.properties.Property;
@@ -22,6 +24,8 @@ import java.net.Proxy;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -37,6 +41,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 import javax.imageio.ImageIO;
 
+import com.sliceclient.ultralight.UltraLightEngine;
+import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.audio.MusicTicker;
@@ -284,6 +290,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
     private GuiScreen queuedGUI;
 
+    private UltraLightEngine ultraLightEngine;
+
     public Minecraft(GameConfiguration gameConfig) {
         theMinecraft = this;
         this.mcDataDir = gameConfig.folderInfo.mcDataDir;
@@ -376,9 +384,11 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         }
 
         logger.info("LWJGL Version: " + Sys.getVersion());
+
         this.setWindowIcon();
         this.setInitialDisplayMode();
         this.createDisplay();
+
         OpenGlHelper.initializeTextures();
         this.framebufferMc = new Framebuffer(this.displayWidth, this.displayHeight, true);
         this.framebufferMc.setFramebufferColor(0.0F, 0.0F, 0.0F, 0.0F);
@@ -512,6 +522,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
         try {
             Display.create((new PixelFormat()).withDepthBits(24));
+            this.ultraLightEngine = new UltraLightEngine();
         } catch (LWJGLException lwjglexception) {
             logger.error((String) "Couldn\'t set pixel format", (Throwable) lwjglexception);
 
