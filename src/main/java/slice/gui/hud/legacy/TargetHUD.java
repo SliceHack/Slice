@@ -59,15 +59,7 @@ public class TargetHUD {
 //        font.drawStringWithShadow("Health: " + health + "\u2764", x+80, y - (font.getHeight(distance) / 2) + 55, -1);
 //        font.drawStringWithShadow("Hurt: " + hurtTime, x+80, y - (font.getHeight(distance) / 2) + 70, -1);
 
-        if (Slice.INSTANCE.target == null) {
-            RequestHandler.hideTargetHUD();
-            return;
-        }
-
-        RequestHandler.updateTargetHUD(Slice.INSTANCE.target);
-
-        RequestHandler.showTargetHUD();
-
+//        Slice.INSTANCE.getViewHUD().updateTargetHUD(Slice.INSTANCE.target);
     }
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {}

@@ -121,7 +121,7 @@ public class CefRenderManager {
                             System.exit(0);
                             break;
                         case "Init":
-                            Slice.INSTANCE.getClickGui().queryInit();
+//                            Slice.INSTANCE.getClickGui().queryInit();
                             break;
                         case "CloseGui":
                             mc.displayGuiScreen(null);

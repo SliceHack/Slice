@@ -31,7 +31,7 @@ public class HUD extends Module {
             for(Setting setting : module.getSettings()) {
                 if(setting instanceof BooleanValue) {
                     BooleanValue bv = (BooleanValue) setting;
-                    Slice.INSTANCE.getClickGui().updateBooleanValue(module, bv, bv.getValue());
+//                    Slice.INSTANCE.getClickGui().updateBooleanValue(module, bv, bv.getValue());
                 }
             }
         }

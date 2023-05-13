@@ -22,7 +22,7 @@ public class Setting {
 
     public void setHidden(boolean hidden) {
         this.hidden = hidden;
-        Slice.INSTANCE.clickGui.setHidden(module, this, hidden);
+//        Slice.INSTANCE.clickGui.setHidden(module, this, hidden);
     }
 
     public void updateSetting(String name, Object value) {
@@ -30,7 +30,7 @@ public class Setting {
                 "\"" + this.name + "\"" + "," +
                 "\"" + name + "\"" + "," +
                 "\"" + value + "\"";
-        Slice.INSTANCE.clickGui.runOnIFrame("updateSetting(" + args + ")");
+//        Slice.INSTANCE.clickGui.runOnIFrame("updateSetting(" + args + ")");
     }
 
 }

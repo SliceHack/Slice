@@ -2,6 +2,7 @@ package slice;
 
 import com.sliceclient.anticheat.SliceAC;
 import com.sliceclient.ultralight.UltraLightEngine;
+import com.sliceclient.ultralight.view.ViewNoGui;
 import lombok.Getter;
 import me.friwi.jcefmaven.impl.progress.ConsoleProgressHandler;
 import net.minecraft.client.Minecraft;
@@ -10,12 +11,10 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S02PacketChat;
 import org.cef.mcef.CefRenderManager;
-import org.cef.mcef.Page;
 import org.lwjgl.input.Keyboard;
 import slice.api.API;
 import slice.api.IRC;
 import slice.cef.RequestHandler;
-import slice.cef.ViewNoGui;
 import slice.clickgui.HTMLGui;
 import slice.command.Command;
 import slice.legacy.clickgui.ClickGui;
@@ -36,6 +35,7 @@ import slice.script.manager.ScriptManager;
 import slice.script.module.ScriptModule;
 import slice.setting.settings.ModeValue;
 import slice.spotify.Spotify;
+import slice.ultralight.ViewHUD;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -66,7 +66,6 @@ public enum Slice {
     private NotificationManager notificationManager;
 
     /* data */
-    public HTMLGui clickGui;
     private final ClickGui legacyClickGui;
 
     private Saver saver;
@@ -115,6 +114,8 @@ public enum Slice {
      */
     private final CefRenderManager cefRenderManager;
     private UltraLightEngine ultraLightEngine;
+    private ViewHUD viewHUD;
+
     private final List<ViewNoGui> html = new ArrayList<>();
 
     /**
@@ -160,10 +161,11 @@ public enum Slice {
     public void init() {
         notificationManager = new NotificationManager();
         anticheat = SliceAC.INSTANCE;
-        this.html.add(new ViewNoGui(Page.of("https://assets.sliceclient.com/hud/index.html" + "?name=" + NAME + "&version=" + VERSION + "&discord=" + discordName)));
+
+        viewHUD = new ViewHUD();
+
         scriptManager = new ScriptManager(moduleManager, fontManager);
         settingsManager = new SettingsManager(moduleManager);
-        clickGui = new HTMLGui();
         saver = new Saver(moduleManager);
 
         commandManager.commands.forEach(Command::init);
@@ -180,12 +182,10 @@ public enum Slice {
         connecting = false;
         saver.save();
         saveTotalTime();
-        html.forEach(ViewNoGui::destroy);
     }
 
     @EventInfo
     public void onUpdate(EventUpdate e) {
-        html.forEach((html) -> html.onResize(Minecraft.getMinecraft(), Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight));
         for (Module module : moduleManager.getModules()) {
 
             if (!module.isEnabled() && eventManager.isRegistered(module)) eventManager.unregister(module);
@@ -257,18 +257,6 @@ public enum Slice {
     }
 
     @EventInfo
-    public void onGuiRender(EventGuiRender e) {
-        if (Minecraft.getMinecraft().gameSettings.showDebugInfo) return;
-        if (Minecraft.getMinecraft().theWorld == null) return;
-
-        ultraLightEngine.getUltraLightEvents().onGuiRender(e);
-        html.forEach((html) -> {
-            if (html.isInit()) html.draw(e);
-            else html.init();
-        });
-    }
-
-    @EventInfo
     public void switchAccount(EventSwitchAccount e) {
         if (irc == null)
             return;
@@ -278,9 +266,6 @@ public enum Slice {
 
     @EventInfo
     public void onKey(EventKey e) {
-        if (e.getKey() == Keyboard.KEY_RSHIFT) {
-            Minecraft.getMinecraft().displayGuiScreen(clickGui);
-        }
         if (e.getKey() == Keyboard.KEY_PERIOD) Minecraft.getMinecraft().displayGuiScreen(new GuiChat("."));
         moduleManager.getModules().stream().filter(module -> module.getKey() == e.getKey()).forEach(Module::toggle); // key event
     }

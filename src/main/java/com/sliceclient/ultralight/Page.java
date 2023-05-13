@@ -1,19 +1,24 @@
 package com.sliceclient.ultralight;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.io.File;
 
+@Getter @Setter
 public class Page {
 
-    @Getter
-    private final String url;
+    private String url;
 
     public Page(File file) {
-        this.url = "file:///" + file.getAbsolutePath();
+        url = "file:///" + file.getAbsolutePath();
     }
 
     public Page(String url) {
         this.url = url;
+    }
+
+    public static Page of(String url) {
+        return new Page(url);
     }
 }

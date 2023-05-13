@@ -42,6 +42,7 @@ import java.util.concurrent.FutureTask;
 import javax.imageio.ImageIO;
 
 import com.sliceclient.ultralight.UltraLightEngine;
+import com.sliceclient.ultralight.view.View;
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -291,6 +292,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private GuiScreen queuedGUI;
 
     private UltraLightEngine ultraLightEngine;
+
+    private long lastUpdate = System.currentTimeMillis();
 
     public Minecraft(GameConfiguration gameConfig) {
         theMinecraft = this;
@@ -863,9 +866,13 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     }
 
     private void runGameLoop() throws IOException {
-//        CefRenderManager cefRenderManager = Slice.INSTANCE.getCefRenderManager();
-//        cefRenderManager.getCefApp().doMessageLoopWork(0L);
-//        cefRenderManager.getBrowsers().forEach(CefBrowserCustom::mcefUpdate);
+        if(ultraLightEngine != null) {
+
+            if(System.currentTimeMillis() - lastUpdate > 100) {
+                lastUpdate =  System.currentTimeMillis();
+                ultraLightEngine.getViews().stream().filter(view -> view != null).forEach(View::update);
+            }
+        }
 
         long i = System.nanoTime();
         this.mcProfiler.startSection("root");

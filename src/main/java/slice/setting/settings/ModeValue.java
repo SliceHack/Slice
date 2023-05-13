@@ -21,7 +21,11 @@ public class ModeValue extends Setting {
     }
 
     public void setValue(String value) {
-        String e = getName().equalsIgnoreCase("Mode") ? getModule().getName() + " " + getValue() : getModule().getName();
+        boolean rename = getName().equalsIgnoreCase("Mode") && getModule().isEnabled();
+
+        if(rename) {
+            Slice.INSTANCE.getViewHUD().renameFromArrayList(getModule().getName() + " " + getValue(), getModule().getName() + " " + value);
+        }
 
         this.value = value;
         try {
@@ -29,9 +33,6 @@ public class ModeValue extends Setting {
                 Slice.INSTANCE.getSaver().save();
         }catch (Exception ignored){}
 
-        if(getModule().isEnabled()) {
-            RequestHandler.renameFromArrayList(e, getModule().getName() + " " + getValue());
-        }
         updateSetting("ModeValue", this.value);
     }
 
