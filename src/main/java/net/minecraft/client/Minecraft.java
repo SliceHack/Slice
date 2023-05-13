@@ -500,6 +500,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         }
 
         this.renderGlobal.makeEntityOutlineShader();
+        ultraLightEngine.init();
     }
 
     private void registerMetadataSerializers() {

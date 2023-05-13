@@ -171,7 +171,6 @@ public enum Slice {
         commandManager.commands.forEach(Command::init);
 
         moduleManager.getModules().stream().filter(module -> module instanceof ScriptModule).forEach(Module::init);
-        ultraLightEngine.init();
     }
 
     /**
