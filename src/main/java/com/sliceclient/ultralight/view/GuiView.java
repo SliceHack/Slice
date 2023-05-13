@@ -55,10 +55,9 @@ public class GuiView extends GuiScreen {
     public void drawScreen(int x, int y, float p) {
         if(Mouse.hasWheel()) {
             int wheel = Mouse.getDWheel();
-
             view.getView().fireScrollEvent(
                     new UltralightScrollEvent()
-                            .deltaX(0)
+                            .deltaX(x)
                             .deltaY(wheel)
                             .type(UltralightScrollEventType.BY_PIXEL)
             );

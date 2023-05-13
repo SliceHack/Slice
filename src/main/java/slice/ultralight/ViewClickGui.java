@@ -1,5 +1,6 @@
 package slice.ultralight;
 
+import com.labymedia.ultralight.javascript.JavascriptContextLock;
 import com.sliceclient.ultralight.Page;
 import com.sliceclient.ultralight.listener.SliceLoadListener;
 import com.sliceclient.ultralight.view.AllTimeGuiView;
@@ -28,6 +29,13 @@ public class ViewClickGui extends AllTimeGuiView {
                     }
                 }
         );
+    }
+
+    @Override
+    public void mouseClicked(int x, int y, int mouseButton) {
+        JavascriptContextLock lock = view.getView().lockJavascriptContext();
+        lock.getContext().garbageCollect();
+        super.mouseClicked(x, y, mouseButton);
     }
 
     public void addModule(Module module) {

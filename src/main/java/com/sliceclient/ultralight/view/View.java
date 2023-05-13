@@ -214,7 +214,7 @@ public class View {
             return;
         }
 
-        if(System.currentTimeMillis() - lastJavascriptGarbageCollections > 1000) {
+        if(System.currentTimeMillis() - lastJavascriptGarbageCollections > 200) {
             try(JavascriptContextLock lock = view.lockJavascriptContext()) {
                 lock.getContext().garbageCollect();
             }
