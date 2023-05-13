@@ -2,6 +2,7 @@ package slice.ultralight;
 
 import com.sliceclient.ultralight.Page;
 import com.sliceclient.ultralight.listener.SliceLoadListener;
+import com.sliceclient.ultralight.view.AllTimeGuiView;
 import com.sliceclient.ultralight.view.DynamicGuiView;
 import slice.Slice;
 import slice.module.Module;
@@ -10,7 +11,7 @@ import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
 
-public class ViewClickGui extends DynamicGuiView {
+public class ViewClickGui extends AllTimeGuiView {
 
     public ViewClickGui() {
         super(Page.of("https://assets.sliceclient.com/clickgui"));
