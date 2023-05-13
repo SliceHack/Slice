@@ -3,7 +3,6 @@ package slice.ultralight;
 import com.sliceclient.ultralight.Page;
 import com.sliceclient.ultralight.listener.SliceLoadListener;
 import com.sliceclient.ultralight.view.AllTimeGuiView;
-import com.sliceclient.ultralight.view.DynamicGuiView;
 import slice.Slice;
 import slice.module.Module;
 import slice.setting.Setting;

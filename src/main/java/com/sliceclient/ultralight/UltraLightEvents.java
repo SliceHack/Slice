@@ -34,8 +34,11 @@ public class UltraLightEvents {
 
     public UltraLightEvents(UltraLightEngine ultraLightEngine) {
         this.ultraLightEngine = ultraLightEngine;
-        this.viewClickGui = new ViewClickGui();
         Slice.INSTANCE.getEventManager().register(this);
+    }
+
+    public void init() {
+        this.viewClickGui = new ViewClickGui();
     }
 
     @EventInfo

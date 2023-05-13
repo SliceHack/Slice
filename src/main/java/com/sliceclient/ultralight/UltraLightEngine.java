@@ -73,6 +73,10 @@ public class UltraLightEngine {
         ultraLightEvents = new UltraLightEvents(this);
     }
 
+    public void init() {
+        ultraLightEvents.init();
+    }
+
     public void registerView(View view) {
         views.add(view);
     }
