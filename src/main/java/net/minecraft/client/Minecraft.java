@@ -186,7 +186,7 @@ import org.lwjgl.util.glu.GLU;
 import slice.Slice;
 import slice.event.events.*;
 import slice.gui.hud.legacy.HUD;
-import slice.gui.main.HTMLMainMenu;
+import slice.ultralight.ViewMainMenu;
 import viamcp.ViaMCP;
 import viamcp.utils.AttackOrder;
 
@@ -479,9 +479,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.ingameGUI = new GuiIngame(this);
 
         if (this.serverName != null) {
-            this.displayGuiScreen(new GuiConnecting(new HTMLMainMenu(), this, this.serverName, this.serverPort));
+            this.displayGuiScreen(new GuiConnecting(UltraLightEngine.getInstance().getMainMenu(), this, this.serverName, this.serverPort));
         } else {
-            this.displayGuiScreen(new HTMLMainMenu());
+            this.displayGuiScreen(UltraLightEngine.getInstance().getMainMenu());
         }
 
         this.renderEngine.deleteTexture(this.mojangLogo);
@@ -805,12 +805,12 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         }
 
         if (guiScreenIn == null && this.theWorld == null) {
-            guiScreenIn = new HTMLMainMenu();
+            guiScreenIn = UltraLightEngine.getInstance().getMainMenu();
         } else if (guiScreenIn == null && this.thePlayer.getHealth() <= 0.0F) {
             guiScreenIn = new GuiGameOver();
         }
 
-        if (guiScreenIn instanceof HTMLMainMenu) {
+        if (guiScreenIn instanceof ViewMainMenu) {
             this.gameSettings.showDebugInfo = false;
             this.ingameGUI.getChatGUI().clearChatMessages();
         }
@@ -869,7 +869,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private void runGameLoop() throws IOException {
         if(ultraLightEngine != null) {
 
-            if(System.currentTimeMillis() - lastUpdate > 100) {
+            if(System.currentTimeMillis() - lastUpdate > 1000 / UltraLightEngine.MAX_FPS) {
                 lastUpdate =  System.currentTimeMillis();
                 ultraLightEngine.getViews().stream().filter(view -> view != null).forEach(View::update);
             }

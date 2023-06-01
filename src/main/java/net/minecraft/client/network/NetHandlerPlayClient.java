@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.mojang.authlib.GameProfile;
+import com.sliceclient.ultralight.UltraLightEngine;
 import io.netty.buffer.Unpooled;
 import java.io.File;
 import java.io.IOException;
@@ -210,7 +211,6 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.storage.MapData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import slice.gui.main.HTMLMainMenu;
 
 @SuppressWarnings("all")
 public class NetHandlerPlayClient implements INetHandlerPlayClient
@@ -709,7 +709,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         }
         else
         {
-            this.gameController.displayGuiScreen(new GuiDisconnected(new GuiMultiplayer(new HTMLMainMenu()), "disconnect.lost", reason));
+            this.gameController.displayGuiScreen(new GuiDisconnected(new GuiMultiplayer(UltraLightEngine.getInstance().getMainMenu()), "disconnect.lost", reason));
         }
     }
 

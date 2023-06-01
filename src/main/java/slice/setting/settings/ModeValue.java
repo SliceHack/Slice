@@ -1,10 +1,12 @@
 package slice.setting.settings;
 
+import com.sliceclient.ultralight.UltraLightEngine;
 import lombok.Getter;
 import lombok.Setter;
 import slice.Slice;
 import slice.cef.RequestHandler;
 import slice.setting.Setting;
+import slice.ultralight.ViewClickGui;
 
 @Getter @Setter
 public class ModeValue extends Setting {
@@ -21,6 +23,10 @@ public class ModeValue extends Setting {
     }
 
     public void setValue(String value) {
+        setValue(value, true);
+    }
+
+    public void setValue(String value, boolean updateClickGui) {
         boolean rename = getName().equalsIgnoreCase("Mode") && getModule().isEnabled();
 
         if(rename) {
@@ -33,7 +39,10 @@ public class ModeValue extends Setting {
                 Slice.INSTANCE.getSaver().save();
         }catch (Exception ignored){}
 
-        updateSetting("ModeValue", this.value);
+        ViewClickGui clickGui = UltraLightEngine.getInstance().getUltraLightEvents().getViewClickGui();
+        if(clickGui != null && updateClickGui) {
+            clickGui.updateSettings(module);
+        }
     }
 
     public void cycle() {
@@ -47,7 +56,7 @@ public class ModeValue extends Setting {
         if (Slice.INSTANCE.getSaver() != null) Slice.INSTANCE.getSaver().save();
 
         if(getModule().isEnabled()) {
-            RequestHandler.renameFromArrayList(e, getModule().getName() + " " + getValue());
+            Slice.INSTANCE.getViewHUD().renameFromArrayList(e, getModule().getName() + " " + getValue());
         }
     }
 
@@ -64,7 +73,7 @@ public class ModeValue extends Setting {
         if (Slice.INSTANCE.getSaver() != null) Slice.INSTANCE.getSaver().save();
 
         if(getModule().isEnabled()) {
-            RequestHandler.renameFromArrayList(e, getModule().getName() + " " + getValue());
+            Slice.INSTANCE.getViewHUD().renameFromArrayList(e, getModule().getName() + " " + getValue());
         }
     }
 

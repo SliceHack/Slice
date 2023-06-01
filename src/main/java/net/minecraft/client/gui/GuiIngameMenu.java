@@ -1,12 +1,13 @@
 package net.minecraft.client.gui;
 
 import java.io.IOException;
+
+import com.sliceclient.ultralight.UltraLightEngine;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.realms.RealmsBridge;
-import slice.gui.main.HTMLMainMenu;
 
 public class GuiIngameMenu extends GuiScreen
 {
@@ -52,16 +53,16 @@ public class GuiIngameMenu extends GuiScreen
 
                 if (flag)
                 {
-                    this.mc.displayGuiScreen(new HTMLMainMenu());
+                    this.mc.displayGuiScreen(UltraLightEngine.getInstance().getMainMenu());
                 }
                 else if (flag1)
                 {
                     RealmsBridge realmsbridge = new RealmsBridge();
-                    realmsbridge.switchToRealms(new HTMLMainMenu());
+                    realmsbridge.switchToRealms(UltraLightEngine.getInstance().getMainMenu());
                 }
                 else
                 {
-                    this.mc.displayGuiScreen(new GuiMultiplayer(new HTMLMainMenu()));
+                    this.mc.displayGuiScreen(new GuiMultiplayer(UltraLightEngine.getInstance().getMainMenu()));
                 }
 
             case 2:

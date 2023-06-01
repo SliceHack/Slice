@@ -4,13 +4,16 @@ import lombok.Getter;
 import lombok.Setter;
 import slice.Slice;
 import slice.module.Module;
+import slice.setting.settings.BooleanValue;
+import slice.setting.settings.ModeValue;
+import slice.setting.settings.NumberValue;
 import slice.util.LoggerUtil;
 
 @Getter @Setter
 public class Setting {
-    private String name;
-    private boolean hidden;
-    private Module module;
+    protected String name;
+    protected Module module;
+    protected boolean hidden;
 
     public Setting(String name) {
         this.name = name;
@@ -22,15 +25,14 @@ public class Setting {
 
     public void setHidden(boolean hidden) {
         this.hidden = hidden;
-//        Slice.INSTANCE.clickGui.setHidden(module, this, hidden);
     }
 
-    public void updateSetting(String name, Object value) {
-        String args = "\"" + module.getName() + "\"" + "," +
-                "\"" + this.name + "\"" + "," +
-                "\"" + name + "\"" + "," +
-                "\"" + value + "\"";
-//        Slice.INSTANCE.clickGui.runOnIFrame("updateSetting(" + args + ")");
+    public String getTypeName() {
+        if(this instanceof BooleanValue) return "BooleanValue";
+        if(this instanceof NumberValue) return "NumberValue";
+        if(this instanceof ModeValue) return "ModeValue";
+
+        return "Unknown";
     }
 
 }

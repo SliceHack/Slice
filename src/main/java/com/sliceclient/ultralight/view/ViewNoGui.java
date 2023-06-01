@@ -1,11 +1,11 @@
 package com.sliceclient.ultralight.view;
 
 import com.sliceclient.ultralight.Page;
+import com.sliceclient.ultralight.UltraLightEngine;
+import com.sliceclient.ultralight.js.SliceJsContext;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.util.ChatComponentText;
 import org.lwjgl.opengl.Display;
 import slice.Slice;
 import slice.event.data.EventInfo;
@@ -25,6 +25,10 @@ public class ViewNoGui {
     protected boolean initialized;
     protected int lastWidth, lastHeight;
 
+
+    @Getter @Setter
+    protected SliceJsContext context;
+
     public ViewNoGui(Page page) {
         this.page = page;
         Slice.INSTANCE.getEventManager().register(this);
@@ -34,6 +38,11 @@ public class ViewNoGui {
         this.view = new View();
         this.view.loadPage(this.page);
         this.initialized = true;
+
+        this.context = new SliceJsContext(this.view);
+        this.context.loadContext(this.view, this.view.getView().lockJavascriptContext().getContext());
+
+        UltraLightEngine.getInstance().registerView(this.view);
     }
 
     @EventInfo

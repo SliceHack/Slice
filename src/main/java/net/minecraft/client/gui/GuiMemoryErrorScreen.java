@@ -1,9 +1,9 @@
 package net.minecraft.client.gui;
 
 import java.io.IOException;
-import net.minecraft.client.resources.I18n;
-import slice.gui.main.HTMLMainMenu;
 
+import com.sliceclient.ultralight.UltraLightEngine;
+import net.minecraft.client.resources.I18n;
 @SuppressWarnings("all")
 public class GuiMemoryErrorScreen extends GuiScreen
 {
@@ -18,7 +18,7 @@ public class GuiMemoryErrorScreen extends GuiScreen
     {
         if (button.id == 0)
         {
-            this.mc.displayGuiScreen(new HTMLMainMenu());
+            this.mc.displayGuiScreen(UltraLightEngine.getInstance().getMainMenu());
         }
         else if (button.id == 1)
         {

@@ -1,5 +1,6 @@
 package slice.module;
 
+import com.sliceclient.ultralight.UltraLightEngine;
 import fr.lavache.anime.Animate;
 import fr.lavache.anime.Easing;
 import lombok.Getter;
@@ -18,6 +19,7 @@ import slice.notification.NotificationManager;
 import slice.notification.Type;
 import slice.setting.Setting;
 import slice.setting.settings.ModeValue;
+import slice.ultralight.ViewClickGui;
 import slice.util.Timer;
 
 import java.util.ArrayList;
@@ -75,14 +77,15 @@ public class Module {
             Slice.INSTANCE.getSaver().save();
         } catch (Exception ignored){}
 
-//        Slice.INSTANCE.clickGui.setEnabled(name, enabled);
+        ViewClickGui clickGui = UltraLightEngine.getInstance().getUltraLightEvents().getViewClickGui();
+        if(clickGui != null) {
+            clickGui.setEnabled(name, enabled);
+        }
+
         Interface interfaceModule = (Interface) Slice.INSTANCE.getModuleManager().getModule(Interface.class);
         if(interfaceModule.getToggleNotifications().getValue()) {
             NotificationManager.queue(new Notification(Type.INFO, enabled ? "Enabled " + name : "Disabled " + name, 2));
         }
-
-//        if(enabled) RequestHandler.addToArrayList(getMode() != null ? name + " " + getMode().getValue() : name);
-//        else RequestHandler.removeFromArrayList(getMode() != null ? name + " " + getMode().getValue() : name);
 
         if(enabled) Slice.INSTANCE.getViewHUD().addModule(this);
         else Slice.INSTANCE.getViewHUD().removeModule(this);

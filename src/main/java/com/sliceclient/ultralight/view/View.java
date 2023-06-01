@@ -1,25 +1,23 @@
 package com.sliceclient.ultralight.view;
 
-import com.labymedia.ultralight.UltralightSurface;
 import com.labymedia.ultralight.UltralightView;
 import com.labymedia.ultralight.bitmap.UltralightBitmap;
 import com.labymedia.ultralight.bitmap.UltralightBitmapSurface;
 import com.labymedia.ultralight.config.UltralightViewConfig;
 import com.labymedia.ultralight.input.*;
-import com.labymedia.ultralight.javascript.JavascriptContext;
 import com.labymedia.ultralight.javascript.JavascriptContextLock;
 import com.labymedia.ultralight.math.IntRect;
 import com.sliceclient.ultralight.Page;
 import com.sliceclient.ultralight.UltraLightEngine;
+import com.sliceclient.ultralight.listener.SliceLoadListener;
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
-import org.cef.misc.IntRef;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL12.*;
@@ -27,7 +25,10 @@ import static org.lwjgl.opengl.GL12.*;
 public class View {
 
     @Getter
-    private UltralightView view;
+    private final UltralightView view;
+
+    @Getter
+    private final List<CustomLoadListener> customLoadListeners = new ArrayList<>();
 
     @Getter
     private int glTexture = -1;
@@ -42,6 +43,16 @@ public class View {
                         .initialDeviceScale(1.0)
                         .isTransparent(true)
         );
+
+        view.setLoadListener(
+                new SliceLoadListener() {
+                    @Override
+                    public void onWindowObjectReady(long frameId, boolean isMainFrame, String url) {
+                        customLoadListeners.forEach(customLoadListener -> customLoadListener.onWindowObjectReady(frameId, isMainFrame, url));
+                    }
+                }
+        );
+
         view.focus();
     }
 
@@ -215,10 +226,8 @@ public class View {
         }
 
         if(System.currentTimeMillis() - lastJavascriptGarbageCollections > 200) {
-            try(JavascriptContextLock lock = view.lockJavascriptContext()) {
-                lock.getContext().garbageCollect();
-            }
-            lastJavascriptGarbageCollections = System.currentTimeMillis();
+            this.lastJavascriptGarbageCollections = System.currentTimeMillis();
+            this.gc();
         }
 
     }
@@ -246,6 +255,10 @@ public class View {
         event.type(buttonDown ? UltralightMouseEventType.DOWN : UltralightMouseEventType.UP);
 
         view.fireMouseEvent(event);
+    }
+
+    interface CustomLoadListener {
+        void onWindowObjectReady(long frameId, boolean isMainFrame, String url);
     }
 
 }

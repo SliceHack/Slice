@@ -8,9 +8,17 @@ import com.labymedia.ultralight.config.FontHinting;
 import com.labymedia.ultralight.config.UltralightConfig;
 import com.labymedia.ultralight.gpu.UltralightGPUDriverNativeUtil;
 import com.labymedia.ultralight.os.OperatingSystem;
+import com.labymedia.ultralight.plugin.clipboard.UltralightClipboard;
+import com.sliceclient.ultralight.input.SliceUltralightClipboard;
+import com.sliceclient.ultralight.js.SliceJsContext;
 import com.sliceclient.ultralight.view.View;
 import lombok.Getter;
+import slice.ultralight.ViewMainMenu;
 
+import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
@@ -18,6 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UltraLightEngine {
+
+    @Getter
+    public static int MAX_FPS = 60;
 
     @Getter
     private static UltraLightEngine instance;
@@ -65,10 +76,18 @@ public class UltraLightEngine {
         platform.setConfig(
                 new UltralightConfig()
                         .fontHinting(FontHinting.SMOOTH)
+                        .animationTimerDelay(1.0 / MAX_FPS)
+                        .scrollTimerDelay(1.0 / MAX_FPS)
+                        .cachePath(ResourceManager.cacheDir.getAbsolutePath())
+                        .forceRepaint(false)
         );
+        platform.setClipboard(new SliceUltralightClipboard());
+
         platform.usePlatformFontLoader();
         platform.usePlatformFileSystem(ResourceManager.ultraLightDir.getAbsolutePath());
+
         renderer = UltralightRenderer.create();
+        renderer.logMemoryUsage();
 
         ultraLightEvents = new UltraLightEvents(this);
     }
@@ -83,5 +102,9 @@ public class UltraLightEngine {
 
     public void unregisterView(View view) {
         views.remove(view);
+    }
+
+    public ViewMainMenu getMainMenu() {
+        return ultraLightEvents.getViewMainMenu();
     }
 }

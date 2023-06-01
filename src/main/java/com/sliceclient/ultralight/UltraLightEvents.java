@@ -1,7 +1,5 @@
 package com.sliceclient.ultralight;
 
-import com.labymedia.ultralight.javascript.JavascriptContextLock;
-import com.sliceclient.ultralight.view.DynamicGuiView;
 import com.sliceclient.ultralight.view.View;
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
@@ -13,6 +11,7 @@ import slice.event.data.EventInfo;
 import slice.event.events.EventGuiRender;
 import slice.event.events.EventKey;
 import slice.ultralight.ViewClickGui;
+import slice.ultralight.ViewMainMenu;
 import slice.util.Timer;
 
 public class UltraLightEvents {
@@ -22,6 +21,8 @@ public class UltraLightEvents {
 
     @Getter
     private ViewClickGui viewClickGui;
+
+    private ViewMainMenu viewMainMenu;
 
     @Getter
     private final Timer timer = new Timer();
@@ -66,7 +67,7 @@ public class UltraLightEvents {
         ultraLightEngine.getRenderer().update();
         ultraLightEngine.getRenderer().render();
 
-        if(timer.hasReached(1000L)){
+        if(timer.hasReached(500L)) {
             ultraLightEngine.getViews().forEach(View::gc);
             timer.reset();
         }
@@ -81,4 +82,14 @@ public class UltraLightEvents {
             mc.displayGuiScreen(viewClickGui);
         }
     }
+
+    public ViewMainMenu getViewMainMenu() {
+
+        if(this.viewMainMenu == null) {
+            this.viewMainMenu = new ViewMainMenu();
+        }
+
+        return this.viewMainMenu;
+    }
+
 }

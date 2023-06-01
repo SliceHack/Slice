@@ -16,10 +16,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
-import net.minecraft.client.gui.GuiChat;
-import net.minecraft.client.gui.GuiDownloadTerrain;
-import net.minecraft.client.gui.MapItemRenderer;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.renderer.chunk.RenderChunk;
 import net.minecraft.client.renderer.culling.ClippingHelper;
@@ -98,7 +95,7 @@ import org.lwjgl.util.glu.Project;
 import slice.event.events.Event3D;
 import slice.event.events.EventGuiRender;
 import slice.event.events.EventPlayerReach;
-import slice.gui.main.HTMLMainMenu;
+import slice.ultralight.ViewMainMenu;
 
 @SuppressWarnings("all")
 public class EntityRenderer implements IResourceManagerReloadListener
@@ -2616,9 +2613,9 @@ public class EntityRenderer implements IResourceManagerReloadListener
             }
         }
 
-        if (this.mc.currentScreen instanceof HTMLMainMenu)
+        if (this.mc.currentScreen instanceof ViewMainMenu)
         {
-            this.updateMainMenu((HTMLMainMenu)this.mc.currentScreen);
+            this.updateMainMenu((ViewMainMenu)this.mc.currentScreen);
         }
 
         if (this.updatedWorld != world)
@@ -2656,7 +2653,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
         }
     }
 
-    private void updateMainMenu(HTMLMainMenu p_updateMainMenu_1_)
+    private void updateMainMenu(ViewMainMenu p_updateMainMenu_1_)
     {
         try
         {

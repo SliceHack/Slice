@@ -1,9 +1,11 @@
 package slice.setting.settings;
 
+import com.sliceclient.ultralight.UltraLightEngine;
 import lombok.Getter;
 import lombok.Setter;
 import slice.Slice;
 import slice.setting.Setting;
+import slice.ultralight.ViewClickGui;
 
 @Getter @Setter
 public class NumberValue extends Setting {
@@ -19,6 +21,10 @@ public class NumberValue extends Setting {
     }
 
     public void setValue(Number value) {
+        setValue(value, true);
+    }
+
+    public void setValue(Number value, boolean updateClickGui) {
         this.value = value;
 
         if(value.doubleValue() > max.doubleValue()) this.value = max;
@@ -27,7 +33,11 @@ public class NumberValue extends Setting {
             if (Slice.INSTANCE.getSaver() != null)
                 Slice.INSTANCE.getSaver().save();
         }catch (Exception ignored){}
-        updateSetting("NumberValue", this.value);
+
+        ViewClickGui clickGui = UltraLightEngine.getInstance().getUltraLightEvents().getViewClickGui();
+        if(clickGui != null && updateClickGui) {
+            clickGui.updateSettings(module);
+        }
     }
 
     public enum Type {

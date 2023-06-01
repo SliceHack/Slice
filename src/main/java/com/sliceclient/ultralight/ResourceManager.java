@@ -24,9 +24,10 @@ public class ResourceManager {
 
     private static final String  LIBRARY_VERSION = "b8daecd";
 
-    public static final File ultraLightDir = new File(Minecraft.getMinecraft().mcDataDir, "Slice\\ultralight");
-    public static final File binDir = new File(ultraLightDir, "bin");
-    public static final File resourceDir = new File(ultraLightDir, "resources");
+    public static final File ultraLightDir = new File(Minecraft.getMinecraft().mcDataDir, "Slice\\ultralight"),
+            binDir = new File(ultraLightDir, "bin"),
+            resourceDir = new File(ultraLightDir, "resources"),
+            cacheDir = new File(ultraLightDir, "cache");
 
     private static List<Integer> printedValues = new ArrayList<>();
 
@@ -50,6 +51,12 @@ public class ResourceManager {
             }
 
             resourceDir.mkdirs();
+
+            if (cacheDir.exists() && cacheDir.isDirectory()) {
+                FileUtils.deleteDirectory(cacheDir);
+            }
+
+            cacheDir.mkdirs();
 
             String os;
             String osName = System.getProperty("os.name").toLowerCase();

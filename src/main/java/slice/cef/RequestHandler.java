@@ -8,7 +8,6 @@ import org.cef.browser.CefBrowser;
 import slice.Slice;
 import slice.event.data.EventInfo;
 import slice.event.events.EventUpdate;
-import slice.gui.main.HTMLMainMenu;
 import slice.module.Module;
 import slice.notification.Notification;
 import slice.util.LoggerUtil;

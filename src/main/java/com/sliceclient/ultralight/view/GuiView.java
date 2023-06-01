@@ -1,13 +1,9 @@
 package com.sliceclient.ultralight.view;
 
-import com.labymedia.ultralight.UltralightRenderer;
-import com.labymedia.ultralight.UltralightView;
-import com.labymedia.ultralight.config.UltralightViewConfig;
 import com.labymedia.ultralight.input.*;
-import com.labymedia.ultralight.javascript.JavascriptEvaluationException;
 import com.sliceclient.ultralight.Page;
 import com.sliceclient.ultralight.UltraLightEngine;
-import com.sliceclient.ultralight.util.UltraLightUtils;
+import com.sliceclient.ultralight.js.SliceJsContext;
 import com.sliceclient.ultralight.util.UltralightKeyMapper;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,8 +11,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.input.Mouse;
-
-import java.io.IOException;
 
 public class GuiView extends GuiScreen {
 
@@ -27,7 +21,10 @@ public class GuiView extends GuiScreen {
     protected float lastMouseX = 0, lastMouseY = 0;
 
     @Getter @Setter
-    private Page page;
+    protected Page page;
+
+    @Getter @Setter
+    protected SliceJsContext context;
 
     public GuiView(Page page) {
         this.page = page;
@@ -35,21 +32,16 @@ public class GuiView extends GuiScreen {
 
     public void init() {
         view = new View();
+
+        view.getCustomLoadListeners().add((frameId, isMainFrame, url) -> {
+            context = new SliceJsContext(view);
+            context.loadContext(view, view.getView().lockJavascriptContext().getContext());
+        });
+
         view.loadPage(page);
+
         UltraLightEngine.getInstance().registerView(view);
     }
-
-    @Override
-    public void onResize(Minecraft p_onResize_1_, int p_onResize_2_, int p_onResize_3_) {
-        super.onResize(p_onResize_1_, p_onResize_2_, p_onResize_3_);
-    }
-
-
-    @Override
-    public void initGui() {
-        super.initGui();
-    }
-
 
     @Override
     public void drawScreen(int x, int y, float p) {

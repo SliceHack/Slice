@@ -11,24 +11,25 @@ import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
 
+import java.io.File;
+import java.util.Set;
+
 public class ViewClickGui extends AllTimeGuiView {
 
+    private boolean firstOpen = true;
+
     public ViewClickGui() {
-        super(Page.of("https://assets.sliceclient.com/clickgui"));
+        super(new Page(new File(
+                "C:\\Users\\Nick\\VSCode\\assets.sliceclient.com\\clickgui\\index.html"
+        )));
     }
 
     @Override
-    public void init() {
-        super.init();
-
-        view.getView().setLoadListener(
-                new SliceLoadListener() {
-                    @Override
-                    public void onFinishLoading(long frameId, boolean isMainFrame, String url) {
-                        Slice.INSTANCE.getModuleManager().getModules().forEach(ViewClickGui.this::addModule);
-                    }
-                }
-        );
+    public void initGui() {
+        if(this.firstOpen) {
+            Slice.INSTANCE.getModuleManager().getModules().forEach(ViewClickGui.this::addModule);
+            this.firstOpen = false;
+        }
     }
 
     @Override
@@ -38,18 +39,46 @@ public class ViewClickGui extends AllTimeGuiView {
         super.mouseClicked(x, y, mouseButton);
     }
 
+    public void updateSettings(Module module) {
+        for(Setting setting : module.getSettings()) {
+            if(setting instanceof BooleanValue) {
+                runOnIFrame(String.format(
+                        "updateSetting(\"%s\", \"%s\", \"%s\", \"%s\")", module.getName(), setting.getName(), "BooleanValue", ((BooleanValue) setting).getValue()
+                        )
+                );
+            }
+
+            if(setting instanceof ModeValue) {
+                runOnIFrame(String.format(
+                        "updateSetting(\"%s\", \"%s\", \"%s\", \"%s\")", module.getName(), setting.getName(), "ModeValue", ((ModeValue) setting).getValue()
+                        )
+                );
+            }
+
+            if(setting instanceof NumberValue) {
+                runOnIFrame(String.format(
+                        "updateSetting(\"%s\", \"%s\", \"%s\", \"%s\")", module.getName(), setting.getName(), "NumberValue", ((NumberValue) setting).getValue()
+                        )
+                );
+            }
+        }
+    }
+
     public void addModule(Module module) {
         runOnIFrame("addModule(\"" + module.getCategory().getName() + "\", \"" + module.getName() + "\")");
 
         for(Setting setting : module.getSettings()) {
+
             if(setting instanceof BooleanValue) {
                 BooleanValue bv = (BooleanValue) setting;
                 runOnIFrame("addSettingToModule(\"" + module.getName() + "\", \"BooleanValue\", \"" + bv.getName() + "\"," + "\"" + bv.getValue() + "\"" + ")");
             }
+
             if(setting instanceof NumberValue) {
                 NumberValue nv = (NumberValue) setting;
                 runOnIFrame("addSettingToModule(\"" + module.getName() + "\", \"NumberValue\", \"" + nv.getName() + "\"," + "\"" + nv.getValue() + "\"," + nv.getMin() + ", " + nv.getMax() + ")");
             }
+
             if(setting instanceof ModeValue) {
                 ModeValue mv = (ModeValue) setting;
 

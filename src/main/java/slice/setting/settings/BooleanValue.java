@@ -1,9 +1,11 @@
 package slice.setting.settings;
 
+import com.sliceclient.ultralight.UltraLightEngine;
 import lombok.Getter;
 import lombok.Setter;
 import slice.Slice;
 import slice.setting.Setting;
+import slice.ultralight.ViewClickGui;
 
 @Getter @Setter
 public class BooleanValue extends Setting {
@@ -15,12 +17,20 @@ public class BooleanValue extends Setting {
     }
 
     public void setValue(boolean value) {
+
+    }
+
+    public void setValue(boolean value, boolean updateClickGui) {
         this.value = value;
         try {
             if (Slice.INSTANCE.getSaver() != null)
                 Slice.INSTANCE.getSaver().save();
         }catch (Exception ignored){}
-        updateSetting("BooleanValue", value);
+
+        ViewClickGui clickGui = UltraLightEngine.getInstance().getUltraLightEvents().getViewClickGui();
+        if(clickGui != null && updateClickGui) {
+            clickGui.updateSettings(module);
+        }
     }
 
     /**

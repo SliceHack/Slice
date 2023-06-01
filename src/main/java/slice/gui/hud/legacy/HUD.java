@@ -51,17 +51,17 @@ public class HUD {
         BooleanValue sessionHUDBoolean = (BooleanValue) Slice.INSTANCE.getModuleManager().getModule(hudClass).getSetting("SessionHUD");
 
         if (playerOnScreenBoolean.getValue()) {
-            playerOnScreen.draw(Mouse.getX(), Mouse.getY());
+//            playerOnScreen.draw(Mouse.getX(), Mouse.getY());
         }
 
         if (targetHUDBoolean.getValue()) {
-            targetHUD.draw(Mouse.getX(), Mouse.getY());
+//            targetHUD.draw(Mouse.getX(), Mouse.getY());
         } else {
             RequestHandler.hideTargetHUD();
         }
 
         if (sessionHUDBoolean.getValue()) {
-            sessionHUD.draw(Mouse.getX(), Mouse.getY());
+//            sessionHUD.draw(Mouse.getX(), Mouse.getY());
         } else {
             RequestHandler.hideSessionHUD();
         }
