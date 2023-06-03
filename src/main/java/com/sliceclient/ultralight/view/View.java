@@ -1,5 +1,6 @@
 package com.sliceclient.ultralight.view;
 
+import com.jogamp.opengl.GL;
 import com.labymedia.ultralight.UltralightView;
 import com.labymedia.ultralight.bitmap.UltralightBitmap;
 import com.labymedia.ultralight.bitmap.UltralightBitmapSurface;
@@ -69,6 +70,7 @@ public class View {
     }
 
     public void render() {
+        GlStateManager.pushMatrix();
         if(glTexture == -1) {
             createGLTexture();
         }
@@ -166,6 +168,7 @@ public class View {
 
         glDisable(GL_TEXTURE_2D);
         glPopAttrib();
+        GlStateManager.popMatrix();
     }
 
     private void createGLTexture() {

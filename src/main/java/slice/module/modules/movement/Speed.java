@@ -176,6 +176,7 @@ public class Speed extends Module {
                     break;
                 }
 
+                MoveUtil.strafe();
                 mc.thePlayer.jumpMovementFactor = 0.033F;
                 mc.thePlayer.speedInAir = 0.5F;
                 break;

@@ -1,22 +1,14 @@
 package slice.module.modules.render;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import net.minecraft.client.Minecraft;
 import slice.Slice;
-import slice.event.Event;
 import slice.event.events.EventUpdate;
 import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
 import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
-import slice.util.LoggerUtil;
-import slice.util.Timer;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @ModuleInfo(name = "Interface", description = "The Interface of Slice", category = Category.RENDER)
 @Getter @Setter
