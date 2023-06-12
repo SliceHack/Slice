@@ -4,18 +4,14 @@ import com.sliceclient.anticheat.SliceAC;
 import com.sliceclient.ultralight.UltraLightEngine;
 import com.sliceclient.ultralight.view.ViewNoGui;
 import lombok.Getter;
-import me.friwi.jcefmaven.impl.progress.ConsoleProgressHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S02PacketChat;
-import org.cef.mcef.CefRenderManager;
 import org.lwjgl.input.Keyboard;
 import slice.api.API;
 import slice.api.IRC;
-import slice.cef.RequestHandler;
-import slice.clickgui.HTMLGui;
 import slice.command.Command;
 import slice.legacy.clickgui.ClickGui;
 import slice.command.commands.CommandPlugins;
@@ -33,12 +29,10 @@ import slice.module.Module;
 import slice.notification.NotificationManager;
 import slice.script.manager.ScriptManager;
 import slice.script.module.ScriptModule;
-import slice.setting.settings.ModeValue;
 import slice.spotify.Spotify;
 import slice.ultralight.ViewHUD;
 import slice.util.account.LoginUtil;
 
-import javax.swing.*;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -114,7 +108,6 @@ public enum Slice {
     /**
      * html
      */
-    private final CefRenderManager cefRenderManager;
     private UltraLightEngine ultraLightEngine;
     private ViewHUD viewHUD;
 
@@ -137,8 +130,6 @@ public enum Slice {
     Slice() {
         connecting = true;
         eventManager = new EventManager();
-        cefRenderManager = new CefRenderManager(eventManager);
-        cefRenderManager.initialize(new ConsoleProgressHandler());
         moduleManager = new ModuleManager();
         fontManager = new FontManager();
         commandManager = new CommandManager(moduleManager);
@@ -199,18 +190,6 @@ public enum Slice {
 
             if (!module.isEnabled() && eventManager.isRegistered(module)) eventManager.unregister(module);
             if (module.isEnabled() && !eventManager.isRegistered(module)) eventManager.register(module);
-
-            if(module.getMode() != null) {
-                ModeValue mode = module.getMode();
-
-                for(String s : mode.getValues()) {
-                    if(!s.equalsIgnoreCase(mode.getValue())) continue;
-                    RequestHandler.renameFromArrayList(module.getName() + " " + s, module.getName() + " " + mode.getValue());
-                }
-            }
-
-            if (module.isEnabled() && eventManager.isRegistered(module)) RequestHandler.addToArrayList(module.getMode() != null ? module.getName() + " " + module.getMode().getValue() : module.getName());
-            else if(!module.isEnabled() && !eventManager.isRegistered(module)) RequestHandler.removeFromArrayList(module.getMode() != null ? module.getName() + " " + module.getMode().getValue() : module.getName());
         }
         players = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap().size();
 
@@ -225,7 +204,6 @@ public enum Slice {
         serverX = e.getX();
         serverY = e.getY();
         serverZ = e.getZ();
-
 
         CommandPlugins plugins = ((CommandPlugins) commandManager.getCommand("plugins"));
         plugins.onUpdate();

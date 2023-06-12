@@ -3,11 +3,6 @@ package slice.gui.hud.legacy;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
-import slice.Slice;
-import slice.cef.RequestHandler;
-
-import java.awt.*;
-import java.util.UUID;
 
 @Getter @Setter
 public class TargetHUD {

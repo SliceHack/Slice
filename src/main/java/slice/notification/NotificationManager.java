@@ -3,9 +3,7 @@ package slice.notification;
 import lombok.Getter;
 import lombok.Setter;
 import slice.Slice;
-import slice.cef.RequestHandler;
 import slice.event.data.EventInfo;
-import slice.event.events.Event2D;
 import slice.event.events.EventUpdate;
 
 import java.util.ArrayList;
@@ -39,7 +37,7 @@ public class NotificationManager {
         currentNotification = notifications.get(0);
 
         if(!currentNotification.isRan()) {
-            RequestHandler.addNotification(currentNotification);
+//            RequestHandler.addNotification(currentNotification);
 
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {

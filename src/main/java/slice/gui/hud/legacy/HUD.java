@@ -5,18 +5,11 @@ import lombok.Setter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.GlStateManager;
-import org.lwjgl.input.Mouse;
 import slice.Slice;
-import slice.cef.RequestHandler;
-import slice.font.TTFFontRenderer;
-import slice.gui.hud.legacy.arraylist.ArrayListHUD;
 import slice.gui.hud.legacy.arraylist.SmoothArrayListHUD;
 import slice.module.Module;
 import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
-import slice.util.MoveUtil;
-import slice.util.RenderUtil;
 
 /**
  * Renders the client's heads-up-display.
@@ -57,13 +50,13 @@ public class HUD {
         if (targetHUDBoolean.getValue()) {
 //            targetHUD.draw(Mouse.getX(), Mouse.getY());
         } else {
-            RequestHandler.hideTargetHUD();
+//            RequestHandler.hideTargetHUD();
         }
 
         if (sessionHUDBoolean.getValue()) {
 //            sessionHUD.draw(Mouse.getX(), Mouse.getY());
         } else {
-            RequestHandler.hideSessionHUD();
+//            RequestHandler.hideSessionHUD();
         }
 
 
@@ -73,10 +66,10 @@ public class HUD {
 
         BooleanValue bpsCounter = (BooleanValue) Slice.INSTANCE.getModuleManager().getModule(hudClass).getSetting("BPS");
 
-        RequestHandler.setBPSVisible(bpsCounter.getValue());
+//        RequestHandler.setBPSVisible(bpsCounter.getValue());
 
         if (bpsCounter.getValue() && (!(Minecraft.getMinecraft().currentScreen instanceof GuiChat))) {
-            RequestHandler.setBPS(MoveUtil.getBPS());
+//            RequestHandler.setBPS(MoveUtil.getBPS());
         }
     }
 

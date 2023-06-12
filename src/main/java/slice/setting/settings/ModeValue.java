@@ -4,7 +4,6 @@ import com.sliceclient.ultralight.UltraLightEngine;
 import lombok.Getter;
 import lombok.Setter;
 import slice.Slice;
-import slice.cef.RequestHandler;
 import slice.setting.Setting;
 import slice.ultralight.ViewClickGui;
 
