@@ -8,8 +8,6 @@ import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListenableFutureTask;
-import com.labymedia.ultralight.UltralightJava;
-import com.labymedia.ultralight.gpu.UltralightGPUDriverNativeUtil;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.properties.Property;
@@ -24,8 +22,6 @@ import java.net.Proxy;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -43,7 +39,7 @@ import javax.imageio.ImageIO;
 
 import com.sliceclient.ultralight.UltraLightEngine;
 import com.sliceclient.ultralight.view.View;
-import lombok.Getter;
+import de.florianmichael.viamcp.fixes.AttackOrder;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.audio.MusicTicker;
@@ -168,8 +164,6 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.cef.browser.CefBrowserCustom;
-import org.cef.mcef.CefRenderManager;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
@@ -187,8 +181,7 @@ import slice.Slice;
 import slice.event.events.*;
 import slice.gui.hud.legacy.HUD;
 import slice.ultralight.ViewMainMenu;
-import viamcp.ViaMCP;
-import viamcp.utils.AttackOrder;
+import de.florianmichael.viamcp.ViaMCP;
 
 @SuppressWarnings("all")
 public class Minecraft implements IThreadListener, IPlayerUsage {
@@ -469,9 +462,10 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
         Slice.INSTANCE.init();
         try {
-            ViaMCP.getInstance().start();
-            ViaMCP.getInstance().initAsyncSlider();
-            ViaMCP.getInstance().initAsyncSlider(0, 0, 110, 20);
+            ViaMCP.create();
+
+            ViaMCP.INSTANCE.initAsyncSlider();
+            ViaMCP.INSTANCE.initAsyncSlider(0, 0, 110, 20);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1241,7 +1235,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
 
         if (this.leftClickCounter <= 0) {
-//            this.thePlayer.swingItem();
             AttackOrder.sendConditionalSwing(this.objectMouseOver);
 
             if (this.objectMouseOver == null) {
@@ -1254,7 +1247,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                 switch (this.objectMouseOver.typeOfHit) {
                     case ENTITY:
                         AttackOrder.sendFixedAttack(this.thePlayer, this.objectMouseOver.entityHit);
-//                        this.playerController.attackEntity(this.thePlayer, this.objectMouseOver.entityHit);
                         break;
 
                     case BLOCK:

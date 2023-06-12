@@ -16,16 +16,13 @@ public class StartDiscordRPC {
 
     public void start() {
         this.timestamp = System.currentTimeMillis();
-        DiscordEventHandlers handlers = new DiscordEventHandlers.Builder().setReadyEventHandler(new ReadyCallback() {
-            @Override
-            public void apply(DiscordUser discordUser) {
-                LoggerUtil.addTerminalMessage("Welcome " + discordUser.username + "#" + discordUser.discriminator);
-                Slice.INSTANCE.discordName = discordUser.username;
-                Slice.INSTANCE.discordID = discordUser.userId;
-                Slice.INSTANCE.discordDiscriminator = discordUser.discriminator;
-                setPresence("Slice Client", String.format("Version %s", Slice.VERSION));
-                Slice.INSTANCE.irc = new IRC();
-            }
+        DiscordEventHandlers handlers = new DiscordEventHandlers.Builder().setReadyEventHandler(discordUser -> {
+            LoggerUtil.addTerminalMessage("Welcome " + discordUser.username + "#" + discordUser.discriminator);
+            Slice.INSTANCE.discordName = discordUser.username;
+            Slice.INSTANCE.discordID = discordUser.userId;
+            Slice.INSTANCE.discordDiscriminator = discordUser.discriminator;
+            setPresence("Slice Client", String.format("Version %s", Slice.VERSION));
+            Slice.INSTANCE.irc = new IRC();
         }).build();
 
         DiscordRPC.discordInitialize("984300399534170113", handlers, true);

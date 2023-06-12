@@ -1,8 +1,9 @@
 package net.minecraft.item;
 
 import java.util.List;
+
+import de.florianmichael.viamcp.fixes.FixedSoundEngine;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,7 +14,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import viamcp.utils.FixedSoundEngine;
 
 public class ItemBlock extends Item
 {

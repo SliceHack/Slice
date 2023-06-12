@@ -1,7 +1,7 @@
 package com.sliceclient.ultralight.js.binding;
 
+import de.florianmichael.viamcp.gui.GuiProtocolSelector;
 import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiOptions;
@@ -17,7 +17,11 @@ import slice.setting.settings.NumberValue;
 import slice.ultralight.ViewMainMenu;
 import slice.util.LoggerUtil;
 import slice.util.account.LoginUtil;
-import viamcp.gui.GuiProtocolSelector;
+import slice.util.account.microsoft.MicrosoftAccount;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 @SuppressWarnings("unused")
 public class SliceJsClientBinding {
@@ -40,7 +44,22 @@ public class SliceJsClientBinding {
     public void displayVersion() { mc.displayGuiScreen(new GuiProtocolSelector(mc.currentScreen)); }
     public void displaySinglePlayerMenu() { mc.displayGuiScreen(new GuiSelectWorld(mc.currentScreen)); }
     public void displayOptions() { mc.displayGuiScreen(new GuiOptions(mc.currentScreen, mc.gameSettings)); }
-    public void displayAlt() { /*mc.displayGuiScreen(new ViewAltManager());*/ }
+    public void displayAlt() {
+        MicrosoftAccount account = LoginUtil.loginFromWebView(true);
+
+        if(account != null) {
+
+            try(BufferedWriter writer = new BufferedWriter(new FileWriter(Slice.INSTANCE.getLastSessionFile(), true))) {
+                writer.write(account.getProfile().getName() + ":" + account.getRefreshToken());
+                writer.newLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        /*mc.displayGuiScreen(new ViewAltManager());*/
+    }
     public void closeGui() { mc.displayGuiScreen(null); }
 
     public void exit() {

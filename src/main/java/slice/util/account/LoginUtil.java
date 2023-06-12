@@ -13,10 +13,17 @@ import fr.litarvan.openauth.microsoft.model.response.MinecraftProfile;
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Session;
+import slice.Slice;
 import slice.util.LoggerUtil;
 import slice.util.account.microsoft.MicrosoftAccount;
 
+import javax.swing.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.Proxy;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Utility class to log in to accounts
@@ -103,6 +110,73 @@ public class LoginUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static MicrosoftAccount loginFromWebView(boolean changeSession) {
+        try {
+            MicrosoftAuthenticator authenticator = new MicrosoftAuthenticator();
+            CompletableFuture<MicrosoftAuthResult> result = authenticator.loginWithAsyncWebview();
+
+            MicrosoftAuthResult authResult = result.get();
+            MinecraftProfile profile = authResult.getProfile();
+
+            Session session = new Session(profile.getName(), profile.getId(), authResult.getAccessToken(), "mojang");
+
+            if(changeSession) {
+                Minecraft.getMinecraft().session = session;
+            }
+
+            return new MicrosoftAccount(profile, session, authResult.getRefreshToken());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static MicrosoftAccount loginWithRefreshToken(String token, boolean changeSession) {
+        try {
+            MicrosoftAuthenticator authenticator = new MicrosoftAuthenticator();
+            MicrosoftAuthResult result = authenticator.loginWithRefreshToken(token);
+            MinecraftProfile profile = result.getProfile();
+
+            Session session = new Session(profile.getName(), profile.getId(), result.getAccessToken(), "mojang");
+
+            if(changeSession) {
+                Minecraft.getMinecraft().session = session;
+            }
+
+            return new MicrosoftAccount(profile, session, result.getRefreshToken());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public void askLoginWithSessionFile(File sessionFile) {
+
+        if (sessionFile.exists()) {
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(sessionFile));
+                String line = reader.readLine();
+
+                String username = line.split(":")[0];
+                String refreshToken = line.split(":")[1];
+
+                int confirmDialog = JOptionPane.showConfirmDialog(
+                        null,
+                        String.format("Would you like to login with your session file? (%s)", username),
+                        "Login",
+                        JOptionPane.YES_NO_OPTION
+                );
+
+                if(confirmDialog == JOptionPane.YES_OPTION) {
+                    LoginUtil.loginWithRefreshToken(refreshToken, true);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**

@@ -154,31 +154,26 @@ public class Speed extends Module {
                 break;
             case "Dac":
                 double speed = 0.33;
+
                 if(!MoveUtil.isMoving()) break;
+
                 if(mc.thePlayer.moveForward < 0) speed -= 0.1;
+
                 if(mc.thePlayer.onGround) MoveUtil.jump();
-                else speed += 0.04;
-                if(mc.thePlayer.fallDistance <= 3 && !mc.thePlayer.onGround) mc.thePlayer.motionY = -0.1;
+                else speed += 0.045;
+
+                if(mc.thePlayer.fallDistance <= 3 && !mc.thePlayer.onGround) mc.thePlayer.motionY = -0.2;
 
                 MoveUtil.strafe(speed);
                 break;
             case "Dev":
-                if(!MoveUtil.isMoving()) break;
-
-                if(mc.thePlayer.onGround) {
-                    if(mc.thePlayer.jumpTicks == 0) {
-                        mc.thePlayer.jump();
-                    }
-
-                    MoveUtil.strafe(0.42);
-                    mc.thePlayer.speedInAir = 0.02F;
-                    mc.thePlayer.jumpMovementFactor = 0.02F;
+                if(!MoveUtil.isMoving()) {
                     break;
                 }
 
-                MoveUtil.strafe();
-                mc.thePlayer.jumpMovementFactor = 0.033F;
-                mc.thePlayer.speedInAir = 0.5F;
+                if(mc.thePlayer.onGround && mc.thePlayer.jumpTicks == 0) {
+                    mc.thePlayer.jump();
+                }
                 break;
         }
     }
@@ -200,10 +195,6 @@ public class Speed extends Module {
                 if(p instanceof S18PacketEntityTeleport) {
                     e.setCancelled(true);
                 }
-                break;
-            case "Dac":
-//                if(timer.hasReached(500L)) timer.reset();
-//                e.setCancelled(PacketUtil.isMovementPacket(p) && !timer.hasTimeReached(500L));
                 break;
         }
     }

@@ -2,10 +2,13 @@ package net.minecraft.network;
 
 import com.google.common.collect.Queues;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.sliceclient.anticheat.event.events.AntiCheatPlayerAnimationEvent;
 import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.connection.UserConnectionImpl;
 import com.viaversion.viaversion.protocol.ProtocolPipelineImpl;
+import de.florianmichael.vialoadingbase.ViaLoadingBase;
+import de.florianmichael.vialoadingbase.netty.event.CompressionReorderEvent;
+import de.florianmichael.viamcp.MCPVLBPipeline;
+import de.florianmichael.viamcp.ViaMCP;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelException;
@@ -26,27 +29,17 @@ import io.netty.channel.local.LocalServerChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.proxy.HttpProxyHandler;
-import io.netty.handler.proxy.ProxyHandler;
-import io.netty.handler.proxy.Socks4ProxyHandler;
-import io.netty.handler.proxy.Socks5ProxyHandler;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.TimeoutException;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
 import java.net.SocketAddress;
 import java.util.Queue;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javax.crypto.SecretKey;
 
-import net.minecraft.network.play.client.C0BPacketEntityAction;
-import net.minecraft.network.play.server.S0BPacketAnimation;
-import net.minecraft.network.play.server.S14PacketEntity;
-import net.minecraft.network.play.server.S18PacketEntityTeleport;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.CryptManager;
@@ -64,12 +57,6 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import slice.event.events.EventPacket;
-import slice.util.LoggerUtil;
-import viamcp.ViaMCP;
-import viamcp.handler.CommonTransformer;
-import viamcp.handler.MCPDecodeHandler;
-import viamcp.handler.MCPEncodeHandler;
-import viamcp.utils.NettyUtil;
 
 @SuppressWarnings("all")
 public class NetworkManager extends SimpleChannelInboundHandler<Packet>
@@ -421,11 +408,11 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
 
                 p_initChannel_1_.pipeline().addLast((String)"timeout", (ChannelHandler)(new ReadTimeoutHandler(30))).addLast((String)"splitter", (ChannelHandler)(new MessageDeserializer2())).addLast((String)"decoder", (ChannelHandler)(new MessageDeserializer(EnumPacketDirection.CLIENTBOUND))).addLast((String)"prepender", (ChannelHandler)(new MessageSerializer2())).addLast((String)"encoder", (ChannelHandler)(new MessageSerializer(EnumPacketDirection.SERVERBOUND))).addLast((String)"packet_handler", (ChannelHandler)networkmanager);
 
-                if (p_initChannel_1_ instanceof SocketChannel && ViaMCP.getInstance().getVersion() != ViaMCP.PROTOCOL_VERSION)
-                {
-                    UserConnection user = new UserConnectionImpl(p_initChannel_1_, true);
+                if (p_initChannel_1_ instanceof SocketChannel && ViaLoadingBase.getInstance().getTargetVersion().getVersion() != ViaMCP.NATIVE_VERSION) {
+                    final UserConnection user = new UserConnectionImpl(p_initChannel_1_, true);
                     new ProtocolPipelineImpl(user);
-                    p_initChannel_1_.pipeline().addBefore("encoder", CommonTransformer.HANDLER_ENCODER_NAME, new MCPEncodeHandler(user)).addBefore("decoder", CommonTransformer.HANDLER_DECODER_NAME, new MCPDecodeHandler(user));
+
+                    p_initChannel_1_.pipeline().addLast(new MCPVLBPipeline(user));
                 }
             }
         })).channel(oclass)).connect(address, serverPort).syncUninterruptibly();
@@ -463,21 +450,18 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
                         } catch (Exception ignored) {}
 
                         p_initChannel_1_.pipeline()
-                                .addLast((String) "timeout", (ChannelHandler) (new ReadTimeoutHandler(30)))
-                                .addLast((String) "splitter", (ChannelHandler) (new MessageDeserializer2()))
-                                .addLast((String) "decoder", (ChannelHandler) (new MessageDeserializer(EnumPacketDirection.CLIENTBOUND)))
-                                .addLast((String) "prepender", (ChannelHandler) (new MessageSerializer2()))
-                                .addLast((String) "encoder", (ChannelHandler) (new MessageSerializer(EnumPacketDirection.SERVERBOUND)))
-                                .addLast((String) "packet_handler", (ChannelHandler) networkmanager);
+                                .addLast((String)"timeout", (ChannelHandler)(new ReadTimeoutHandler(30)))
+                                .addLast((String)"splitter", (ChannelHandler)(new MessageDeserializer2()))
+                                .addLast((String)"decoder", (ChannelHandler)(new MessageDeserializer(EnumPacketDirection.CLIENTBOUND)))
+                                .addLast((String)"prepender", (ChannelHandler)(new MessageSerializer2()))
+                                .addLast((String)"encoder", (ChannelHandler)(new MessageSerializer(EnumPacketDirection.SERVERBOUND)))
+                                .addLast((String)"packet_handler", (ChannelHandler)networkmanager);
 
-
-
-                        if (p_initChannel_1_ instanceof SocketChannel && ViaMCP.getInstance().getVersion() != ViaMCP.PROTOCOL_VERSION) {
-                            UserConnection user = new UserConnectionImpl(p_initChannel_1_, true);
+                        if (p_initChannel_1_ instanceof SocketChannel && ViaLoadingBase.getInstance().getTargetVersion().getVersion() != ViaMCP.NATIVE_VERSION) {
+                            final UserConnection user = new UserConnectionImpl(p_initChannel_1_, true);
                             new ProtocolPipelineImpl(user);
-                            p_initChannel_1_.pipeline()
-                                    .addBefore("encoder", CommonTransformer.HANDLER_ENCODER_NAME, new MCPEncodeHandler(user))
-                                    .addBefore("decoder", CommonTransformer.HANDLER_DECODER_NAME, new MCPDecodeHandler(user));
+
+                            p_initChannel_1_.pipeline().addLast(new MCPVLBPipeline(user));
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -580,9 +564,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
             }
             else
             {
-//                this.channel.pipeline().addBefore("decoder", "decompress", new NettyCompressionDecoder(treshold));
-                NettyUtil.decodeEncodePlacement(channel.pipeline(), "decoder", "decompress", new NettyCompressionDecoder(treshold));
-            }
+                this.channel.pipeline().addBefore("decoder", "decompress", new NettyCompressionDecoder(treshold));            }
 
             if (this.channel.pipeline().get("compress") instanceof NettyCompressionEncoder)
             {
@@ -590,8 +572,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
             }
             else
             {
-//                this.channel.pipeline().addBefore("encoder", "compress", new NettyCompressionEncoder(treshold));
-                NettyUtil.decodeEncodePlacement(channel.pipeline(), "encoder", "compress", new NettyCompressionEncoder(treshold));
+                this.channel.pipeline().addBefore("encoder", "compress", new NettyCompressionEncoder(treshold));
             }
         }
         else
@@ -606,6 +587,8 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
                 this.channel.pipeline().remove("compress");
             }
         }
+
+        this.channel.pipeline().fireUserEventTriggered(new CompressionReorderEvent());
     }
 
     public void checkDisconnected()

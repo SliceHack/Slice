@@ -1,5 +1,6 @@
 package org.cef.mcef;
 
+import de.florianmichael.viamcp.gui.GuiProtocolSelector;
 import lombok.Getter;
 import lombok.Setter;
 import me.friwi.jcefmaven.*;
@@ -30,7 +31,6 @@ import slice.setting.settings.NumberValue;
 import slice.util.LoggerUtil;
 import slice.util.account.LoginUtil;
 import slice.util.account.microsoft.MicrosoftAccount;
-import viamcp.gui.GuiProtocolSelector;
 
 import java.io.File;
 import java.io.IOException;

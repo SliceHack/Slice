@@ -76,6 +76,7 @@ public class ModuleManager {
         register(new AutoTool());
         register(new WTap());
         register(new AutoPot());
+        register(new Stealer());
     }
 
     /**

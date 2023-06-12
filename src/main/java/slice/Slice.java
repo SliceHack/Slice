@@ -36,7 +36,9 @@ import slice.script.module.ScriptModule;
 import slice.setting.settings.ModeValue;
 import slice.spotify.Spotify;
 import slice.ultralight.ViewHUD;
+import slice.util.account.LoginUtil;
 
+import javax.swing.*;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -129,6 +131,9 @@ public enum Slice {
 
     private final String date;
 
+    @Getter
+    private final File lastSessionFile = new File(Minecraft.getMinecraft().mcDataDir, "Slice/microsoftAuth.txt");
+
     Slice() {
         connecting = true;
         eventManager = new EventManager();
@@ -138,9 +143,13 @@ public enum Slice {
         fontManager = new FontManager();
         commandManager = new CommandManager(moduleManager);
         legacyClickGui = new ClickGui();
+
+        LoginUtil.askLoginWithSessionFile(lastSessionFile);
+
         discordRPC = new StartDiscordRPC();
         discordRPC.start();
         API.sendAuthRequest(irc);
+
 
         date = (new SimpleDateFormat("MM/dd/yyyy")).format(new Date());
 
@@ -156,7 +165,7 @@ public enum Slice {
     }
 
     /**
-     * Calls when minecraft is initialized and ready to be used.
+     * TODO: Fix buggy ass clickgui
      */
     public void init() {
         notificationManager = new NotificationManager();

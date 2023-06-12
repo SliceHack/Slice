@@ -1,12 +1,12 @@
 package slice.gui.main;
 
+import de.florianmichael.viamcp.gui.GuiProtocolSelector;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.GlStateManager;
 import slice.Slice;
 import slice.font.TTFFontRenderer;
 import slice.util.RenderUtil;
-import viamcp.gui.GuiProtocolSelector;
 
 import java.io.IOException;
 
