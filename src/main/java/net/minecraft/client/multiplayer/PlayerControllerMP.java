@@ -431,6 +431,37 @@ public class PlayerControllerMP
         }
     }
 
+    public boolean sendUseItemSelection(EntityPlayer playerIn, World worldIn, ItemStack itemStackIn)
+    {
+        if (this.currentGameType == WorldSettings.GameType.SPECTATOR)
+        {
+            return false;
+        }
+        else
+        {
+            this.syncCurrentPlayItem();
+            this.netClientHandler.addToSendQueue(new C08PacketPlayerBlockPlacement(itemStackIn));
+            int i = itemStackIn.stackSize;
+            ItemStack itemstack = itemStackIn.useItemRightClick(worldIn, playerIn);
+
+            if (itemstack != itemStackIn || itemstack != null && itemstack.stackSize != i)
+            {
+                playerIn.inventory.mainInventory[playerIn.inventory.currentItem] = itemstack;
+
+                if (itemstack.stackSize == 0)
+                {
+                    playerIn.inventory.mainInventory[playerIn.inventory.currentItem] = null;
+                }
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
     public EntityPlayerSP func_178892_a(World worldIn, StatFileWriter statWriter)
     {
         return new EntityPlayerSP(this.mc, worldIn, this.netClientHandler, statWriter);

@@ -1,12 +1,13 @@
 package slice.module.modules.movement;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBow;
-import net.minecraft.item.ItemStack;
+import net.minecraft.init.Items;
+import net.minecraft.item.*;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.*;
-import net.minecraft.network.play.server.S08PacketPlayerPosLook;
-import net.minecraft.network.play.server.S18PacketEntityTeleport;
+import net.minecraft.network.play.server.S12PacketEntityVelocity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.MathHelper;
 import org.lwjgl.input.Keyboard;
 import slice.event.data.EventInfo;
 import slice.event.events.EventClientTick;
@@ -29,7 +30,7 @@ import java.util.List;
 @SuppressWarnings("all")
 public class Fly extends Module {
 
-    ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla", "Dev", "PvPGym", "Zonecraft", "Vulcan", "Vulcan2", "PvPLegacy");
+    ModeValue mode = new ModeValue("Mode", "Vanilla", "Vanilla", "Dev", "PvPGym", "Zonecraft", "Vulcan", "Vulcan2", "PvPLegacy", "Bow");
     BooleanValue bobbing = new BooleanValue("Bobbing", true);
     NumberValue speed = new NumberValue("Speed", 3.0D, 0.1D, 6.0D, NumberValue.Type.DOUBLE);
 
@@ -41,8 +42,9 @@ public class Fly extends Module {
     private int posY;
     
     private double x, y, z;
+    private float yaw, pitch;
 
-    private int currentSlot;
+    private int currentSlot, lastSlot;
 
     private ItemStack bow;
 
@@ -57,6 +59,10 @@ public class Fly extends Module {
         z = mc.thePlayer.posZ;
         stage = 0;
         moveSpeed = 0.18D;
+
+        yaw = mc.thePlayer.rotationYaw;
+        pitch = mc.thePlayer.rotationPitch;
+
         switch (mode.getValue()) {
             case "UwUGuard":
                 if(!mc.thePlayer.onGround) break;
@@ -102,13 +108,85 @@ public class Fly extends Module {
 
     @EventInfo
     public void onUpdate(EventUpdate e) {
-        // boobing
         if(bobbing.getValue() && MoveUtil.isMoving()) {
             mc.thePlayer.cameraPitch = 0.1F;
             mc.thePlayer.cameraYaw = 0.1F;
         }
 
         switch (mode.getValue()) {
+            case "Bow":
+                if(stage == 0) {
+                    ItemStack[] inventory = mc.thePlayer.inventory.mainInventory;
+
+                    boolean arrowsFound = false, bowFound = false;
+                    for(int i = 0; i < inventory.length; i++) {
+                        ItemStack itemStack = inventory[i];
+
+                        if(itemStack != null) {
+
+                            if(itemStack.getItem() == Items.bow && !bowFound && i < 9) {
+                                currentSlot = i;
+                                bow = itemStack;
+                                bowFound = true;
+                            }
+
+                            if(itemStack.getItem() == Items.arrow && !arrowsFound) {
+                                arrowsFound = true;
+                            }
+
+                            if(mc.thePlayer.capabilities.isCreativeMode) arrowsFound = true;
+                            if(bowFound && arrowsFound) break;
+                        }
+                    }
+
+                    if(!bowFound) {
+                        LoggerUtil.addMessage("You don't have a bow in your hotbar!");
+                        this.toggle();
+                        return;
+                    }
+
+                    if(!arrowsFound) {
+                        LoggerUtil.addMessage("You don't have any arrows in your inventory!");
+                        this.toggle();
+                        return;
+                    }
+
+                    stage = 1;
+                }
+
+                if(stage <= 2) {
+                    mc.thePlayer.sendQueue.addToSendNoEvent(new C03PacketPlayer.C05PacketPlayerLook(mc.thePlayer.rotationYaw, -90, mc.thePlayer.onGround));
+                    mc.thePlayer.rotationPitchHead = -90;
+                    MoveUtil.stop();
+                }
+
+                if(stage == 1) {
+                    lastSlot = mc.thePlayer.inventory.currentItem;
+                    mc.thePlayer.inventory.currentItem = currentSlot;
+                    mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.inventory.getCurrentItem());
+                    stage = 2;
+                }
+
+                if(stage == 3) {
+                    mc.thePlayer.inventory.currentItem = lastSlot;
+                    mc.thePlayer.sendQueue.addToSendNoEvent(new C03PacketPlayer.C05PacketPlayerLook(mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch, mc.thePlayer.onGround));
+                    stage = 4;
+                }
+
+                if(stage == 4) {
+                    MoveUtil.jump();
+                    stage = 5;
+                }
+
+                if(stage == 5) {
+                    mc.thePlayer.motionY = 0F;
+                    MoveUtil.strafe(speed.getValue().doubleValue());
+                }
+
+                if(stage == 2 && mc.thePlayer.hurtResistantTime > 12) {
+                    stage = 3;
+                }
+                break;
             case "Vulcan2":
                 if(stage <= 1) {
                     MoveUtil.stop();
@@ -239,11 +317,24 @@ public class Fly extends Module {
         }
     }
 
+    public boolean deltaDesiredPitch(float pitch) {
+        float sens = 9F, newPitch = MathHelper.wrapAngleTo180_float(pitch - -90);
+
+        if (newPitch > sens) newPitch = sens;
+        if (newPitch < -sens) newPitch = -sens;
+
+        if (pitch > 90) pitch = 90;
+
+        pitch -= newPitch;
+        return pitch == newPitch;
+    }
+
     public void useBow() {
         int i2;
         for (i2 = 0; i2 < 9; ++i2) {
             i = i2;
             bow = mc.thePlayer.inventoryContainer.getSlot(i2 + 36).getStack();
+
             if (bow != null) {
                 final Item item = bow.getItem();
                 if (item instanceof ItemBow) {
@@ -260,6 +351,8 @@ public class Fly extends Module {
                             }
                         }
                     }
+
+
                 }
             }
 

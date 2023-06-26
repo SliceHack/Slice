@@ -11,6 +11,9 @@ import slice.event.data.EventInfo;
 import slice.event.events.EventGuiRender;
 import slice.event.events.EventUpdate;
 import slice.module.Module;
+import slice.module.modules.render.HUD;
+import slice.module.modules.render.Interface;
+import slice.setting.settings.BooleanValue;
 import slice.util.MoveUtil;
 
 import java.util.ArrayList;
@@ -59,4 +62,13 @@ public class ViewHUD extends ViewNoGui {
     public void renameFromArrayList(String oldName, String newName) {
         view.eval(String.format("renameFromArrayList(\"%s\", \"%s\");", oldName, newName));
     }
+
+    public void setBPS(double bps) {
+        view.eval(String.format("setBPS(\"%s\");", bps));
+    }
+
+    public void showBPS(boolean show) {
+        view.eval(String.format("document.querySelector(\".bps\").style.display = \"%s\";", show ? "block" : "none"));
+    }
+
 }

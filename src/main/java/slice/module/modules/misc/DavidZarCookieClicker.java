@@ -15,7 +15,6 @@ public class DavidZarCookieClicker extends Module {
         if(mc.currentScreen instanceof GuiChest) {
             GuiChest gui = (GuiChest) mc.currentScreen;
 
-
             int[] slots = { 11, 10, 20, 19 };
             for (int slot : slots) {
                 if (mc.thePlayer.inventory.getStackInSlot(slot) == null) {

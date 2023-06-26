@@ -24,5 +24,14 @@
     <orderEntry type="library" name="ViaMCP" level="project" />
     <orderEntry type="library" name="other" level="project" />
     <orderEntry type="library" name="ultralight" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/org/jetbrains/annotations/24.0.0/annotations-24.0.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

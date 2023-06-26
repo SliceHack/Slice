@@ -1,16 +1,13 @@
 package slice.script.module;
 
-import jdk.nashorn.api.scripting.JSObject;
 import slice.Slice;
 import slice.font.FontManager;
 import slice.module.Module;
 import slice.module.data.Category;
 import slice.script.Script;
-import slice.script.lang.logger.Chat;
 import slice.setting.settings.BooleanValue;
 import slice.setting.settings.ModeValue;
 import slice.setting.settings.NumberValue;
-import slice.util.*;
 
 import javax.script.ScriptEngine;
 

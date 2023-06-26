@@ -46,6 +46,8 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import slice.Slice;
+import slice.module.modules.player.Scaffold;
 
 public abstract class Entity implements ICommandSender
 {
@@ -451,7 +453,7 @@ public abstract class Entity implements ICommandSender
             double d3 = x;
             double d4 = y;
             double d5 = z;
-            boolean flag = this.onGround && this.isSneaking() && this instanceof EntityPlayer;
+            boolean flag = this.onGround && (this.isSneaking() || Slice.INSTANCE.getModuleManager().getModule(Scaffold.class).isEnabled()) && this instanceof EntityPlayer;
 
             if (flag)
             {

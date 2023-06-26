@@ -139,6 +139,7 @@ public enum Slice {
 
         discordRPC = new StartDiscordRPC();
         discordRPC.start();
+
         API.sendAuthRequest(irc);
 
 

@@ -7,17 +7,14 @@ import slice.module.data.Category;
 import slice.module.modules.combat.*;
 import slice.module.modules.misc.*;
 import slice.module.modules.movement.*;
-import slice.module.modules.player.AutoArmor;
-import slice.module.modules.player.AutoPlace;
-import slice.module.modules.player.AutoTool;
-import slice.module.modules.player.Derp;
-import slice.module.modules.player.Scaffold;
+import slice.module.modules.player.*;
 import slice.module.modules.render.*;
 import slice.module.modules.world.Phase;
 import slice.module.modules.world.SumoFences;
 import slice.module.modules.world.TimeChanger;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -32,51 +29,24 @@ public class ModuleManager {
     private List<Module> modules = new ArrayList<>();
 
     public ModuleManager() {
-        register(new Interface());
-        register(new Fly());
-        register(new Speed());
-        register(new InvMove());
-        register(new Disabler());
-        register(new NoFall());
-        register(new ChatSpammer());
-        register(new Aura());
-        register(new NoSlow());
-        register(new AntiBot());
-        register(new TimeChanger());
-        register(new Velocity());
-        register(new AntiCrash());
-        register(new Sprint());
-        register(new Insults());
-        register(new Translator());
-        register(new HUD());
-        register(new Minehut());
-        register(new Chams());
-        register(new Animations());
-        register(new PvPBot());
-        register(new FullBright());
-        register(new Derp());
-        register(new Reach());
-        register(new Phase());
-        register(new AirJump());
-        register(new Step());
-        register(new Safewalk());
-        register(new Botter());
-        register(new Spoofer());
-        register(new SumoFences());
-        register(new TargetStrafe());
-        register(new AntiVanish());
-        register(new DavidZarCookieClicker());
-        register(new AntiCheat());
-        register(new NoBob());
-        register(new Hat());
-        register(new Scaffold());
-        register(new AutoPlace());
-        register(new ESP());
-        register(new AutoArmor());
-        register(new AutoTool());
-        register(new WTap());
-        register(new AutoPot());
-        register(new Stealer());
+        register(new Interface(), new Fly(), new Speed(),
+                new InvMove(), new Disabler(), new NoFall(),
+                new ChatSpammer(), new Aura(), new NoSlow(),
+                new AntiBot(), new TimeChanger(), new Velocity(),
+                new AntiCrash(), new Sprint(), new Insults(),
+                new Translator(), new HUD(), new Minehut(),
+                new Chams(), new Animations(), new PvPBot(),
+                new FullBright(), new Derp(), new Reach(),
+                new Phase(), new AirJump(), new Step(),
+                new Safewalk(), new Botter(), new Spoofer(),
+                new SumoFences(), new TargetStrafe(), new AntiVanish(),
+                new DavidZarCookieClicker(), new AntiCheat(), new NoBob(),
+                new Hat(), new Scaffold(), new AutoPlace(),
+                new ESP(), new AutoArmor(), new AutoTool(),
+                new WTap(), new AutoPot(), new Stealer(),
+
+                new Manager()
+        );
     }
 
     /**
@@ -84,10 +54,8 @@ public class ModuleManager {
      *
      * @param module The module to register.
      */
-    public void register(Module module) {
-        if(getModule(module.getName()) != null) unregister(getModule(module.getName()));
-
-        modules.add(module);
+    public void register(Module... module) {
+        modules.addAll(Arrays.asList(module));
     }
 
     /**
