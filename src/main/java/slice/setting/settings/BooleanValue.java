@@ -17,7 +17,7 @@ public class BooleanValue extends Setting {
     }
 
     public void setValue(boolean value) {
-
+        this.value = value;
     }
 
     public void setValue(boolean value, boolean updateClickGui) {

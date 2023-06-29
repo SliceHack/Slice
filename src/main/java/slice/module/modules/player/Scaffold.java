@@ -7,18 +7,17 @@ import net.minecraft.block.BlockAir;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.network.play.client.C09PacketHeldItemChange;
 import net.minecraft.network.play.client.C0APacketAnimation;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import slice.event.data.EventInfo;
 import slice.event.events.EventUpdate;
 import slice.module.Module;
 import slice.module.data.Category;
 import slice.module.data.ModuleInfo;
+import slice.setting.settings.BooleanValue;
 import slice.setting.settings.NumberValue;
+import slice.util.BlockUtil;
 
 import java.util.Arrays;
 
@@ -26,10 +25,13 @@ import java.util.Arrays;
 public class Scaffold extends Module {
 
     NumberValue delay = new NumberValue("Delay", 100, 0, 6000, NumberValue.Type.LONG);
+    BooleanValue swing = new BooleanValue("Swing", true);
+    BooleanValue blockSpoofing = new BooleanValue("Block Spoofing", true);
+    BooleanValue sprint = new BooleanValue("Sprint", true);
 
     private BlockData data;
     private int lastSlot;
-    private float yaw = -1, pitch = -1;
+    private float yaw = -1, pitch = -1, deltaYaw, deltaPitch;
 
     private final Block[] blacklisted = {
             Blocks.stone_stairs, Blocks.oak_stairs, Blocks.spruce_stairs, Blocks.birch_stairs, Blocks.jungle_stairs, Blocks.acacia_stairs, Blocks.dark_oak_stairs,
@@ -44,43 +46,60 @@ public class Scaffold extends Module {
     @Override
     public void onEnable() {
         lastSlot = mc.thePlayer.inventory.currentItem;
+        deltaYaw = mc.thePlayer.rotationYaw;
+        deltaPitch = mc.thePlayer.rotationPitch;
     }
 
     @Override
     public void onDisable() {
-        mc.thePlayer.sendQueue.addToSendQueue(new C09PacketHeldItemChange(lastSlot));
+        if(blockSpoofing.getValue()) mc.thePlayer.sendQueue.addToSendNoEvent(new C09PacketHeldItemChange(lastSlot));
+        else mc.thePlayer.inventory.currentItem = lastSlot;
+
         yaw = -1;
         pitch = -1;
     }
 
+    @Override
+    public void onUpdateNoToggle(EventUpdate event) {
+        if(isEnabled()) return;
+
+        deltaYaw = mc.thePlayer.rotationYaw;
+        deltaPitch = mc.thePlayer.rotationPitch;
+    }
+
     @EventInfo
     public void onUpdate(EventUpdate e) {
+        if(!sprint.getValue()) {
+            mc.thePlayer.setSprinting(false);
+            mc.gameSettings.keyBindSprint.pressed = false;
+        }
+
+        if(data != null) {
+            final float[] rotations = getRotations();
+
+            yaw = rotations[0];
+            pitch = rotations[1];
+        }
 
         if(yaw != -1 && pitch != -1) {
             e.setYaw(yaw);
             e.setPitch(pitch);
         }
 
-        if(e.isPre()) {
-
+        if(!e.isPre()) {
             BlockPos below = new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1, mc.thePlayer.posZ);
 
             if(mc.theWorld.getBlockState(below).getBlock() instanceof BlockAir) {
                 data = getBlockData(below);
-
-                if(data != null) {
-                    float[] rotations = getRotations(data.pos);
-
-                    yaw = rotations[0];
-                    pitch = rotations[1];
-                }
             }
         }
 
-        if(!e.isPre()) {
+        if(e.isPre()) {
             if(data == null) return;
 
             int slot = getBlocks();
+
+            if(!blockSpoofing.getValue()) mc.thePlayer.inventory.currentItem = slot;
 
             if(slot == -1) return;
 
@@ -97,34 +116,29 @@ public class Scaffold extends Module {
         }
     }
 
-    private float[] getRotations(BlockPos pos) {
-        double x = pos.getX() + 0.5 - mc.thePlayer.posX;
-        double y = pos.getY() + 0.5 - (mc.thePlayer.posY + mc.thePlayer.getEyeHeight());
-        double z = pos.getZ() + 0.5 - mc.thePlayer.posZ;
-
-        double dist = Math.sqrt(x * x + z * z);
-
-        float yaw = (float) (Math.atan2(z, x) * 180.0D / Math.PI) - 90.0F;
-        float pitch = (float) -(Math.atan2(y, dist) * 180.0D / Math.PI);
-
-        if(pitch < -90) pitch = -90;
-        if(pitch > 90) pitch = 90;
-
-        return new float[] { yaw, pitch };
-    }
-
     public void place(int slot, ItemStack place) {
-        mc.thePlayer.sendQueue.addToSendQueue(new C09PacketHeldItemChange(slot));
-        mc.thePlayer.sendQueue.addToSendNoEvent(new C0APacketAnimation());
+        if(blockSpoofing.getValue()) mc.thePlayer.sendQueue.addToSendNoEvent(new C09PacketHeldItemChange(slot));
 
-        mc.thePlayer.sendQueue.addToSendQueue(new C08PacketPlayerBlockPlacement(data.pos, data.facing.getIndex(), place, data.pos.x, data.pos.y, data.pos.z));
+        if(swing.getValue()) mc.thePlayer.swingItem();
+        else mc.thePlayer.sendQueue.addToSendNoEvent(new C0APacketAnimation());
+
+        MovingObjectPosition movingObjectPosition = mc.thePlayer.rayTraceCustom(mc.playerController.getBlockReachDistance(), mc.timer.renderPartialTicks, yaw, pitch);
+
+        if(movingObjectPosition == null)
+            return;
+
+        mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, place, data.pos, data.facing, movingObjectPosition.hitVec);
+
+        if(mc.theWorld.getBlockState(data.pos).getBlock() != Blocks.air) {
+            data = null;
+        }
     }
 
     public int getBlocks() {
         for(int i = 0; i < 9; i++) {
             ItemStack stack = mc.thePlayer.inventory.getStackInSlot(i);
 
-            if(stack != null && stack.getItem() instanceof ItemBlock && !Arrays.asList(blacklisted).contains(((ItemBlock) stack.getItem()).getBlock())) {
+            if(stack != null && stack.getItem() instanceof ItemBlock && !Arrays.asList(blacklisted).contains(((ItemBlock) stack.getItem()).getBlock()) && stack.stackSize > 0) {
                 return i;
             }
         }
@@ -159,6 +173,24 @@ public class Scaffold extends Module {
         }
 
         return null;
+    }
+
+    public float[] getRotations() {
+        float[] rotations = BlockUtil.getDirectionToBlock(data.pos.getX(), data.pos.getY(), data.pos.getZ(), data.facing);
+        float yaw = rotations[0], pitch = rotations[1];
+
+        float newYaw = MathHelper.wrapAngleTo180_float(deltaYaw - yaw), newPitch = MathHelper.wrapAngleTo180_float(deltaPitch - pitch);
+
+        if (newYaw > 9F) newYaw = 9F;
+        if (newYaw < -9F) newYaw = -9F;
+        if (newPitch > 9F) newPitch = 9F;
+        if (newPitch < -9F) newPitch = -9F;
+        if (deltaPitch > 90) deltaPitch = 90;
+
+        deltaYaw -= newYaw;
+        deltaPitch -= newPitch;
+
+        return new float[] {deltaYaw, deltaPitch};
     }
 
     @AllArgsConstructor
