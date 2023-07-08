@@ -7,6 +7,7 @@ import net.arikia.dev.drpc.DiscordRichPresence;
 import net.arikia.dev.drpc.DiscordUser;
 import net.arikia.dev.drpc.callbacks.ReadyCallback;
 import slice.Slice;
+import slice.api.API;
 import slice.api.IRC;
 import slice.util.LoggerUtil;
 
@@ -22,7 +23,9 @@ public class StartDiscordRPC {
             Slice.INSTANCE.discordID = discordUser.userId;
             Slice.INSTANCE.discordDiscriminator = discordUser.discriminator;
             setPresence("Slice Client", String.format("Version %s", Slice.VERSION));
+
             Slice.INSTANCE.irc = new IRC();
+            API.sendAuthRequest(Long.parseLong(discordUser.userId));
         }).build();
 
         DiscordRPC.discordInitialize("984300399534170113", handlers, true);

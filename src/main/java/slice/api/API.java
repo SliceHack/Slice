@@ -3,6 +3,7 @@ package slice.api;
 import net.minecraft.client.Minecraft;
 import net.minecraft.crash.CrashReport;
 import org.json.JSONObject;
+import slice.Slice;
 import slice.util.HardwareUtil;
 import slice.util.LoggerUtil;
 
@@ -18,16 +19,13 @@ import java.net.URL;
  * **/
 public class API {
 
-    /** API url */
-    private static final String API_URL = "https://api.sliceclient.com/";
-
     /**
      * Checks if a user is authenticated with the server
      * **/
     @SuppressWarnings("all")
-    public static void sendAuthRequest(IRC irc) {
+    public static void sendAuthRequest(long discordID) {
         try {
-            URL url = new URL(API_URL + "checkAuth/" + HardwareUtil.getHardwareID());
+            URL url = new URL(Slice.API_URL + String.format("checkAuth/%s", discordID));
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("User-Agent", "Mozilla/5.0");

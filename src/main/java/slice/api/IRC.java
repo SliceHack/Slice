@@ -22,14 +22,10 @@ import java.util.List;
 @Getter @Setter
 public class IRC {
 
-    /** API url */
-    private static final String API_URL = "https://api.sliceclient.com/";
-
     private Socket socket;
     private SocketEvents socketEvents;
 
     private List<String> list = new ArrayList<>();
-
 
     /***
      * Connect to an IRC server.
@@ -37,7 +33,7 @@ public class IRC {
     public IRC() {
         try {
             IO.Options options = IO.Options.builder().build();
-            socket = IO.socket(URI.create(API_URL), options);
+            socket = IO.socket(URI.create(Slice.API_URL), options);
             socketEvents = new SocketEvents(socket);
 
             socket.on("addMessage", (args) -> LoggerUtil.addMessage(String.valueOf(args[0])));

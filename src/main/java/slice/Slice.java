@@ -50,7 +50,7 @@ import java.util.List;
 public enum Slice {
     INSTANCE;
 
-    public static final String NAME = "Slice", VERSION = "1.0";
+    public static final String NAME = "Slice", VERSION = "1.0", API_URL = "https://api.sliceclient.com/";
 
     /* managers */
     private final EventManager eventManager;
@@ -142,8 +142,6 @@ public enum Slice {
         discordRPC = new StartDiscordRPC();
         discordRPC.start();
 
-        API.sendAuthRequest(irc);
-
         date = (new SimpleDateFormat("MM/dd/yyyy")).format(new Date());
 
         File totalTimeFile = new File(Minecraft.getMinecraft().mcDataDir, "Slice/totalTime.txt");
@@ -162,7 +160,7 @@ public enum Slice {
      */
     public void init() {
         notificationManager = new NotificationManager();
-        capeManager = new CapeManager("https://api.sliceclient.com");
+        capeManager = new CapeManager(API_URL);
         anticheat = SliceAC.INSTANCE;
 
         viewHUD = new ViewHUD();
