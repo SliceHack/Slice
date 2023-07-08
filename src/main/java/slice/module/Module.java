@@ -1,8 +1,6 @@
 package slice.module;
 
 import com.sliceclient.ultralight.UltraLightEngine;
-import fr.lavache.anime.Animate;
-import fr.lavache.anime.Easing;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
@@ -48,9 +46,6 @@ public class Module {
 
     private List<Setting> settings = new ArrayList<>();
 
-    /** ArrayList animation */
-    private Animate animate;
-
     public Module() {
         if(info == null) return;
 
@@ -59,10 +54,6 @@ public class Module {
         this.description = info.description();
         this.key = info.key();
         this.init();
-
-        animate = new Animate();
-        animate.setEase(Easing.BACK_IN);
-        animate.setReversed(true);
     }
 
     public void init() {}
@@ -133,39 +124,6 @@ public class Module {
      * without being enabled
      * */
     public void onUpdateNoToggle(EventUpdate event) {}
-
-    /** Animation */
-    public void updateAnimation() {
-        animate.update();
-    }
-
-    public void setMaxAnimation(float max) {
-        animate.setMax(max);
-    }
-
-    public void setMinAnimation(float min) {
-        animate.setMin(min);
-    }
-
-    public void setSpeedAnimation(float speed) {
-        animate.setSpeed(speed);
-    }
-
-    public float getAnimationValue() {
-        return animate.getValue();
-    }
-
-    public void setAnimationValue(float value) {
-        animate.setValue(value);
-    }
-
-    public void setAnimationEasingValue(Easing easing) {
-        animate.setEase(easing);
-    }
-
-    public void setReversedAnimation(boolean reversed) {
-        animate.setReversed(reversed);
-    }
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
