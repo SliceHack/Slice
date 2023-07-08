@@ -6,8 +6,6 @@ import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication;
 import com.thealtening.AlteningAPI;
 import com.thealtening.AlteningServiceType;
-import com.thealtening.SSLController;
-import com.thealtening.TheAlteningAuthentication;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
@@ -29,9 +27,6 @@ public class TheAlteningAPILogin extends GuiScreen {
     private GuiTextField token;
     private GuiButton login, generate;
     private String loginText, generateToken;
-
-    private SSLController ssl = new SSLController();
-    private TheAlteningAuthentication serviceSwitch = TheAlteningAuthentication.mojang();
 
     private GuiScreen parent;
 
@@ -84,26 +79,11 @@ public class TheAlteningAPILogin extends GuiScreen {
         YggdrasilAuthenticationService service = new YggdrasilAuthenticationService(Proxy.NO_PROXY, "");
         YggdrasilUserAuthentication auth = (YggdrasilUserAuthentication) service.createUserAuthentication(Agent.MINECRAFT);
 
-        if (t.contains("@alt.com")) {
-            if (this.serviceSwitch.getService() == AlteningServiceType.MOJANG) {
-                this.ssl.disableCertificateValidation();
-                this.serviceSwitch.updateService(AlteningServiceType.THEALTENING);
-            }
-        } else {
-            if (this.serviceSwitch.getService() == AlteningServiceType.THEALTENING) {
-                this.ssl.enableCertificateValidation();
-                this.serviceSwitch.updateService(AlteningServiceType.MOJANG);
-            }
-            loginText = "Invaild token switched to mojang.";
-            return;
-        }
-
         auth.setUsername(t);
         auth.setPassword(t);
 
         try {
             auth.logIn();
-            this.serviceSwitch.updateService(AlteningServiceType.MOJANG);
             Minecraft.getMinecraft().session = new Session(auth.getSelectedProfile().getName(), auth.getSelectedProfile().getId().toString(), auth.getAuthenticatedToken(), "mojang");
         } catch (final AuthenticationException localAuthenticationException) {
             localAuthenticationException.printStackTrace();

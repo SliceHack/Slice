@@ -1,7 +1,5 @@
 package slice.gui.alt;
 
-import com.thealtening.SSLController;
-import com.thealtening.TheAlteningAuthentication;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
@@ -23,9 +21,6 @@ public class GuiOfflineLogin extends GuiScreen {
     private GuiTextField token;
     private GuiButton login;
     private String loginText, generateToken;
-
-    private SSLController ssl = new SSLController();
-    private TheAlteningAuthentication serviceSwitch = TheAlteningAuthentication.mojang();
 
     private GuiScreen parent;
 
