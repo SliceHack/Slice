@@ -8,6 +8,7 @@ import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.gui.GuiSelectWorld;
 import net.minecraft.util.Session;
 import slice.Slice;
+import slice.gui.alt.MicrosoftAltLogin;
 import slice.manager.ModuleManager;
 import slice.module.Module;
 import slice.setting.Setting;
@@ -46,20 +47,20 @@ public class SliceJsClientBinding {
     public void displayOptions() { mc.displayGuiScreen(new GuiOptions(mc.currentScreen, mc.gameSettings)); }
 
     public void displayAlt() {
-        MicrosoftAccount account = LoginUtil.loginFromWebView(true);
-
-        if(account != null) {
-
-            try(BufferedWriter writer = new BufferedWriter(new FileWriter(Slice.INSTANCE.getLastSessionFile(), true))) {
-                writer.write(account.getProfile().getName() + ":" + account.getRefreshToken());
-                writer.newLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-        /*mc.displayGuiScreen(new ViewAltManager());*/
+//        MicrosoftAccount account = LoginUtil.loginFromWebView(true);
+//
+//        if(account != null) {
+//
+//            try(BufferedWriter writer = new BufferedWriter(new FileWriter(Slice.INSTANCE.getLastSessionFile(), true))) {
+//                writer.write(account.getProfile().getName() + ":" + account.getRefreshToken());
+//                writer.newLine();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
+//        /*mc.displayGuiScreen(new ViewAltManager());*/
+        mc.displayGuiScreen(new MicrosoftAltLogin(mc.currentScreen));
     }
     public void closeGui() { mc.displayGuiScreen(null); }
 
