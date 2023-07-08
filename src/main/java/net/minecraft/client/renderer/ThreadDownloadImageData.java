@@ -10,6 +10,8 @@ import java.net.URL;
 import java.net.Proxy.Type;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.imageio.ImageIO;
+
+import com.sliceclient.api.util.Chat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.SimpleTexture;
 import net.minecraft.client.renderer.texture.TextureUtil;
@@ -132,7 +134,7 @@ public class ThreadDownloadImageData extends SimpleTexture
                 HttpURLConnection httpurlconnection = null;
                 ThreadDownloadImageData.logger.debug("Downloading http texture from {} to {}", new Object[] {ThreadDownloadImageData.this.imageUrl, ThreadDownloadImageData.this.cacheFile});
 
-                if (ThreadDownloadImageData.this.shouldPipeline())
+                if (!ThreadDownloadImageData.this.shouldPipeline())
                 {
                     ThreadDownloadImageData.this.loadPipelined();
                 }
@@ -143,6 +145,11 @@ public class ThreadDownloadImageData extends SimpleTexture
                         httpurlconnection = (HttpURLConnection)(new URL(ThreadDownloadImageData.this.imageUrl)).openConnection(Minecraft.getMinecraft().getProxy());
                         httpurlconnection.setDoInput(true);
                         httpurlconnection.setDoOutput(false);
+
+                        httpurlconnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
+                        httpurlconnection.setRequestProperty("Accept", "application/json, image/png, image/jpeg");
+                        httpurlconnection.setConnectTimeout(5000);
+                        httpurlconnection.setReadTimeout(5000);
                         httpurlconnection.connect();
 
                         if (httpurlconnection.getResponseCode() / 100 != 2)

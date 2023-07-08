@@ -16,7 +16,8 @@ public class CapeManager {
         try {
             URL url = new URL(String.format("%s/cape/%s", baseUrl, username));
             URLConnection connection = url.openConnection();
-            connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
+            connection.setRequestProperty("Accept", "application/json, image/png, image/jpeg");
             connection.setConnectTimeout(5000);
             connection.setReadTimeout(5000);
             connection.connect();

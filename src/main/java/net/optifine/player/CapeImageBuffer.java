@@ -1,9 +1,12 @@
 package net.optifine.player;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.ImageBufferDownload;
 import net.minecraft.util.ResourceLocation;
+import slice.script.lang.logger.Chat;
 
 public class CapeImageBuffer extends ImageBufferDownload
 {

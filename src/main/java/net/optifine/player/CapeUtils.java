@@ -1,12 +1,14 @@
 package net.optifine.player;
 
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
-import java.util.List;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.regex.Pattern;
 
+import com.sliceclient.api.util.Chat;
 import com.sliceclient.capes.CapeManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -17,7 +19,8 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.src.Config;
 import net.minecraft.util.ResourceLocation;
 import slice.Slice;
-import slice.script.lang.logger.Chat;
+
+import javax.imageio.ImageIO;
 
 public class CapeUtils
 {
@@ -30,21 +33,16 @@ public class CapeUtils
 
         if (s != null && !s.isEmpty() && !s.contains("\u0000") && PATTERN_USERNAME.matcher(s).matches())
         {
-            List<String> users = Slice.INSTANCE.getIrc().getList();
-            String discordID = null;
+            String s1 = "http://s.optifine.net/capes/" + s + ".png";
 
-            for(String user : users) {
+            for(String user : Slice.INSTANCE.getIrc().getList()) {
                 String username = user.split(":")[0];
 
-                if(s.equalsIgnoreCase(username) && capeManager.getCape(user.split(":")[2]) == null) break;
-
-                if(s.equalsIgnoreCase(username) && capeManager.getCape(user.split(":")[2]) != null) {
-                    discordID = user.split(":")[2];
+                if(username.equalsIgnoreCase(s)) {
+                    s1 = capeManager.getCape(user.split(":")[2]);
+                    break;
                 }
-                break;
             }
-
-            String s1 = discordID == null ? String.format("http://s.optifine.net/capes/%s.png", s) : capeManager.getCape(discordID);
 
             ResourceLocation resourcelocation = new ResourceLocation("capeof/" + s);
             TextureManager texturemanager = Minecraft.getMinecraft().getTextureManager();
@@ -66,7 +64,6 @@ public class CapeUtils
                             player.setElytraOfCape(capeimagebuffer1.isElytraOfCape());
                         }
                     }
-
                     return;
                 }
             }
@@ -76,6 +73,7 @@ public class CapeUtils
             threaddownloadimagedata1.pipeline = true;
             texturemanager.loadTexture(resourcelocation, threaddownloadimagedata1);
         }
+
     }
 
     public static BufferedImage parseCape(BufferedImage img)
