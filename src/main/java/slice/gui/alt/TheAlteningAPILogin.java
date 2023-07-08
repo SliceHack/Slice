@@ -4,8 +4,6 @@ import com.mojang.authlib.Agent;
 import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication;
-import com.thealtening.AlteningAPI;
-import com.thealtening.AlteningServiceType;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
@@ -59,19 +57,10 @@ public class TheAlteningAPILogin extends GuiScreen {
             login(this.token.getText());
         }
         if(mouseX >= this.generate.xPosition && mouseX <= this.generate.xPosition + this.generate.getButtonWidth() && mouseY >= this.generate.yPosition && mouseY <= this.generate.yPosition + this.generate.getButtonWidth()) {
-            String token = AlteningAPI.generateAlteningFree();
-
             if(token == null) {
                 loginText = "Failed to generate token";
                 return;
             }
-
-            if(!token.contains("@alt.com")) {
-                loginText = token.replace("_", " ");
-                return;
-            }
-
-            login(token);
         }
     }
 

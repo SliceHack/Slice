@@ -1,8 +1,5 @@
 package slice.gui.alt;
 
-import com.thealtening.AlteningServiceType;
-import com.thealtening.SSLController;
-import com.thealtening.TheAlteningAuthentication;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.gui.*;
@@ -23,8 +20,6 @@ public class MicrosoftAltLogin extends GuiScreen {
     private GuiTextField username;
     private GuiPasswordField password;
     private String loginText;
-    private SSLController ssl = new SSLController();
-    private final TheAlteningAuthentication serviceSwitch = TheAlteningAuthentication.mojang();
 
     public MicrosoftAltLogin(GuiScreen parent) {
         this.parent = parent;
@@ -84,9 +79,6 @@ public class MicrosoftAltLogin extends GuiScreen {
 
     public void login() {
         new Thread(() -> {
-            ssl.disableCertificateValidation();
-            serviceSwitch.updateService(AlteningServiceType.MOJANG);
-
             if(username.getText().isEmpty() || password.getText().isEmpty()) {
                 loginText = "Please fill in all fields!";
                 return;
