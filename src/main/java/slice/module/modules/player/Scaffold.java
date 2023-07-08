@@ -80,7 +80,9 @@ public class Scaffold extends Module {
 
             yaw = rotations[0];
             pitch = rotations[1];
+        }
 
+        if(yaw != -1 && pitch != -1) {
             e.setYaw(yaw);
             e.setPitch(pitch);
         }

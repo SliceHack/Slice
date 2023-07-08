@@ -230,7 +230,6 @@ public class View {
 
         if(System.currentTimeMillis() - lastJavascriptGarbageCollections > 200) {
             this.lastJavascriptGarbageCollections = System.currentTimeMillis();
-            this.gc();
         }
 
     }

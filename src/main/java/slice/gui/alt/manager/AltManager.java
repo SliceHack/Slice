@@ -48,7 +48,7 @@ public class AltManager extends GuiScreen {
         if(places < 10) return "00" + places;
         else if(places == 100) return "100";
         else if(places < 100) return "0" + places;
-        else return "" + places;
+        else return String.valueOf(places);
     }
 
     public void onTick() {
