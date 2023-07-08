@@ -20,6 +20,7 @@ import slice.setting.settings.NumberValue;
 import slice.util.BlockUtil;
 
 import java.util.Arrays;
+import java.util.Random;
 
 @ModuleInfo(name = "Scaffold", description = "Places blocks under you", category = Category.PLAYER)
 public class Scaffold extends Module {
@@ -79,9 +80,7 @@ public class Scaffold extends Module {
 
             yaw = rotations[0];
             pitch = rotations[1];
-        }
 
-        if(yaw != -1 && pitch != -1) {
             e.setYaw(yaw);
             e.setPitch(pitch);
         }
@@ -177,7 +176,7 @@ public class Scaffold extends Module {
 
     public float[] getRotations() {
         float[] rotations = BlockUtil.getDirectionToBlock(data.pos.getX(), data.pos.getY(), data.pos.getZ(), data.facing);
-        float yaw = rotations[0], pitch = rotations[1];
+        float yaw = rotations[0], pitch = 90;
 
         float newYaw = MathHelper.wrapAngleTo180_float(deltaYaw - yaw), newPitch = MathHelper.wrapAngleTo180_float(deltaPitch - pitch);
 
@@ -190,7 +189,7 @@ public class Scaffold extends Module {
         deltaYaw -= newYaw;
         deltaPitch -= newPitch;
 
-        return new float[] {deltaYaw, deltaPitch};
+        return new float[] {deltaYaw + new Random().nextInt(1), deltaPitch };
     }
 
     @AllArgsConstructor

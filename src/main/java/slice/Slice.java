@@ -1,6 +1,7 @@
 package slice;
 
 import com.sliceclient.anticheat.SliceAC;
+import com.sliceclient.capes.CapeManager;
 import com.sliceclient.ultralight.UltraLightEngine;
 import com.sliceclient.ultralight.view.ViewNoGui;
 import lombok.Getter;
@@ -55,11 +56,12 @@ public enum Slice {
     private final EventManager eventManager;
     private final ModuleManager moduleManager;
     private final CommandManager commandManager;
-    private SettingsManager settingsManager;
     private final FontManager fontManager;
-    private ScriptManager scriptManager;
 
+    private SettingsManager settingsManager;
+    private ScriptManager scriptManager;
     private NotificationManager notificationManager;
+    private CapeManager capeManager;
 
     /* data */
     private final ClickGui legacyClickGui;
@@ -142,7 +144,6 @@ public enum Slice {
 
         API.sendAuthRequest(irc);
 
-
         date = (new SimpleDateFormat("MM/dd/yyyy")).format(new Date());
 
         File totalTimeFile = new File(Minecraft.getMinecraft().mcDataDir, "Slice/totalTime.txt");
@@ -161,6 +162,7 @@ public enum Slice {
      */
     public void init() {
         notificationManager = new NotificationManager();
+        capeManager = new CapeManager("https://api.sliceclient.com");
         anticheat = SliceAC.INSTANCE;
 
         viewHUD = new ViewHUD();

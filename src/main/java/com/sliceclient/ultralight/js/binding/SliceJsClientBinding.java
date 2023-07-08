@@ -44,6 +44,7 @@ public class SliceJsClientBinding {
     public void displayVersion() { mc.displayGuiScreen(new GuiProtocolSelector(mc.currentScreen)); }
     public void displaySinglePlayerMenu() { mc.displayGuiScreen(new GuiSelectWorld(mc.currentScreen)); }
     public void displayOptions() { mc.displayGuiScreen(new GuiOptions(mc.currentScreen, mc.gameSettings)); }
+
     public void displayAlt() {
         MicrosoftAccount account = LoginUtil.loginFromWebView(true);
 

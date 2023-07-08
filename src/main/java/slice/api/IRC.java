@@ -40,7 +40,7 @@ public class IRC {
             socket = IO.socket(URI.create(API_URL), options);
             socketEvents = new SocketEvents(socket);
 
-            socket.on("addMessage", (args) -> LoggerUtil.addMessage(args[0] + ""));
+            socket.on("addMessage", (args) -> LoggerUtil.addMessage(String.valueOf(args[0])));
 
             socket.connect();
         } catch (Exception ignored){}
@@ -99,7 +99,7 @@ public class IRC {
             return;
 
         try {
-            socket.emit("setUsername", event.getUsername(), event.getLastSession().getUsername(), Slice.INSTANCE.discordName);
+            socket.emit("setUsername", event.getUsername(), event.getLastSession().getUsername(), Slice.INSTANCE.discordName, Slice.INSTANCE.discordID);
         } catch (Exception ignored) {}
     }
 }

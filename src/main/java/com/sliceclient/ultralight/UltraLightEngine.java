@@ -71,6 +71,7 @@ public class UltraLightEngine {
             throw new RuntimeException(e);
         }
 
+        long ram = Runtime.getRuntime().maxMemory() - (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory());
 
         platform = UltralightPlatform.instance();
         platform.setConfig(
@@ -80,6 +81,7 @@ public class UltraLightEngine {
                         .scrollTimerDelay(1.0 / MAX_FPS)
                         .cachePath(ResourceManager.cacheDir.getAbsolutePath())
                         .forceRepaint(false)
+                        .memoryCacheSize(ram)
         );
         platform.setClipboard(new SliceUltralightClipboard());
 

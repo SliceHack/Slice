@@ -84,7 +84,12 @@ public class SocketEvents {
      * Runs when the socket is connected.
      * */
     public void runConnected() {
-        socket.emit("connected", Slice.INSTANCE.discordName, Minecraft.getMinecraft().getSession().getUsername(), HardwareUtil.getHardwareID());
+        socket.emit("connected",
+                Slice.INSTANCE.discordName,
+                Minecraft.getMinecraft().getSession().getUsername(),
+                HardwareUtil.getHardwareID(),
+                Slice.INSTANCE.discordID
+        );
     }
 
     /**

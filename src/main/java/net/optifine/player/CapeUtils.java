@@ -4,7 +4,10 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
+import java.util.List;
 import java.util.regex.Pattern;
+
+import com.sliceclient.capes.CapeManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.ThreadDownloadImageData;
@@ -13,6 +16,8 @@ import net.minecraft.client.renderer.texture.SimpleTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.src.Config;
 import net.minecraft.util.ResourceLocation;
+import slice.Slice;
+import slice.script.lang.logger.Chat;
 
 public class CapeUtils
 {
@@ -21,10 +26,26 @@ public class CapeUtils
     public static void downloadCape(AbstractClientPlayer player)
     {
         String s = player.getNameClear();
+        CapeManager capeManager = Slice.INSTANCE.getCapeManager();
 
         if (s != null && !s.isEmpty() && !s.contains("\u0000") && PATTERN_USERNAME.matcher(s).matches())
         {
-            String s1 = "http://s.optifine.net/capes/" + s + ".png";
+            List<String> users = Slice.INSTANCE.getIrc().getList();
+            String discordID = null;
+
+            for(String user : users) {
+                String username = user.split(":")[0];
+
+                if(s.equalsIgnoreCase(username) && capeManager.getCape(user.split(":")[2]) == null) break;
+
+                if(s.equalsIgnoreCase(username) && capeManager.getCape(user.split(":")[2]) != null) {
+                    discordID = user.split(":")[2];
+                }
+                break;
+            }
+
+            String s1 = discordID == null ? String.format("http://s.optifine.net/capes/%s.png", s) : capeManager.getCape(discordID);
+
             ResourceLocation resourcelocation = new ResourceLocation("capeof/" + s);
             TextureManager texturemanager = Minecraft.getMinecraft().getTextureManager();
             ITextureObject itextureobject = texturemanager.getTexture(resourcelocation);
