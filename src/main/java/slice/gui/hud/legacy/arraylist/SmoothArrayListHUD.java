@@ -1,6 +1,5 @@
 package slice.gui.hud.legacy.arraylist;
 
-import fr.lavache.anime.Easing;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
@@ -32,7 +31,6 @@ public class SmoothArrayListHUD {
 
             String text = module.getMode() == null ? module.getName() : module.getName() + " §7" + module.getMode().getValue();
             if(module.isEnabled()) {
-                module.setAnimationValue((sr.getScaledWidth() - font.getWidth(text)) - 30);
             }
         });
     }
@@ -49,13 +47,6 @@ public class SmoothArrayListHUD {
 
             String text = module.getMode() == null ? module.getName() : module.getName() + " §7" + module.getMode().getValue();
 
-            module.setMaxAnimation((sr.getScaledWidth() - font.getWidth(text)));
-            module.setMinAnimation((sr.getScaledWidth() - font.getWidth(text)) - 30);
-            module.getAnimate().setEase(Easing.CUBIC_OUT);
-            module.getAnimate().setSpeed(50);
-
-
-            font.drawStringWithShadow(text, module.getAnimationValue(), i, -1);
             i += font.getHeight(text) + 1;
             GlStateManager.popMatrix();
 
@@ -68,24 +59,10 @@ public class SmoothArrayListHUD {
             if(moduleTimers.get(module) == null) {
                 moduleTimers.put(module, new Timer());
             }
-            if((int)module.getAnimate().getValue() <= (int)module.getAnimate().getMin()) {
-                module.getAnimate().setValue(module.getAnimate().getMin());
-                return;
-            }
-            if((int)module.getAnimate().getValue() >= (int)module.getAnimate().getMax()) {
-                module.getAnimate().setValue(module.getAnimate().getMax());
-                return;
-            }
-
-            if(moduleTimers.get(module).hasReached(Long.parseLong((module.getAnimate().getSpeed() + "").replace(".0", "")))) {
-                module.getAnimate().setValue(module.getAnimationValue() + 3);
-                moduleTimers.get(module).reset();
-            }
         });
     }
 
     public void onToggle(Module module) {
-        module.setAnimationValue(module.getAnimate().getMin());
     }
 
 
