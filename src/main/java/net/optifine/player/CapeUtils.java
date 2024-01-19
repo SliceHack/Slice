@@ -35,12 +35,14 @@ public class CapeUtils
         {
             String s1 = "http://s.optifine.net/capes/" + s + ".png";
 
-            for(String user : Slice.INSTANCE.getIrc().getList()) {
-                String username = user.split(":")[0];
+            if(Slice.INSTANCE.getIrc() != null) {
+                for (String user : Slice.INSTANCE.getIrc().getList()) {
+                    String username = user.split(":")[0];
 
-                if(username.equalsIgnoreCase(s)) {
-                    s1 = capeManager.getCape(user.split(":")[2]);
-                    break;
+                    if (username.equalsIgnoreCase(s)) {
+                        s1 = capeManager.getCape(user.split(":")[2]);
+                        break;
+                    }
                 }
             }
 

@@ -25,7 +25,7 @@ public class ViewHUD extends ViewNoGui {
     private final List<Module> arrayList = new ArrayList<>();
 
     public ViewHUD() {
-        super(Page.of(String.format("https://assets.sliceclient.com/hud/index.html?name=%s&version=%s&discord=%s", Slice.NAME, Slice.VERSION, Slice.INSTANCE.getDiscordName())));
+        super(Page.of(String.format("https://slicehack.github.io/assets.sliceclient.com/hud/index.html?name=%s&version=%s&discord=%s", Slice.NAME, Slice.VERSION, Slice.INSTANCE.getDiscordName())));
     }
 
     @Override

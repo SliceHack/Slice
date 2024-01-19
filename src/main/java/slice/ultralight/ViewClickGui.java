@@ -19,7 +19,7 @@ public class ViewClickGui extends AllTimeGuiView {
     private boolean firstOpen = true;
 
     public ViewClickGui() {
-        super(new Page("https://assets.sliceclient.com/clickgui"));
+        super(new Page("https://slicehack.github.io/assets.sliceclient.com/clickgui"));
     }
 
     @Override

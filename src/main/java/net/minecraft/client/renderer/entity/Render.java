@@ -358,8 +358,10 @@ public abstract class Render<T extends Entity> implements IEntityRenderer
                 i = -10;
             }
 
-            for(String s : Slice.INSTANCE.getIrc().getList()) {
-                str = Slice.INSTANCE.replaceUsername(s.split(":")[0], s.split(":")[1], str);
+            if(Slice.INSTANCE.getIrc() != null) {
+                for (String s : Slice.INSTANCE.getIrc().getList()) {
+                    str = Slice.INSTANCE.replaceUsername(s.split(":")[0], s.split(":")[1], str);
+                }
             }
 
             int j = fontrenderer.getStringWidth(str) / 2;

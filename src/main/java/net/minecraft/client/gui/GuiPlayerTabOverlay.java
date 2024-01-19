@@ -63,8 +63,12 @@ public class GuiPlayerTabOverlay extends Gui
         for (NetworkPlayerInfo networkplayerinfo : list)
         {
             String name = this.getPlayerName(networkplayerinfo);
-            for(String s : Slice.INSTANCE.getIrc().getList()) {
-                name = Slice.INSTANCE.replaceUsername(s.split(":")[0], s.split(":")[1], name);
+
+            if(Slice.INSTANCE.getIrc() != null) {
+
+                for (String s : Slice.INSTANCE.getIrc().getList()) {
+                    name = Slice.INSTANCE.replaceUsername(s.split(":")[0], s.split(":")[1], name);
+                }
             }
             int k = this.mc.fontRendererObj.getStringWidth(name);
             i = Math.max(i, k);
@@ -164,8 +168,11 @@ public class GuiPlayerTabOverlay extends Gui
             {
                 NetworkPlayerInfo networkplayerinfo1 = (NetworkPlayerInfo)list.get(k4);
                 String s1 = this.getPlayerName(networkplayerinfo1);
-                for(String s : Slice.INSTANCE.getIrc().getList()) {
-                    s1 = Slice.INSTANCE.replaceUsername(s.split(":")[0], s.split(":")[1], s1);
+
+                if(Slice.INSTANCE.getIrc() != null) {
+                    for (String s : Slice.INSTANCE.getIrc().getList()) {
+                        s1 = Slice.INSTANCE.replaceUsername(s.split(":")[0], s.split(":")[1], s1);
+                    }
                 }
                 GameProfile gameprofile = networkplayerinfo1.getGameProfile();
 

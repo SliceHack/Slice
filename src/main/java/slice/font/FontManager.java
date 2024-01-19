@@ -23,8 +23,6 @@ public class FontManager {
             fonts.put(name + size, new TTFFontRenderer(font.deriveFont(Font.PLAIN, size)));
             font = font.deriveFont(Font.PLAIN, size);
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error loading font");
             font = new Font("default", Font.PLAIN, +10);
         }
     }

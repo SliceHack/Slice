@@ -77,7 +77,7 @@ public enum Slice {
     /**
      * discord
      */
-    public String discordName, discordID, discordDiscriminator;
+    public String discordName = "Cracked", discordID = "0", discordDiscriminator = "0000";
 
     /**
      * server
@@ -160,7 +160,7 @@ public enum Slice {
      */
     public void init() {
         notificationManager = new NotificationManager();
-        capeManager = new CapeManager(API_URL);
+//        capeManager = new CapeManager(API_URL);
         anticheat = SliceAC.INSTANCE;
 
         viewHUD = new ViewHUD();

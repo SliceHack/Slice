@@ -426,7 +426,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
      * @param serverPort The server port
      * @param useNativeTransport True if the client use the native transport system
      */
-    public static NetworkManager createNetworkManagerAndConnect(InetAddress address, int serverPort, boolean useNativeTransport, String userIP, int userPort)
+    public static NetworkManager createNetworkManagerAndConnect(InetAddress address, int serverPort, boolean useNativeTransport, boolean yay)
     {
         final NetworkManager networkmanager = new NetworkManager(EnumPacketDirection.CLIENTBOUND);
         try {

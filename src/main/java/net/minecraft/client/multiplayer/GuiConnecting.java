@@ -128,19 +128,16 @@ public class GuiConnecting extends GuiScreen
             {
                 InetAddress inetaddress = null;
 
-
-                String botIP = Botter.getRandomIP();
-                String randomIP = botIP.split(":")[0];
-                int randomPort = Integer.parseInt(botIP.split(":")[1]);
-
                 try {
                     if (cancel) return;
 
                     inetaddress = InetAddress.getByName(ip);
-                    networkManager = NetworkManager.createNetworkManagerAndConnect(inetaddress, port, mc.gameSettings.isUsingNativeTransport(), randomIP, randomPort);
+                    networkManager = NetworkManager.createNetworkManagerAndConnect(inetaddress, port, mc.gameSettings.isUsingNativeTransport(), true);
+                    networkManager.setNetHandler(new NetHandlerLoginClient(networkManager, mc, previousGuiScreen));
                     networkManager.sendPacket(new C00Handshake(47, ip, port, EnumConnectionState.LOGIN));
                     networkManager.sendPacket(new C00PacketLoginStart(session.getProfile()));
-                    LoggerUtil.addMessage("Connected to &a" + ip + ":" + port + "&7 proxy: &a" + botIP + "&7:" + randomPort);
+                    LoggerUtil.addMessage("Connected to &a" + ip + ":" + port);
+
                 } catch (UnknownHostException unknownhostexception) {
                     if (cancel) return;
 

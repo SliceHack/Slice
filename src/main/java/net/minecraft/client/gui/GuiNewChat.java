@@ -41,7 +41,11 @@ public class GuiNewChat extends Gui
             TTFFontRenderer font;
             switch (interfaceModule.getFontChatMode().getValue()) {
                 case "Poppins":
-                    font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 19);
+                    try {
+                        font = Slice.INSTANCE.getFontManager().getFont("Poppins-Regular", 19);
+                    } catch (Exception e) {
+                        font = Slice.INSTANCE.getFontManager().getArialFont(19);
+                    }
                     break;
                 case "Arial":
                     font = Slice.INSTANCE.getFontManager().getArialFont(19);
