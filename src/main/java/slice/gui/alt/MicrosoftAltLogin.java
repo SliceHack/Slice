@@ -3,6 +3,7 @@ package slice.gui.alt;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.gui.*;
+import net.minecraft.util.Session;
 import org.lwjgl.input.Keyboard;
 import slice.gui.alt.field.GuiPasswordField;
 import slice.util.LoggerUtil;
@@ -80,6 +81,13 @@ public class MicrosoftAltLogin extends GuiScreen {
     public void login() {
         new Thread(() -> {
             if(username.getText().isEmpty() || password.getText().isEmpty()) {
+
+                if(!username.getText().isEmpty()) {
+                    Session session = LoginUtil.loginOffline(username.getText());
+                    loginText = "logged in as " + session.getUsername();
+                    return;
+                }
+
                 loginText = "Please fill in all fields!";
                 return;
             }

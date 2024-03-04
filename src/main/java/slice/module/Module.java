@@ -73,12 +73,12 @@ public class Module {
         }
 
         Interface interfaceModule = (Interface) Slice.INSTANCE.getModuleManager().getModule(Interface.class);
+
         if(interfaceModule.getToggleNotifications().getValue()) {
             NotificationManager.queue(new Notification(Type.INFO, enabled ? "Enabled " + name : "Disabled " + name, 2));
         }
 
-        if(enabled) Slice.INSTANCE.getViewHUD().addModule(this);
-        else Slice.INSTANCE.getViewHUD().removeModule(this);
+        updateOnView();
     }
 
     public void startOnEnable() {
@@ -127,8 +127,17 @@ public class Module {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
 
-//        if(enabled) RequestHandler.addToArrayList(getMode() != null ? name + " " + getMode().getValue() : name);
-//        else RequestHandler.removeFromArrayList(getMode() != null ? name + " " + getMode().getValue() : name);
+    public void updateOnView() {
+        if (enabled) Slice.INSTANCE.getViewHUD().addModule(this);
+        else Slice.INSTANCE.getViewHUD().removeModule(this);
+
+        ViewClickGui clickGui = UltraLightEngine.getInstance().getUltraLightEvents().getViewClickGui();
+
+        if(clickGui != null) {
+            clickGui.setEnabled(name, enabled);
+            clickGui.updateSettings(this);
+        }
     }
 }

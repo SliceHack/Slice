@@ -1,6 +1,6 @@
 /*
  * This file is part of ViaLoadingBase - https://github.com/FlorianMichael/ViaLoadingBase
- * Copyright (C) 2022-2023 FlorianMichael/EnZaXD and contributors
+ * Copyright (C) 2020-2024 FlorianMichael/EnZaXD <florian.michael07@gmail.com> and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,15 +15,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.florianmichael.vialoadingbase.platform.viaversion;
 
 import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.platform.ViaPlatformLoader;
 import com.viaversion.viaversion.api.platform.providers.ViaProviders;
 import com.viaversion.viaversion.api.protocol.version.VersionProvider;
-import com.viaversion.viaversion.protocols.protocol1_9to1_8.providers.MovementTransmitterProvider;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
-import de.florianmichael.vialoadingbase.platform.providers.VLBMovementTransmitterProvider;
 import de.florianmichael.vialoadingbase.provider.VLBBaseVersionProvider;
 
 public class VLBViaProviders implements ViaPlatformLoader {
@@ -33,7 +32,6 @@ public class VLBViaProviders implements ViaPlatformLoader {
         // Now, we can implement custom providers
         final ViaProviders providers = Via.getManager().getProviders();
         providers.use(VersionProvider.class, new VLBBaseVersionProvider());
-        providers.use(MovementTransmitterProvider.class, new VLBMovementTransmitterProvider());
 
         if (ViaLoadingBase.getInstance().getProviders() != null) ViaLoadingBase.getInstance().getProviders().accept(providers);
     }

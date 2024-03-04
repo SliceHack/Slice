@@ -29,7 +29,7 @@ public class ModeValue extends Setting {
         boolean rename = getName().equalsIgnoreCase("Mode") && getModule().isEnabled();
 
         if(rename) {
-            Slice.INSTANCE.getViewHUD().renameFromArrayList(getModule().getName() + " " + getValue(), getModule().getName() + " " + value);
+            Slice.INSTANCE.getViewHUD().removeModule(getModule());
         }
 
         this.value = value;
@@ -41,6 +41,10 @@ public class ModeValue extends Setting {
         ViewClickGui clickGui = UltraLightEngine.getInstance().getUltraLightEvents().getViewClickGui();
         if(clickGui != null && updateClickGui) {
             clickGui.updateSettings(module);
+        }
+
+        if(rename) {
+            Slice.INSTANCE.getViewHUD().addModule(getModule());
         }
     }
 

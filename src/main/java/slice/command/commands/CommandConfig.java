@@ -90,6 +90,7 @@ public class CommandConfig extends Command {
                     return;
 
                 module.setEnabled(false);
+                module.updateOnView();
             });
             configS.load();
             addMessage("Loaded " + config);

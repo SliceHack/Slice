@@ -137,8 +137,6 @@ public enum Slice {
         commandManager = new CommandManager(moduleManager);
         legacyClickGui = new ClickGui();
 
-        LoginUtil.askLoginWithSessionFile(lastSessionFile);
-
         discordRPC = new StartDiscordRPC();
         discordRPC.start();
 

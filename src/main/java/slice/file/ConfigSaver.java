@@ -50,6 +50,7 @@ public class ConfigSaver {
                     return;
                 }
                 module.setEnabled(moduleJson.getBoolean("enabled"));
+                module.updateOnView();
 
                 JSONObject settingsJson = moduleJson.getJSONObject("settings");
                 for(Setting key : module.getSettings()) {
@@ -84,6 +85,7 @@ public class ConfigSaver {
                         } catch (Exception ignored){}
                     }
                 }
+                Slice.INSTANCE.getUltraLightEngine().getUltraLightEvents().getViewClickGui().updateSettings(module);
             }
         } catch (IOException e) {
             e.printStackTrace();

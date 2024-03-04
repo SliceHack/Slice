@@ -4,12 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.network.play.client.C09PacketHeldItemChange;
 import net.minecraft.network.play.client.C0APacketAnimation;
 import net.minecraft.util.*;
+import org.lwjgl.input.Keyboard;
 import slice.event.data.EventInfo;
 import slice.event.events.EventUpdate;
 import slice.module.Module;
@@ -18,8 +22,11 @@ import slice.module.data.ModuleInfo;
 import slice.setting.settings.BooleanValue;
 import slice.setting.settings.NumberValue;
 import slice.util.BlockUtil;
+import slice.util.LoggerUtil;
 
+import java.security.Key;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 @ModuleInfo(name = "Scaffold", description = "Places blocks under you", category = Category.PLAYER)
@@ -41,7 +48,7 @@ public class Scaffold extends Module {
             Blocks.lit_furnace, Blocks.crafting_table, Blocks.bed,
             Blocks.dropper, Blocks.dispenser, Blocks.hopper,
             Blocks.hopper, Blocks.piston, Blocks.sticky_piston,
-            Blocks.piston_extension
+            Blocks.piston_extension, Blocks.web
     };
 
     @Override
@@ -88,11 +95,7 @@ public class Scaffold extends Module {
         }
 
         if(!e.isPre()) {
-            BlockPos below = new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1, mc.thePlayer.posZ);
-
-            if(mc.theWorld.getBlockState(below).getBlock() instanceof BlockAir) {
-                data = getBlockData(below);
-            }
+            data = getBlockData();
         }
 
         if(e.isPre()) {
@@ -107,6 +110,7 @@ public class Scaffold extends Module {
             ItemStack stack = mc.thePlayer.inventory.getStackInSlot(slot);
 
             if(stack != null && stack.getItem() instanceof ItemBlock) {
+                Block blockUnder = mc.theWorld.getBlockState(data.pos).getBlock();
 
                 if(timer.hasReached(delay.getValue().longValue())) {
                     this.place(slot, stack);
@@ -120,19 +124,12 @@ public class Scaffold extends Module {
     public void place(int slot, ItemStack place) {
         if(blockSpoofing.getValue()) mc.thePlayer.sendQueue.addToSendNoEvent(new C09PacketHeldItemChange(slot));
 
+        if(mc.theWorld.getBlockState(data.pos.add(data.pos.getX(), data.pos.getY(), data.pos.getZ())).getBlock().getMaterial() != Material.air) return;
+
         if(swing.getValue()) mc.thePlayer.swingItem();
-        else mc.thePlayer.sendQueue.addToSendNoEvent(new C0APacketAnimation());
+//        else mc.thePlayer.sendQueue.addToSendNoEvent(new C0APacketAnimation());
 
-        MovingObjectPosition movingObjectPosition = mc.thePlayer.rayTraceCustom(mc.playerController.getBlockReachDistance(), mc.timer.renderPartialTicks, yaw, pitch);
-
-        if(movingObjectPosition == null)
-            return;
-
-        mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, place, data.pos, data.facing, movingObjectPosition.hitVec);
-
-        if(mc.theWorld.getBlockState(data.pos).getBlock() != Blocks.air) {
-            data = null;
-        }
+        mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, place, data.pos, data.facing, new Vec3(data.pos.getX(), data.pos.getY(), data.pos.getZ()));
     }
 
     public int getBlocks() {
@@ -147,35 +144,35 @@ public class Scaffold extends Module {
         return -1;
     }
 
-    public BlockData getBlockData(@NonNull BlockPos pos) {
-        BlockVector[] vectors = {
-                new BlockVector(0, -1, 0, EnumFacing.UP),
-                new BlockVector(-1, 0, 0, EnumFacing.EAST),
-                new BlockVector(1, 0, 0, EnumFacing.WEST),
-                new BlockVector(0, 0, -1, EnumFacing.SOUTH),
-                new BlockVector(0, 0, 1, EnumFacing.NORTH),
+    private BlockData getBlockData() {
+        EnumFacing[] facings = new EnumFacing[]{EnumFacing.UP, EnumFacing.DOWN, EnumFacing.SOUTH, EnumFacing.NORTH, EnumFacing.EAST, EnumFacing.WEST};
+        BlockPos pos = new BlockPos(mc.thePlayer.getPositionVector()).offset(EnumFacing.DOWN);
+        EnumFacing[] facing = EnumFacing.values();
 
-                new BlockVector(-1, -1, 0, EnumFacing.UP),
-                new BlockVector(1, -1, 0, EnumFacing.UP),
-                new BlockVector(0, -1, -1, EnumFacing.UP),
-                new BlockVector(0, -1, 1, EnumFacing.UP),
+        for (EnumFacing enumFacing : facing) {
+            if (mc.theWorld.getBlockState(pos.offset(enumFacing)).getBlock().getMaterial() == Material.air) continue;
 
-                // sideways
-                new BlockVector(-1, 0, -1, EnumFacing.SOUTH),
-                new BlockVector(-1, 0, 1, EnumFacing.NORTH),
-                new BlockVector(1, 0, -1, EnumFacing.SOUTH),
-                new BlockVector(1, 0, 1, EnumFacing.NORTH),
-        };
-
-        for(BlockVector vector : vectors) {
-            if(mc.theWorld.getBlockState(pos.add(vector.x, vector.y, vector.z)).getBlock() != Blocks.air) {
-                return new BlockData(pos.add(vector.x, vector.y, vector.z), vector.facing);
-            }
+            return new BlockData(pos.offset(enumFacing), facings[enumFacing.ordinal()]);
         }
 
+        BlockPos[] positions = new BlockPos[]{new BlockPos(-1, 0, 0), new BlockPos(1, 0, 0), new BlockPos(0, 0, -1), new BlockPos(0, 0, 1)};
+
+        for (BlockPos position : positions) {
+            BlockPos currentPos = pos.add(position.getX(), 0, position.getZ());
+
+            if (!(mc.theWorld.getBlockState(currentPos).getBlock() instanceof BlockAir)) continue;
+
+            for (int i2 = 0; i2 < EnumFacing.values().length; ++i2) {
+
+                if (mc.theWorld.getBlockState(currentPos.offset(EnumFacing.values()[i2])).getBlock().getMaterial() == Material.air)
+                    continue;
+
+                return new BlockData(currentPos.offset(EnumFacing.values()[i2]), facings[EnumFacing.values()[i2].ordinal()]);
+            }
+        }
         return null;
     }
-
+    
     public float[] getRotations() {
         float[] rotations = BlockUtil.getDirectionToBlock(data.pos.getX(), data.pos.getY(), data.pos.getZ(), data.facing);
         float yaw = rotations[0], pitch = 90;
