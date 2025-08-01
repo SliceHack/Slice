@@ -21,7 +21,6 @@ package de.florianmichael.vialoadingbase.platform;
 import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.ViaAPI;
 import com.viaversion.viaversion.api.command.ViaCommandSender;
-import com.viaversion.viaversion.api.configuration.ConfigurationProvider;
 import com.viaversion.viaversion.api.configuration.ViaVersionConfig;
 import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.api.platform.UnsupportedSoftware;
@@ -36,50 +35,26 @@ import de.florianmichael.vialoadingbase.util.VLBTask;
 
 import java.io.File;
 import java.util.*;
-import java.util.concurrent.*;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-public class ViaVersionPlatformImpl implements ViaPlatform<UUID> {
+public class ViaVersionPlatformImpl implements ViaPlatform<UserConnection> {
 
-    private final ViaAPI<UUID> api = new VLBViaAPIWrapper();
+    private final ViaAPI<UserConnection> api = new VLBViaAPIWrapper();
 
     private final Logger logger;
     private final VLBViaConfig config;
 
     public ViaVersionPlatformImpl(final Logger logger) {
         this.logger = logger;
-        config = new VLBViaConfig(new File(ViaLoadingBase.getInstance().getRunDirectory(), "viaversion.yml"));
+        config = new VLBViaConfig(new File(ViaLoadingBase.getInstance().getRunDirectory(), "viaversion.yml"), logger);
     }
 
     public static List<ProtocolVersion> createVersionList() {
-        final List<ProtocolVersion> versions = new ArrayList<>(ProtocolVersion.getProtocols()).stream().filter(protocolVersion -> protocolVersion != ProtocolVersion.unknown && ProtocolVersion.getProtocols().indexOf(protocolVersion) >= 7).collect(Collectors.toList());
+        final List<ProtocolVersion> versions = new ArrayList<>(ProtocolVersion.getProtocols()).stream().filter(version -> version.newerThanOrEqualTo(ProtocolVersion.v1_8)).collect(Collectors.toList());
         Collections.reverse(versions);
         return versions;
-    }
-
-    @Override
-    public ViaCommandSender[] getOnlinePlayers() {
-        return new ViaCommandSender[0];
-    }
-
-    @Override
-    public void sendMessage(UUID uuid, String msg) {
-        if (uuid == null) {
-            this.getLogger().info(msg);
-        } else {
-            this.getLogger().info("[" + uuid + "] " + msg);
-        }
-    }
-
-    @Override
-    public boolean kickPlayer(UUID uuid, String s) {
-        return false;
-    }
-
-    @Override
-    public boolean disconnect(UserConnection connection, String message) {
-        return ViaPlatform.super.disconnect(connection, message);
     }
 
     @Override
@@ -127,7 +102,7 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UUID> {
     }
 
     @Override
-    public ViaAPI<UUID> getApi() {
+    public ViaAPI<UserConnection> getApi() {
         return api;
     }
 
@@ -143,17 +118,12 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UUID> {
 
     @Override
     public String getPlatformName() {
-        return "ViaLoadingBase by FlorianMichael";
+        return "ViaLoadingBase";
     }
 
     @Override
     public String getPlatformVersion() {
         return ViaLoadingBase.VERSION;
-    }
-
-    @Override
-    public boolean isPluginEnabled() {
-        return true;
     }
 
     public VLBViaConfig getConfig() {

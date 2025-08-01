@@ -72,16 +72,14 @@ public class GuiProtocolSelector extends GuiScreen {
 
         final ProtocolInfo protocolInfo = ProtocolInfo.fromProtocolVersion(ViaLoadingBase.getInstance().getTargetVersion());
 
-        try {
-            final String versionTitle = "Version: " + ViaLoadingBase.getInstance().getTargetVersion().getName() + " - " + protocolInfo.getName();
-            final String versionReleased = "Released: " + protocolInfo.getReleaseDate();
+        final String versionTitle = "Version: " + ViaLoadingBase.getInstance().getTargetVersion().getName() + " - " + protocolInfo.getName();
+        final String versionReleased = "Released: " + protocolInfo.getReleaseDate();
 
-            final int fixedHeight = ((5 + this.fontRendererObj.FONT_HEIGHT) * 2) + 2;
+        final int fixedHeight = ((5 + this.fontRendererObj.FONT_HEIGHT) * 2) + 2;
 
-            drawString(this.fontRendererObj, EnumChatFormatting.GRAY + (EnumChatFormatting.BOLD + "Version Information"), (width - this.fontRendererObj.getStringWidth("Version Information")) / 2, fixedHeight, -1);
-            drawString(this.fontRendererObj, versionTitle, (width - this.fontRendererObj.getStringWidth(versionTitle)) / 2, fixedHeight + this.fontRendererObj.FONT_HEIGHT, -1);
-            drawString(this.fontRendererObj, versionReleased, (width - this.fontRendererObj.getStringWidth(versionReleased)) / 2, fixedHeight + this.fontRendererObj.FONT_HEIGHT * 2, -1);
-        } catch (NullPointerException ignoredLol) {}
+        drawString(this.fontRendererObj, EnumChatFormatting.GRAY + (EnumChatFormatting.BOLD + "Version Information"), (width - this.fontRendererObj.getStringWidth("Version Information")) / 2, fixedHeight, -1);
+        drawString(this.fontRendererObj, versionTitle, (width - this.fontRendererObj.getStringWidth(versionTitle)) / 2, fixedHeight + this.fontRendererObj.FONT_HEIGHT, -1);
+        drawString(this.fontRendererObj, versionReleased, (width - this.fontRendererObj.getStringWidth(versionReleased)) / 2, fixedHeight + this.fontRendererObj.FONT_HEIGHT * 2, -1);
 
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
@@ -115,7 +113,7 @@ public class GuiProtocolSelector extends GuiScreen {
 
         @Override
         protected void drawSlot(int i, int i1, int i2, int i3, int i4, int i5) {
-            drawCenteredString(mc.fontRendererObj,(ViaLoadingBase.getInstance().getTargetVersion().getIndex() == i ? EnumChatFormatting.GREEN.toString() + EnumChatFormatting.BOLD : EnumChatFormatting.GRAY.toString()) + ViaLoadingBase.getProtocols().get(i).getName(), width / 2, i2 + 2, -1);
+            drawCenteredString(mc.fontRendererObj,(ViaLoadingBase.PROTOCOLS.indexOf(ViaLoadingBase.getInstance().getTargetVersion()) == i ? EnumChatFormatting.GREEN.toString() + EnumChatFormatting.BOLD : EnumChatFormatting.GRAY.toString()) + ViaLoadingBase.getProtocols().get(i).getName(), width / 2, i2 + 2, -1);
             GlStateManager.pushMatrix();
             GlStateManager.scale(0.5, 0.5, 0.5);
             drawCenteredString(mc.fontRendererObj, "PVN: " + ViaLoadingBase.getProtocols().get(i).getVersion(), width, (i2 + 2) * 2 + 20, -1);

@@ -32,7 +32,7 @@ public class S32PacketConfirmTransaction implements Packet<INetHandlerPlayClient
 
     public void readPacketData(PacketBuffer buf) throws IOException
     {
-        if (ViaLoadingBase.getInstance().getTargetVersion().isNewerThanOrEqualTo(ProtocolVersion.v1_17)) {
+        if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_17)) {
             this.windowId = buf.readInt();
         } else {
             this.windowId = buf.readUnsignedByte();
