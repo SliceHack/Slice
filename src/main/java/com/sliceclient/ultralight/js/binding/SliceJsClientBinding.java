@@ -19,6 +19,7 @@ import slice.ultralight.ViewMainMenu;
 import slice.util.LoggerUtil;
 import slice.util.account.LoginUtil;
 import slice.util.account.microsoft.MicrosoftAccount;
+import the_fireplace.ias.gui.GuiAccountSelector;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -60,7 +61,8 @@ public class SliceJsClientBinding {
 //
 //        }
 //        /*mc.displayGuiScreen(new ViewAltManager());*/
-        mc.displayGuiScreen(new MicrosoftAltLogin(mc.currentScreen));
+//        mc.displayGuiScreen(new MicrosoftAltLogin(mc.currentScreen));
+        mc.displayGuiScreen(new GuiAccountSelector());
     }
     public void closeGui() { mc.displayGuiScreen(null); }
 

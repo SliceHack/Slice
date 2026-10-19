@@ -20,6 +20,8 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.opengl.Display;
+
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL12.*;
 
@@ -34,12 +36,16 @@ public class View {
     @Getter
     private int glTexture = -1;
 
-    @Getter
-    private long lastJavascriptGarbageCollections;
-
     public View() {
+        // UltraLightEvents.width/height only get set once the first onGuiRender frame
+        // has run, so a view created before then (e.g. the main menu/click GUI views,
+        // which are built during startup) would otherwise be created at 0x0 and crash
+        // natively the first time it gets resized. Read the real display size instead.
+        long initialWidth = Math.max(1, Display.getWidth());
+        long initialHeight = Math.max(1, Display.getHeight());
+
         view = UltraLightEngine.getInstance().getRenderer().createView(
-                (long) UltraLightEngine.getInstance().getUltraLightEvents().getWidth(), (long) UltraLightEngine.getInstance().getUltraLightEvents().getHeight(),
+                initialWidth, initialHeight,
                 new UltralightViewConfig()
                         .initialDeviceScale(1.0)
                         .isTransparent(true)
@@ -176,8 +182,8 @@ public class View {
         this.glTexture = glGenTextures();
         glBindTexture(GL_TEXTURE_2D, this.glTexture);
 
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         glBindTexture(GL_TEXTURE_2D, 0);
@@ -217,21 +223,6 @@ public class View {
 
     public void fireKeyEvent(UltralightKeyEvent event) {
         view.fireKeyEvent(event);
-    }
-
-    public void update() {
-        UltraLightEngine.getInstance().getRenderer().update();
-        UltraLightEngine.getInstance().getRenderer().render();
-
-        if(lastJavascriptGarbageCollections == 0) {
-            lastJavascriptGarbageCollections = System.currentTimeMillis();
-            return;
-        }
-
-        if(System.currentTimeMillis() - lastJavascriptGarbageCollections > 200) {
-            this.lastJavascriptGarbageCollections = System.currentTimeMillis();
-        }
-
     }
 
     public void onMouseClick(int x, int y, int mouseButton, boolean buttonDown) {

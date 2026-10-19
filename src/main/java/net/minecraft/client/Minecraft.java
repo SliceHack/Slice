@@ -1,5 +1,6 @@
 package net.minecraft.client;
 
+import com.github.mrebhan.ingameaccountswitcher.MR;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -38,7 +39,6 @@ import java.util.concurrent.FutureTask;
 import javax.imageio.ImageIO;
 
 import com.sliceclient.ultralight.UltraLightEngine;
-import com.sliceclient.ultralight.view.View;
 import de.florianmichael.viamcp.fixes.AttackOrder;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -182,6 +182,9 @@ import slice.event.events.*;
 import slice.gui.hud.legacy.HUD;
 import slice.ultralight.ViewMainMenu;
 import de.florianmichael.viamcp.ViaMCP;
+import the_fireplace.ias.events.ClientEvents;
+import the_fireplace.ias.tools.SkinTools;
+import the_fireplace.iasencrypt.Standards;
 
 @SuppressWarnings("all")
 public class Minecraft implements IThreadListener, IPlayerUsage {
@@ -285,8 +288,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private GuiScreen queuedGUI;
 
     private UltraLightEngine ultraLightEngine;
-
-    private long lastUpdate = System.currentTimeMillis();
 
     public Minecraft(GameConfiguration gameConfig) {
         theMinecraft = this;
@@ -458,7 +459,14 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.guiAchievement = new GuiAchievement(this);
         GlStateManager.viewport(0, 0, this.displayWidth, this.displayHeight);
         this.effectRenderer = new EffectRenderer(this.theWorld, this.renderEngine);
+
         this.checkGLError("Post startup");
+
+        // starting ias
+        MR.init();
+        ClientEvents.register();
+        Standards.importAccounts();
+        ru.vidtu.iasfork.msauth.MicrosoftAccount.load(this);
 
         Slice.INSTANCE.init();
         try {
@@ -471,6 +479,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         }
 
         this.ingameGUI = new GuiIngame(this);
+
+        // finish ias startup
+        SkinTools.cacheSkins();
 
         if (this.serverName != null) {
             this.displayGuiScreen(new GuiConnecting(UltraLightEngine.getInstance().getMainMenu(), this, this.serverName, this.serverPort));
@@ -861,14 +872,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     }
 
     private void runGameLoop() throws IOException {
-        if(ultraLightEngine != null) {
-
-            if(System.currentTimeMillis() - lastUpdate > 1000 / UltraLightEngine.MAX_FPS) {
-                lastUpdate =  System.currentTimeMillis();
-                ultraLightEngine.getViews().stream().filter(view -> view != null).forEach(View::update);
-            }
-        }
-
         long i = System.nanoTime();
         this.mcProfiler.startSection("root");
 

@@ -177,7 +177,9 @@ public enum Slice {
      */
     public void stop() {
         totalTime += System.currentTimeMillis() - startTime;
-        irc.getSocket().disconnect();
+        if(irc != null && irc.getSocket() != null) {
+            irc.getSocket().disconnect();
+        }
         connecting = false;
         saver.save();
         saveTotalTime();

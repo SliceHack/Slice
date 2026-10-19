@@ -43,6 +43,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import slice.event.events.EventActionPerformed;
+import slice.event.events.EventGUIInit;
 import tv.twitch.chat.ChatUserInfo;
 
 public abstract class GuiScreen extends Gui implements GuiYesNoCallback
@@ -453,6 +455,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
                     this.selectedButton = guibutton;
                     guibutton.playPressSound(this.mc.getSoundHandler());
                     this.actionPerformed(guibutton);
+                    new EventActionPerformed(guibutton, this).call();
                 }
             }
         }
@@ -484,6 +487,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
         this.height = height;
         this.buttonList.clear();
         this.initGui();
+        new EventGUIInit(this, this.buttonList).call();
     }
 
     public void setGuiSize(int w, int h)
